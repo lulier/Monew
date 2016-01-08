@@ -1,0 +1,7 @@
+pod 'AFNetworking', '~> 3.0'
+pod 'vfrReader','~> 2.8.6'
+pod 'SSZipArchive', '~> 1.0'
+pod 'SDWebImage','~> 3.7'
+pod 'MRProgress'
+pod 'FMDB'
+pod 'StreamingKit'
