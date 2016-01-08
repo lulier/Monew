@@ -7,9 +7,14 @@
 //
 
 #import <UIKit/UIKit.h>
+#include "lua.h"
+#include "lualib.h"
+#include "lauxlib.h"
 
 @interface ViewController : UIViewController
-
+{
+    lua_State *L;
+}
 
 @end
 

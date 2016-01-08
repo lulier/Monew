@@ -7,6 +7,10 @@
 //
 
 #import "AppDelegate.h"
+#import "MainTableViewController.h"
+#import "AFNetworkActivityIndicatorManager.h"
+#import "AFNetworking.h"
+#import <AVFoundation/AVFoundation.h>
 
 @interface AppDelegate ()
 
@@ -16,6 +20,32 @@
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
+    
+    //streamingkit init
+    NSError* error;
+    
+    [[AVAudioSession sharedInstance] setCategory:AVAudioSessionCategoryPlayback error:&error];
+    [[AVAudioSession sharedInstance] setActive:YES error:&error];
+    
+    Float32 bufferLength = 0.1;
+    AudioSessionSetProperty(kAudioSessionProperty_PreferredHardwareIOBufferDuration, sizeof(bufferLength), &bufferLength);
+    
+    
+    
+    NSURLCache *URLCache=[[NSURLCache alloc]initWithMemoryCapacity:4*1024*1024 diskCapacity:20*1024*1024 diskPath:nil];
+    [NSURLCache setSharedURLCache:URLCache];
+    
+    [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
+    UITableViewController *viewController=[[MainTableViewController alloc]initWithStyle:UITableViewStyleGrouped];
+    
+    self.navigationController=[[UINavigationController alloc]initWithRootViewController:viewController];
+    self.navigationController.navigationBar.tintColor=[UIColor darkGrayColor];
+    self.window=[[UIWindow alloc]initWithFrame:[[UIScreen mainScreen] bounds]];
+    self.window.backgroundColor=[UIColor whiteColor];
+    self.window.rootViewController=self.navigationController;
+    [self.window makeKeyAndVisible];
+    
+    
     // Override point for customization after application launch.
     return YES;
 }

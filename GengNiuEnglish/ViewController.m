@@ -16,7 +16,18 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    [self initLua];
     // Do any additional setup after loading the view, typically from a nib.
+}
+-(void)initLua
+{
+    L=luaL_newstate();
+    luaL_openlibs(L);
+    lua_settop(L, 0);
+    luaL_dostring(L, "text=\"this is leolu\"");
+    lua_getglobal(L, "text");
+    const char *str=lua_tostring(L,1);
+    printf("%s",str);
 }
 
 - (void)didReceiveMemoryWarning {
