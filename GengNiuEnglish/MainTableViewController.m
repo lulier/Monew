@@ -16,6 +16,7 @@
 #import "LyricViewController.h"
 #import "FMDB.h"
 #import "LyricItem.h"
+#import "UIImageView+WebCache.h"
 
 
 

@@ -37,7 +37,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="397" y="616"/>
+            <point key="canvasLocation" x="411" y="338"/>
         </scene>
         <!--Main Table View Controller-->
         <scene sceneID="LXI-lP-tNv">
@@ -67,6 +67,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Xuw-Aa-uR4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="390" y="-116"/>
         </scene>
         <!--Lyric View Controller-->
         <scene sceneID="KIn-O2-PTY">

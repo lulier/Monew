@@ -7,6 +7,7 @@
 //
 
 #import "TableViewCell.h"
+#import "UIImageView+WebCache.h"
 #import "UIImageView+AFNetworking.h"
 
 @implementation TableViewCell
@@ -35,12 +36,10 @@
         NSLog(@"your book is nil");
     }
     self.textLabel.text = _book.text_name;
-//    self.detailTextLabel.text = _book.text_name;
     [self.imageView setImageWithURL:[NSURL URLWithString:_book.cover_url] placeholderImage:[UIImage imageNamed:@"profile-image-placeholder"]];
-//
     [self setNeedsLayout];
+    [self setNeedsDisplay];
 }
-
 #pragma mark - UIView
 
 - (void)layoutSubviews {

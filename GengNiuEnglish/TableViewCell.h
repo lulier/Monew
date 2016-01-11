@@ -11,4 +11,6 @@
 
 @interface TableViewCell : UITableViewCell
 @property(strong,nonatomic)DataForCell *book;
+- (instancetype)initWithStyle:(UITableViewCellStyle)style
+              reuseIdentifier:(NSString *)reuseIdentifier;
 @end
