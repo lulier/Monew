@@ -39,6 +39,8 @@
             return URLForTextList;
         case RUText_detail:
             return URLForTextDetai;
+        case RUGrade_list:
+            return URLForGradeList;
         case RUCustom:
             return nil;
         default:

@@ -30,11 +30,11 @@ typedef NS_ENUM(NSInteger,FileType)
 @property(strong,nonatomic)NSMutableArray *fileNames;
 
 -(instancetype)initWithAttributes:(NSDictionary *)attributes;
++(NSURLSessionTask*)getGradeList:(void(^)(NSArray *data,NSError *error))block;
 +(NSURLSessionTask*)getTextList:(void(^)(NSArray *data,NSError *error))block;
 - (void)zipArchiveDidUnzipFileAtIndex:(NSInteger)fileIndex totalFiles:(NSInteger)totalFiles archivePath:(NSString *)archivePath unzippedFilePath:(NSString *)unzippedFilePath;
 - (void)zipArchiveDidUnzipArchiveAtPath:(NSString *)path zipInfo:(unz_global_info)zipInfo unzippedPath:(NSString *)unzippedPath;
 -(NSString*)getFileName:(FileType)fileType;
-+(UIViewController*)getCurrentVC;
 - (void)dismissReaderViewController:(ReaderViewController *)viewController;
 -(BOOL)checkDatabase;
 -(NSString*)getDocumentPath;

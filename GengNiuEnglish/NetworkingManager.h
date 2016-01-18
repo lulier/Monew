@@ -20,11 +20,13 @@ typedef NS_ENUM(NSInteger,RequestURL)
 {
     RUText_list=0,
     RUText_detail,
+    RUGrade_list,
     RUCustom
 };
 
-static const NSString *URLForTextList=@"http://203.195.212.228:8002/courseware/text_list_query";
-static const NSString *URLForTextDetai=@"http://203.195.212.228:8002/courseware/text_detail_query";
+static const NSString *URLForGradeList=@"http://120.25.103.72:8002/courseware/grade_list_query";
+static const NSString *URLForTextList=@"http://120.25.103.72:8002/courseware/text_list_query";
+static const NSString *URLForTextDetai=@"http://120.25.103.72:8002/courseware/text_detail_query";
 
 @interface NetworkingManager : NSObject
 

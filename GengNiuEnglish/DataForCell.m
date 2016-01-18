@@ -11,6 +11,7 @@
 #import "ReaderDocument.h"
 #import "ReaderViewController.h"
 #import "FMDB.h"
+#import "CommonMethod.h"
 @implementation DataForCell
 {
     ReaderViewController *readerViewController;
@@ -23,12 +24,25 @@
     if (!self) {
         return nil;
     }
-    self.text_id=[attributes objectForKey:@"text_id"];
-    self.text_name=[attributes objectForKey:@"text_name"];
-    self.cover_url=[attributes objectForKey:@"cover_url"];
-    self.category=[attributes objectForKey:@"category"];
-    self.fileNames=[[NSMutableArray alloc]init];
-    [self getBookDetail];
+    if ([attributes objectForKey:@"text_id"]!=nil)
+    {
+        self.text_id=[attributes objectForKey:@"text_id"];
+        self.text_name=[attributes objectForKey:@"text_name"];
+        self.cover_url=[attributes objectForKey:@"cover_url"];
+        self.category=[attributes objectForKey:@"category"];
+        self.fileNames=[[NSMutableArray alloc]init];
+        [self getBookDetail];
+    }
+    else
+    {
+        self.text_id=[attributes objectForKey:@"grade_id"];
+        self.text_name=[attributes objectForKey:@"grade_name"];
+        self.cover_url=[attributes objectForKey:@"cover_url"];
+        self.category=nil;
+        self.fileNames=nil;
+        self.downloadURL=nil;
+        self.zipFileName=nil;
+    }
     return self;
     
 }
@@ -40,6 +54,35 @@
     success:^(NSURLSessionTask *task,id JSON)
             {
                 NSArray *list=[JSON valueForKey:@"text_list"];
+                for (NSDictionary *attributes in list)
+                {
+                    DataForCell *data=[[DataForCell alloc]initWithAttributes:attributes];
+                    [mutableBooks addObject:data];
+                }
+                if (block)
+                {
+                    block([NSArray arrayWithArray:mutableBooks],nil);
+                }
+            }
+    failure:^(NSURLSessionTask *task,NSError* error)
+            {
+                if (block)
+                {
+                    block([NSArray array],error);
+                }
+            }
+            
+    completionHandler:nil];
+    
+}
++(NSURLSessionTask*)getGradeList:(void (^)(NSArray *, NSError *))block{
+    
+    NSDictionary *parameters=[[NSDictionary alloc]initWithObjectsAndKeys:@"1",@"user_id", nil];
+    NSMutableArray *mutableBooks=[[NSMutableArray alloc]init];
+    return [NetworkingManager httpRequest:RTGet url:RUText_list parameters:parameters progress:nil
+    success:^(NSURLSessionTask *task,id JSON)
+            {
+                NSArray *list=[JSON valueForKey:@"grade_list"];
                 for (NSDictionary *attributes in list)
                 {
                     DataForCell *data=[[DataForCell alloc]initWithAttributes:attributes];
@@ -209,7 +252,7 @@
 - (void)zipArchiveDidUnzipArchiveAtPath:(NSString *)path zipInfo:(unz_global_info)zipInfo unzippedPath:(NSString *)unzippedPath
 {
     [self updateDatabase];
-    UIViewController *currentVC=[DataForCell getCurrentVC];
+    UIViewController *currentVC=[CommonMethod getCurrentVC];
     NSString *doctName=[self getFileName:FTDocument];
     NSString *pdfName=[self getFileName:FTPDF];
     NSString *pdfPath=[unzippedPath stringByAppendingString:[NSString stringWithFormat:@"/%@/%@",doctName,pdfName]];
@@ -241,39 +284,10 @@
 -(void)dismissReaderViewController:(ReaderViewController *)viewController
 {
     
-    [[DataForCell getCurrentVC] dismissViewControllerAnimated:NO completion:NULL];
+    [[CommonMethod getCurrentVC] dismissViewControllerAnimated:NO completion:NULL];
     readerViewController=nil;
 }
 
-//获取当前屏幕显示的viewcontroller
-+(UIViewController *)getCurrentVC
-{
-    UIViewController *result = nil;
-    
-    UIWindow * window = [[UIApplication sharedApplication] keyWindow];
-    if (window.windowLevel != UIWindowLevelNormal)
-    {
-        NSArray *windows = [[UIApplication sharedApplication] windows];
-        for(UIWindow * tmpWin in windows)
-        {
-            if (tmpWin.windowLevel == UIWindowLevelNormal)
-            {
-                window = tmpWin;
-                break;
-            }
-        }
-    }
-    
-    UIView *frontView = [[window subviews] objectAtIndex:0];
-    id nextResponder = [frontView nextResponder];
-    
-    if ([nextResponder isKindOfClass:[UIViewController class]])
-        result = nextResponder;
-    else
-        result = window.rootViewController;
-    
-    return result;
-}
 -(NSString *)getDocumentPath
 {
     NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
