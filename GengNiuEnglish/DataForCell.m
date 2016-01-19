@@ -46,9 +46,9 @@
     return self;
     
 }
-+(NSURLSessionTask*)getTextList:(void (^)(NSArray *, NSError *))block{
++(NSURLSessionTask*)getTextList:(void (^)(NSArray *, NSError *))block grade_id:(NSString*)grade_id{
     
-    NSDictionary *parameters=[[NSDictionary alloc]initWithObjectsAndKeys:@"1",@"user_id", nil];
+    NSDictionary *parameters=[[NSDictionary alloc]initWithObjectsAndKeys:@"1",@"user_id",grade_id,@"grade_id", nil];
     NSMutableArray *mutableBooks=[[NSMutableArray alloc]init];
     return [NetworkingManager httpRequest:RTGet url:RUText_list parameters:parameters progress:nil
     success:^(NSURLSessionTask *task,id JSON)

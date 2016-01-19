@@ -31,7 +31,7 @@ typedef NS_ENUM(NSInteger,FileType)
 
 -(instancetype)initWithAttributes:(NSDictionary *)attributes;
 +(NSURLSessionTask*)getGradeList:(void(^)(NSArray *data,NSError *error))block;
-+(NSURLSessionTask*)getTextList:(void(^)(NSArray *data,NSError *error))block;
++(NSURLSessionTask*)getTextList:(void(^)(NSArray *data,NSError *error))block grade_id:(NSString*)grade_id;
 - (void)zipArchiveDidUnzipFileAtIndex:(NSInteger)fileIndex totalFiles:(NSInteger)totalFiles archivePath:(NSString *)archivePath unzippedFilePath:(NSString *)unzippedFilePath;
 - (void)zipArchiveDidUnzipArchiveAtPath:(NSString *)path zipInfo:(unz_global_info)zipInfo unzippedPath:(NSString *)unzippedPath;
 -(NSString*)getFileName:(FileType)fileType;

@@ -1,32 +1,34 @@
 //
-//  MaterialViewController.m
+//  BookViewController.m
 //  GengNiuEnglish
 //
 //  Created by luzegeng on 16/1/19.
 //  Copyright © 2016年 luzegeng. All rights reserved.
 //
 
-#import "MaterialViewController.h"
+#import "BookViewController.h"
 #import "DataForCell.h"
 #import "CommonMethod.h"
-#import "MaterialCell.h"
-#import "BookViewController.h"
+#import "TextBookCell.h"
 
-@interface MaterialViewController ()
+@interface BookViewController ()
 
 @end
 
-@implementation MaterialViewController
+@implementation BookViewController
 
-static NSString * const reuseIdentifier = @"MaterialCell";
+static NSString * const reuseIdentifier = @"TextBookCell";
 
 -(void)reload:(__unused id)sender{
-    NSURLSessionTask *task=[DataForCell getGradeList:^(NSArray *data, NSError *error) {
+    NSURLSessionTask *task=[DataForCell getTextList:^(NSArray *data, NSError *error) {
         if (!error) {
             self.list=data;
             [self.collectionView reloadData];
         }
-    }];
+    } grade_id:self.grade_id];
+}
+- (IBAction)goBackClick:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
 }
 
 
@@ -37,6 +39,7 @@ static NSString * const reuseIdentifier = @"MaterialCell";
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Register cell classes
+    [self.goBackButton setBackgroundImage:[UIImage imageNamed:@"general_go"] forState:UIControlStateNormal];
     self.collectionView.delegate=self;
     // Do any additional setup after loading the view.
     [self.navigationController.navigationBar setHidden:YES];
@@ -74,9 +77,9 @@ static NSString * const reuseIdentifier = @"MaterialCell";
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    MaterialCell *cell = (MaterialCell*)[collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
+    TextBookCell *cell = (TextBookCell*)[collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
     // Configure the cell
-    cell.material=self.list[indexPath.row];
+    cell.book=self.list[indexPath.row];
     return cell;
 }
 
@@ -99,13 +102,13 @@ static NSString * const reuseIdentifier = @"MaterialCell";
 {
     // Prepare for animation
     
-    UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    BookViewController *bookViewController=[storyboard instantiateViewControllerWithIdentifier:@"BookViewController"];
-    DataForCell *material=self.list[indexPath.row];
-    bookViewController.grade_id=material.text_id;
-    [self.navigationController pushViewController:bookViewController animated:YES];
+    NSIndexPath *index=[NSIndexPath indexPathForRow:1 inSection:0];
+    [self.collectionView layoutIfNeeded];
+    [self.collectionView scrollToItemAtIndexPath:index atScrollPosition:UICollectionViewScrollPositionCenteredHorizontally animated:YES];
+    
+    
     // Animate
-    NSLog(@"log for index:%ld",indexPath.row);
+    NSLog(@"log for section:%ld",indexPath.section);
 }
 
 -(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate

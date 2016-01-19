@@ -56,6 +56,7 @@
 		F4A9AF3C1C4D2418004BC7BF /* MaterialCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A9AF3B1C4D2418004BC7BF /* MaterialCell.m */; };
 		F4A9AF3F1C4D2435004BC7BF /* TextBookCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A9AF3E1C4D2435004BC7BF /* TextBookCell.m */; };
 		F4A9AF481C4E2040004BC7BF /* MaterialViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A9AF471C4E2040004BC7BF /* MaterialViewController.m */; };
+		F4A9AF4B1C4E30E1004BC7BF /* BookViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A9AF4A1C4E30E1004BC7BF /* BookViewController.m */; };
 		F4AD05651C2C1021006554FF /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4AD05641C2C1021006554FF /* QuartzCore.framework */; };
 		F4AD05671C2C102C006554FF /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4AD05661C2C102C006554FF /* ImageIO.framework */; };
 		F4AD05691C2C1034006554FF /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4AD05681C2C1034006554FF /* MessageUI.framework */; };
@@ -172,6 +173,8 @@
 		F4A9AF3E1C4D2435004BC7BF /* TextBookCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextBookCell.m; sourceTree = "<group>"; };
 		F4A9AF461C4E2040004BC7BF /* MaterialViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaterialViewController.h; sourceTree = "<group>"; };
 		F4A9AF471C4E2040004BC7BF /* MaterialViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MaterialViewController.m; sourceTree = "<group>"; };
+		F4A9AF491C4E30E1004BC7BF /* BookViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BookViewController.h; sourceTree = "<group>"; };
+		F4A9AF4A1C4E30E1004BC7BF /* BookViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BookViewController.m; sourceTree = "<group>"; };
 		F4AD05641C2C1021006554FF /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		F4AD05661C2C102C006554FF /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		F4AD05681C2C1034006554FF /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
@@ -364,6 +367,8 @@
 			children = (
 				F4A9AF461C4E2040004BC7BF /* MaterialViewController.h */,
 				F4A9AF471C4E2040004BC7BF /* MaterialViewController.m */,
+				F4A9AF491C4E30E1004BC7BF /* BookViewController.h */,
+				F4A9AF4A1C4E30E1004BC7BF /* BookViewController.m */,
 				F49466FF1C27CD2E00806DEF /* MainTableViewController.h */,
 				F49467001C27CD2E00806DEF /* MainTableViewController.m */,
 				F4B271AE1C33B429009313CA /* LyricViewController.h */,
@@ -581,6 +586,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F4A9AF4B1C4E30E1004BC7BF /* BookViewController.m in Sources */,
 				F484BAEB1C1EB6A100F56815 /* lvm.c in Sources */,
 				F484BAE51C1EB6A100F56815 /* ltable.c in Sources */,
 				F484BAD61C1EB6A100F56815 /* lfunc.c in Sources */,

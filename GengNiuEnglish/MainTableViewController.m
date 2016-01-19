@@ -37,7 +37,7 @@
             self.list=data;
             [self.tableView reloadData];
         }
-    }];
+    } grade_id:@"4"];
     [self.refreshControl setRefreshingWithStateOfTask:task];
     
 }

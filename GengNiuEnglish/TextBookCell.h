@@ -7,7 +7,10 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "DataForCell.h"
 
 @interface TextBookCell : UICollectionViewCell
-
+@property(strong,nonatomic)DataForCell *book;
+@property (weak, nonatomic) IBOutlet UIImageView *cellImage;
+@property (weak, nonatomic) IBOutlet UILabel *cellLabel;
 @end
