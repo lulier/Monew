@@ -24,9 +24,9 @@ typedef NS_ENUM(NSInteger,RequestURL)
     RUCustom
 };
 
-static const NSString *URLForGradeList=@"http://120.25.103.72:8002/courseware/grade_list_query";
-static const NSString *URLForTextList=@"http://120.25.103.72:8002/courseware/text_list_query";
-static const NSString *URLForTextDetai=@"http://120.25.103.72:8002/courseware/text_detail_query";
+static const NSString *URLForGradeList=@"http://120.25.103.72:8002/courseware/grade_list_query/";
+static const NSString *URLForTextList=@"http://120.25.103.72:8002/courseware/text_list_query/";
+static const NSString *URLForTextDetai=@"http://120.25.103.72:8002/courseware/text_detail_query/";
 
 @interface NetworkingManager : NSObject
 

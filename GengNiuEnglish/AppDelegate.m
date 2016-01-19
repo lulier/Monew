@@ -36,9 +36,13 @@
     [NSURLCache setSharedURLCache:URLCache];
     
     [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
-    UITableViewController *viewController=[[MainTableViewController alloc]initWithStyle:UITableViewStyleGrouped];
     
-    self.navigationController=[[UINavigationController alloc]initWithRootViewController:viewController];
+    UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    UIViewController *rootViewController=[storyboard instantiateViewControllerWithIdentifier:@"MaterialViewController"];
+    
+    
+    
+    self.navigationController=[[UINavigationController alloc]initWithRootViewController:rootViewController];
     self.navigationController.navigationBar.tintColor=[UIColor darkGrayColor];
     self.window=[[UIWindow alloc]initWithFrame:[[UIScreen mainScreen] bounds]];
     self.window.backgroundColor=[UIColor whiteColor];

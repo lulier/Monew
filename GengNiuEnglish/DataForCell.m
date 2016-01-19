@@ -79,7 +79,7 @@
     
     NSDictionary *parameters=[[NSDictionary alloc]initWithObjectsAndKeys:@"1",@"user_id", nil];
     NSMutableArray *mutableBooks=[[NSMutableArray alloc]init];
-    return [NetworkingManager httpRequest:RTGet url:RUText_list parameters:parameters progress:nil
+    return [NetworkingManager httpRequest:RTGet url:RUGrade_list parameters:parameters progress:nil
     success:^(NSURLSessionTask *task,id JSON)
             {
                 NSArray *list=[JSON valueForKey:@"grade_list"];
