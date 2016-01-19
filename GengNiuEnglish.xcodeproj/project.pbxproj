@@ -54,6 +54,8 @@
 		F494670A1C28ECE900806DEF /* NetworkingManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F49467091C28ECE900806DEF /* NetworkingManager.m */; };
 		F4A9AF361C4D00E9004BC7BF /* TXMaterialCollectionViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A9AF351C4D00E9004BC7BF /* TXMaterialCollectionViewController.m */; };
 		F4A9AF391C4D0D26004BC7BF /* CommonMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A9AF381C4D0D26004BC7BF /* CommonMethod.m */; };
+		F4A9AF3C1C4D2418004BC7BF /* MaterialCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A9AF3B1C4D2418004BC7BF /* MaterialCell.m */; };
+		F4A9AF3F1C4D2435004BC7BF /* TextBookCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A9AF3E1C4D2435004BC7BF /* TextBookCell.m */; };
 		F4AD05651C2C1021006554FF /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4AD05641C2C1021006554FF /* QuartzCore.framework */; };
 		F4AD05671C2C102C006554FF /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4AD05661C2C102C006554FF /* ImageIO.framework */; };
 		F4AD05691C2C1034006554FF /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4AD05681C2C1034006554FF /* MessageUI.framework */; };
@@ -166,6 +168,10 @@
 		F4A9AF351C4D00E9004BC7BF /* TXMaterialCollectionViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TXMaterialCollectionViewController.m; sourceTree = "<group>"; };
 		F4A9AF371C4D0D26004BC7BF /* CommonMethod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonMethod.h; sourceTree = "<group>"; };
 		F4A9AF381C4D0D26004BC7BF /* CommonMethod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonMethod.m; sourceTree = "<group>"; };
+		F4A9AF3A1C4D2418004BC7BF /* MaterialCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaterialCell.h; sourceTree = "<group>"; };
+		F4A9AF3B1C4D2418004BC7BF /* MaterialCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MaterialCell.m; sourceTree = "<group>"; };
+		F4A9AF3D1C4D2435004BC7BF /* TextBookCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TextBookCell.h; sourceTree = "<group>"; };
+		F4A9AF3E1C4D2435004BC7BF /* TextBookCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TextBookCell.m; sourceTree = "<group>"; };
 		F4AD05641C2C1021006554FF /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		F4AD05661C2C102C006554FF /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		F4AD05681C2C1034006554FF /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
@@ -369,6 +375,10 @@
 		F49466FD1C27C94D00806DEF /* View */ = {
 			isa = PBXGroup;
 			children = (
+				F4A9AF3A1C4D2418004BC7BF /* MaterialCell.h */,
+				F4A9AF3B1C4D2418004BC7BF /* MaterialCell.m */,
+				F4A9AF3D1C4D2435004BC7BF /* TextBookCell.h */,
+				F4A9AF3E1C4D2435004BC7BF /* TextBookCell.m */,
 				F49467051C27CE2900806DEF /* TableViewCell.h */,
 				F49467061C27CE2900806DEF /* TableViewCell.m */,
 			);
@@ -596,11 +606,13 @@
 				F484BAD91C1EB6A100F56815 /* liolib.c in Sources */,
 				F484BAE41C1EB6A100F56815 /* lstrlib.c in Sources */,
 				F486C7801C3B8B7C00CBFBD1 /* SampleQueueId.m in Sources */,
+				F4A9AF3F1C4D2435004BC7BF /* TextBookCell.m in Sources */,
 				F484BADE1C1EB6A100F56815 /* lobject.c in Sources */,
 				F484BAD31C1EB6A100F56815 /* ldebug.c in Sources */,
 				F49467011C27CD2E00806DEF /* MainTableViewController.m in Sources */,
 				F494670A1C28ECE900806DEF /* NetworkingManager.m in Sources */,
 				F484BAE61C1EB6A100F56815 /* ltablib.c in Sources */,
+				F4A9AF3C1C4D2418004BC7BF /* MaterialCell.m in Sources */,
 				F49467041C27CE0900806DEF /* DataForCell.m in Sources */,
 				F484BAE31C1EB6A100F56815 /* lstring.c in Sources */,
 				F4B271B01C33B429009313CA /* LyricViewController.m in Sources */,

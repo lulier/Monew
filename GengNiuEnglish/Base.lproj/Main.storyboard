@@ -39,28 +39,43 @@
             </objects>
             <point key="canvasLocation" x="390" y="327"/>
         </scene>
-        <!--Collection View Controller-->
+        <!--Material Collection View Controller-->
         <scene sceneID="cXk-xh-eqJ">
             <objects>
-                <collectionViewController id="AgV-IJ-3Zd" sceneMemberID="viewController">
+                <collectionViewController id="AgV-IJ-3Zd" customClass="TXMaterialCollectionViewController" sceneMemberID="viewController">
                     <collectionView key="view" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" alwaysBounceHorizontal="YES" dataMode="prototypes" id="TXv-px-x4Q">
                         <rect key="frame" x="0.0" y="0.0" width="568" height="320"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="jF6-gW-7hZ">
-                            <size key="itemSize" width="50" height="50"/>
+                            <size key="itemSize" width="215" height="199"/>
                             <size key="headerReferenceSize" width="0.0" height="0.0"/>
                             <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                            <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                            <inset key="sectionInset" minX="100" minY="0.0" maxX="0.0" maxY="0.0"/>
                         </collectionViewFlowLayout>
                         <cells>
-                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="OXz-aA-6U1">
-                                <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                            <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" id="OXz-aA-6U1" customClass="MaterialCell">
+                                <rect key="frame" x="100" y="60.5" width="215" height="199"/>
                                 <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                                 <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
-                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
+                                    <rect key="frame" x="0.0" y="0.0" width="215" height="199"/>
                                     <autoresizingMask key="autoresizingMask"/>
+                                    <subviews>
+                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="EmM-5g-Waq">
+                                            <rect key="frame" x="14" y="0.0" width="186" height="164"/>
+                                        </imageView>
+                                        <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="新加州_小学四年级英语_On-Level_17" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="ODe-l3-hAO">
+                                            <rect key="frame" x="-23" y="170" width="276" height="21"/>
+                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                            <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                            <nil key="highlightedColor"/>
+                                        </label>
+                                    </subviews>
                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 </view>
+                                <connections>
+                                    <outlet property="cellImage" destination="EmM-5g-Waq" id="IjY-Oq-IFz"/>
+                                    <outlet property="cellLabel" destination="ODe-l3-hAO" id="eor-Gu-ime"/>
+                                </connections>
                             </collectionViewCell>
                         </cells>
                         <connections>
@@ -73,7 +88,7 @@
                 </collectionViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="wzk-wv-qxq" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="375" y="-499"/>
+            <point key="canvasLocation" x="390" y="-504"/>
         </scene>
         <!--Main Table View Controller-->
         <scene sceneID="LXI-lP-tNv">

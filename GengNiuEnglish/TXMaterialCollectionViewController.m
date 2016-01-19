@@ -41,7 +41,7 @@ static NSString * const reuseIdentifier = @"MaterialCell";
     // Do any additional setup after loading the view.
     [self.navigationController.navigationBar setHidden:YES];
     UIImage *background=[CommonMethod imageWithImage:[UIImage imageNamed:@"background"] scaledToSize:CGSizeMake(self.collectionView.frame.size.width, self.collectionView.frame.size.height)];
-    self.collectionView.backgroundColor=[UIColor colorWithPatternImage:background];
+    self.collectionView.backgroundView=[[UIImageView alloc]initWithImage:background];
     [self reload:nil];
 }
 
@@ -75,7 +75,6 @@ static NSString * const reuseIdentifier = @"MaterialCell";
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
     UICollectionViewCell *cell = [collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
-    
     // Configure the cell
     
     return cell;
