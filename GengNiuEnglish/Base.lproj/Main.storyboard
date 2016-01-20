@@ -121,17 +121,17 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
                         <subviews>
-                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="IZJ-NC-hmx">
-                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            <collectionView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" misplaced="YES" dataMode="prototypes" translatesAutoresizingMaskIntoConstraints="NO" id="IZJ-NC-hmx">
+                                <rect key="frame" x="-10" y="0.0" width="600" height="600"/>
                                 <collectionViewFlowLayout key="collectionViewLayout" scrollDirection="horizontal" minimumLineSpacing="10" minimumInteritemSpacing="10" id="xmD-Fv-Cht">
                                     <size key="itemSize" width="200" height="250"/>
                                     <size key="headerReferenceSize" width="0.0" height="0.0"/>
                                     <size key="footerReferenceSize" width="0.0" height="0.0"/>
-                                    <inset key="sectionInset" minX="0.0" minY="0.0" maxX="0.0" maxY="0.0"/>
+                                    <inset key="sectionInset" minX="100" minY="100" maxX="0.0" maxY="0.0"/>
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MaterialCell" id="LQX-fH-oeH" customClass="MaterialCell">
-                                        <rect key="frame" x="0.0" y="0.0" width="200" height="250"/>
+                                        <rect key="frame" x="100" y="225" width="200" height="250"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="200" height="250"/>
@@ -140,10 +140,13 @@
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="GIO-T8-x4M">
                                                     <rect key="frame" x="14" y="8" width="172" height="193"/>
                                                 </imageView>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="label_bg" translatesAutoresizingMaskIntoConstraints="NO" id="ObR-Dq-Lpu">
+                                                    <rect key="frame" x="2" y="185" width="196" height="52"/>
+                                                </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="0ou-Q5-bkt">
-                                                    <rect key="frame" x="65" y="214" width="71" height="21"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" name="controlDarkShadowColor" catalog="System" colorSpace="catalog"/>
+                                                    <rect key="frame" x="65" y="202" width="71" height="21"/>
+                                                    <fontDescription key="fontDescription" type="italicSystem" pointSize="17"/>
+                                                    <color key="textColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                             </subviews>
@@ -209,18 +212,36 @@
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Yia-Sd-ZVC">
                                                     <rect key="frame" x="14" y="8" width="172" height="193"/>
                                                 </imageView>
+                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" image="label_bg" translatesAutoresizingMaskIntoConstraints="NO" id="wIG-AR-4k4">
+                                                    <rect key="frame" x="2" y="179" width="196" height="52"/>
+                                                </imageView>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Haj-w6-d68">
-                                                    <rect key="frame" x="65" y="214" width="71" height="21"/>
+                                                    <rect key="frame" x="8" y="209" width="184" height="28"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                                     <color key="textColor" name="controlDarkShadowColor" catalog="System" colorSpace="catalog"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sLQ-wg-v5D">
+                                                    <rect key="frame" x="8" y="194" width="50" height="30"/>
+                                                    <state key="normal" title="修炼" backgroundImage="xl_bg"/>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mg1-Ay-eU7">
+                                                    <rect key="frame" x="75" y="194" width="50" height="30"/>
+                                                    <state key="normal" title="磨耳朵" backgroundImage="med_bg"/>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QHE-Td-72e">
+                                                    <rect key="frame" x="142" y="195" width="50" height="30"/>
+                                                    <state key="normal" title="闯关" backgroundImage="cg_bg"/>
+                                                </button>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <connections>
                                             <outlet property="cellImage" destination="Yia-Sd-ZVC" id="BMm-9I-tFr"/>
                                             <outlet property="cellLabel" destination="Haj-w6-d68" id="5av-KB-Uhw"/>
+                                            <outlet property="chuangGuan" destination="QHE-Td-72e" id="0mJ-08-D8A"/>
+                                            <outlet property="moErDuo" destination="mg1-Ay-eU7" id="mcF-FS-4Wq"/>
+                                            <outlet property="xiuLian" destination="sLQ-wg-v5D" id="9bj-0J-iEJ"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>
@@ -255,4 +276,10 @@
             <point key="canvasLocation" x="406" y="1616"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="cg_bg" width="100" height="86"/>
+        <image name="label_bg" width="268" height="100"/>
+        <image name="med_bg" width="100" height="86"/>
+        <image name="xl_bg" width="100" height="86"/>
+    </resources>
 </document>

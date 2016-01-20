@@ -18,7 +18,7 @@
     {
         NSLog(@"your book is nil");
     }
-    [self.cellLabel setText:_book.text_name];
+    [self.cellLabel setText:@""];
     [self.cellImage setImageWithURL:[NSURL URLWithString:_book.cover_url] placeholderImage:[UIImage imageNamed:@"profile-image-placeholder"]];
     [self setNeedsLayout];
     [self setNeedsDisplay];

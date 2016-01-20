@@ -12,4 +12,5 @@
 @interface CommonMethod : NSObject
 + (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize;
 +(UIViewController*)getCurrentVC;
++(NSString*)getPath:(NSString*)fileName;
 @end

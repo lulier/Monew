@@ -28,6 +28,7 @@ typedef NS_ENUM(NSInteger,FileType)
 @property(strong,nonatomic)NSString *downloadURL;
 @property(strong,nonatomic)NSString *zipFileName;
 @property(strong,nonatomic)NSMutableArray *fileNames;
+@property(strong,nonatomic)NSURLSessionTask *task;
 
 -(instancetype)initWithAttributes:(NSDictionary *)attributes;
 +(NSURLSessionTask*)getGradeList:(void(^)(NSArray *data,NSError *error))block;

@@ -13,4 +13,7 @@
 @property(strong,nonatomic)DataForCell *book;
 @property (weak, nonatomic) IBOutlet UIImageView *cellImage;
 @property (weak, nonatomic) IBOutlet UILabel *cellLabel;
+@property (weak, nonatomic) IBOutlet UIButton *xiuLian;
+@property (weak, nonatomic) IBOutlet UIButton *moErDuo;
+@property (weak, nonatomic) IBOutlet UIButton *chuangGuan;
 @end

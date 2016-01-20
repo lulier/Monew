@@ -43,6 +43,8 @@
         self.downloadURL=nil;
         self.zipFileName=nil;
     }
+    self.zipFileName=nil;
+    self.task=nil;
     return self;
     
 }
@@ -142,8 +144,6 @@
             NSLog(@"error: %@",[database lastError]);
         }
     }
-//    result=[database executeQuery:[NSString stringWithFormat:@"SELECT * FROM Books WHERE BookID=%@",self.text_id]];
-    
     else
     {
         
