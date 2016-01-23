@@ -173,7 +173,10 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
      {
          NSLog(@"log for download response:%@",response);
          NSLog(@"File downloaded to: %@", filePath.absoluteString);
-         [weakSelf unzipDownloadFile:[filePath.absoluteString substringFromIndex:7] index:indexPath.row];
+         if ([[NSFileManager defaultManager] fileExistsAtPath:[filePath.absoluteString substringFromIndex:7]])
+         {
+             [weakSelf unzipDownloadFile:[filePath.absoluteString substringFromIndex:7] index:indexPath.row];
+         }
      }];
     book.task=task;
     progressView.stopBlock = ^(MRProgressOverlayView *view){
@@ -213,7 +216,9 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
 {
     NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *doctPath=[paths objectAtIndex:0];
+    NSString *zipFileName=[[filePath componentsSeparatedByString:@"/"] lastObject];
     DataForCell *book=self.list[index];
+    book.download_zipFileName=zipFileName;
     [SSZipArchive unzipFileAtPath:filePath toDestination:doctPath delegate:book];
 }
 

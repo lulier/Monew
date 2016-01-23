@@ -252,6 +252,8 @@
 - (void)zipArchiveDidUnzipArchiveAtPath:(NSString *)path zipInfo:(unz_global_info)zipInfo unzippedPath:(NSString *)unzippedPath
 {
     [self updateDatabase];
+    //delete zip file after extracting
+    [self deleteZipFile];
     UIViewController *currentVC=[CommonMethod getCurrentVC];
     NSString *doctName=[self getFileName:FTDocument];
     NSString *pdfName=[self getFileName:FTPDF];
@@ -266,15 +268,14 @@
         [currentVC presentViewController:readerViewController animated:YES
                               completion:nil];
     }
-    //delete zip file after extracting
-    [self deleteZipFile];
+    
 }
 -(void)deleteZipFile
 {
     NSFileManager *fileManager=[NSFileManager defaultManager];
     NSArray *path=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *doctDirectory=[path objectAtIndex:0];
-    NSString *filePath=[doctDirectory stringByAppendingPathComponent:self.zipFileName];
+    NSString *filePath=[doctDirectory stringByAppendingPathComponent:self.download_zipFileName];
     if ([fileManager fileExistsAtPath:filePath])
     {
         NSLog(@"start delete zip file");
