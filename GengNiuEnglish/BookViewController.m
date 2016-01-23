@@ -26,7 +26,7 @@
 
 @implementation BookViewController
 
-static NSString * const reuseIdentifier = @"TextBookCell";
+static NSString * const reuseIdentifierBook = @"TextBookCell";
 
 
 -(void)initDatabase
@@ -79,7 +79,6 @@ static NSString * const reuseIdentifier = @"TextBookCell";
     // self.clearsSelectionOnViewWillAppear = NO;
     
     // Register cell classes
-    [self.goBackButton setBackgroundImage:[UIImage imageNamed:@"general_go"] forState:UIControlStateNormal];
     self.collectionView.delegate=self;
     // Do any additional setup after loading the view.
     [self.navigationController.navigationBar setHidden:YES];
@@ -107,18 +106,16 @@ static NSString * const reuseIdentifier = @"TextBookCell";
 #pragma mark <UICollectionViewDataSource>
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-#warning Incomplete implementation, return the number of sections
     return 1;
 }
 
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of items
     return [self.list count];
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    TextBookCell *cell = (TextBookCell*)[collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
+    TextBookCell *cell = (TextBookCell*)[collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifierBook forIndexPath:indexPath];
     // Configure the cell
     cell.book=self.list[indexPath.row];
     return cell;
@@ -216,9 +213,7 @@ static NSString * const reuseIdentifier = @"TextBookCell";
 {
     NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *doctPath=[paths objectAtIndex:0];
-    NSString *zipFileName=[[filePath componentsSeparatedByString:@"/"] lastObject];
     DataForCell *book=self.list[index];
-    book.zipFileName=zipFileName;
     [SSZipArchive unzipFileAtPath:filePath toDestination:doctPath delegate:book];
 }
 

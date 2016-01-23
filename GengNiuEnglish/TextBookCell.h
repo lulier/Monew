@@ -8,12 +8,16 @@
 
 #import <UIKit/UIKit.h>
 #import "DataForCell.h"
+#import "LyricViewController.h"
+#import "UIImageView+AFNetworking.h"
+#import "CommonMethod.h"
+#import "PracticeViewController.h"
 
-@interface TextBookCell : UICollectionViewCell
+@interface TextBookCell : UICollectionViewCell<dismissDelegate>
 @property(strong,nonatomic)DataForCell *book;
 @property (weak, nonatomic) IBOutlet UIImageView *cellImage;
-@property (weak, nonatomic) IBOutlet UILabel *cellLabel;
 @property (weak, nonatomic) IBOutlet UIButton *xiuLian;
 @property (weak, nonatomic) IBOutlet UIButton *moErDuo;
 @property (weak, nonatomic) IBOutlet UIButton *chuangGuan;
+- (IBAction)xiulianClick:(id)sender;
 @end

@@ -8,6 +8,11 @@
 
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
+@protocol dismissDelegate <NSObject>
+
+-(void)dismissView;
+
+@end
 
 @interface CommonMethod : NSObject
 + (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize;

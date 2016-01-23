@@ -18,7 +18,7 @@
 
 @implementation MaterialViewController
 
-static NSString * const reuseIdentifier = @"MaterialCell";
+static NSString * const reuseIdentifierMaterial = @"MaterialCell";
 
 -(void)reload:(__unused id)sender{
     NSURLSessionTask *task=[DataForCell getGradeList:^(NSArray *data, NSError *error) {
@@ -74,7 +74,7 @@ static NSString * const reuseIdentifier = @"MaterialCell";
 }
 
 - (UICollectionViewCell *)collectionView:(UICollectionView *)collectionView cellForItemAtIndexPath:(NSIndexPath *)indexPath {
-    MaterialCell *cell = (MaterialCell*)[collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifier forIndexPath:indexPath];
+    MaterialCell *cell = (MaterialCell*)[collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifierMaterial forIndexPath:indexPath];
     // Configure the cell
     cell.material=self.list[indexPath.row];
     return cell;

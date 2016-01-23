@@ -7,7 +7,8 @@
 //
 
 #import "LyricViewController.h"
-#import "SampleQueueId.h"
+
+
 
 
 @interface LyricViewController ()
@@ -18,6 +19,10 @@
     STKAudioPlayer *audioPlayer;
     NSTimer *timer;
     NSInteger endTime;
+}
+- (IBAction)goBack:(id)sender {
+    [self.navigationController popViewControllerAnimated:YES];
+    [self.delegate dismissView];
 }
 - (IBAction)playButtonClick:(id)sender {
 
@@ -76,6 +81,8 @@
 - (void)viewDidLoad {
     [super viewDidLoad];
     [self.lyricText setText:[self getLyric]];
+    UIImage *background=[CommonMethod imageWithImage:[UIImage imageNamed:@"naked_background"] scaledToSize:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height)];
+    self.view.backgroundColor=[UIColor colorWithPatternImage:background];
     // Do any additional setup after loading the view.
 }
 
@@ -101,10 +108,10 @@
     if (endTime<=audioPlayer.progress*1000)
     {
         [self.lyricText setText:[self getLyric]];
-        if (audioPlayer.progress!=0)
-        {
-            [self playButtonClick:nil];
-        }
+//        if (audioPlayer.progress!=0)
+//        {
+//            [self playButtonClick:nil];
+//        }
     }
 }
 //每次改变播放时间的时候将endtime置空，在updatecontrol的时候再去找对应的endtime，每次进到updatecontrol的时候如果current time没到end time的话就返回，如果到达endtime就从新找对应的字幕，同时更新endtime
