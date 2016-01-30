@@ -12,8 +12,11 @@
 #import "UIImageView+AFNetworking.h"
 #import "CommonMethod.h"
 #import "PracticeViewController.h"
+#import "ReaderViewController.h"
+#import "AppDelegate.h"
 
-@interface TextBookCell : UICollectionViewCell<dismissDelegate>
+
+@interface TextBookCell : UICollectionViewCell<ReaderViewControllerDelegate,dismissDelegate>
 @property(strong,nonatomic)DataForCell *book;
 @property (weak, nonatomic) IBOutlet UIImageView *cellImage;
 @property (weak, nonatomic) IBOutlet UIButton *xiuLian;

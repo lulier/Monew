@@ -10,6 +10,7 @@
 #import "MainTableViewController.h"
 #import "AFNetworkActivityIndicatorManager.h"
 #import "AFNetworking.h"
+#import "ReaderViewController.h"
 #import <AVFoundation/AVFoundation.h>
 
 @interface AppDelegate ()
@@ -75,5 +76,16 @@
 - (void)applicationWillTerminate:(UIApplication *)application {
     // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
 }
-
+- (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
+{
+    if ([self.window.rootViewController.presentedViewController isKindOfClass: [ReaderViewController class]])
+    {
+        if (!self.isReaderView)
+        {
+            return UIInterfaceOrientationMaskLandscape;
+        }
+        return UIInterfaceOrientationMaskAll;
+    }
+    else return UIInterfaceOrientationMaskLandscape;
+}
 @end

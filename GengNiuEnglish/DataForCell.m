@@ -30,8 +30,11 @@
         self.text_name=[attributes objectForKey:@"text_name"];
         self.cover_url=[attributes objectForKey:@"cover_url"];
         self.category=[attributes objectForKey:@"category"];
+        self.downloadURL=[attributes objectForKey:@"courseware_url"];
+        self.zipFileName=[[[[self.downloadURL componentsSeparatedByString:@"/"] lastObject] componentsSeparatedByString:@"?"] objectAtIndex:0];
         self.fileNames=[[NSMutableArray alloc]init];
-        [self getBookDetail];
+        [self checkDatabase];
+//        [self getBookDetail];
     }
     else
     {
@@ -43,7 +46,6 @@
         self.downloadURL=nil;
         self.zipFileName=nil;
     }
-    self.zipFileName=nil;
     self.task=nil;
     return self;
     
@@ -254,21 +256,6 @@
     [self updateDatabase];
     //delete zip file after extracting
     [self deleteZipFile];
-    UIViewController *currentVC=[CommonMethod getCurrentVC];
-    NSString *doctName=[self getFileName:FTDocument];
-    NSString *pdfName=[self getFileName:FTPDF];
-    NSString *pdfPath=[unzippedPath stringByAppendingString:[NSString stringWithFormat:@"/%@/%@",doctName,pdfName]];
-    ReaderDocument *document=[ReaderDocument withDocumentFilePath:pdfPath password:nil];
-    if (doctName!=nil)
-    {
-        readerViewController=[[ReaderViewController alloc]initWithReaderDocument:document];
-        readerViewController.modalTransitionStyle=UIModalTransitionStyleCrossDissolve;
-        readerViewController.modalPresentationStyle=UIModalPresentationFullScreen;
-        readerViewController.delegate=self;
-        [currentVC presentViewController:readerViewController animated:YES
-                              completion:nil];
-    }
-    
 }
 -(void)deleteZipFile
 {
