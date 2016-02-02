@@ -48,7 +48,6 @@
 		F484BAEE1C1EB6A100F56815 /* print.c in Sources */ = {isa = PBXBuildFile; fileRef = F484BACD1C1EB6A100F56815 /* print.c */; };
 		F486C77C1C3A492000CBFBD1 /* LyricItem.m in Sources */ = {isa = PBXBuildFile; fileRef = F486C77B1C3A492000CBFBD1 /* LyricItem.m */; };
 		F486C7801C3B8B7C00CBFBD1 /* SampleQueueId.m in Sources */ = {isa = PBXBuildFile; fileRef = F486C77F1C3B8B7C00CBFBD1 /* SampleQueueId.m */; };
-		F49467011C27CD2E00806DEF /* MainTableViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F49467001C27CD2E00806DEF /* MainTableViewController.m */; };
 		F49467041C27CE0900806DEF /* DataForCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F49467031C27CE0900806DEF /* DataForCell.m */; };
 		F49467071C27CE2900806DEF /* TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F49467061C27CE2900806DEF /* TableViewCell.m */; };
 		F494670A1C28ECE900806DEF /* NetworkingManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F49467091C28ECE900806DEF /* NetworkingManager.m */; };
@@ -159,8 +158,6 @@
 		F486C77B1C3A492000CBFBD1 /* LyricItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LyricItem.m; sourceTree = "<group>"; };
 		F486C77E1C3B8B7C00CBFBD1 /* SampleQueueId.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleQueueId.h; sourceTree = "<group>"; };
 		F486C77F1C3B8B7C00CBFBD1 /* SampleQueueId.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleQueueId.m; sourceTree = "<group>"; };
-		F49466FF1C27CD2E00806DEF /* MainTableViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MainTableViewController.h; sourceTree = "<group>"; };
-		F49467001C27CD2E00806DEF /* MainTableViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MainTableViewController.m; sourceTree = "<group>"; };
 		F49467021C27CE0900806DEF /* DataForCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataForCell.h; sourceTree = "<group>"; };
 		F49467031C27CE0900806DEF /* DataForCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataForCell.m; sourceTree = "<group>"; };
 		F49467051C27CE2900806DEF /* TableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewCell.h; sourceTree = "<group>"; };
@@ -377,8 +374,6 @@
 				F4A9AF4A1C4E30E1004BC7BF /* BookViewController.m */,
 				F4A9AF4C1C4F7258004BC7BF /* PracticeViewController.h */,
 				F4A9AF4D1C4F7258004BC7BF /* PracticeViewController.m */,
-				F49466FF1C27CD2E00806DEF /* MainTableViewController.h */,
-				F49467001C27CD2E00806DEF /* MainTableViewController.m */,
 				F4B271AE1C33B429009313CA /* LyricViewController.h */,
 				F4B271AF1C33B429009313CA /* LyricViewController.m */,
 			);
@@ -626,7 +621,6 @@
 				F4A9AF3F1C4D2435004BC7BF /* TextBookCell.m in Sources */,
 				F484BADE1C1EB6A100F56815 /* lobject.c in Sources */,
 				F484BAD31C1EB6A100F56815 /* ldebug.c in Sources */,
-				F49467011C27CD2E00806DEF /* MainTableViewController.m in Sources */,
 				F494670A1C28ECE900806DEF /* NetworkingManager.m in Sources */,
 				F484BAE61C1EB6A100F56815 /* ltablib.c in Sources */,
 				F4A9AF3C1C4D2418004BC7BF /* MaterialCell.m in Sources */,

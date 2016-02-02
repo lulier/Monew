@@ -40,36 +40,6 @@
             </objects>
             <point key="canvasLocation" x="390" y="327"/>
         </scene>
-        <!--Main Table View Controller-->
-        <scene sceneID="LXI-lP-tNv">
-            <objects>
-                <tableViewController id="heU-aE-vZ7" customClass="MainTableViewController" sceneMemberID="viewController">
-                    <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="mzU-sn-H6h">
-                        <rect key="frame" x="0.0" y="0.0" width="568" height="320"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <prototypes>
-                            <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" reuseIdentifier="cellForList" id="X0S-hM-uZy" customClass="TableViewCell">
-                                <rect key="frame" x="0.0" y="28" width="568" height="44"/>
-                                <autoresizingMask key="autoresizingMask"/>
-                                <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="X0S-hM-uZy" id="yjj-L2-71h">
-                                    <rect key="frame" x="0.0" y="0.0" width="568" height="43.5"/>
-                                    <autoresizingMask key="autoresizingMask"/>
-                                </tableViewCellContentView>
-                            </tableViewCell>
-                        </prototypes>
-                        <connections>
-                            <outlet property="dataSource" destination="heU-aE-vZ7" id="fMG-zD-qlZ"/>
-                            <outlet property="delegate" destination="heU-aE-vZ7" id="NMP-pK-VOx"/>
-                        </connections>
-                    </tableView>
-                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
-                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina4"/>
-                </tableViewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Xuw-Aa-uR4" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="390" y="-116"/>
-        </scene>
         <!--Lyric View Controller-->
         <scene sceneID="KIn-O2-PTY">
             <objects>

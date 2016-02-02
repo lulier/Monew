@@ -7,7 +7,6 @@
 //
 
 #import "AppDelegate.h"
-#import "MainTableViewController.h"
 #import "AFNetworkActivityIndicatorManager.h"
 #import "AFNetworking.h"
 #import "ReaderViewController.h"
