@@ -19,6 +19,7 @@
 @property(weak,nonatomic)id<dismissDelegate>delegate;
 @property(nonatomic,weak)DataForCell *book;
 @property(nonatomic,strong)NSIndexPath *selectedIndex;
+@property (weak, nonatomic) IBOutlet UITableView *tableview;
 @property (weak, nonatomic) IBOutlet UIButton *goBack;
 -(void)initWithBook:(DataForCell*)book;
 @end

@@ -49,6 +49,11 @@ static NSString* cellIdentifierLyric=@"LyricViewCell";
     self.view.backgroundColor=[UIColor colorWithPatternImage:background];
     self.selectedIndex=[NSIndexPath indexPathForRow:0 inSection:0];
     // Do any additional setup after loading the view.
+    UIImageView *tempImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tableview_bg.png"]];
+    [tempImageView setFrame:self.tableview.frame];
+    self.tableview.backgroundColor = [UIColor clearColor];
+    self.tableview.opaque = NO;
+    self.tableview.backgroundView = tempImageView;
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -90,6 +95,18 @@ static NSString* cellIdentifierLyric=@"LyricViewCell";
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
     return [self.lyricItems count];
 }
+-(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
+{
+    return 0.0f;
+}
+-(UIView*)tableView:(UITableView *)tableView viewForHeaderInSection:(NSInteger)section
+{
+    UIView *headerView = [[UIView alloc] initWithFrame:CGRectMake(0,0,CGRectGetWidth(tableView.frame)-20, 100)];
+    UIImageView *imageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"cover_bg.png"]];
+//    imageView.frame = ;
+    [headerView addSubview: imageView];
+    return headerView;
+}
 - (UITableViewCell *)tableView:(UITableView *)tableView cellForRowAtIndexPath:(NSIndexPath *)indexPath {
     LyricViewCell *cell = [tableView dequeueReusableCellWithIdentifier:cellIdentifierLyric forIndexPath:indexPath];
     if (!cell) {
@@ -97,6 +114,10 @@ static NSString* cellIdentifierLyric=@"LyricViewCell";
     }
     // Configure the cell...
     cell.lyricItem=self.lyricItems[indexPath.row];
+    
+    //clear cell color
+    cell.backgroundColor = [UIColor clearColor];
+    
     return cell;
 }
 

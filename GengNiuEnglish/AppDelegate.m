@@ -49,7 +49,6 @@
     self.window.rootViewController=self.navigationController;
     [self.window makeKeyAndVisible];
     
-    
     // Override point for customization after application launch.
     return YES;
 }
