@@ -13,6 +13,9 @@
     STKAudioPlayer *audioPlayer;
     NSInteger endTime;
     NSTimer *timer;
+    AVAudioRecorder *audioRecorder;
+    AVAudioPlayer *recordAudioPlayer;
+    NSMutableDictionary *recordSettings;
 }
 @end
 
@@ -114,9 +117,11 @@ static NSString* cellIdentifierLyric=@"LyricViewCell";
     }
     // Configure the cell...
     cell.lyricItem=self.lyricItems[indexPath.row];
-    
+    cell.index=indexPath.row;
+    cell.delegate=self;
     //clear cell color
-    cell.backgroundColor = [UIColor clearColor];
+//    cell.backgroundColor = [UIColor clearColor];
+//    cell.selectionStyle=UITableViewCellSelectionStyleNone;
     
     return cell;
 }
@@ -133,19 +138,91 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView beginUpdates];
-    LyricItem *item=self.lyricItems[indexPath.row];
-    NSLog(@"%f",audioPlayer.progress);
+    if (![indexPath compare:self.selectedIndex]==NSOrderedSame)
+    {
+        self.selectedIndex=indexPath;
+    }
+    [tableView deselectRowAtIndexPath:indexPath animated:NO];
+    [tableView endUpdates];
+}
+-(void)initRecorderSettings
+{
+    recordSettings = [NSMutableDictionary dictionary];
+    [recordSettings setValue: [NSNumber numberWithInt:kAudioFormatLinearPCM] forKey:AVFormatIDKey];
+    
+    [recordSettings setValue: [NSNumber numberWithFloat:16000.0] forKey:AVSampleRateKey];
+    
+    [recordSettings setValue: [NSNumber numberWithInt: 1] forKey:AVNumberOfChannelsKey];
+    
+    [recordSettings setValue: [NSNumber numberWithInt:16] forKey:AVLinearPCMBitDepthKey];
+    
+    [recordSettings setValue: [NSNumber numberWithBool:NO] forKey:AVLinearPCMIsBigEndianKey];
+    
+    [recordSettings setValue: [NSNumber numberWithBool:NO] forKey:AVLinearPCMIsFloatKey];
+    
+    [recordSettings setValue: [NSNumber numberWithInt: AVAudioQualityMax] forKey:AVEncoderAudioQualityKey];
+}
+//lyricViewCellDelegate
+//当前的heightlight从一个cell转到另一个cell的时候需要停止前一个cell的所有的录音，播放，识别
+-(void)initRecorder:(NSInteger)index
+{
+    if (audioRecorder!=nil)
+    {
+        audioRecorder=nil;
+    }
+    NSString *soundFileName = [NSString stringWithFormat:@"sound%ld.wav",index];
+    NSString *soundFilePath=[CommonMethod getPath:soundFileName];
+    NSLog(@"log for path%@",soundFilePath);
+    NSURL *soundFileURL = [NSURL fileURLWithPath:soundFilePath];
+    NSError *error;
+    audioRecorder = [[AVAudioRecorder alloc]
+                     initWithURL:soundFileURL
+                     settings:recordSettings
+                     error:&error];
+    if (error)
+    {
+        NSLog(@"error occur while init audioRecorder");
+    }
+    else
+    {
+        [audioRecorder record];
+    }
+}
+-(void)stopRecorder
+{
+    [audioRecorder stop];
+}
+-(void)playRecord:(NSInteger)index
+{
+    if (recordAudioPlayer!=nil)
+    {
+        recordAudioPlayer=nil;
+    }
+    NSURL *path=[NSURL URLWithString:[CommonMethod getPath:[NSString stringWithFormat:@"sound%ld.wav",index]]];
+    NSFileManager *fileMagager=[NSFileManager defaultManager];
+    if ([fileMagager fileExistsAtPath:path.absoluteString])
+    {
+        recordAudioPlayer=[[AVAudioPlayer alloc]initWithContentsOfURL:path error:nil];
+        [recordAudioPlayer play];
+    }
+}
+-(void)stopRecorderPlaying
+{
+    [recordAudioPlayer stop];
+}
+-(void)runRecognition:(NSInteger)index
+{
+    
+}
+-(void)playText:(NSInteger)index
+{
+    LyricItem *item=self.lyricItems[index];
     endTime=item.endTime;
     [self setPlayerTime:item.beginTime];
     if (audioPlayer.state!=STKAudioPlayerStatePlaying)
     {
         [audioPlayer resume];
     }
-    if (![indexPath compare:self.selectedIndex]==NSOrderedSame)
-    {
-        self.selectedIndex=indexPath;
-    }
-    [tableView endUpdates];
 }
 /*
 #pragma mark - Navigation

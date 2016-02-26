@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Kkx-zD-Tlb">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Kkx-zD-Tlb">
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -53,14 +53,20 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="leolu is wonderful !!!!" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="HG3-ay-HTn">
-                                <rect key="frame" x="28" y="123" width="611" height="128"/>
+                                <rect key="frame" x="40" y="123" width="587" height="128"/>
                                 <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="128" id="eCG-SQ-13q"/>
-                                    <constraint firstAttribute="width" constant="611" id="ucC-Ip-y53"/>
+                                    <constraint firstAttribute="width" constant="560" id="ucC-Ip-y53"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="18"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                <variation key="default">
+                                    <mask key="constraints">
+                                        <exclude reference="eCG-SQ-13q"/>
+                                        <exclude reference="ucC-Ip-y53"/>
+                                    </mask>
+                                </variation>
                             </textView>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="title" translatesAutoresizingMaskIntoConstraints="NO" id="1dC-r8-qUu">
                                 <rect key="frame" x="210" y="5" width="247" height="55"/>
@@ -83,7 +89,7 @@
                                 </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="jfF-Nk-4r5">
-                                <rect key="frame" x="317.5" y="273" width="32" height="33"/>
+                                <rect key="frame" x="317" y="273" width="32" height="33"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <state key="normal" title="play"/>
                                 <connections>
@@ -95,6 +101,9 @@
                         <constraints>
                             <constraint firstItem="1dC-r8-qUu" firstAttribute="centerX" secondItem="VFW-jp-szo" secondAttribute="centerX" id="0kz-27-TEi"/>
                             <constraint firstAttribute="trailingMargin" secondItem="jfF-Nk-4r5" secondAttribute="trailing" constant="232" id="843-nJ-mMl"/>
+                            <constraint firstAttribute="trailing" secondItem="HG3-ay-HTn" secondAttribute="trailing" constant="40" id="BaN-8k-qlZ"/>
+                            <constraint firstItem="HG3-ay-HTn" firstAttribute="top" secondItem="1dC-r8-qUu" secondAttribute="bottom" constant="63" id="Cxc-IK-IXi"/>
+                            <constraint firstItem="HG3-ay-HTn" firstAttribute="leading" secondItem="VFW-jp-szo" secondAttribute="leading" constant="40" id="ELh-Y2-pjA"/>
                             <constraint firstItem="icP-7e-ypX" firstAttribute="centerX" secondItem="1dC-r8-qUu" secondAttribute="centerX" id="JaB-LM-SUu"/>
                             <constraint firstItem="jfF-Nk-4r5" firstAttribute="leading" secondItem="VFW-jp-szo" secondAttribute="leadingMargin" constant="232" id="PxT-aT-MFa"/>
                             <constraint firstItem="jfF-Nk-4r5" firstAttribute="centerX" secondItem="VFW-jp-szo" secondAttribute="centerX" id="X3g-73-0ec"/>
@@ -109,6 +118,7 @@
                         <variation key="default">
                             <mask key="constraints">
                                 <exclude reference="c4Q-lK-KlD"/>
+                                <exclude reference="pMe-hM-mTE"/>
                                 <exclude reference="r8R-3D-j4Z"/>
                                 <exclude reference="843-nJ-mMl"/>
                                 <exclude reference="PxT-aT-MFa"/>
@@ -151,21 +161,62 @@
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v7a-pc-uDa">
-                                                    <rect key="frame" x="8" y="8" width="611" height="28"/>
+                                                    <rect key="frame" x="10" y="10" width="617" height="17"/>
                                                     <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Ct-Zp-lOS">
+                                                    <rect key="frame" x="48" y="60" width="30" height="30"/>
+                                                    <state key="normal" title="录音"/>
+                                                    <connections>
+                                                        <action selector="recordVoiceClick:" destination="nrk-Bx-EJL" eventType="touchUpInside" id="vxs-g6-QQf"/>
+                                                    </connections>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="djR-7G-fr4">
+                                                    <rect key="frame" x="152" y="60" width="30" height="30"/>
+                                                    <state key="normal" title="播放"/>
+                                                    <connections>
+                                                        <action selector="playVoiceClick:" destination="nrk-Bx-EJL" eventType="touchUpInside" id="LlD-N4-Fia"/>
+                                                    </connections>
+                                                </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4vz-PU-mv9">
+                                                    <rect key="frame" x="256" y="60" width="60" height="30"/>
+                                                    <state key="normal" title="播放文本"/>
+                                                    <connections>
+                                                        <action selector="playTextClick:" destination="nrk-Bx-EJL" eventType="touchUpInside" id="Y0C-kv-ndH"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
-                                                <constraint firstItem="v7a-pc-uDa" firstAttribute="trailing" secondItem="4G9-2G-cvS" secondAttribute="trailingMargin" id="0cD-gG-EIB"/>
-                                                <constraint firstAttribute="bottomMargin" secondItem="v7a-pc-uDa" secondAttribute="bottom" constant="-0.5" id="n8c-0N-O9z"/>
-                                                <constraint firstItem="v7a-pc-uDa" firstAttribute="top" secondItem="4G9-2G-cvS" secondAttribute="topMargin" id="sIl-8B-z1p"/>
-                                                <constraint firstItem="v7a-pc-uDa" firstAttribute="leading" secondItem="4G9-2G-cvS" secondAttribute="leadingMargin" id="wFk-QS-nCq"/>
+                                                <constraint firstItem="djR-7G-fr4" firstAttribute="top" secondItem="4G9-2G-cvS" secondAttribute="top" id="47z-aI-D5r"/>
+                                                <constraint firstItem="v7a-pc-uDa" firstAttribute="leading" secondItem="4G9-2G-cvS" secondAttribute="leading" id="LWd-3H-QNW"/>
+                                                <constraint firstAttribute="trailing" secondItem="v7a-pc-uDa" secondAttribute="trailing" id="NvW-Jb-Y3m"/>
+                                                <constraint firstItem="djR-7G-fr4" firstAttribute="top" secondItem="v7a-pc-uDa" secondAttribute="top" constant="50" id="THJ-8H-Ag6"/>
+                                                <constraint firstItem="4vz-PU-mv9" firstAttribute="top" secondItem="4G9-2G-cvS" secondAttribute="top" id="V19-Rh-oCK"/>
+                                                <constraint firstItem="v7a-pc-uDa" firstAttribute="top" secondItem="4G9-2G-cvS" secondAttribute="top" constant="10" id="V7e-gf-bAK"/>
+                                                <constraint firstAttribute="bottom" secondItem="v7a-pc-uDa" secondAttribute="bottom" id="aIL-4b-uTz"/>
+                                                <constraint firstItem="djR-7G-fr4" firstAttribute="leading" secondItem="0Ct-Zp-lOS" secondAttribute="trailing" constant="74" id="foj-AT-j2d"/>
+                                                <constraint firstItem="0Ct-Zp-lOS" firstAttribute="top" secondItem="v7a-pc-uDa" secondAttribute="top" constant="50" id="gih-PO-7pu"/>
+                                                <constraint firstItem="0Ct-Zp-lOS" firstAttribute="leading" secondItem="4G9-2G-cvS" secondAttribute="leading" constant="48" id="keP-Pq-n8h"/>
+                                                <constraint firstItem="v7a-pc-uDa" firstAttribute="leading" secondItem="4G9-2G-cvS" secondAttribute="leading" constant="10" id="l9b-Va-V4b"/>
+                                                <constraint firstItem="4vz-PU-mv9" firstAttribute="top" secondItem="v7a-pc-uDa" secondAttribute="top" constant="50" id="p7H-qc-8cd"/>
+                                                <constraint firstItem="4vz-PU-mv9" firstAttribute="leading" secondItem="djR-7G-fr4" secondAttribute="trailing" constant="74" id="wxa-kO-BdS"/>
                                             </constraints>
+                                            <variation key="default">
+                                                <mask key="constraints">
+                                                    <exclude reference="LWd-3H-QNW"/>
+                                                    <exclude reference="aIL-4b-uTz"/>
+                                                    <exclude reference="47z-aI-D5r"/>
+                                                    <exclude reference="V19-Rh-oCK"/>
+                                                </mask>
+                                            </variation>
                                         </tableViewCellContentView>
                                         <connections>
                                             <outlet property="cellText" destination="v7a-pc-uDa" id="QHw-dF-BwM"/>
+                                            <outlet property="playText" destination="4vz-PU-mv9" id="Hoe-60-nu5"/>
+                                            <outlet property="playVoice" destination="djR-7G-fr4" id="YSE-87-JqO"/>
+                                            <outlet property="recordVoice" destination="0Ct-Zp-lOS" id="f4P-up-yIF"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>

@@ -49,7 +49,6 @@
 		F486C77C1C3A492000CBFBD1 /* LyricItem.m in Sources */ = {isa = PBXBuildFile; fileRef = F486C77B1C3A492000CBFBD1 /* LyricItem.m */; };
 		F486C7801C3B8B7C00CBFBD1 /* SampleQueueId.m in Sources */ = {isa = PBXBuildFile; fileRef = F486C77F1C3B8B7C00CBFBD1 /* SampleQueueId.m */; };
 		F49467041C27CE0900806DEF /* DataForCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F49467031C27CE0900806DEF /* DataForCell.m */; };
-		F49467071C27CE2900806DEF /* TableViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F49467061C27CE2900806DEF /* TableViewCell.m */; };
 		F494670A1C28ECE900806DEF /* NetworkingManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F49467091C28ECE900806DEF /* NetworkingManager.m */; };
 		F4A9AF391C4D0D26004BC7BF /* CommonMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A9AF381C4D0D26004BC7BF /* CommonMethod.m */; };
 		F4A9AF3C1C4D2418004BC7BF /* MaterialCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A9AF3B1C4D2418004BC7BF /* MaterialCell.m */; };
@@ -61,7 +60,11 @@
 		F4AD05651C2C1021006554FF /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4AD05641C2C1021006554FF /* QuartzCore.framework */; };
 		F4AD05671C2C102C006554FF /* ImageIO.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4AD05661C2C102C006554FF /* ImageIO.framework */; };
 		F4AD05691C2C1034006554FF /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4AD05681C2C1034006554FF /* MessageUI.framework */; };
+		F4AFCF921C8025C10003B7F2 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4AFCF911C8025C10003B7F2 /* AVFoundation.framework */; };
 		F4B271B01C33B429009313CA /* LyricViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B271AF1C33B429009313CA /* LyricViewController.m */; };
+		F4E5BA2F1C7C25DD005E3A62 /* OpenEars.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4E5BA2C1C7C25DD005E3A62 /* OpenEars.framework */; };
+		F4E5BA301C7C25DD005E3A62 /* AcousticModelEnglish.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F4E5BA2D1C7C25DD005E3A62 /* AcousticModelEnglish.bundle */; };
+		F4E5BA311C7C25DD005E3A62 /* Slt.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4E5BA2E1C7C25DD005E3A62 /* Slt.framework */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -160,8 +163,6 @@
 		F486C77F1C3B8B7C00CBFBD1 /* SampleQueueId.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SampleQueueId.m; sourceTree = "<group>"; };
 		F49467021C27CE0900806DEF /* DataForCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DataForCell.h; sourceTree = "<group>"; };
 		F49467031C27CE0900806DEF /* DataForCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataForCell.m; sourceTree = "<group>"; };
-		F49467051C27CE2900806DEF /* TableViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TableViewCell.h; sourceTree = "<group>"; };
-		F49467061C27CE2900806DEF /* TableViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TableViewCell.m; sourceTree = "<group>"; };
 		F49467081C28ECE900806DEF /* NetworkingManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkingManager.h; sourceTree = "<group>"; };
 		F49467091C28ECE900806DEF /* NetworkingManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkingManager.m; sourceTree = "<group>"; };
 		F4A9AF371C4D0D26004BC7BF /* CommonMethod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonMethod.h; sourceTree = "<group>"; };
@@ -181,8 +182,12 @@
 		F4AD05641C2C1021006554FF /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		F4AD05661C2C102C006554FF /* ImageIO.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImageIO.framework; path = System/Library/Frameworks/ImageIO.framework; sourceTree = SDKROOT; };
 		F4AD05681C2C1034006554FF /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
+		F4AFCF911C8025C10003B7F2 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		F4B271AE1C33B429009313CA /* LyricViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LyricViewController.h; sourceTree = "<group>"; };
 		F4B271AF1C33B429009313CA /* LyricViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LyricViewController.m; sourceTree = "<group>"; };
+		F4E5BA2C1C7C25DD005E3A62 /* OpenEars.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OpenEars.framework; sourceTree = "<group>"; };
+		F4E5BA2D1C7C25DD005E3A62 /* AcousticModelEnglish.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AcousticModelEnglish.bundle; sourceTree = "<group>"; };
+		F4E5BA2E1C7C25DD005E3A62 /* Slt.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = Slt.framework; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -190,8 +195,11 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F4AFCF921C8025C10003B7F2 /* AVFoundation.framework in Frameworks */,
+				F4E5BA311C7C25DD005E3A62 /* Slt.framework in Frameworks */,
 				F4AD05691C2C1034006554FF /* MessageUI.framework in Frameworks */,
 				F4AD05671C2C102C006554FF /* ImageIO.framework in Frameworks */,
+				F4E5BA2F1C7C25DD005E3A62 /* OpenEars.framework in Frameworks */,
 				F4AD05651C2C1021006554FF /* QuartzCore.framework in Frameworks */,
 				4685CC87E9EF4168376FEC31 /* libPods.a in Frameworks */,
 			);
@@ -226,6 +234,10 @@
 		5F4697E4BCC7D6FEE1E67A97 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F4AFCF911C8025C10003B7F2 /* AVFoundation.framework */,
+				F4E5BA2C1C7C25DD005E3A62 /* OpenEars.framework */,
+				F4E5BA2D1C7C25DD005E3A62 /* AcousticModelEnglish.bundle */,
+				F4E5BA2E1C7C25DD005E3A62 /* Slt.framework */,
 				F4AD05681C2C1034006554FF /* MessageUI.framework */,
 				F4AD05661C2C102C006554FF /* ImageIO.framework */,
 				F4AD05641C2C1021006554FF /* QuartzCore.framework */,
@@ -389,8 +401,6 @@
 				F4A9AF3E1C4D2435004BC7BF /* TextBookCell.m */,
 				F4A9AF4F1C4F7E04004BC7BF /* LyricViewCell.h */,
 				F4A9AF501C4F7E04004BC7BF /* LyricViewCell.m */,
-				F49467051C27CE2900806DEF /* TableViewCell.h */,
-				F49467061C27CE2900806DEF /* TableViewCell.m */,
 			);
 			name = View;
 			sourceTree = "<group>";
@@ -518,6 +528,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				F42799391C18514200240736 /* LaunchScreen.storyboard in Resources */,
+				F4E5BA301C7C25DD005E3A62 /* AcousticModelEnglish.bundle in Resources */,
 				F42799361C18514200240736 /* Assets.xcassets in Resources */,
 				F42799341C18514200240736 /* Main.storyboard in Resources */,
 			);
@@ -633,7 +644,6 @@
 				F4A9AF481C4E2040004BC7BF /* MaterialViewController.m in Sources */,
 				F484BAD41C1EB6A100F56815 /* ldo.c in Sources */,
 				F4A9AF511C4F7E04004BC7BF /* LyricViewCell.m in Sources */,
-				F49467071C27CE2900806DEF /* TableViewCell.m in Sources */,
 				F484BADF1C1EB6A100F56815 /* lopcodes.c in Sources */,
 				F484BAEC1C1EB6A100F56815 /* lzio.c in Sources */,
 				F484BAD51C1EB6A100F56815 /* ldump.c in Sources */,
@@ -781,13 +791,17 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEFINES_MODULE = YES;
-				FRAMEWORK_SEARCH_PATHS = "\"${PODS_ROOT}\"/**";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"${PODS_ROOT}\"/**",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = GengNiuEnglish/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULEMAP_FILE = "${PROJECT_DIR}/module.modulemap";
 				PRODUCT_BUNDLE_IDENTIFIER = com.leolu.GengNiuEnglish;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
 		};
@@ -798,13 +812,17 @@
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
 				DEFINES_MODULE = YES;
-				FRAMEWORK_SEARCH_PATHS = "\"${PODS_ROOT}\"/**";
+				FRAMEWORK_SEARCH_PATHS = (
+					"\"${PODS_ROOT}\"/**",
+					"$(PROJECT_DIR)",
+				);
 				INFOPLIST_FILE = GengNiuEnglish/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULEMAP_FILE = "${PROJECT_DIR}/module.modulemap";
 				PRODUCT_BUNDLE_IDENTIFIER = com.leolu.GengNiuEnglish;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
 		};

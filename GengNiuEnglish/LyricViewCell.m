@@ -18,13 +18,17 @@
         return nil;
     }
     
+
     return self;
 }
 -(void)setLyricItem:(LyricItem *)lyricItem
 {
     self.cellText.text=lyricItem.lyricBody;
-//    self.cellText.frame=CGRectMake(10, 10, self.contentView.frame.size.width, self.contentView.frame.size.height);
-    
+    //clear cell color
+    self.backgroundColor = [UIColor clearColor];
+    self.selectionStyle=UITableViewCellSelectionStyleNone;
+    self.recording=false;
+    self.recordPlaying=false;
 }
 - (void)awakeFromNib {
     // Initialization code
@@ -34,5 +38,32 @@
     [super setSelected:selected animated:animated];
 
     // Configure the view for the selected state
+}
+- (IBAction)recordVoiceClick:(id)sender {
+    if (self.recording)
+    {
+        [self.recordVoice setTitle:@"录音" forState:UIControlStateNormal];
+        [self.delegate stopRecorder];
+        self.recording=false;
+        return;
+    }
+    self.recording=true;
+    [self.recordVoice setTitle:@"停止录音" forState:UIControlStateNormal];
+    [self.delegate initRecorder:self.index];
+}
+- (IBAction)playVoiceClick:(id)sender {
+    if (self.recordPlaying)
+    {
+        [self.playVoice setTitle:@"播放" forState:UIControlStateNormal];
+        [self.delegate stopRecorderPlaying];
+        self.recordPlaying=false;
+        return;
+    }
+    self.recordPlaying=true;
+    [self.playVoice setTitle:@"停止播放" forState:UIControlStateNormal];
+    [self.delegate playRecord:self.index];
+}
+- (IBAction)playTextClick:(id)sender {
+    [self.delegate playText:self.index];
 }
 @end

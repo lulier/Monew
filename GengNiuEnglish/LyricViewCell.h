@@ -9,10 +9,27 @@
 #import <UIKit/UIKit.h>
 #import "LyricItem.h"
 
+
+@protocol lyricViewCellDelegate <NSObject>
+
+-(void)initRecorder:(NSInteger)index;
+-(void)stopRecorder;
+-(void)playRecord:(NSInteger)index;
+-(void)stopRecorderPlaying;
+-(void)runRecognition:(NSInteger)index;
+-(void)playText:(NSInteger)index;
+@end
+
 @interface LyricViewCell : UITableViewCell
 @property(strong,nonatomic)LyricItem *lyricItem;
+@property(nonatomic)NSInteger index;
+@property(nonatomic)BOOL recording;
+@property(nonatomic)BOOL recordPlaying;
 @property (weak, nonatomic) IBOutlet UILabel *cellText;
-
+@property (weak, nonatomic) IBOutlet UIButton *recordVoice;
+@property (weak, nonatomic) IBOutlet UIButton *playVoice;
+@property (weak, nonatomic) IBOutlet UIButton *playText;
+@property(weak,nonatomic)id<lyricViewCellDelegate>delegate;
 - (instancetype)initWithStyle:(UITableViewCellStyle)style
               reuseIdentifier:(NSString *)reuseIdentifier;
 @end

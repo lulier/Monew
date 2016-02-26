@@ -20,6 +20,7 @@
 
 static NSString * const reuseIdentifierMaterial = @"MaterialCell";
 
+
 -(void)reload:(__unused id)sender{
     NSURLSessionTask *task=[DataForCell getGradeList:^(NSArray *data, NSError *error) {
         if (!error) {
@@ -28,7 +29,6 @@ static NSString * const reuseIdentifierMaterial = @"MaterialCell";
         }
     }];
 }
-
 
 - (void)viewDidLoad {
     [super viewDidLoad];
