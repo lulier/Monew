@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Kkx-zD-Tlb">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="hw0-uc-bVX">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
@@ -38,7 +38,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="405.5" y="480.5"/>
+            <point key="canvasLocation" x="1145.5" y="460.5"/>
         </scene>
         <!--Lyric View Controller-->
         <scene sceneID="KIn-O2-PTY">
@@ -166,23 +166,38 @@
                                                     <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                                     <nil key="highlightedColor"/>
                                                 </label>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Ct-Zp-lOS">
-                                                    <rect key="frame" x="48" y="60" width="30" height="30"/>
-                                                    <state key="normal" title="录音"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Ct-Zp-lOS">
+                                                    <rect key="frame" x="48" y="50" width="94" height="35"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="35" id="Z44-bc-uZy"/>
+                                                    </constraints>
+                                                    <state key="normal" title="录音" image="recording">
+                                                        <color key="titleColor" name="controlDarkShadowColor" catalog="System" colorSpace="catalog"/>
+                                                    </state>
                                                     <connections>
                                                         <action selector="recordVoiceClick:" destination="nrk-Bx-EJL" eventType="touchUpInside" id="vxs-g6-QQf"/>
                                                     </connections>
                                                 </button>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="djR-7G-fr4">
-                                                    <rect key="frame" x="152" y="60" width="30" height="30"/>
-                                                    <state key="normal" title="播放"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="djR-7G-fr4">
+                                                    <rect key="frame" x="216" y="50" width="94" height="40"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="40" id="e2V-pw-rvP"/>
+                                                    </constraints>
+                                                    <state key="normal" title="播放" image="broadcast">
+                                                        <color key="titleColor" name="controlDarkShadowColor" catalog="System" colorSpace="catalog"/>
+                                                    </state>
                                                     <connections>
                                                         <action selector="playVoiceClick:" destination="nrk-Bx-EJL" eventType="touchUpInside" id="LlD-N4-Fia"/>
                                                     </connections>
                                                 </button>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4vz-PU-mv9">
-                                                    <rect key="frame" x="256" y="60" width="60" height="30"/>
-                                                    <state key="normal" title="播放文本"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4vz-PU-mv9">
+                                                    <rect key="frame" x="384" y="50" width="112" height="40"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="height" constant="40" id="Fkz-fU-Rmp"/>
+                                                    </constraints>
+                                                    <state key="normal" title="播放文本" image="playText">
+                                                        <color key="titleColor" name="controlDarkShadowColor" catalog="System" colorSpace="catalog"/>
+                                                    </state>
                                                     <connections>
                                                         <action selector="playTextClick:" destination="nrk-Bx-EJL" eventType="touchUpInside" id="Y0C-kv-ndH"/>
                                                     </connections>
@@ -192,15 +207,15 @@
                                                 <constraint firstItem="djR-7G-fr4" firstAttribute="top" secondItem="4G9-2G-cvS" secondAttribute="top" id="47z-aI-D5r"/>
                                                 <constraint firstItem="v7a-pc-uDa" firstAttribute="leading" secondItem="4G9-2G-cvS" secondAttribute="leading" id="LWd-3H-QNW"/>
                                                 <constraint firstAttribute="trailing" secondItem="v7a-pc-uDa" secondAttribute="trailing" id="NvW-Jb-Y3m"/>
-                                                <constraint firstItem="djR-7G-fr4" firstAttribute="top" secondItem="v7a-pc-uDa" secondAttribute="top" constant="50" id="THJ-8H-Ag6"/>
+                                                <constraint firstItem="djR-7G-fr4" firstAttribute="top" secondItem="v7a-pc-uDa" secondAttribute="top" constant="40" id="THJ-8H-Ag6"/>
                                                 <constraint firstItem="4vz-PU-mv9" firstAttribute="top" secondItem="4G9-2G-cvS" secondAttribute="top" id="V19-Rh-oCK"/>
                                                 <constraint firstItem="v7a-pc-uDa" firstAttribute="top" secondItem="4G9-2G-cvS" secondAttribute="top" constant="10" id="V7e-gf-bAK"/>
                                                 <constraint firstAttribute="bottom" secondItem="v7a-pc-uDa" secondAttribute="bottom" id="aIL-4b-uTz"/>
                                                 <constraint firstItem="djR-7G-fr4" firstAttribute="leading" secondItem="0Ct-Zp-lOS" secondAttribute="trailing" constant="74" id="foj-AT-j2d"/>
-                                                <constraint firstItem="0Ct-Zp-lOS" firstAttribute="top" secondItem="v7a-pc-uDa" secondAttribute="top" constant="50" id="gih-PO-7pu"/>
+                                                <constraint firstItem="0Ct-Zp-lOS" firstAttribute="top" secondItem="v7a-pc-uDa" secondAttribute="top" constant="40" id="gih-PO-7pu"/>
                                                 <constraint firstItem="0Ct-Zp-lOS" firstAttribute="leading" secondItem="4G9-2G-cvS" secondAttribute="leading" constant="48" id="keP-Pq-n8h"/>
                                                 <constraint firstItem="v7a-pc-uDa" firstAttribute="leading" secondItem="4G9-2G-cvS" secondAttribute="leading" constant="10" id="l9b-Va-V4b"/>
-                                                <constraint firstItem="4vz-PU-mv9" firstAttribute="top" secondItem="v7a-pc-uDa" secondAttribute="top" constant="50" id="p7H-qc-8cd"/>
+                                                <constraint firstItem="4vz-PU-mv9" firstAttribute="top" secondItem="v7a-pc-uDa" secondAttribute="top" constant="40" id="p7H-qc-8cd"/>
                                                 <constraint firstItem="4vz-PU-mv9" firstAttribute="leading" secondItem="djR-7G-fr4" secondAttribute="trailing" constant="74" id="wxa-kO-BdS"/>
                                             </constraints>
                                             <variation key="default">
@@ -251,6 +266,12 @@
                                     <action selector="goBackClick:" destination="tmb-8m-Yk1" eventType="touchUpInside" id="Nd8-Kw-mBK"/>
                                 </connections>
                             </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Ep-bL-3Nm">
+                                <rect key="frame" x="20" y="61" width="627" height="22"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="8"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -277,11 +298,30 @@
                     <connections>
                         <outlet property="goBack" destination="cQx-ht-Um7" id="bb6-Q7-P2N"/>
                         <outlet property="tableview" destination="Dps-S7-wZ5" id="p1x-gO-H4l"/>
+                        <outlet property="testReconition" destination="2Ep-bL-3Nm" id="tGN-qc-gYc"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="b5U-mT-L3R" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1173.5" y="1402.5"/>
+        </scene>
+        <!--Navigation Controller-->
+        <scene sceneID="uiy-vy-9g0">
+            <objects>
+                <navigationController id="hw0-uc-bVX" sceneMemberID="viewController">
+                    <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
+                    <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
+                    <navigationBar key="navigationBar" contentMode="scaleToFill" id="6CU-or-OIS">
+                        <rect key="frame" x="0.0" y="0.0" width="320" height="44"/>
+                        <autoresizingMask key="autoresizingMask"/>
+                    </navigationBar>
+                    <connections>
+                        <segue destination="Kkx-zD-Tlb" kind="relationship" relationship="rootViewController" id="e0B-Yy-TeJ"/>
+                    </connections>
+                </navigationController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="y6P-E4-XtQ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-377.5" y="935.5"/>
         </scene>
         <!--Material View Controller-->
         <scene sceneID="KD8-4V-8fu">
@@ -305,7 +345,7 @@
                                 </collectionViewFlowLayout>
                                 <cells>
                                     <collectionViewCell opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" reuseIdentifier="MaterialCell" id="LQX-fH-oeH" customClass="MaterialCell">
-                                        <rect key="frame" x="100" y="112.5" width="200" height="250"/>
+                                        <rect key="frame" x="100" y="144.5" width="200" height="250"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <view key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center">
                                             <rect key="frame" x="0.0" y="0.0" width="200" height="250"/>
@@ -458,10 +498,13 @@
         </scene>
     </scenes>
     <resources>
+        <image name="broadcast" width="58" height="58"/>
         <image name="cg_bg" width="100" height="86"/>
         <image name="go_back" width="88" height="86"/>
         <image name="label_bg" width="268" height="100"/>
         <image name="med_bg" width="100" height="86"/>
+        <image name="playText" width="40" height="40"/>
+        <image name="recording" width="58" height="58"/>
         <image name="title" width="404" height="94"/>
         <image name="xl_bg" width="100" height="86"/>
     </resources>

@@ -16,6 +16,9 @@
     AVAudioRecorder *audioRecorder;
     AVAudioPlayer *recordAudioPlayer;
     NSMutableDictionary *recordSettings;
+    NSMutableString *recognitionResult;
+    NSString *lmPath ;
+    NSString *dicPath ;
 }
 @end
 
@@ -57,6 +60,10 @@ static NSString* cellIdentifierLyric=@"LyricViewCell";
     self.tableview.backgroundColor = [UIColor clearColor];
     self.tableview.opaque = NO;
     self.tableview.backgroundView = tempImageView;
+    self.openEarsEventsObserver = [[OEEventsObserver alloc] init];
+    self.openEarsEventsObserver.delegate = self;
+//    [self initRecorderSettings];
+    [self generateLM];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -69,6 +76,11 @@ static NSString* cellIdentifierLyric=@"LyricViewCell";
     {
         [audioPlayer stop];
         audioPlayer=nil;
+    }
+    if([OEPocketsphinxController sharedInstance].isListening) { // Stop if we are currently listening.
+            NSError *error = nil;
+            error = [[OEPocketsphinxController sharedInstance] stopListening];
+            if(error)NSLog(@"Error stopping listening in stopButtonAction: %@", error);
     }
 }
 -(void)setPlayerTime:(NSInteger)value
@@ -133,7 +145,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     {
         return 100.0f;
     }
-    return 60.0f;
+    return 50.0f;
 }
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
@@ -147,6 +159,20 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
 }
 -(void)initRecorderSettings
 {
+    AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+    NSError *err = nil;
+    [audioSession setCategory :AVAudioSessionCategoryPlayAndRecord error:&err];
+    if(err){
+        NSLog(@"audioSession: %@ %ld %@", [err domain], [err code], [[err userInfo] description]);
+        return;
+    }
+    err = nil;
+    [audioSession setActive:YES error:&err];
+    if(err){
+        NSLog(@"audioSession: %@ %ld %@", [err domain], [err code], [[err userInfo] description]);
+        return;
+    }
+    [audioSession overrideOutputAudioPort:AVAudioSessionPortOverrideSpeaker error:nil];
     recordSettings = [NSMutableDictionary dictionary];
     [recordSettings setValue: [NSNumber numberWithInt:kAudioFormatLinearPCM] forKey:AVFormatIDKey];
     
@@ -163,34 +189,21 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     [recordSettings setValue: [NSNumber numberWithInt: AVAudioQualityMax] forKey:AVEncoderAudioQualityKey];
 }
 //lyricViewCellDelegate
+//还没有区分不同文章的不同录音
 //当前的heightlight从一个cell转到另一个cell的时候需要停止前一个cell的所有的录音，播放，识别
 -(void)initRecorder:(NSInteger)index
 {
-    if (audioRecorder!=nil)
+    
+    if (recognitionResult!=nil)
     {
-        audioRecorder=nil;
+        recognitionResult=nil;
     }
-    NSString *soundFileName = [NSString stringWithFormat:@"sound%ld.wav",index];
-    NSString *soundFilePath=[CommonMethod getPath:soundFileName];
-    NSLog(@"log for path%@",soundFilePath);
-    NSURL *soundFileURL = [NSURL fileURLWithPath:soundFilePath];
-    NSError *error;
-    audioRecorder = [[AVAudioRecorder alloc]
-                     initWithURL:soundFileURL
-                     settings:recordSettings
-                     error:&error];
-    if (error)
-    {
-        NSLog(@"error occur while init audioRecorder");
-    }
-    else
-    {
-        [audioRecorder record];
-    }
+    recognitionResult=[[NSMutableString alloc]init];
+    [self runRecognition:index];
 }
 -(void)stopRecorder
 {
-    [audioRecorder stop];
+    [[OEPocketsphinxController sharedInstance] suspendRecognition];
 }
 -(void)playRecord:(NSInteger)index
 {
@@ -210,9 +223,43 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [recordAudioPlayer stop];
 }
+-(void)generateLM
+{
+    OELanguageModelGenerator *lmGenerator = [[OELanguageModelGenerator alloc] init];
+    
+    NSDictionary *words=@{OneOfTheseCanBeSaidWithOptionalRepetitions:@[@"A",@"SAD",@"DAY",@"IN",@"YELLOWSTONE"]};
+    NSString *name = @"testLM";
+//    NSError *err=[lmGenerator generateLanguageModelFromTextFile:[[NSBundle mainBundle] pathForResource:@"test" ofType:@"txt"] withFilesNamed:name forAcousticModelAtPath:[OEAcousticModel pathToModel:@"AcousticModelEnglish"]];
+//    NSError *err = [lmGenerator generateLanguageModelFromArray:words withFilesNamed:name forAcousticModelAtPath:[OEAcousticModel pathToModel:@"AcousticModelEnglish"]];
+    
+    NSError *err =[lmGenerator generateGrammarFromDictionary:words withFilesNamed:name forAcousticModelAtPath:[OEAcousticModel pathToModel:@"AcousticModelEnglish"]];
+    
+    if(err == nil) {
+        
+        lmPath = [lmGenerator pathToSuccessfullyGeneratedGrammarWithRequestedName:@"testLM"];
+        NSLog(@"log for path:%@",lmPath);
+        dicPath = [lmGenerator pathToSuccessfullyGeneratedDictionaryWithRequestedName:@"testLM"];
+        
+    } else {
+        NSLog(@"Error: %@",[err localizedDescription]);
+    }
+}
 -(void)runRecognition:(NSInteger)index
 {
-    
+
+    if(![OEPocketsphinxController sharedInstance].isListening) {
+        //设置输出音频数据
+        [[OEPocketsphinxController sharedInstance] setSecondsOfSilenceToDetect:0.3];
+        [[OEPocketsphinxController sharedInstance] setVadThreshold:3.0];
+        [[OEPocketsphinxController sharedInstance] setOutputAudio:YES];
+        [[OEPocketsphinxController sharedInstance] setReturnNullHypotheses:YES];//返回空数据
+        [[OEPocketsphinxController sharedInstance] setActive:TRUE error:nil];
+        [[OEPocketsphinxController sharedInstance] startListeningWithLanguageModelAtPath:lmPath dictionaryAtPath:dicPath acousticModelAtPath:[OEAcousticModel pathToModel:@"AcousticModelEnglish"] languageModelIsJSGF:TRUE]; // Start speech recognition if we aren't already listening.
+    }
+    else
+    {
+        [[OEPocketsphinxController sharedInstance] resumeRecognition];
+    }
 }
 -(void)playText:(NSInteger)index
 {
@@ -224,6 +271,48 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
         [audioPlayer resume];
     }
 }
+#pragma mark -
+#pragma mark OEEventsObserver delegate methods
+
+- (void) pocketsphinxDidReceiveHypothesis:(NSString *)hypothesis recognitionScore:(NSString *)recognitionScore utteranceID:(NSString *)utteranceID {
+    
+    NSLog(@"Local callback: The received hypothesis is %@ with a score of %@ and an ID of %@", hypothesis, recognitionScore, utteranceID); // Log it.
+    [recognitionResult appendString:hypothesis];
+    self.testReconition.text=recognitionResult;
+}
+
+
+
+// An optional delegate method of OEEventsObserver which informs that Pocketsphinx is now listening for speech.
+- (void) pocketsphinxDidStartListening {
+    
+    NSLog(@"Local callback: Pocketsphinx is now listening."); // Log it.
+    
+}
+
+// An optional delegate method of OEEventsObserver which informs that Pocketsphinx detected speech and is starting to process it.
+- (void) pocketsphinxDidDetectSpeech {
+    NSLog(@"Local callback: Pocketsphinx has detected speech."); // Log it.
+    
+}
+
+// An optional delegate method of OEEventsObserver which informs that the Pocketsphinx recognition loop has entered its actual loop.
+// This might be useful in debugging a conflict between another sound class and Pocketsphinx.
+- (void) pocketsphinxRecognitionLoopDidStart {
+    
+    NSLog(@"Local callback: Pocketsphinx started."); // Log it.
+    
+}
+// An optional delegate method of OEEventsObserver which informs that Pocketsphinx has exited its recognition loop, most
+// likely in response to the OEPocketsphinxController being told to stop listening via the stopListening method.
+- (void) pocketsphinxDidStopListening {
+    NSLog(@"Local callback: Pocketsphinx has stopped listening."); // Log it.
+}
+- (void) pocketsphinxDidSuspendRecognition {
+    NSLog(@"Pocketsphinx has suspended recognition.");
+}
+
+
 /*
 #pragma mark - Navigation
 

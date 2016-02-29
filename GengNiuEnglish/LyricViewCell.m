@@ -49,9 +49,13 @@
     }
     self.recording=true;
     [self.recordVoice setTitle:@"停止录音" forState:UIControlStateNormal];
-    [self.delegate initRecorder:self.index];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [self.delegate initRecorder:self.index];
+    });
 }
 - (IBAction)playVoiceClick:(id)sender {
+    
+    
     if (self.recordPlaying)
     {
         [self.playVoice setTitle:@"播放" forState:UIControlStateNormal];
@@ -65,5 +69,11 @@
 }
 - (IBAction)playTextClick:(id)sender {
     [self.delegate playText:self.index];
+}
+-(void)runReconition
+{
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [self.delegate runRecognition:self.index];
+    });
 }
 @end
