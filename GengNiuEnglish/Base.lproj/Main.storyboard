@@ -298,7 +298,7 @@
                     <connections>
                         <outlet property="goBack" destination="cQx-ht-Um7" id="bb6-Q7-P2N"/>
                         <outlet property="tableview" destination="Dps-S7-wZ5" id="p1x-gO-H4l"/>
-                        <outlet property="testReconition" destination="2Ep-bL-3Nm" id="tGN-qc-gYc"/>
+                        <outlet property="testReconition" destination="2Ep-bL-3Nm" id="v3g-Wv-ayd"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="b5U-mT-L3R" userLabel="First Responder" sceneMemberID="firstResponder"/>

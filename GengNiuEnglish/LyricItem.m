@@ -19,6 +19,7 @@
     self.beginTime=[[attributes objectForKey:@"beginTime"] integerValue];
     self.endTime=[[attributes objectForKey:@"endTime"] integerValue];
     self.lyricBody=[attributes objectForKey:@"lyricBody"];
+    self.lyricWords=[LyricItem extractWords:self.lyricBody];
     return self;
 }
 +(NSString*)parseToMillisecond:(NSString*)time
@@ -42,10 +43,42 @@
         NSArray *next=[contents[i+1] componentsSeparatedByString:@"]"];
         NSString* beginTime=[LyricItem parseToMillisecond:current[0]];
         NSString* endTime=[LyricItem parseToMillisecond:next[0]];
-        NSDictionary *attribute=[NSDictionary dictionaryWithObjectsAndKeys:beginTime,@"beginTime",endTime,@"endTime",current[1],@"lyricBody", nil];
+        NSDictionary *attribute=[NSDictionary dictionaryWithObjectsAndKeys:beginTime,@"beginTime",endTime,@"endTime",current[1],@"lyricBody",nil];
         LyricItem *item=[[LyricItem alloc]initWithAttributes:attribute];
         [lyrics addObject:item];
     }
     return lyrics;
+}
++(BOOL)isCharacter:(char)letter
+{
+    if ((letter-'a'>=0&&letter-'a'<26)||(letter-'A'>=0&&letter-'A'<26)||letter=='\''||(letter-'0'>=0&&letter-'0'<=9))
+    {
+        return YES;
+    }
+    return NO;
+}
++(NSArray *)extractWords:(NSString*)sentence
+{
+    NSMutableArray *words=[[NSMutableArray alloc]init];
+    NSInteger len=[sentence length];
+    NSInteger start=0;
+    NSInteger end=0;
+    while (start<len&&end<len)
+    {
+        while (start<len&&(![LyricItem isCharacter:[sentence characterAtIndex:start]]))
+        {
+            start++;
+        }
+        end=start+1;
+        while (end<len&&[LyricItem isCharacter:[sentence characterAtIndex:end]])
+        {
+            end++;
+        }
+        if (end<len) {
+            [words addObject:[sentence substringWithRange:NSMakeRange(start, end-start)]];
+            start=end+1;
+        }
+    }
+    return words;
 }
 @end

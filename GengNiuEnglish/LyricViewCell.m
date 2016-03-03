@@ -29,6 +29,7 @@
     self.selectionStyle=UITableViewCellSelectionStyleNone;
     self.recording=false;
     self.recordPlaying=false;
+    _lyricItem=lyricItem;
 }
 - (void)awakeFromNib {
     // Initialization code
@@ -43,15 +44,13 @@
     if (self.recording)
     {
         [self.recordVoice setTitle:@"录音" forState:UIControlStateNormal];
-        [self.delegate stopRecorder];
+        [self.delegate stopRecorder:self.lyricItem.lyricWords index:self.index];
         self.recording=false;
         return;
     }
     self.recording=true;
     [self.recordVoice setTitle:@"停止录音" forState:UIControlStateNormal];
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [self.delegate initRecorder:self.index];
-    });
+    [self.delegate initRecorder:self.index words:self.lyricItem.lyricWords];
 }
 - (IBAction)playVoiceClick:(id)sender {
     
@@ -69,11 +68,5 @@
 }
 - (IBAction)playTextClick:(id)sender {
     [self.delegate playText:self.index];
-}
--(void)runReconition
-{
-    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
-        [self.delegate runRecognition:self.index];
-    });
 }
 @end

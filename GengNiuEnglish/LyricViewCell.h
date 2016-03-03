@@ -12,8 +12,8 @@
 
 @protocol lyricViewCellDelegate <NSObject>
 
--(void)initRecorder:(NSInteger)index;
--(void)stopRecorder;
+-(void)initRecorder:(NSInteger)index words:(NSArray*)words;
+-(void)stopRecorder:(NSArray*)words index:(NSInteger)index;
 -(void)playRecord:(NSInteger)index;
 -(void)stopRecorderPlaying;
 -(void)runRecognition:(NSInteger)index;

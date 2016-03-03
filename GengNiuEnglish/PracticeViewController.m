@@ -10,15 +10,17 @@
 
 @interface PracticeViewController ()
 {
+    NSMutableData *_audioBuffer;
     STKAudioPlayer *audioPlayer;
     NSInteger endTime;
     NSTimer *timer;
     AVAudioRecorder *audioRecorder;
     AVAudioPlayer *recordAudioPlayer;
     NSMutableDictionary *recordSettings;
-    NSMutableString *recognitionResult;
+    NSMutableSet *recognitionResult;
     NSString *lmPath ;
     NSString *dicPath ;
+    NSInteger cashIndex;
 }
 @end
 
@@ -39,6 +41,7 @@ static NSString* cellIdentifierLyric=@"LyricViewCell";
     audioPlayer.meteringEnabled = YES;
     audioPlayer.volume = 1;
     [self setupMP3];
+    [OELogging startOpenEarsLogging];
 }
 -(void)setupMP3
 {
@@ -62,8 +65,18 @@ static NSString* cellIdentifierLyric=@"LyricViewCell";
     self.tableview.backgroundView = tempImageView;
     self.openEarsEventsObserver = [[OEEventsObserver alloc] init];
     self.openEarsEventsObserver.delegate = self;
-//    [self initRecorderSettings];
-    [self generateLM];
+    cashIndex=0;
+    
+    //buffer通知
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(availableBuffer:) name:@"AvailableBuffer" object:nil];
+}
+- (void) availableBuffer:(id)sender {
+    NSDictionary *userInfo = (NSDictionary *)[sender userInfo];
+    NSData *buffer = userInfo[@"Buffer"];
+    if(_audioBuffer==nil){
+        _audioBuffer=[[NSMutableData alloc]init];
+    }
+    [_audioBuffer appendData:buffer];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -71,6 +84,7 @@ static NSString* cellIdentifierLyric=@"LyricViewCell";
 }
 -(void)viewDidDisappear:(BOOL)animated
 {
+    [super viewDidDisappear:animated];
     [timer invalidate];
     if (audioPlayer!=nil)
     {
@@ -191,19 +205,39 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
 //lyricViewCellDelegate
 //还没有区分不同文章的不同录音
 //当前的heightlight从一个cell转到另一个cell的时候需要停止前一个cell的所有的录音，播放，识别
--(void)initRecorder:(NSInteger)index
+-(void)initRecorder:(NSInteger)index words:(NSArray *)words
 {
-    
+    _audioBuffer=nil;
     if (recognitionResult!=nil)
     {
         recognitionResult=nil;
     }
-    recognitionResult=[[NSMutableString alloc]init];
+    recognitionResult=[[NSMutableSet alloc]init];
+    [self generateLM:words index:index];
     [self runRecognition:index];
 }
--(void)stopRecorder
+-(void)stopRecorder:(NSArray*)words index:(NSInteger)index
 {
     [[OEPocketsphinxController sharedInstance] suspendRecognition];
+    NSMutableAttributedString *resultString=[[NSMutableAttributedString alloc]init];
+    for (NSString *tmp in words)
+    {
+        NSAttributedString *word;
+        NSDictionary *attributes;
+        if ([recognitionResult containsObject:[tmp uppercaseString]])
+        {
+            attributes=[NSDictionary dictionaryWithObject:[UIColor blackColor] forKey:NSForegroundColorAttributeName];
+            word=[[NSAttributedString alloc]initWithString:[NSString stringWithFormat:@"%@ ",tmp] attributes:attributes];
+        }
+        else
+        {
+            attributes=[NSDictionary dictionaryWithObject:[UIColor redColor] forKey:NSForegroundColorAttributeName];
+            word=[[NSAttributedString alloc]initWithString:[NSString stringWithFormat:@"%@ ",tmp] attributes:attributes];
+        }
+        [resultString appendAttributedString:word];
+    }
+    self.testReconition.attributedText=resultString;
+    [self mergeWavHeaderData:_audioBuffer index:index];
 }
 -(void)playRecord:(NSInteger)index
 {
@@ -223,22 +257,18 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [recordAudioPlayer stop];
 }
--(void)generateLM
+-(void)generateLM:(NSArray *)words index:(NSInteger)index
 {
     OELanguageModelGenerator *lmGenerator = [[OELanguageModelGenerator alloc] init];
     
-    NSDictionary *words=@{OneOfTheseCanBeSaidWithOptionalRepetitions:@[@"A",@"SAD",@"DAY",@"IN",@"YELLOWSTONE"]};
-    NSString *name = @"testLM";
-//    NSError *err=[lmGenerator generateLanguageModelFromTextFile:[[NSBundle mainBundle] pathForResource:@"test" ofType:@"txt"] withFilesNamed:name forAcousticModelAtPath:[OEAcousticModel pathToModel:@"AcousticModelEnglish"]];
-//    NSError *err = [lmGenerator generateLanguageModelFromArray:words withFilesNamed:name forAcousticModelAtPath:[OEAcousticModel pathToModel:@"AcousticModelEnglish"]];
-    
-    NSError *err =[lmGenerator generateGrammarFromDictionary:words withFilesNamed:name forAcousticModelAtPath:[OEAcousticModel pathToModel:@"AcousticModelEnglish"]];
+    NSDictionary *grammar=@{OneOfTheseCanBeSaidWithOptionalRepetitions:words};
+    NSString *name = [NSString stringWithFormat:@"GrammarLM%ld",index];
+    NSLog(@"log for words:%@",words);
+    NSError *err =[lmGenerator generateGrammarFromDictionary:grammar withFilesNamed:name forAcousticModelAtPath:[OEAcousticModel pathToModel:@"AcousticModelEnglish"]];
     
     if(err == nil) {
-        
-        lmPath = [lmGenerator pathToSuccessfullyGeneratedGrammarWithRequestedName:@"testLM"];
-        NSLog(@"log for path:%@",lmPath);
-        dicPath = [lmGenerator pathToSuccessfullyGeneratedDictionaryWithRequestedName:@"testLM"];
+        lmPath = [lmGenerator pathToSuccessfullyGeneratedGrammarWithRequestedName:name];
+        dicPath = [lmGenerator pathToSuccessfullyGeneratedDictionaryWithRequestedName:name];
         
     } else {
         NSLog(@"Error: %@",[err localizedDescription]);
@@ -246,18 +276,25 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
 }
 -(void)runRecognition:(NSInteger)index
 {
-
+    if (cashIndex!=index)
+    {
+        cashIndex=index;
+        [[OEPocketsphinxController sharedInstance] stopListening];
+        
+    }
     if(![OEPocketsphinxController sharedInstance].isListening) {
         //设置输出音频数据
+        [[OEPocketsphinxController sharedInstance] setVerbosePocketSphinx:YES];
         [[OEPocketsphinxController sharedInstance] setSecondsOfSilenceToDetect:0.3];
-        [[OEPocketsphinxController sharedInstance] setVadThreshold:3.0];
+        [[OEPocketsphinxController sharedInstance] setVadThreshold:3.5];
         [[OEPocketsphinxController sharedInstance] setOutputAudio:YES];
         [[OEPocketsphinxController sharedInstance] setReturnNullHypotheses:YES];//返回空数据
         [[OEPocketsphinxController sharedInstance] setActive:TRUE error:nil];
-        [[OEPocketsphinxController sharedInstance] startListeningWithLanguageModelAtPath:lmPath dictionaryAtPath:dicPath acousticModelAtPath:[OEAcousticModel pathToModel:@"AcousticModelEnglish"] languageModelIsJSGF:TRUE]; // Start speech recognition if we aren't already listening.
+        [[OEPocketsphinxController sharedInstance] startListeningWithLanguageModelAtPath:lmPath dictionaryAtPath:dicPath acousticModelAtPath:[OEAcousticModel pathToModel:@"AcousticModelEnglish"] languageModelIsJSGF:TRUE];
     }
     else
     {
+//        [[OEPocketsphinxController sharedInstance] changeLanguageModelToFile:lmPath withDictionary:dicPath];
         [[OEPocketsphinxController sharedInstance] resumeRecognition];
     }
 }
@@ -277,8 +314,15 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
 - (void) pocketsphinxDidReceiveHypothesis:(NSString *)hypothesis recognitionScore:(NSString *)recognitionScore utteranceID:(NSString *)utteranceID {
     
     NSLog(@"Local callback: The received hypothesis is %@ with a score of %@ and an ID of %@", hypothesis, recognitionScore, utteranceID); // Log it.
-    [recognitionResult appendString:hypothesis];
-    self.testReconition.text=recognitionResult;
+    NSArray *result=[hypothesis componentsSeparatedByString:@" "];
+    if (result!=nil)
+    {
+        for (NSString *tmp in result)
+        {
+            if(![tmp isEqualToString:@""])
+            [recognitionResult addObject:[tmp uppercaseString]];
+        }
+    }
 }
 
 
@@ -312,7 +356,77 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     NSLog(@"Pocketsphinx has suspended recognition.");
 }
 
-
+//添加wav头
+-(NSMutableData *)mergeWavHeaderData:(NSMutableData *)data index:(NSInteger)index
+{
+    
+    long totalAudioLen = 0;
+    long totalDataLen = 0;
+    long longSampleRate = 16000;//11025.0
+    int channels = 1;
+    long byteRate = 16 * 16000 * channels/8;
+    
+    totalAudioLen=[data length];
+    totalDataLen=totalAudioLen+44;
+    
+    
+    Byte *header=(Byte *)malloc(44);
+    header[0] = 'R'; // RIFF/WAVE header
+    header[1] = 'I';
+    header[2] = 'F';
+    header[3] = 'F';
+    header[4] = (Byte) (totalDataLen & 0xff);
+    header[5] = (Byte) ((totalDataLen >> 8) & 0xff);
+    header[6] = (Byte) ((totalDataLen >> 16) & 0xff);
+    header[7] = (Byte) ((totalDataLen >> 24) & 0xff);
+    header[8] = 'W';
+    header[9] = 'A';
+    header[10] = 'V';
+    header[11] = 'E';
+    header[12] = 'f'; // 'fmt ' chunk
+    header[13] = 'm';
+    header[14] = 't';
+    header[15] = ' ';
+    header[16] = 16; // 4 bytes: size of 'fmt ' chunk
+    header[17] = 0;
+    header[18] = 0;
+    header[19] = 0;
+    header[20] = 1; // format = 1
+    header[21] = 0;
+    header[22] = (Byte) channels;
+    header[23] = 0;
+    header[24] = (Byte) (longSampleRate & 0xff);
+    header[25] = (Byte) ((longSampleRate >> 8) & 0xff);
+    header[26] = (Byte) ((longSampleRate >> 16) & 0xff);
+    header[27] = (Byte) ((longSampleRate >> 24) & 0xff);
+    header[28] = (Byte) (byteRate & 0xff);
+    header[29] = (Byte) ((byteRate >> 8) & 0xff);
+    header[30] = (Byte) ((byteRate >> 16) & 0xff);
+    header[31] = (Byte) ((byteRate >> 24) & 0xff);
+    header[32] = (Byte) (2 * 8 / 8); // block align
+    header[33] = 0;
+    header[34] = 16; // bits per sample
+    header[35] = 0;
+    header[36] = 'd';
+    header[37] = 'a';
+    header[38] = 't';
+    header[39] = 'a';
+    header[40] = (Byte) (totalAudioLen & 0xff);
+    header[41] = (Byte) ((totalAudioLen >> 8) & 0xff);
+    header[42] = (Byte) ((totalAudioLen >> 16) & 0xff);
+    header[43] = (Byte) ((totalAudioLen >> 24) & 0xff);
+    
+    NSData *headerData=[NSData dataWithBytes:header length:44];
+    
+    NSMutableData *soundData=[[NSMutableData alloc]init];
+    [soundData appendData:[headerData subdataWithRange:NSMakeRange(0, 44)]];
+    [soundData appendData:data];
+    
+    [soundData writeToFile:[CommonMethod getPath:[NSString stringWithFormat:@"sound%ld.wav",index]] atomically:YES];
+    NSLog(@"log for path:%@",[CommonMethod getPath:[NSString stringWithFormat:@"sound%ld.wav",index]]);
+    return soundData;
+    
+}
 /*
 #pragma mark - Navigation
 
