@@ -21,6 +21,7 @@
     NSString *lmPath ;
     NSString *dicPath ;
     NSInteger cashIndex;
+    NSArray *currentWords;
 }
 @end
 
@@ -41,7 +42,6 @@ static NSString* cellIdentifierLyric=@"LyricViewCell";
     audioPlayer.meteringEnabled = YES;
     audioPlayer.volume = 1;
     [self setupMP3];
-    [OELogging startOpenEarsLogging];
 }
 -(void)setupMP3
 {
@@ -69,6 +69,9 @@ static NSString* cellIdentifierLyric=@"LyricViewCell";
     
     //buffer通知
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(availableBuffer:) name:@"AvailableBuffer" object:nil];
+    dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
+        [self initRecorderSettings];
+    });
 }
 - (void) availableBuffer:(id)sender {
     NSDictionary *userInfo = (NSDictionary *)[sender userInfo];
@@ -213,31 +216,30 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
         recognitionResult=nil;
     }
     recognitionResult=[[NSMutableSet alloc]init];
+    NSError *error;
+    NSURL *soundFileURL=[NSURL URLWithString:[CommonMethod getPath:[NSString stringWithFormat:@"sound%ld.wav",index]]];
+    audioRecorder = [[AVAudioRecorder alloc]
+                     initWithURL:soundFileURL
+                     settings:recordSettings
+                     error:&error];
+    if (error)
+    {
+        
+    } else
+    {
+        [audioRecorder prepareToRecord];
+        [audioRecorder record];
+    }
+    currentWords=words;
     [self generateLM:words index:index];
-    [self runRecognition:index];
+//    [self runRecognition:index];
 }
 -(void)stopRecorder:(NSArray*)words index:(NSInteger)index
 {
-    [[OEPocketsphinxController sharedInstance] suspendRecognition];
-    NSMutableAttributedString *resultString=[[NSMutableAttributedString alloc]init];
-    for (NSString *tmp in words)
-    {
-        NSAttributedString *word;
-        NSDictionary *attributes;
-        if ([recognitionResult containsObject:[tmp uppercaseString]])
-        {
-            attributes=[NSDictionary dictionaryWithObject:[UIColor blackColor] forKey:NSForegroundColorAttributeName];
-            word=[[NSAttributedString alloc]initWithString:[NSString stringWithFormat:@"%@ ",tmp] attributes:attributes];
-        }
-        else
-        {
-            attributes=[NSDictionary dictionaryWithObject:[UIColor redColor] forKey:NSForegroundColorAttributeName];
-            word=[[NSAttributedString alloc]initWithString:[NSString stringWithFormat:@"%@ ",tmp] attributes:attributes];
-        }
-        [resultString appendAttributedString:word];
-    }
-    self.testReconition.attributedText=resultString;
-    [self mergeWavHeaderData:_audioBuffer index:index];
+//    [[OEPocketsphinxController sharedInstance] suspendRecognition];
+    [self runRecognition:index];
+    
+//    [self mergeWavHeaderData:_audioBuffer index:index];
 }
 -(void)playRecord:(NSInteger)index
 {
@@ -279,23 +281,23 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     if (cashIndex!=index)
     {
         cashIndex=index;
-        [[OEPocketsphinxController sharedInstance] stopListening];
+//        [[OEPocketsphinxController sharedInstance] stopListening];
         
     }
     if(![OEPocketsphinxController sharedInstance].isListening) {
         //设置输出音频数据
-        [[OEPocketsphinxController sharedInstance] setVerbosePocketSphinx:YES];
+//        [[OEPocketsphinxController sharedInstance] setVerbosePocketSphinx:YES];
         [[OEPocketsphinxController sharedInstance] setSecondsOfSilenceToDetect:0.3];
         [[OEPocketsphinxController sharedInstance] setVadThreshold:3.5];
         [[OEPocketsphinxController sharedInstance] setOutputAudio:YES];
         [[OEPocketsphinxController sharedInstance] setReturnNullHypotheses:YES];//返回空数据
         [[OEPocketsphinxController sharedInstance] setActive:TRUE error:nil];
-        [[OEPocketsphinxController sharedInstance] startListeningWithLanguageModelAtPath:lmPath dictionaryAtPath:dicPath acousticModelAtPath:[OEAcousticModel pathToModel:@"AcousticModelEnglish"] languageModelIsJSGF:TRUE];
+        [[OEPocketsphinxController sharedInstance] runRecognitionOnWavFileAtPath:[CommonMethod getPath:[NSString stringWithFormat:@"sound%ld.wav",index]] usingLanguageModelAtPath:lmPath dictionaryAtPath:dicPath acousticModelAtPath:[OEAcousticModel pathToModel:@"AcousticModelEnglish"] languageModelIsJSGF:YES];
     }
     else
     {
 //        [[OEPocketsphinxController sharedInstance] changeLanguageModelToFile:lmPath withDictionary:dicPath];
-        [[OEPocketsphinxController sharedInstance] resumeRecognition];
+//        [[OEPocketsphinxController sharedInstance] resumeRecognition];
     }
 }
 -(void)playText:(NSInteger)index
@@ -323,6 +325,24 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
             [recognitionResult addObject:[tmp uppercaseString]];
         }
     }
+    NSMutableAttributedString *resultString=[[NSMutableAttributedString alloc]init];
+    for (NSString *tmp in currentWords)
+    {
+        NSAttributedString *word;
+        NSDictionary *attributes;
+        if ([recognitionResult containsObject:[tmp uppercaseString]])
+        {
+            attributes=[NSDictionary dictionaryWithObject:[UIColor blackColor] forKey:NSForegroundColorAttributeName];
+            word=[[NSAttributedString alloc]initWithString:[NSString stringWithFormat:@"%@ ",tmp] attributes:attributes];
+        }
+        else
+        {
+            attributes=[NSDictionary dictionaryWithObject:[UIColor redColor] forKey:NSForegroundColorAttributeName];
+            word=[[NSAttributedString alloc]initWithString:[NSString stringWithFormat:@"%@ ",tmp] attributes:attributes];
+        }
+        [resultString appendAttributedString:word];
+    }
+        self.testReconition.attributedText=resultString;
 }
 
 
