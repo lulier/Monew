@@ -27,6 +27,10 @@ static NSString * const reuseIdentifierMaterial = @"MaterialCell";
             self.list=data;
             [self.collectionView reloadData];
         }
+        else
+        {
+            NSLog(@"get gradeList error:%@",error);
+        }
     }];
 }
 

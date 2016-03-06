@@ -86,6 +86,11 @@
     return [NetworkingManager httpRequest:RTGet url:RUGrade_list parameters:parameters progress:nil
     success:^(NSURLSessionTask *task,id JSON)
             {
+                NSInteger status=[JSON valueForKey:@"status"];
+                if (status!=0)
+                {
+                    NSLog(@"get gradeList error with errormsg: %@",[JSON valueForKey:@"errormsg"]);
+                }
                 NSArray *list=[JSON valueForKey:@"grade_list"];
                 for (NSDictionary *attributes in list)
                 {
