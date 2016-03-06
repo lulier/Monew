@@ -34,7 +34,6 @@
         self.zipFileName=[[[[self.downloadURL componentsSeparatedByString:@"/"] lastObject] componentsSeparatedByString:@"?"] objectAtIndex:0];
         self.fileNames=[[NSMutableArray alloc]init];
         [self checkDatabase];
-//        [self getBookDetail];
     }
     else
     {
@@ -57,7 +56,14 @@
     return [NetworkingManager httpRequest:RTGet url:RUText_list parameters:parameters progress:nil
     success:^(NSURLSessionTask *task,id JSON)
             {
+                NSInteger status=(NSInteger)[JSON valueForKey:@"status"];
+                if (status!=0)
+                {
+                    NSLog(@"get gradeList error with errormsg: %@",[JSON valueForKey:@"errormsg"]);
+                }
                 NSArray *list=[JSON valueForKey:@"text_list"];
+                //在数据库中纪录text_list
+                [DataForCell recordTextList:list];
                 for (NSDictionary *attributes in list)
                 {
                     DataForCell *data=[[DataForCell alloc]initWithAttributes:attributes];
@@ -78,6 +84,13 @@
             
     completionHandler:nil];
     
+}
++(void)recordTextList:(NSArray*)textList
+{
+    if (textList==nil)
+    {
+        return;
+    }
 }
 +(NSURLSessionTask*)getGradeList:(void (^)(NSArray *, NSError *))block{
     
@@ -86,12 +99,14 @@
     return [NetworkingManager httpRequest:RTGet url:RUGrade_list parameters:parameters progress:nil
     success:^(NSURLSessionTask *task,id JSON)
             {
-                NSInteger status=[JSON valueForKey:@"status"];
+                NSInteger status=(NSInteger)[JSON valueForKey:@"status"];
                 if (status!=0)
                 {
                     NSLog(@"get gradeList error with errormsg: %@",[JSON valueForKey:@"errormsg"]);
                 }
                 NSArray *list=[JSON valueForKey:@"grade_list"];
+                //在数据库中纪录grade_list
+                [DataForCell recordGradeList:list];
                 for (NSDictionary *attributes in list)
                 {
                     DataForCell *data=[[DataForCell alloc]initWithAttributes:attributes];
@@ -113,23 +128,20 @@
     completionHandler:nil];
     
 }
-
--(void)getBookDetail
++(void)recordGradeList:(NSArray*)gradeList
 {
-    NSDictionary *parameters=[NSDictionary dictionaryWithObjectsAndKeys:self.text_id,@"text_id",@"1",@"user_id",nil];
-    __weak __typeof(self)weakself=self;
-    [NetworkingManager httpRequest:RTGet url:RUText_detail parameters:parameters progress:nil
-      success:^(NSURLSessionTask *task, id  _Nullable responseObject)
+    if (gradeList==nil)
     {
-        NSDictionary *text_detail=[responseObject objectForKey:@"text_detail"];
-        weakself.downloadURL=[text_detail objectForKey:@"courseware_url"];
-        weakself.zipFileName=[text_detail objectForKey:@"file_name"];
-        [weakself checkDatabase];
-    } failure:^(NSURLSessionTask * _Nullable task, NSError *error)
-    {
-        
-    } completionHandler:nil];
+        return;
+    }
 }
+
+
+
+
+
+
+
 //首先是检查数据库中对应text_id的书是否存在，如果不存在就加入一条记录，然后是检查数据库对应text_id的zipfileName与当前的zipfileName是否相同，如果不一样返回no，表示需要重新下载，如果一样则返回yes，表示不用下载
 -(BOOL)checkDatabase
 {

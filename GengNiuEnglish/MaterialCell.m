@@ -7,7 +7,6 @@
 //
 
 #import "MaterialCell.h"
-#import "UIImageView+AFNetworking.h"
 
 
 @implementation MaterialCell
@@ -22,7 +21,40 @@
         NSLog(@"your material is nil");
     }
     [self.cellLabel setText:_material.text_name];
-    [self.cellImage setImageWithURL:[NSURL URLWithString:_material.cover_url] placeholderImage:[UIImage imageNamed:@"profile-image-placeholder"]];
+    [self.cellImage setImage:[UIImage imageNamed:@"profile-image-placeholder"]];
+    SDWebImageDownloader *downloader = [SDWebImageDownloader sharedDownloader];
+    [downloader downloadImageWithURL:[NSURL URLWithString:_material.cover_url]
+                             options:0
+                            progress:^(NSInteger receivedSize, NSInteger expectedSize){
+                                // progression tracking code
+                            }
+                           completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished){
+                               if (image && finished)
+                               {
+                                   // do something with image
+                                   [self.cellImage setImage:image];
+                                   NSString *cacheKey=[[SDWebImageManager sharedManager] cacheKeyForURL:[NSURL URLWithString:_material.cover_url]];
+                                   [[SDImageCache sharedImageCache] storeImage:self.cellImage.image forKey:cacheKey];
+                               }
+                               else
+                               {
+                                   NSString *cacheKey=[[SDWebImageManager sharedManager] cacheKeyForURL:[NSURL URLWithString:_material.cover_url]];
+                                   [[SDImageCache sharedImageCache] queryDiskCacheForKey:cacheKey done:
+                                   ^(UIImage *image, SDImageCacheType cacheType) {
+                                       if (image!=nil)
+                                       {
+                                           [self.cellImage setImage:image];
+                                       }
+                                       else
+                                       {
+                                           [self.cellImage setImage:[UIImage imageNamed:@"profile-image-placeholder"]];
+                                       }
+                                   }];
+                               }
+                           }];
+    
+    
+
     [self setNeedsLayout];
     [self setNeedsDisplay];
 }

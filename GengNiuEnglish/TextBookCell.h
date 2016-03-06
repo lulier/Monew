@@ -14,6 +14,8 @@
 #import "PracticeViewController.h"
 #import "ReaderViewController.h"
 #import "AppDelegate.h"
+#import <SDWebImage/UIImageView+WebCache.h>
+
 
 
 @interface TextBookCell : UICollectionViewCell<ReaderViewControllerDelegate,dismissDelegate>

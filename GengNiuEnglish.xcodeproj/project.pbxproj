@@ -15,6 +15,9 @@
 		F42799391C18514200240736 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F42799371C18514200240736 /* LaunchScreen.storyboard */; };
 		F42799441C18514300240736 /* GengNiuEnglishTests.m in Sources */ = {isa = PBXBuildFile; fileRef = F42799431C18514300240736 /* GengNiuEnglishTests.m */; };
 		F427994F1C18514300240736 /* GengNiuEnglishUITests.m in Sources */ = {isa = PBXBuildFile; fileRef = F427994E1C18514300240736 /* GengNiuEnglishUITests.m */; };
+		F42FA5E71C8C00E70033C9C9 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F42FA5E61C8C00E70033C9C9 /* LoginViewController.m */; };
+		F42FA5EA1C8C01570033C9C9 /* MobileRegistViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F42FA5E91C8C01570033C9C9 /* MobileRegistViewController.m */; };
+		F42FA5ED1C8C017B0033C9C9 /* EmailRegistViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F42FA5EC1C8C017B0033C9C9 /* EmailRegistViewController.m */; };
 		F486C77C1C3A492000CBFBD1 /* LyricItem.m in Sources */ = {isa = PBXBuildFile; fileRef = F486C77B1C3A492000CBFBD1 /* LyricItem.m */; };
 		F486C7801C3B8B7C00CBFBD1 /* SampleQueueId.m in Sources */ = {isa = PBXBuildFile; fileRef = F486C77F1C3B8B7C00CBFBD1 /* SampleQueueId.m */; };
 		F49467041C27CE0900806DEF /* DataForCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F49467031C27CE0900806DEF /* DataForCell.m */; };
@@ -71,6 +74,12 @@
 		F427994A1C18514300240736 /* GengNiuEnglishUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = GengNiuEnglishUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		F427994E1C18514300240736 /* GengNiuEnglishUITests.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = GengNiuEnglishUITests.m; sourceTree = "<group>"; };
 		F42799501C18514300240736 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		F42FA5E51C8C00E70033C9C9 /* LoginViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LoginViewController.h; sourceTree = "<group>"; };
+		F42FA5E61C8C00E70033C9C9 /* LoginViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LoginViewController.m; sourceTree = "<group>"; };
+		F42FA5E81C8C01570033C9C9 /* MobileRegistViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MobileRegistViewController.h; sourceTree = "<group>"; };
+		F42FA5E91C8C01570033C9C9 /* MobileRegistViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MobileRegistViewController.m; sourceTree = "<group>"; };
+		F42FA5EB1C8C017B0033C9C9 /* EmailRegistViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmailRegistViewController.h; sourceTree = "<group>"; };
+		F42FA5EC1C8C017B0033C9C9 /* EmailRegistViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmailRegistViewController.m; sourceTree = "<group>"; };
 		F486C77A1C3A492000CBFBD1 /* LyricItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LyricItem.h; sourceTree = "<group>"; };
 		F486C77B1C3A492000CBFBD1 /* LyricItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LyricItem.m; sourceTree = "<group>"; };
 		F486C77E1C3B8B7C00CBFBD1 /* SampleQueueId.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleQueueId.h; sourceTree = "<group>"; };
@@ -239,6 +248,12 @@
 				F4A9AF4D1C4F7258004BC7BF /* PracticeViewController.m */,
 				F4B271AE1C33B429009313CA /* LyricViewController.h */,
 				F4B271AF1C33B429009313CA /* LyricViewController.m */,
+				F42FA5E51C8C00E70033C9C9 /* LoginViewController.h */,
+				F42FA5E61C8C00E70033C9C9 /* LoginViewController.m */,
+				F42FA5E81C8C01570033C9C9 /* MobileRegistViewController.h */,
+				F42FA5E91C8C01570033C9C9 /* MobileRegistViewController.m */,
+				F42FA5EB1C8C017B0033C9C9 /* EmailRegistViewController.h */,
+				F42FA5EC1C8C017B0033C9C9 /* EmailRegistViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -473,8 +488,11 @@
 				F4A9AF3C1C4D2418004BC7BF /* MaterialCell.m in Sources */,
 				F49467041C27CE0900806DEF /* DataForCell.m in Sources */,
 				F4B271B01C33B429009313CA /* LyricViewController.m in Sources */,
+				F42FA5EA1C8C01570033C9C9 /* MobileRegistViewController.m in Sources */,
 				F4A9AF481C4E2040004BC7BF /* MaterialViewController.m in Sources */,
+				F42FA5ED1C8C017B0033C9C9 /* EmailRegistViewController.m in Sources */,
 				F4A9AF511C4F7E04004BC7BF /* LyricViewCell.m in Sources */,
+				F42FA5E71C8C00E70033C9C9 /* LoginViewController.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

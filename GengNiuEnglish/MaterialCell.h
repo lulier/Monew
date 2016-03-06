@@ -7,6 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
+#import <SDWebImage/UIImageView+WebCache.h>
 #import "DataForCell.h"
 
 @interface MaterialCell : UICollectionViewCell

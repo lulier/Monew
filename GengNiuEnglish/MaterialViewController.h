@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "AFNetworking.h"
+#import "FMDB.h"
 
 @interface MaterialViewController : UIViewController<UICollectionViewDelegateFlowLayout,UIScrollViewDelegate,UICollectionViewDelegate,UICollectionViewDataSource>
 @property(strong,nonatomic)NSArray *list;

@@ -11,6 +11,7 @@
 #import "AFNetworking.h"
 #import "ReaderViewController.h"
 #import <AVFoundation/AVFoundation.h>
+#import <SDWebImage/SDWebImageManager.h>
 
 @interface AppDelegate ()
 
@@ -37,18 +38,10 @@
     
     [[AFNetworkActivityIndicatorManager sharedManager] setEnabled:YES];
     
-//    UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
-//    UIViewController *rootViewController=[storyboard instantiateViewControllerWithIdentifier:@"MaterialViewController"];
-//    
-//    
-//    
-//    self.navigationController=[[UINavigationController alloc]initWithRootViewController:rootViewController];
-//    self.navigationController.navigationBar.tintColor=[UIColor darkGrayColor];
-//    self.window=[[UIWindow alloc]initWithFrame:[[UIScreen mainScreen] bounds]];
-//    self.window.backgroundColor=[UIColor whiteColor];
-//    self.window.rootViewController=self.navigationController;
-//    [self.window makeKeyAndVisible];
-    
+    SDWebImageManager.sharedManager.cacheKeyFilter = ^(NSURL *url) {
+        NSString *path=url.path;
+        return path;
+    };
     // Override point for customization after application launch.
     return YES;
 }

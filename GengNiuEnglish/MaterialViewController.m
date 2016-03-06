@@ -29,6 +29,8 @@ static NSString * const reuseIdentifierMaterial = @"MaterialCell";
         }
         else
         {
+            //网络加载数据出错，需要在这里从数据库中读取数据
+            
             NSLog(@"get gradeList error:%@",error);
         }
     }];
@@ -46,9 +48,55 @@ static NSString * const reuseIdentifierMaterial = @"MaterialCell";
     [self.navigationController.navigationBar setHidden:YES];
     UIImage *background=[CommonMethod imageWithImage:[UIImage imageNamed:@"background"] scaledToSize:CGSizeMake(self.collectionView.frame.size.width, self.collectionView.frame.size.height)];
     self.collectionView.backgroundView=[[UIImageView alloc]initWithImage:background];
+    [self initDatabase];
     [self reload:nil];
 }
-
+-(void)initDatabase
+{
+    NSString *databasePath=[CommonMethod getPath:@"user.sqlite"];
+    FMDatabase *database=[FMDatabase databaseWithPath:databasePath];
+    if (![database open])
+    {
+        NSLog(@"database open failed");
+        return;
+    }
+    
+    FMResultSet *result=[database executeQuery:@"select * from GradeList"];
+    if (![result next])
+    {
+        NSString *createTable=@"create table GradeList(GradeID  integer,GradeName varchar(255),CoverURL varchar(512),Text_Count integer);";
+        BOOL success=[database executeUpdate:createTable];
+        if (!success)
+        {
+            NSLog(@"create table failed");
+            return;
+        }
+        NSLog(@"create table success");
+    }
+    else
+    {
+        NSLog(@"table books exist");
+    }
+    
+    result=[database executeQuery:@"select * from TextList"];
+    if (![result next])
+    {
+        NSString *createTable=@"create table TextList(TextID  integer,TextName varchar(255),CoverURL varchar(512),DownloadURL varchar(512),Describe varchar(255),ChallengeGoal integer,ChallengeScore integer,ListenCount integer,PractiseGoal integer,StarCount integer,ListenGoal integer,PractiseCount integer,Version integer);";
+        BOOL success=[database executeUpdate:createTable];
+        if (!success)
+        {
+            NSLog(@"create table failed");
+            return;
+        }
+        NSLog(@"create table success");
+    }
+    else
+    {
+        NSLog(@"table books exist");
+    }
+    
+    [database close];
+}
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.

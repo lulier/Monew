@@ -65,6 +65,10 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
             self.list=data;
             [self.collectionView reloadData];
         }
+        else
+        {
+            //网络加载数据出错，需要在这里从数据库中读取数据
+        }
     } grade_id:self.grade_id];
 }
 - (IBAction)goBackClick:(id)sender {
