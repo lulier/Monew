@@ -9,6 +9,7 @@
 #import <UIKit/UIKit.h>
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "DataForCell.h"
+#import "NetworkingManager.h"
 
 @interface MaterialCell : UICollectionViewCell
 @property(strong,nonatomic)DataForCell *material;

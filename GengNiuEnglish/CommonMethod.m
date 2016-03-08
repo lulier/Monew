@@ -8,6 +8,7 @@
 
 #import "CommonMethod.h"
 
+
 @implementation CommonMethod
 
 //传入参数格式: number of value_key,value,key,value,key...
@@ -30,6 +31,51 @@
     
     return myDic;
 }
+
++(NSString*)randomStringWithLength:(int)length
+{
+    NSString* result =[[NSString alloc ]init];
+    for (int i = 0; i < length; i++) {
+        int temp1 = arc4random()%2;
+        int temp2 = arc4random()%36;
+        if (temp2>9) {
+            if (temp1 <1) {
+                char c = 'A'+temp2-10;
+                NSString* temp3 = [[NSString alloc]initWithFormat:@"%c",c];
+                result = [result stringByAppendingString:temp3];
+            }
+            else
+            {
+                char c = 'a'+temp2-10;
+                NSString* temp3 = [[NSString alloc]initWithFormat:@"%c",c];
+                result = [result stringByAppendingString:temp3];
+            }
+        }
+        else
+        {
+            char c = '0'+temp2;
+            NSString* temp3 = [[NSString alloc]initWithFormat:@"%c",c];
+            result = [result stringByAppendingString:temp3];
+        }
+        
+    }
+    return result;
+}
+
++(NSMutableString*)MD5EncryptionWithString:(NSString *)str
+{
+    const char *cstr = [str UTF8String];
+    unsigned char result[CC_MD5_DIGEST_LENGTH];
+    CC_MD5(cstr, (unsigned int)strlen(cstr), result);
+    NSMutableString *md5_str = [NSMutableString string];
+    for (int i = 0; i < 16; i++)
+        [md5_str appendFormat:@"%02x", result[i]];
+    NSLog(@"MD5: %@",md5_str);
+    return md5_str;
+    
+}
+
+
 
 + (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize {
     //UIGraphicsBeginImageContext(newSize);

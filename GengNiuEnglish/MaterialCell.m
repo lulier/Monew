@@ -23,43 +23,10 @@
     [self.cellLabel setText:_material.text_name];
     [self.cellImage setImage:[UIImage imageNamed:@"profile-image-placeholder"]];
     __weak __typeof__(self) weakSelf = self;
-    SDWebImageDownloader *downloader = [SDWebImageDownloader sharedDownloader];
-    [downloader downloadImageWithURL:[NSURL URLWithString:_material.cover_url]
-                             options:0
-                            progress:^(NSInteger receivedSize, NSInteger expectedSize){
-                                // progression tracking code
-                            }
-                           completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished){
-                               if (image && finished)
-                               {
-                                   // do something with image
-                                   dispatch_async(dispatch_get_main_queue(),^{
-                                       [weakSelf.cellImage setImage:image];
-                                   });
-                                   NSString *cacheKey=[[SDWebImageManager sharedManager] cacheKeyForURL:[NSURL URLWithString:_material.cover_url]];
-                                   [[SDImageCache sharedImageCache] storeImage:self.cellImage.image forKey:cacheKey];
-                               }
-                               else
-                               {
-                                   NSString *cacheKey=[[SDWebImageManager sharedManager] cacheKeyForURL:[NSURL URLWithString:_material.cover_url]];
-                                   [[SDImageCache sharedImageCache] queryDiskCacheForKey:cacheKey done:
-                                   ^(UIImage *image, SDImageCacheType cacheType) {
-                                       if (image!=nil)
-                                       {
-                                           dispatch_async(dispatch_get_main_queue(),^{
-                                               [weakSelf.cellImage setImage:image];
-                                           });
-                                       }
-                                       else
-                                       {
-                                           dispatch_async(dispatch_get_main_queue(),^{
-                                               [weakSelf.cellImage setImage:[UIImage imageNamed:@"profile-image-placeholder"]];
-                                           });
-                                       }
-                                   }];
-                               }
-                           }];
     
+    [NetworkingManager downloadImage:[NSURL URLWithString:_material.cover_url] block:^(UIImage *image) {
+        [weakSelf.cellImage setImage:image];
+    }];
     
 
     [self setNeedsLayout];

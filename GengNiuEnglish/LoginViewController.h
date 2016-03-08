@@ -8,9 +8,9 @@
 
 #import <UIKit/UIKit.h>
 #import "CommonMethod.h"
+#import "MobileRegistViewController.h"
 
 @interface LoginViewController : UIViewController
-@property (weak, nonatomic) IBOutlet UIButton *goBackButton;
 @property (weak, nonatomic) IBOutlet UITextField *accountInput;
 @property (weak, nonatomic) IBOutlet UITextField *passwordInput;
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;

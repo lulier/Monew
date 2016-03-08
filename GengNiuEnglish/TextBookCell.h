@@ -15,6 +15,7 @@
 #import "ReaderViewController.h"
 #import "AppDelegate.h"
 #import <SDWebImage/UIImageView+WebCache.h>
+#import "NetworkingManager.h"
 
 
 

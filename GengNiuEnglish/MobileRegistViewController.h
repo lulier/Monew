@@ -7,6 +7,8 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CommonMethod.h"
+#import "EmailRegistViewController.h"
 
 @interface MobileRegistViewController : UIViewController
 @property (weak, nonatomic) IBOutlet UIButton *goBackButton;
@@ -14,5 +16,6 @@
 @property (weak, nonatomic) IBOutlet UITextField *veriInput;
 @property (weak, nonatomic) IBOutlet UITextField *passwordInput;
 @property (weak, nonatomic) IBOutlet UIButton *registButton;
+@property (weak, nonatomic) IBOutlet UIButton *veriButton;
 
 @end

@@ -92,4 +92,44 @@
     [downloadTask resume];
     return downloadTask;
 }
++(void)downloadImage:(NSURL *)downloadURL block:(void (^)(UIImage *))block
+{
+    NSString *cacheKey=[[SDWebImageManager sharedManager] cacheKeyForURL:downloadURL];
+    [[SDImageCache sharedImageCache] queryDiskCacheForKey:cacheKey done:
+     ^(UIImage *image, SDImageCacheType cacheType) {
+         if (image!=nil)
+         {
+             dispatch_async(dispatch_get_main_queue(),^{
+                 block(image);
+             });
+         }
+         else
+         {
+             SDWebImageDownloader *downloader = [SDWebImageDownloader sharedDownloader];
+             [downloader downloadImageWithURL:downloadURL
+                                      options:0
+                                     progress:^(NSInteger receivedSize, NSInteger expectedSize){
+                                         // progression tracking code
+                                     }
+                                    completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished){
+                                        if (image && finished)
+                                        {
+                                            // do something with image
+                                            dispatch_async(dispatch_get_main_queue(),^{
+                                                block(image);
+                                                NSString *cacheKey=[[SDWebImageManager sharedManager] cacheKeyForURL:downloadURL];
+                                                [[SDImageCache sharedImageCache] storeImage:image forKey:cacheKey];
+                                            });
+                                            
+                                        }
+                                        else
+                                        {
+                                            dispatch_async(dispatch_get_main_queue(),^{
+                                                block([UIImage imageNamed:@"profile-image-placeholder"]);
+                                            });
+                                        }
+                                    }];
+         }
+     }];
+}
 @end

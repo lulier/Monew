@@ -12,14 +12,14 @@
 
 -(void)viewDidLoad
 {
+    [self.navigationController setNavigationBarHidden:YES];
     UIImage *background=[CommonMethod imageWithImage:[UIImage imageNamed:@"naked_background"] scaledToSize:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height)];
     self.view.backgroundColor=[UIColor colorWithPatternImage:background];
 }
-
-
-
-- (IBAction)goback:(id)sender {
-    [self.navigationController popViewControllerAnimated:YES];
+- (IBAction)registButtonClick:(id)sender {
+    UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    MobileRegistViewController *mobileRegistViewController=[storyboard instantiateViewControllerWithIdentifier:@"MobileRegistViewController"];
+    [self.navigationController pushViewController:mobileRegistViewController animated:YES];
 }
 
 @end
