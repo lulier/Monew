@@ -60,15 +60,25 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
 
 
 -(void)reload:(__unused id)sender{
+    __weak __typeof__(self) weakSelf = self;
     NSURLSessionTask *task=[DataForCell getTextList:^(NSArray *data, NSError *error) {
-        if (!error) {
-            self.list=data;
-            [self.collectionView reloadData];
+        if (data==nil)
+        {
+            [DataForCell queryTextList:weakSelf.grade_id block:^(NSArray*cells){
+                weakSelf.list=cells;
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [weakSelf.collectionView reloadData];
+                });
+            }];
         }
         else
         {
-            //网络加载数据出错，需要在这里从数据库中读取数据
+            weakSelf.list=data;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [weakSelf.collectionView reloadData];
+            });
         }
+        
     } grade_id:self.grade_id];
 }
 - (IBAction)goBackClick:(id)sender {
@@ -197,24 +207,6 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
     };
 }
 
--(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
-{
-    
-}
--(void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    //        for (int i = 0; i < [scrollView.subviews count]; i++) {
-    //            UIView *cell = [scrollView.subviews objectAtIndex:i];
-    //            float position = cell.center.x - scrollView.contentOffset.x;
-    //            float offset = 1.5 - (fabs(scrollView.center.x - position) * 1.0) / scrollView.center.x;
-    //            if (offset<1.0)
-    //            {
-    //                offset=1.0;
-    //            }
-    //            cell.transform = CGAffineTransformIdentity;
-    //            cell.transform = CGAffineTransformScale(cell.transform, offset, offset);
-    //        }
-}
 
 -(void)unzipDownloadFile:(NSString*)filePath index:(NSInteger)index
 {
@@ -247,34 +239,5 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
 
 
 #pragma mark <UICollectionViewDelegate>
-
-/*
- // Uncomment this method to specify if the specified item should be highlighted during tracking
- - (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
-	return YES;
- }
- */
-
-/*
- // Uncomment this method to specify if the specified item should be selected
- - (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
- return YES;
- }
- */
-
-/*
- // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
- - (BOOL)collectionView:(UICollectionView *)collectionView shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath {
-	return NO;
- }
- 
- - (BOOL)collectionView:(UICollectionView *)collectionView canPerformAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
-	return NO;
- }
- 
- - (void)collectionView:(UICollectionView *)collectionView performAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
-	
- }
- */
 
 @end

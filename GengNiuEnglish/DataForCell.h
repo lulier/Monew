@@ -40,4 +40,6 @@ typedef NS_ENUM(NSInteger,FileType)
 - (void)dismissReaderViewController:(ReaderViewController *)viewController;
 -(BOOL)checkDatabase;
 -(NSString*)getDocumentPath;
++(void)queryGradeList:(void (^)(NSArray*data))block;
++(void)queryTextList:(NSString*)gradeID block:(void (^)(NSArray*data))block;
 @end

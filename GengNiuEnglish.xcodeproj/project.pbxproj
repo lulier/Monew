@@ -18,6 +18,8 @@
 		F42FA5E71C8C00E70033C9C9 /* LoginViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F42FA5E61C8C00E70033C9C9 /* LoginViewController.m */; };
 		F42FA5EA1C8C01570033C9C9 /* MobileRegistViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F42FA5E91C8C01570033C9C9 /* MobileRegistViewController.m */; };
 		F42FA5ED1C8C017B0033C9C9 /* EmailRegistViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F42FA5EC1C8C017B0033C9C9 /* EmailRegistViewController.m */; };
+		F42FA5F01C8D29600033C9C9 /* MTDatabaseHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = F42FA5EF1C8D29600033C9C9 /* MTDatabaseHelper.m */; };
+		F42FA5F31C8D32C50033C9C9 /* UserAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = F42FA5F21C8D32C50033C9C9 /* UserAccount.m */; };
 		F486C77C1C3A492000CBFBD1 /* LyricItem.m in Sources */ = {isa = PBXBuildFile; fileRef = F486C77B1C3A492000CBFBD1 /* LyricItem.m */; };
 		F486C7801C3B8B7C00CBFBD1 /* SampleQueueId.m in Sources */ = {isa = PBXBuildFile; fileRef = F486C77F1C3B8B7C00CBFBD1 /* SampleQueueId.m */; };
 		F49467041C27CE0900806DEF /* DataForCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F49467031C27CE0900806DEF /* DataForCell.m */; };
@@ -80,6 +82,10 @@
 		F42FA5E91C8C01570033C9C9 /* MobileRegistViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MobileRegistViewController.m; sourceTree = "<group>"; };
 		F42FA5EB1C8C017B0033C9C9 /* EmailRegistViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = EmailRegistViewController.h; sourceTree = "<group>"; };
 		F42FA5EC1C8C017B0033C9C9 /* EmailRegistViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmailRegistViewController.m; sourceTree = "<group>"; };
+		F42FA5EE1C8D29600033C9C9 /* MTDatabaseHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTDatabaseHelper.h; sourceTree = "<group>"; };
+		F42FA5EF1C8D29600033C9C9 /* MTDatabaseHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTDatabaseHelper.m; sourceTree = "<group>"; };
+		F42FA5F11C8D32C50033C9C9 /* UserAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserAccount.h; sourceTree = "<group>"; };
+		F42FA5F21C8D32C50033C9C9 /* UserAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserAccount.m; sourceTree = "<group>"; };
 		F486C77A1C3A492000CBFBD1 /* LyricItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LyricItem.h; sourceTree = "<group>"; };
 		F486C77B1C3A492000CBFBD1 /* LyricItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LyricItem.m; sourceTree = "<group>"; };
 		F486C77E1C3B8B7C00CBFBD1 /* SampleQueueId.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleQueueId.h; sourceTree = "<group>"; };
@@ -274,6 +280,8 @@
 		F49466FE1C27C95700806DEF /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				F42FA5EE1C8D29600033C9C9 /* MTDatabaseHelper.h */,
+				F42FA5EF1C8D29600033C9C9 /* MTDatabaseHelper.m */,
 				F4A9AF371C4D0D26004BC7BF /* CommonMethod.h */,
 				F4A9AF381C4D0D26004BC7BF /* CommonMethod.m */,
 				F49467021C27CE0900806DEF /* DataForCell.h */,
@@ -282,6 +290,8 @@
 				F486C77B1C3A492000CBFBD1 /* LyricItem.m */,
 				F486C77E1C3B8B7C00CBFBD1 /* SampleQueueId.h */,
 				F486C77F1C3B8B7C00CBFBD1 /* SampleQueueId.m */,
+				F42FA5F11C8D32C50033C9C9 /* UserAccount.h */,
+				F42FA5F21C8D32C50033C9C9 /* UserAccount.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -480,6 +490,7 @@
 				F486C77C1C3A492000CBFBD1 /* LyricItem.m in Sources */,
 				F4A9AF391C4D0D26004BC7BF /* CommonMethod.m in Sources */,
 				F427992E1C18514200240736 /* AppDelegate.m in Sources */,
+				F42FA5F31C8D32C50033C9C9 /* UserAccount.m in Sources */,
 				F4A9AF4E1C4F7258004BC7BF /* PracticeViewController.m in Sources */,
 				F427992B1C18514200240736 /* main.m in Sources */,
 				F486C7801C3B8B7C00CBFBD1 /* SampleQueueId.m in Sources */,
@@ -489,6 +500,7 @@
 				F49467041C27CE0900806DEF /* DataForCell.m in Sources */,
 				F4B271B01C33B429009313CA /* LyricViewController.m in Sources */,
 				F42FA5EA1C8C01570033C9C9 /* MobileRegistViewController.m in Sources */,
+				F42FA5F01C8D29600033C9C9 /* MTDatabaseHelper.m in Sources */,
 				F4A9AF481C4E2040004BC7BF /* MaterialViewController.m in Sources */,
 				F42FA5ED1C8C017B0033C9C9 /* EmailRegistViewController.m in Sources */,
 				F4A9AF511C4F7E04004BC7BF /* LyricViewCell.m in Sources */,

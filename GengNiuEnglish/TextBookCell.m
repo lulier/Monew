@@ -25,6 +25,7 @@
     
     [self.cellImage setImage:[UIImage imageNamed:@"profile-image-placeholder"]];
     SDWebImageDownloader *downloader = [SDWebImageDownloader sharedDownloader];
+    __weak __typeof__(self) weakSelf = self;
     [downloader downloadImageWithURL:[NSURL URLWithString:book.cover_url]
                              options:0
                             progress:^(NSInteger receivedSize, NSInteger expectedSize){
@@ -34,7 +35,10 @@
                                if (image && finished)
                                {
                                    // do something with image
-                                   [self.cellImage setImage:image];
+                                   dispatch_async(dispatch_get_main_queue(),^{
+                                       [weakSelf.cellImage setImage:image];
+                                   });
+
                                    NSString *cacheKey=[[SDWebImageManager sharedManager] cacheKeyForURL:[NSURL URLWithString:book.cover_url]];
                                    [[SDImageCache sharedImageCache] storeImage:self.cellImage.image forKey:cacheKey];
                                }
@@ -45,11 +49,15 @@
                                     ^(UIImage *image, SDImageCacheType cacheType) {
                                         if (image!=nil)
                                         {
-                                            [self.cellImage setImage:image];
+                                            dispatch_async(dispatch_get_main_queue(),^{
+                                                [weakSelf.cellImage setImage:image];
+                                            });
                                         }
                                         else
                                         {
-                                            [self.cellImage setImage:[UIImage imageNamed:@"profile-image-placeholder"]];
+                                            dispatch_async(dispatch_get_main_queue(),^{
+                                                [weakSelf.cellImage setImage:[UIImage imageNamed:@"profile-image-placeholder"]];
+                                            });
                                         }
                                     }];
                                }

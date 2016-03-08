@@ -15,6 +15,8 @@
 @end
 
 @interface CommonMethod : NSObject
+//打包一个dictionary.传入参数格式: value,key,value,key...
++(NSMutableDictionary*)packParamsInDictionary:(id) params,...;
 + (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize;
 +(UIViewController*)getCurrentVC;
 +(NSString*)getPath:(NSString*)fileName;

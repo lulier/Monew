@@ -11,6 +11,7 @@
 #import "CommonMethod.h"
 #import "MaterialCell.h"
 #import "BookViewController.h"
+#import "MTDatabaseHelper.h"
 
 @interface MaterialViewController ()
 
@@ -22,16 +23,23 @@ static NSString * const reuseIdentifierMaterial = @"MaterialCell";
 
 
 -(void)reload:(__unused id)sender{
+    __weak __typeof__(self) weakSelf = self;
     NSURLSessionTask *task=[DataForCell getGradeList:^(NSArray *data, NSError *error) {
-        if (!error) {
-            self.list=data;
-            [self.collectionView reloadData];
+        if (data==nil)
+        {
+            [DataForCell queryGradeList:^(NSArray*cells){
+                weakSelf.list=cells;
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [weakSelf.collectionView reloadData];
+                });
+            }];
         }
         else
         {
-            //网络加载数据出错，需要在这里从数据库中读取数据
-            
-            NSLog(@"get gradeList error:%@",error);
+            weakSelf.list=data;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [weakSelf.collectionView reloadData];
+            });
         }
     }];
 }
@@ -53,75 +61,24 @@ static NSString * const reuseIdentifierMaterial = @"MaterialCell";
 }
 -(void)initDatabase
 {
-    NSString *databasePath=[CommonMethod getPath:@"user.sqlite"];
-    FMDatabase *database=[FMDatabase databaseWithPath:databasePath];
-    if (![database open])
-    {
-        NSLog(@"database open failed");
-        return;
-    }
-    
-    FMResultSet *result=[database executeQuery:@"select * from GradeList"];
-    if (![result next])
-    {
-        NSString *createTable=@"create table GradeList(GradeID  integer,GradeName varchar(255),CoverURL varchar(512),Text_Count integer);";
-        BOOL success=[database executeUpdate:createTable];
-        if (!success)
-        {
-            NSLog(@"create table failed");
-            return;
-        }
-        NSLog(@"create table success");
-    }
-    else
-    {
-        NSLog(@"table books exist");
-    }
-    
-    result=[database executeQuery:@"select * from TextList"];
-    if (![result next])
-    {
-        NSString *createTable=@"create table TextList(TextID  integer,TextName varchar(255),CoverURL varchar(512),DownloadURL varchar(512),Describe varchar(255),ChallengeGoal integer,ChallengeScore integer,ListenCount integer,PractiseGoal integer,StarCount integer,ListenGoal integer,PractiseCount integer,Version integer);";
-        BOOL success=[database executeUpdate:createTable];
-        if (!success)
-        {
-            NSLog(@"create table failed");
-            return;
-        }
-        NSLog(@"create table success");
-    }
-    else
-    {
-        NSLog(@"table books exist");
-    }
-    
-    [database close];
+    [[MTDatabaseHelper sharedInstance] createTableWithTableName:@"GradeList" indexesWithProperties:@[@"grade_id  INTEGER PRIMARY KEY UNIQUE",@"grade_name varchar(255)",@"cover_url varchar(512)",@"text_count integer"]];
+    [[MTDatabaseHelper sharedInstance] createTableWithTableName:@"TextList" indexesWithProperties:@[@"text_id  INTEGER PRIMARY KEY UNIQUE",@"grade_id  INTEGER",@"text_name varchar(255)",@"cover_url varchar(512)",@"courseware_url varchar(512)",@"desc varchar(255)",@"challenge_goal integer",@"challenge_score integer",@"listen_count integer",@"practise_goal integer",@"star_count integer",@"listen_goal integer",@"practise_count integer",@"version integer"]];
+    return;
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
 
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
 
 #pragma mark <UICollectionViewDataSource>
 
 - (NSInteger)numberOfSectionsInCollectionView:(UICollectionView *)collectionView {
-#warning Incomplete implementation, return the number of sections
     return 1;
 }
 
 
 - (NSInteger)collectionView:(UICollectionView *)collectionView numberOfItemsInSection:(NSInteger)section {
-#warning Incomplete implementation, return the number of items
     return [self.list count];
 }
 
@@ -159,56 +116,5 @@ static NSString * const reuseIdentifierMaterial = @"MaterialCell";
     // Animate
     NSLog(@"log for index:%ld",indexPath.row);
 }
-
--(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
-{
-    
-}
--(void)scrollViewDidScroll:(UIScrollView *)scrollView
-{
-    //        for (int i = 0; i < [scrollView.subviews count]; i++) {
-    //            UIView *cell = [scrollView.subviews objectAtIndex:i];
-    //            float position = cell.center.x - scrollView.contentOffset.x;
-    //            float offset = 1.5 - (fabs(scrollView.center.x - position) * 1.0) / scrollView.center.x;
-    //            if (offset<1.0)
-    //            {
-    //                offset=1.0;
-    //            }
-    //            cell.transform = CGAffineTransformIdentity;
-    //            cell.transform = CGAffineTransformScale(cell.transform, offset, offset);
-    //        }
-}
-
-
-#pragma mark <UICollectionViewDelegate>
-
-/*
- // Uncomment this method to specify if the specified item should be highlighted during tracking
- - (BOOL)collectionView:(UICollectionView *)collectionView shouldHighlightItemAtIndexPath:(NSIndexPath *)indexPath {
-	return YES;
- }
- */
-
-/*
- // Uncomment this method to specify if the specified item should be selected
- - (BOOL)collectionView:(UICollectionView *)collectionView shouldSelectItemAtIndexPath:(NSIndexPath *)indexPath {
- return YES;
- }
- */
-
-/*
- // Uncomment these methods to specify if an action menu should be displayed for the specified item, and react to actions performed on the item
- - (BOOL)collectionView:(UICollectionView *)collectionView shouldShowMenuForItemAtIndexPath:(NSIndexPath *)indexPath {
-	return NO;
- }
- 
- - (BOOL)collectionView:(UICollectionView *)collectionView canPerformAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
-	return NO;
- }
- 
- - (void)collectionView:(UICollectionView *)collectionView performAction:(SEL)action forItemAtIndexPath:(NSIndexPath *)indexPath withSender:(id)sender {
-	
- }
- */
 
 @end

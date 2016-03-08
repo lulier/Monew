@@ -22,6 +22,7 @@
     }
     [self.cellLabel setText:_material.text_name];
     [self.cellImage setImage:[UIImage imageNamed:@"profile-image-placeholder"]];
+    __weak __typeof__(self) weakSelf = self;
     SDWebImageDownloader *downloader = [SDWebImageDownloader sharedDownloader];
     [downloader downloadImageWithURL:[NSURL URLWithString:_material.cover_url]
                              options:0
@@ -32,7 +33,9 @@
                                if (image && finished)
                                {
                                    // do something with image
-                                   [self.cellImage setImage:image];
+                                   dispatch_async(dispatch_get_main_queue(),^{
+                                       [weakSelf.cellImage setImage:image];
+                                   });
                                    NSString *cacheKey=[[SDWebImageManager sharedManager] cacheKeyForURL:[NSURL URLWithString:_material.cover_url]];
                                    [[SDImageCache sharedImageCache] storeImage:self.cellImage.image forKey:cacheKey];
                                }
@@ -43,11 +46,15 @@
                                    ^(UIImage *image, SDImageCacheType cacheType) {
                                        if (image!=nil)
                                        {
-                                           [self.cellImage setImage:image];
+                                           dispatch_async(dispatch_get_main_queue(),^{
+                                               [weakSelf.cellImage setImage:image];
+                                           });
                                        }
                                        else
                                        {
-                                           [self.cellImage setImage:[UIImage imageNamed:@"profile-image-placeholder"]];
+                                           dispatch_async(dispatch_get_main_queue(),^{
+                                               [weakSelf.cellImage setImage:[UIImage imageNamed:@"profile-image-placeholder"]];
+                                           });
                                        }
                                    }];
                                }

@@ -11,6 +11,7 @@
 #import "ReaderDocument.h"
 #import "ReaderViewController.h"
 #import "FMDB.h"
+#import "MTDatabaseHelper.h"
 #import "CommonMethod.h"
 @implementation DataForCell
 {
@@ -49,61 +50,12 @@
     return self;
     
 }
-+(NSURLSessionTask*)getTextList:(void (^)(NSArray *, NSError *))block grade_id:(NSString*)grade_id{
-    
-    NSDictionary *parameters=[[NSDictionary alloc]initWithObjectsAndKeys:@"1",@"user_id",grade_id,@"grade_id", nil];
-    NSMutableArray *mutableBooks=[[NSMutableArray alloc]init];
-    return [NetworkingManager httpRequest:RTGet url:RUText_list parameters:parameters progress:nil
-    success:^(NSURLSessionTask *task,id JSON)
-            {
-                NSInteger status=(NSInteger)[JSON valueForKey:@"status"];
-                if (status!=0)
-                {
-                    NSLog(@"get gradeList error with errormsg: %@",[JSON valueForKey:@"errormsg"]);
-                }
-                NSArray *list=[JSON valueForKey:@"text_list"];
-                //在数据库中纪录text_list
-                [DataForCell recordTextList:list];
-                for (NSDictionary *attributes in list)
-                {
-                    DataForCell *data=[[DataForCell alloc]initWithAttributes:attributes];
-                    [mutableBooks addObject:data];
-                }
-                if (block)
-                {
-                    block([NSArray arrayWithArray:mutableBooks],nil);
-                }
-            }
-    failure:^(NSURLSessionTask *task,NSError* error)
-            {
-                if (block)
-                {
-                    block([NSArray array],error);
-                }
-            }
-            
-    completionHandler:nil];
-    
-}
-+(void)recordTextList:(NSArray*)textList
-{
-    if (textList==nil)
-    {
-        return;
-    }
-}
 +(NSURLSessionTask*)getGradeList:(void (^)(NSArray *, NSError *))block{
-    
     NSDictionary *parameters=[[NSDictionary alloc]initWithObjectsAndKeys:@"1",@"user_id", nil];
     NSMutableArray *mutableBooks=[[NSMutableArray alloc]init];
     return [NetworkingManager httpRequest:RTGet url:RUGrade_list parameters:parameters progress:nil
     success:^(NSURLSessionTask *task,id JSON)
             {
-                NSInteger status=(NSInteger)[JSON valueForKey:@"status"];
-                if (status!=0)
-                {
-                    NSLog(@"get gradeList error with errormsg: %@",[JSON valueForKey:@"errormsg"]);
-                }
                 NSArray *list=[JSON valueForKey:@"grade_list"];
                 //在数据库中纪录grade_list
                 [DataForCell recordGradeList:list];
@@ -121,7 +73,7 @@
             {
                 if (block)
                 {
-                    block([NSArray array],error);
+                    block(nil,error);
                 }
             }
             
@@ -134,10 +86,128 @@
     {
         return;
     }
+    for (NSDictionary *arg in gradeList)
+    {
+        NSString *gradeID=[arg objectForKey:@"grade_id"];
+        NSString *gradeName=[arg objectForKey:@"grade_name"];
+        NSString *coverURL=[arg objectForKey:@"cover_url"];
+        NSString *textCount=[arg objectForKey:@"text_count"];
+        NSArray *colums=[[NSArray alloc]initWithObjects:@"grade_id",@"grade_name",@"cover_url",@"text_count", nil];
+        NSArray *values=[[NSArray alloc]initWithObjects:[NSString stringWithFormat:@"'%@'",gradeID],[NSString stringWithFormat:@"'%@'",gradeName],[NSString stringWithFormat:@"'%@'",coverURL],[NSString stringWithFormat:@"'%@'",textCount], nil];
+        [[MTDatabaseHelper sharedInstance] insertToTable:@"GradeList" withColumns:colums andValues:values];
+    }
 }
-
-
-
++(NSURLSessionTask*)getTextList:(void (^)(NSArray *, NSError *))block grade_id:(NSString*)grade_id{
+    
+    NSDictionary *parameters=[[NSDictionary alloc]initWithObjectsAndKeys:@"1",@"user_id",grade_id,@"grade_id", nil];
+    NSMutableArray *mutableBooks=[[NSMutableArray alloc]init];
+    return [NetworkingManager httpRequest:RTGet url:RUText_list parameters:parameters progress:nil
+        success:^(NSURLSessionTask *task,id JSON)
+            {
+                NSArray *list=[JSON valueForKey:@"text_list"];
+                //在数据库中纪录text_list
+                [DataForCell recordTextList:list gradeID:grade_id];
+                for (NSDictionary *attributes in list)
+                {
+                    DataForCell *data=[[DataForCell alloc]initWithAttributes:attributes];
+                    [mutableBooks addObject:data];
+                }
+                if (block)
+                {
+                    block([NSArray arrayWithArray:mutableBooks],nil);
+                }
+            }
+        failure:^(NSURLSessionTask *task,NSError* error)
+            {
+                if (block)
+                {
+                    block(nil,error);
+                }
+            }
+            
+        completionHandler:nil];
+    
+}
++(void)recordTextList:(NSArray*)textList gradeID:(NSString*)gradeID
+{
+    if (textList==nil)
+    {
+        return;
+    }
+    for (NSDictionary *arg in textList)
+    {
+        NSString *textID=[arg objectForKey:@"text_id"];
+        NSString *textName=[arg objectForKey:@"text_name"];
+        NSString *coverURL=[arg objectForKey:@"cover_url"];
+        NSString *coursewareURL=[arg objectForKey:@"courseware_url"];
+        NSString *desc=[arg objectForKey:@"desc"];
+        NSString *challengeGoal=[arg objectForKey:@"challenge_goal"];
+        NSString *challengeScore=[arg objectForKey:@"challenge_score"];
+        NSString *listenCount=[arg objectForKey:@"listen_count"];
+        NSString *practiseGoal=[arg objectForKey:@"practise_goal"];
+        NSString *starCount=[arg objectForKey:@"star_count"];
+        NSString *listenGoal=[arg objectForKey:@"listen_goal"];
+        NSString *practiseCount=[arg objectForKey:@"practise_count"];
+        NSString *version=[arg objectForKey:@"version"];
+        NSArray *colums=[[NSArray alloc]initWithObjects:@"text_id",@"grade_id",@"text_name",@"cover_url",@"courseware_url",@"desc",@"challenge_goal",@"challenge_score",@"listen_count",@"practise_goal",@"star_count",@"listen_goal",@"practise_count",@"version",nil];
+        NSArray *values=[[NSArray alloc]initWithObjects:
+            [NSString stringWithFormat:@"'%@'",textID],
+            [NSString stringWithFormat:@"'%@'",gradeID],
+            [NSString stringWithFormat:@"'%@'",textName],
+            [NSString stringWithFormat:@"'%@'",coverURL],
+            [NSString stringWithFormat:@"'%@'",coursewareURL],
+            [NSString stringWithFormat:@"'%@'",desc],
+            [NSString stringWithFormat:@"'%@'",challengeGoal],
+            [NSString stringWithFormat:@"'%@'",challengeScore],
+            [NSString stringWithFormat:@"'%@'",listenCount],
+            [NSString stringWithFormat:@"'%@'",practiseGoal],
+            [NSString stringWithFormat:@"'%@'",starCount],
+            [NSString stringWithFormat:@"'%@'",listenGoal],
+            [NSString stringWithFormat:@"'%@'",practiseCount],
+            [NSString stringWithFormat:@"'%@'",version], nil];
+        [[MTDatabaseHelper sharedInstance] insertToTable:@"TextList" withColumns:colums andValues:values];
+    }
+}
+//这里需要改成添加block参数
++(void)queryGradeList:(void (^)(NSArray*data))block
+{
+    [[MTDatabaseHelper sharedInstance] queryTable:@"GradeList" withSelect:@[@"*"] andWhere:nil completion:
+     ^(NSMutableArray *resultsArray) {
+         NSMutableArray *mutableBooks=[[NSMutableArray alloc]init];
+         if (resultsArray!=nil)
+         {
+             for (NSDictionary*tmp in resultsArray)
+             {
+                 DataForCell *data=[[DataForCell alloc]initWithAttributes:tmp];
+                 [mutableBooks addObject:data];
+             }
+         }
+         if (block)
+         {
+             block([NSArray arrayWithArray:mutableBooks]);
+         }
+     }];
+}
++(void)queryTextList:(NSString *)gradeID block:(void (^)(NSArray *))block
+{
+    NSDictionary *where=[NSDictionary dictionaryWithObjectsAndKeys:gradeID,@"grade_id", nil];
+    [[MTDatabaseHelper sharedInstance] queryTable:@"TextList" withSelect:@[@"*"] andWhere:where completion:
+     ^(NSMutableArray *resultsArray) {
+         NSMutableArray *mutableBooks=[[NSMutableArray alloc]init];
+         if (resultsArray!=nil)
+         {
+             for (NSDictionary*tmp in resultsArray)
+             {
+                 DataForCell *data=[[DataForCell alloc]initWithAttributes:tmp];
+                 [mutableBooks addObject:data];
+             }
+         }
+         if (block)
+         {
+             block([NSArray arrayWithArray:mutableBooks]);
+         }
+     }];
+}
 
 
 

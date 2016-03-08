@@ -10,6 +10,26 @@
 
 @implementation CommonMethod
 
+//传入参数格式: number of value_key,value,key,value,key...
++(NSMutableDictionary*)packParamsInDictionary:(id)params, ...
+{
+    NSMutableDictionary* myDic = [[NSMutableDictionary alloc]init];
+    id value;
+    NSString* key = [[NSString alloc]init];
+    va_list dicList;
+    value = params;
+    if (value) {
+        va_start(dicList, params);
+        while (value) {
+            key = va_arg(dicList, id);
+            [myDic setValue:value forKey:key];
+            value = va_arg(dicList, id);
+        }
+        va_end(dicList);
+    }
+    
+    return myDic;
+}
 
 + (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize {
     //UIGraphicsBeginImageContext(newSize);
