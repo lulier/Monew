@@ -22,8 +22,10 @@
 +(NSString*)randomStringWithLength:(int)length;
 //对str字符串进行md5加密
 +(NSMutableString*)MD5EncryptionWithString:(NSString*)str;
++(BOOL)isEmailValid:(NSString *)email;
 
 + (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize;
 +(UIViewController*)getCurrentVC;
 +(NSString*)getPath:(NSString*)fileName;
+
 @end

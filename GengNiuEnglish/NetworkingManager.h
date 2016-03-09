@@ -22,6 +22,9 @@ typedef NS_ENUM(NSInteger,RequestURL)
     RUText_list=0,
     RUText_detail,
     RUGrade_list,
+    RURegist,
+    RULogin,
+    RUGetSalt,
     RUCustom
 };
 
@@ -29,6 +32,9 @@ static const NSString *URLForGradeList=@"http://120.25.103.72:8002/courseware/gr
 static const NSString *URLForTextList=@"http://120.25.103.72:8002/courseware/text_list_query/";
 static const NSString *URLForTextDetai=@"http://120.25.103.72:8002/courseware/text_detail_query/";
 static const NSString *URLForRegist=@"http://120.25.103.72:8002/student/register/";
+static const NSString *URLForLogin=@"http://120.25.103.72:8002/student/login/";
+static const NSString *URLForGetSalt=@"http://120.25.103.72:8002/student/get_salt/";
+
 
 @interface NetworkingManager : NSObject
 

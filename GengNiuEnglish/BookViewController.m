@@ -61,17 +61,14 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
 
 -(void)reload:(__unused id)sender{
     __weak __typeof__(self) weakSelf = self;
+    [DataForCell queryTextList:weakSelf.grade_id block:^(NSArray*cells){
+        weakSelf.list=cells;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [weakSelf.collectionView reloadData];
+        });
+    }];
     NSURLSessionTask *task=[DataForCell getTextList:^(NSArray *data, NSError *error) {
-        if (data==nil)
-        {
-            [DataForCell queryTextList:weakSelf.grade_id block:^(NSArray*cells){
-                weakSelf.list=cells;
-                dispatch_async(dispatch_get_main_queue(), ^{
-                    [weakSelf.collectionView reloadData];
-                });
-            }];
-        }
-        else
+        if(data!=nil)
         {
             weakSelf.list=data;
             dispatch_async(dispatch_get_main_queue(), ^{

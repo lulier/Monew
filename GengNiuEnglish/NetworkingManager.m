@@ -22,7 +22,7 @@
             return [NetworkingManager httpGet:link parameters:parameters success:success failure:failure];
             break;
         case RTPost:
-            return nil;
+            return [NetworkingManager httpPost:link parameters:parameters success:success failure:failure];
         case RTDownload:
             return [NetworkingManager httpDownload:link parameters:parameters progress:downloadProgressBlock completionHandler:completionHandler];
         case RTUpload:
@@ -41,6 +41,12 @@
             return URLForTextDetai;
         case RUGrade_list:
             return URLForGradeList;
+        case RURegist:
+            return URLForRegist;
+        case RULogin:
+            return URLForLogin;
+        case RUGetSalt:
+            return URLForGetSalt;
         case RUCustom:
             return nil;
         default:
@@ -70,6 +76,7 @@
         //        NSLog(@"log for the response data%@",responseObject);
         
         success(task,responseObject);
+        NSLog(@"log for response:%@",responseObject);
         
     } failure:^(NSURLSessionDataTask *task, NSError *error){
         NSLog(@"your request has failed%@",error);

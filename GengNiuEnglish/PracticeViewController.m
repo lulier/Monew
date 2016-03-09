@@ -137,6 +137,12 @@ static NSString* cellIdentifierLyric=@"LyricViewCell";
     cell.lyricItem=self.lyricItems[indexPath.row];
     cell.index=indexPath.row;
     cell.delegate=self;
+    cell.playText.hidden=YES;
+    if (indexPath.row==0)
+    {
+        cell.playText.hidden=NO;
+    }
+    
     //clear cell color
 //    cell.backgroundColor = [UIColor clearColor];
 //    cell.selectionStyle=UITableViewCellSelectionStyleNone;
@@ -156,6 +162,19 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView beginUpdates];
+    for (LyricViewCell *cell in [tableView visibleCells])
+    {
+        cell.playText.hidden=YES;
+        if (cell.index!=indexPath.row)
+        {
+            LyricItem *item=self.lyricItems[cell.index];
+            cell.cellText.text=item.lyricBody;
+        }
+        if (cell.index==indexPath.row)
+        {
+            cell.playText.hidden=NO;
+        }
+    }
     if (![indexPath compare:self.selectedIndex]==NSOrderedSame)
     {
         self.selectedIndex=indexPath;
@@ -332,7 +351,16 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
         }
         [resultString appendAttributedString:word];
     }
-        self.testReconition.attributedText=resultString;
+    
+    for (LyricViewCell *cell in [self.tableview visibleCells])
+    {
+        if (cell.index==self.selectedIndex.row)
+        {
+            cell.cellText.attributedText=resultString;
+        }
+        
+    }
+//    self.testReconition.attributedText=resultString;
 }
 
 

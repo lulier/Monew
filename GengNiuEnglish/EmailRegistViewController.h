@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "CommonMethod.h"
+#import "AccountManager.h"
 
 @interface EmailRegistViewController : UIViewController<UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *goBackButton;

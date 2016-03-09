@@ -41,6 +41,10 @@
     // Configure the view for the selected state
 }
 - (IBAction)recordVoiceClick:(id)sender {
+    if (self.recordPlaying)
+    {
+        return;
+    }
     if (self.recording)
     {
         [self.recordVoice setTitle:@"录音" forState:UIControlStateNormal];
@@ -53,8 +57,10 @@
     [self.delegate initRecorder:self.index words:self.lyricItem.lyricWords];
 }
 - (IBAction)playVoiceClick:(id)sender {
-    
-    
+    if (self.recording)
+    {
+        return;
+    }
     if (self.recordPlaying)
     {
         [self.playVoice setTitle:@"播放" forState:UIControlStateNormal];
