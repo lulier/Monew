@@ -9,13 +9,34 @@
 #import "EmailRegistViewController.h"
 
 @implementation EmailRegistViewController
+-(void)updateViewConstraints
+{
+    [super updateViewConstraints];
+    NSLog(@"%f",[UIScreen mainScreen].bounds.size.height);
+    self.titleTopConstraint.constant=[UIScreen mainScreen].bounds.size.height>320.0f?7:4;
+    if ([UIScreen mainScreen].bounds.size.height>375.0f)
+    {
+        self.titleTopConstraint.constant=10;
+    }
+}
 -(void)viewDidLoad
 {
     UIImage *background=[CommonMethod imageWithImage:[UIImage imageNamed:@"naked_background"] scaledToSize:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height)];
     self.view.backgroundColor=[UIColor colorWithPatternImage:background];
     self.emailInput.delegate=self;
     self.passwordInput.delegate=self;
+    [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(onKeyboardHide) name:UIKeyboardWillHideNotification object:nil];
 }
+-(void)onKeyboardHide
+{
+    self.view.frame =CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+}
+-(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
+    [self.emailInput resignFirstResponder];
+    [self.passwordInput resignFirstResponder];
+    self.view.frame =CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
+}
+
 -(BOOL)textFieldShouldReturn:(UITextField *)textField
 {
     [textField resignFirstResponder];
@@ -26,7 +47,7 @@
 {
     CGRect frame = textField.frame;
     int offset = frame.origin.y + 70 - (self.view.frame.size.height - 216.0);//键盘高度216
-    NSTimeInterval animationDuration = 0.30f;
+    NSTimeInterval animationDuration = 0.50f;
     [UIView beginAnimations:@"ResizeForKeyboard" context:nil];
     [UIView setAnimationDuration:animationDuration];
     
@@ -47,11 +68,14 @@
     NSString *passWord=self.passwordInput.text;
     
     if (![CommonMethod isEmailValid: emailAddress]) {
-        NSLog(@"log for adderss:%@",emailAddress);
-//        [SVProgressHUD showErrorWithStatus:@"邮箱格式不正确" duration:1.f];
+        SCLAlertView *alert = [[SCLAlertView alloc] init];
+        [alert showError:self title:@"错误" subTitle:@"您输入的邮箱格式有误" closeButtonTitle:@"确定" duration:0.0f];
         return;
-    } else if ([passWord length] < 5) {
-//        [SVProgressHUD showErrorWithStatus:@"密码长度请不要小于5位" duration:1.f];
+    }
+    if ([passWord length] < 5)
+    {
+        SCLAlertView *alert = [[SCLAlertView alloc] init];
+        [alert showError:self title:@"错误" subTitle:@"密码长度请不要少于5位" closeButtonTitle:@"确定" duration:0.0f];
         return;
     }
     NSDictionary *dict=[NSDictionary dictionaryWithObjectsAndKeys:emailAddress,@"account",passWord,@"password",nil];

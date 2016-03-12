@@ -9,11 +9,14 @@
 #import <UIKit/UIKit.h>
 #import "CommonMethod.h"
 #import "AccountManager.h"
+#import "SCLAlertView.h"
 
 @interface EmailRegistViewController : UIViewController<UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *goBackButton;
 @property (weak, nonatomic) IBOutlet UITextField *emailInput;
 @property (weak, nonatomic) IBOutlet UITextField *passwordInput;
 @property (weak, nonatomic) IBOutlet UIButton *registButton;
+
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *titleTopConstraint;
 
 @end

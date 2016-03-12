@@ -25,9 +25,9 @@ static MTDatabaseHelper *singleInstance = nil;
     self = [super init];
     if(self){
         NSArray* path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString* DBname =[NSString stringWithFormat:@"%@.sqlite",@"leo"];
+        NSString *userID =  [[NSUserDefaults standardUserDefaults] objectForKey:@"userID"];
+        NSString* DBname =[NSString stringWithFormat:@"%@/user.sqlite",userID];
         NSString *dbFilePath =[(NSString*)[path objectAtIndex:0] stringByAppendingPathComponent:DBname];
-        NSLog(@"log path:%@",dbFilePath);
         queue = [FMDatabaseQueue databaseQueueWithPath:dbFilePath];
     }
     return self;
@@ -69,7 +69,7 @@ static MTDatabaseHelper *singleInstance = nil;
     }
     
     [sql appendString:@")"];
-    NSLog(@"create table sql: %@",sql);
+//    NSLog(@"create table sql: %@",sql);
     
 
     [queue inDatabase:^(FMDatabase *db) {
@@ -109,7 +109,7 @@ static MTDatabaseHelper *singleInstance = nil;
         }
     }
     [sql appendString:@")"];
-    NSLog(@"insert into table sql: %@",sql);
+//    NSLog(@"insert into table sql: %@",sql);
     [queue inDatabase:^(FMDatabase *db) {
         [db executeUpdate:sql];
     }];
@@ -146,7 +146,7 @@ static MTDatabaseHelper *singleInstance = nil;
             [sql appendString:@", "];
         }
     }
-    NSLog(@"update sql: %@",sql);
+//    NSLog(@"update sql: %@",sql);
     [queue inDatabase:^(FMDatabase *db) {
         [db executeUpdate:sql];
     }];

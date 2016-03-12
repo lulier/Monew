@@ -21,6 +21,13 @@
 		F42FA5F01C8D29600033C9C9 /* MTDatabaseHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = F42FA5EF1C8D29600033C9C9 /* MTDatabaseHelper.m */; };
 		F42FA5F31C8D32C50033C9C9 /* UserAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = F42FA5F21C8D32C50033C9C9 /* UserAccount.m */; };
 		F42FA5FC1C8EB1560033C9C9 /* AccountManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F42FA5FB1C8EB1560033C9C9 /* AccountManager.m */; };
+		F46A44FA1C93CA37002BC9D4 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F46A44F91C93CA37002BC9D4 /* CoreTelephony.framework */; };
+		F46A45051C93CD50002BC9D4 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F46A44FB1C93CA5B002BC9D4 /* libz.tbd */; };
+		F46A45071C93CD5A002BC9D4 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F46A45061C93CD5A002BC9D4 /* libicucore.tbd */; };
+		F46A45081C93CD6D002BC9D4 /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F46A44FD1C93CA65002BC9D4 /* libstdc++.tbd */; };
+		F46A450A1C93CD7D002BC9D4 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F46A45091C93CD7D002BC9D4 /* JavaScriptCore.framework */; };
+		F46A450D1C93CE34002BC9D4 /* MOBFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F46A450B1C93CE34002BC9D4 /* MOBFoundation.framework */; };
+		F46A450E1C93CE34002BC9D4 /* SMS_SDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F46A450C1C93CE34002BC9D4 /* SMS_SDK.framework */; };
 		F486C77C1C3A492000CBFBD1 /* LyricItem.m in Sources */ = {isa = PBXBuildFile; fileRef = F486C77B1C3A492000CBFBD1 /* LyricItem.m */; };
 		F486C7801C3B8B7C00CBFBD1 /* SampleQueueId.m in Sources */ = {isa = PBXBuildFile; fileRef = F486C77F1C3B8B7C00CBFBD1 /* SampleQueueId.m */; };
 		F49467041C27CE0900806DEF /* DataForCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F49467031C27CE0900806DEF /* DataForCell.m */; };
@@ -89,6 +96,15 @@
 		F42FA5F21C8D32C50033C9C9 /* UserAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserAccount.m; sourceTree = "<group>"; };
 		F42FA5FA1C8EB1560033C9C9 /* AccountManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountManager.h; sourceTree = "<group>"; };
 		F42FA5FB1C8EB1560033C9C9 /* AccountManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountManager.m; sourceTree = "<group>"; };
+		F46A44F91C93CA37002BC9D4 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
+		F46A44FB1C93CA5B002BC9D4 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
+		F46A44FD1C93CA65002BC9D4 /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
+		F46A44FF1C93CA6F002BC9D4 /* libsqlite3.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libsqlite3.tbd; path = usr/lib/libsqlite3.tbd; sourceTree = SDKROOT; };
+		F46A45011C93CBDC002BC9D4 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
+		F46A45061C93CD5A002BC9D4 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
+		F46A45091C93CD7D002BC9D4 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/PrivateFrameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
+		F46A450B1C93CE34002BC9D4 /* MOBFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MOBFoundation.framework; path = SMS_SDK/MOBFoundation.framework; sourceTree = "<group>"; };
+		F46A450C1C93CE34002BC9D4 /* SMS_SDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SMS_SDK.framework; path = SMS_SDK/SMS_SDK.framework; sourceTree = "<group>"; };
 		F486C77A1C3A492000CBFBD1 /* LyricItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LyricItem.h; sourceTree = "<group>"; };
 		F486C77B1C3A492000CBFBD1 /* LyricItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LyricItem.m; sourceTree = "<group>"; };
 		F486C77E1C3B8B7C00CBFBD1 /* SampleQueueId.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleQueueId.h; sourceTree = "<group>"; };
@@ -127,10 +143,17 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F46A450D1C93CE34002BC9D4 /* MOBFoundation.framework in Frameworks */,
+				F46A450E1C93CE34002BC9D4 /* SMS_SDK.framework in Frameworks */,
+				F46A450A1C93CD7D002BC9D4 /* JavaScriptCore.framework in Frameworks */,
+				F46A45081C93CD6D002BC9D4 /* libstdc++.tbd in Frameworks */,
+				F4AD05691C2C1034006554FF /* MessageUI.framework in Frameworks */,
+				F46A45071C93CD5A002BC9D4 /* libicucore.tbd in Frameworks */,
+				F46A45051C93CD50002BC9D4 /* libz.tbd in Frameworks */,
+				F46A44FA1C93CA37002BC9D4 /* CoreTelephony.framework in Frameworks */,
 				F4AFCFAC1C842C9B0003B7F2 /* OpenEars.framework in Frameworks */,
 				F4AFCF9A1C803DE30003B7F2 /* AudioToolbox.framework in Frameworks */,
 				F4AFCF921C8025C10003B7F2 /* AVFoundation.framework in Frameworks */,
-				F4AD05691C2C1034006554FF /* MessageUI.framework in Frameworks */,
 				F4AD05671C2C102C006554FF /* ImageIO.framework in Frameworks */,
 				F4AD05651C2C1021006554FF /* QuartzCore.framework in Frameworks */,
 				4685CC87E9EF4168376FEC31 /* libPods.a in Frameworks */,
@@ -166,6 +189,15 @@
 		5F4697E4BCC7D6FEE1E67A97 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F46A450B1C93CE34002BC9D4 /* MOBFoundation.framework */,
+				F46A450C1C93CE34002BC9D4 /* SMS_SDK.framework */,
+				F46A45091C93CD7D002BC9D4 /* JavaScriptCore.framework */,
+				F46A45061C93CD5A002BC9D4 /* libicucore.tbd */,
+				F46A45011C93CBDC002BC9D4 /* MobileCoreServices.framework */,
+				F46A44FF1C93CA6F002BC9D4 /* libsqlite3.tbd */,
+				F46A44FD1C93CA65002BC9D4 /* libstdc++.tbd */,
+				F46A44FB1C93CA5B002BC9D4 /* libz.tbd */,
+				F46A44F91C93CA37002BC9D4 /* CoreTelephony.framework */,
 				F4AFCFA91C842C9B0003B7F2 /* AcousticModelEnglish.bundle */,
 				F4AFCFAA1C842C9B0003B7F2 /* OpenEars.framework */,
 				F4AFCF991C803DE30003B7F2 /* AudioToolbox.framework */,
@@ -658,6 +690,8 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"${PODS_ROOT}\"/**",
 					"$(PROJECT_DIR)",
+					"$(SDKROOT)$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks",
+					"$(PROJECT_DIR)/SMS_SDK",
 				);
 				INFOPLIST_FILE = GengNiuEnglish/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
@@ -680,6 +714,8 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"\"${PODS_ROOT}\"/**",
 					"$(PROJECT_DIR)",
+					"$(SDKROOT)$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks",
+					"$(PROJECT_DIR)/SMS_SDK",
 				);
 				INFOPLIST_FILE = GengNiuEnglish/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;

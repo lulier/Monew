@@ -7,6 +7,7 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "AccountManager.h"
 
 @interface MTDatabaseHelper : NSObject
 
