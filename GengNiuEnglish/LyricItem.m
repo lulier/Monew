@@ -7,6 +7,8 @@
 //
 
 #import "LyricItem.h"
+#define CIPHER_KEY @"24BF8C08A00AFA00"
+#import "CommonMethod.h"
 
 @implementation LyricItem
 -(instancetype)initWithAttributes:(NSDictionary *)attributes
@@ -35,7 +37,10 @@
 +(NSArray *)parseLyric:(NSString *)filePath
 {
     NSMutableArray *lyrics=[[NSMutableArray alloc]init];
-    NSString *content=[NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:nil];
+    NSData *secretText=[NSData dataWithContentsOfFile:filePath];
+    NSString *result=[CommonMethod decryptAESData:secretText app_key:CIPHER_KEY];
+    NSString *tmp=[result stringByReplacingOccurrencesOfString:@"[ENDASH]" withString:@"–"];
+    NSString *content=[tmp stringByReplacingOccurrencesOfString:@"[EMDASH]" withString:@"—"];
     NSArray *contents=[content componentsSeparatedByString:@"\n"];
     for (int i=0; i<[contents count]-1; i++)
     {

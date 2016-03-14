@@ -47,6 +47,8 @@
 		F4AFCFAB1C842C9B0003B7F2 /* AcousticModelEnglish.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F4AFCFA91C842C9B0003B7F2 /* AcousticModelEnglish.bundle */; };
 		F4AFCFAC1C842C9B0003B7F2 /* OpenEars.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4AFCFAA1C842C9B0003B7F2 /* OpenEars.framework */; };
 		F4B271B01C33B429009313CA /* LyricViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B271AF1C33B429009313CA /* LyricViewController.m */; };
+		F4F0E6CE1C94167600818C89 /* NSData+NSData_AES.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F0E6CD1C94167600818C89 /* NSData+NSData_AES.m */; };
+		F4F0E6DC1C95667600818C89 /* MHE_Rdg_Wonders_LvRdr_G4_On-Level_U4W2_17.lrc in Resources */ = {isa = PBXBuildFile; fileRef = F4F0E6DB1C95667600818C89 /* MHE_Rdg_Wonders_LvRdr_G4_On-Level_U4W2_17.lrc */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -136,6 +138,9 @@
 		F4AFCFAA1C842C9B0003B7F2 /* OpenEars.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OpenEars.framework; sourceTree = "<group>"; };
 		F4B271AE1C33B429009313CA /* LyricViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LyricViewController.h; sourceTree = "<group>"; };
 		F4B271AF1C33B429009313CA /* LyricViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LyricViewController.m; sourceTree = "<group>"; };
+		F4F0E6CC1C94167600818C89 /* NSData+NSData_AES.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+NSData_AES.h"; sourceTree = "<group>"; };
+		F4F0E6CD1C94167600818C89 /* NSData+NSData_AES.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+NSData_AES.m"; sourceTree = "<group>"; };
+		F4F0E6DB1C95667600818C89 /* MHE_Rdg_Wonders_LvRdr_G4_On-Level_U4W2_17.lrc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MHE_Rdg_Wonders_LvRdr_G4_On-Level_U4W2_17.lrc"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -213,6 +218,7 @@
 		F427991D1C18514200240736 = {
 			isa = PBXGroup;
 			children = (
+				F4F0E6DB1C95667600818C89 /* MHE_Rdg_Wonders_LvRdr_G4_On-Level_U4W2_17.lrc */,
 				F42799281C18514200240736 /* GengNiuEnglish */,
 				F42799421C18514300240736 /* GengNiuEnglishTests */,
 				F427994D1C18514300240736 /* GengNiuEnglishUITests */,
@@ -315,6 +321,7 @@
 		F49466FE1C27C95700806DEF /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				F4F0E6D21C94189200818C89 /* GTMBase64 */,
 				F42FA5EE1C8D29600033C9C9 /* MTDatabaseHelper.h */,
 				F42FA5EF1C8D29600033C9C9 /* MTDatabaseHelper.m */,
 				F4A9AF371C4D0D26004BC7BF /* CommonMethod.h */,
@@ -336,8 +343,17 @@
 		F4AFCFAF1C84394D0003B7F2 /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				F4F0E6CC1C94167600818C89 /* NSData+NSData_AES.h */,
+				F4F0E6CD1C94167600818C89 /* NSData+NSData_AES.m */,
 			);
 			name = Category;
+			sourceTree = "<group>";
+		};
+		F4F0E6D21C94189200818C89 /* GTMBase64 */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = GTMBase64;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -449,6 +465,7 @@
 			files = (
 				F42799391C18514200240736 /* LaunchScreen.storyboard in Resources */,
 				F42799361C18514200240736 /* Assets.xcassets in Resources */,
+				F4F0E6DC1C95667600818C89 /* MHE_Rdg_Wonders_LvRdr_G4_On-Level_U4W2_17.lrc in Resources */,
 				F42799341C18514200240736 /* Main.storyboard in Resources */,
 				F4AFCFAB1C842C9B0003B7F2 /* AcousticModelEnglish.bundle in Resources */,
 			);
@@ -539,6 +556,7 @@
 				F4B271B01C33B429009313CA /* LyricViewController.m in Sources */,
 				F42FA5EA1C8C01570033C9C9 /* MobileRegistViewController.m in Sources */,
 				F42FA5F01C8D29600033C9C9 /* MTDatabaseHelper.m in Sources */,
+				F4F0E6CE1C94167600818C89 /* NSData+NSData_AES.m in Sources */,
 				F4A9AF481C4E2040004BC7BF /* MaterialViewController.m in Sources */,
 				F42FA5ED1C8C017B0033C9C9 /* EmailRegistViewController.m in Sources */,
 				F4A9AF511C4F7E04004BC7BF /* LyricViewCell.m in Sources */,

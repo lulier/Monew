@@ -28,6 +28,18 @@ typedef NS_ENUM(NSInteger,RequestURL)
     RUCheckAvail,
     RUCustom
 };
+enum Return_Code
+{
+    TEXT_VERSION_ERR=91,
+    PASSWD_UNSET=92,
+    BIND_PHONE_ERROR=93,
+    PASSWD_INCORRECT=94,
+    USER_NOT_ACTIVE=95,
+    USER_EXIST=96,
+    PARAM_ERROR=97,
+    TEXT_NOT_EXIST=98,
+    USER_NOT_EXIST=99
+};
 
 @interface NetworkingManager : NSObject
 

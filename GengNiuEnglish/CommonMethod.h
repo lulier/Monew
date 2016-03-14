@@ -27,7 +27,11 @@
 
 
 
-
+#pragma mark - AES加密
+//将string转成带密码的data
++ (NSData*)encryptAESData:(NSString*)string app_key:(NSString*)key ;
+//将带密码的data转成string
++(NSString*)decryptAESData:(NSData*)data app_key:(NSString*)key ;
 + (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize;
 +(UIViewController*)getCurrentVC;
 +(NSString*)getPath:(NSString*)fileName;

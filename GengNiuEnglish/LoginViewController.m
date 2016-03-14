@@ -7,6 +7,7 @@
 //
 
 #import "LoginViewController.h"
+#define CIPHER_KEY @"24BF8C08A00AFA00"
 
 @implementation LoginViewController
 -(void)viewWillAppear:(BOOL)animated
@@ -14,6 +15,13 @@
     //检查是否登陆过  在nsdefual中查询是否存在userid字段，同时是否是active，如果是自动登陆，同时跳到主界面
     [super viewWillAppear:animated];
     [self checkLogin];
+}
+-(void)testDecode
+{
+    NSString *plaintText=@"[00:00.00]CHAPTER 1 Donald Lopskill’s Floozle Dreams[00:04.75]Donald Lopskill settled back into his chair.[00:08.38]\"So what w";
+    NSData *secretText=[NSData dataWithContentsOfFile:[[NSBundle mainBundle] pathForResource:@"MHE_Rdg_Wonders_LvRdr_G4_On-Level_U4W2_17" ofType:@"lrc"]];
+    NSString *result=[CommonMethod decryptAESData:secretText app_key:CIPHER_KEY];
+    
 }
 -(void)checkLogin
 {
