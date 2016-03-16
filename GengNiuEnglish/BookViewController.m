@@ -9,13 +9,13 @@
 #import "BookViewController.h"
 #import "DataForCell.h"
 #import "CommonMethod.h"
-#import "TextBookCell.h"
 #import "DataForCell.h"
 #import "NetworkingManager.h"
 #import "MRProgress.h"
 #import <AVFoundation/AVFoundation.h>
 #import "LyricViewController.h"
 #import "FMDB.h"
+#import "DAProgressOverlayView.h"
 
 @interface BookViewController ()
 {
@@ -129,9 +129,14 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
     TextBookCell *cell = (TextBookCell*)[collectionView dequeueReusableCellWithReuseIdentifier:reuseIdentifierBook forIndexPath:indexPath];
     // Configure the cell
     cell.book=self.list[indexPath.row];
+    cell.index=indexPath.row;
+    cell.delegate=self;
     return cell;
 }
-
+-(void)clickCellButton:(NSInteger)index
+{
+    [self collectionView:self.collectionView didSelectItemAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
+}
 
 
 
@@ -188,7 +193,12 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
     //这里还没有处理下载出错的情况
     NSDictionary *parameters=[NSDictionary dictionaryWithObjectsAndKeys:book.downloadURL,@"url",nil];
     __weak __typeof__(self) weakSelf = self;
-    __block MRProgressOverlayView *progressView=[MRProgressOverlayView showOverlayAddedTo:cell title:@"downloading" mode:MRProgressOverlayViewModeDeterminateCircular animated:YES];
+//    __block MRProgressOverlayView *progressView=[MRProgressOverlayView showOverlayAddedTo:cell title:@"downloading" mode:MRProgressOverlayViewModeDeterminateCircular animated:YES];
+    __block DAProgressOverlayView *progressView=[[DAProgressOverlayView alloc]initWithFrame:cell.bounds];
+    [progressView setHidden:NO];
+    progressView.progress = 0;
+    [cell addSubview:progressView];
+    [progressView displayOperationWillTriggerAnimation];
     __block NSURLSessionTask *task=
     [NetworkingManager httpRequest:RTDownload url:RUCustom parameters:parameters
                           progress:^(NSProgress *downloadProgress)
@@ -198,8 +208,13 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
              dispatch_async(dispatch_get_main_queue(), ^{
                  [progressView setProgress:downloadProgress.fractionCompleted];
                  if (downloadProgress.fractionCompleted == 1.0000) {
-                     [progressView dismiss:YES];
-                     progressView=nil;
+                     [progressView displayOperationDidFinishAnimation];
+                     double delayInSeconds = progressView.stateChangeAnimationDuration;
+                     dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
+                     dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
+                         [progressView removeFromSuperview];
+                         progressView = nil;
+                     });
                      NSLog(@"download complete");
                      if(progressView!=nil)
                          NSLog(@"progressView is not nil");
@@ -220,18 +235,18 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
          }
      }];
     book.task=task;
-    progressView.stopBlock = ^(MRProgressOverlayView *view){
-        if (task.state==NSURLSessionTaskStateSuspended)
-        {
-            [view setTitleLabelText:@"downloading"];
-            [task resume];
-        }
-        else
-        {
-            [view setTitleLabelText:@"suspended"];
-            [task suspend];
-        }
-    };
+//    progressView.stopBlock = ^(MRProgressOverlayView *view){
+//        if (task.state==NSURLSessionTaskStateSuspended)
+//        {
+//            [view setTitleLabelText:@"downloading"];
+//            [task resume];
+//        }
+//        else
+//        {
+//            [view setTitleLabelText:@"suspended"];
+//            [task suspend];
+//        }
+//    };
 }
 
 

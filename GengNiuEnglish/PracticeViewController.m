@@ -8,6 +8,14 @@
 
 #import "PracticeViewController.h"
 
+
+typedef NS_ENUM(NSInteger,StarNum)
+{
+    oneStar=0,
+    twoStar,
+    threeStar,
+};
+
 @interface PracticeViewController ()
 {
     STKAudioPlayer *audioPlayer;
@@ -61,6 +69,9 @@ static NSString* cellIdentifierLyric=@"LyricViewCell";
     UIImage *background=[CommonMethod imageWithImage:[UIImage imageNamed:@"naked_background"] scaledToSize:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height)];
     self.view.backgroundColor=[UIColor colorWithPatternImage:background];
     self.selectedIndex=[NSIndexPath indexPathForRow:0 inSection:0];
+//    [self.tableview reloadData];
+//    [self tableView:self.tableview didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+
     // Do any additional setup after loading the view.
     UIImageView *tempImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tableview_bg.png"]];
     [tempImageView setFrame:self.tableview.frame];
@@ -143,15 +154,14 @@ static NSString* cellIdentifierLyric=@"LyricViewCell";
     cell.index=indexPath.row;
     cell.delegate=self;
     cell.playText.hidden=YES;
-    if (indexPath.row==0)
+    [cell.star1 setImage:[UIImage imageNamed:@"star_unlight"]];
+    [cell.star2 setImage:[UIImage imageNamed:@"star_unlight"]];
+    [cell.star3 setImage:[UIImage imageNamed:@"star_unlight"]];
+    if (self.selectedIndex.row==cell.index)
     {
         cell.playText.hidden=NO;
+        cell.cellText.textColor=[UIColor colorWithRed:2/255.f green:196/255.f blue:188/255.f alpha:1.0];
     }
-    
-    //clear cell color
-//    cell.backgroundColor = [UIColor clearColor];
-//    cell.selectionStyle=UITableViewCellSelectionStyleNone;
-    
     return cell;
 }
 
@@ -164,6 +174,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     }
     return 50.0f;
 }
+
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [tableView beginUpdates];
@@ -173,11 +184,16 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
         if (cell.index!=indexPath.row)
         {
             LyricItem *item=self.lyricItems[cell.index];
+            [cell.star1 setImage:[UIImage imageNamed:@"star_unlight"]];
+            [cell.star2 setImage:[UIImage imageNamed:@"star_unlight"]];
+            [cell.star3 setImage:[UIImage imageNamed:@"star_unlight"]];
             cell.cellText.text=item.lyricBody;
+            cell.cellText.textColor=[UIColor blackColor];
         }
         if (cell.index==indexPath.row)
         {
             cell.playText.hidden=NO;
+            cell.cellText.textColor=[UIColor colorWithRed:2/255.f green:196/255.f blue:188/255.f alpha:1.0];
         }
     }
     if (![indexPath compare:self.selectedIndex]==NSOrderedSame)
@@ -340,6 +356,8 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
         }
     }
     NSMutableAttributedString *resultString=[[NSMutableAttributedString alloc]init];
+    NSInteger correct=0;
+    NSInteger wrong=0;
     for (NSString *tmp in currentWords)
     {
         NSAttributedString *word;
@@ -348,24 +366,54 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
         {
             attributes=[NSDictionary dictionaryWithObject:[UIColor blackColor] forKey:NSForegroundColorAttributeName];
             word=[[NSAttributedString alloc]initWithString:[NSString stringWithFormat:@"%@ ",tmp] attributes:attributes];
+            correct++;
         }
         else
         {
             attributes=[NSDictionary dictionaryWithObject:[UIColor redColor] forKey:NSForegroundColorAttributeName];
             word=[[NSAttributedString alloc]initWithString:[NSString stringWithFormat:@"%@ ",tmp] attributes:attributes];
+            wrong++;
         }
         [resultString appendAttributedString:word];
     }
-    
+    StarNum number;
+    if (wrong>=correct)
+    {
+        number=oneStar;
+    }
+    else
+    {
+        number=twoStar;
+        if (wrong<=2)
+        {
+            number=threeStar;
+        }
+    }
     for (LyricViewCell *cell in [self.tableview visibleCells])
     {
         if (cell.index==self.selectedIndex.row)
         {
-            cell.cellText.attributedText=resultString;
+//            cell.cellText.attributedText=resultString;
+            switch (number) {
+                case oneStar:
+                    [cell.star1 setImage:[UIImage imageNamed:@"star_light"]];
+                    break;
+                case twoStar:
+                    [cell.star1 setImage:[UIImage imageNamed:@"star_light"]];
+                    [cell.star2 setImage:[UIImage imageNamed:@"star_light"]];
+                    break;
+                case threeStar:
+                    [cell.star1 setImage:[UIImage imageNamed:@"star_light"]];
+                    [cell.star2 setImage:[UIImage imageNamed:@"star_light"]];
+                    [cell.star3 setImage:[UIImage imageNamed:@"star_light"]];
+                    break;
+                default:
+                    break;
+            }
         }
         
     }
-//    self.testReconition.attributedText=resultString;
+    
 }
 
 

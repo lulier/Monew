@@ -7,8 +7,9 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "TextBookCell.h"
 
-@interface BookViewController : UIViewController<UICollectionViewDelegateFlowLayout,UIScrollViewDelegate,UICollectionViewDelegate,UICollectionViewDataSource>
+@interface BookViewController : UIViewController<UICollectionViewDelegateFlowLayout,UIScrollViewDelegate,UICollectionViewDelegate,UICollectionViewDataSource,textBookCellDelegate>
 @property(strong,nonatomic)NSArray *list;
 @property(strong,nonatomic)NSString *grade_id;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;

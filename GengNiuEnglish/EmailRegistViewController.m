@@ -12,7 +12,7 @@
 -(void)updateViewConstraints
 {
     [super updateViewConstraints];
-    NSLog(@"%f",[UIScreen mainScreen].bounds.size.height);
+//    NSLog(@"%f",[UIScreen mainScreen].bounds.size.height);
     self.titleTopConstraint.constant=[UIScreen mainScreen].bounds.size.height>320.0f?7:4;
     if ([UIScreen mainScreen].bounds.size.height>375.0f)
     {

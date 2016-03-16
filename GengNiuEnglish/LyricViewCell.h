@@ -30,6 +30,9 @@
 @property (weak, nonatomic) IBOutlet UIButton *playVoice;
 @property (weak, nonatomic) IBOutlet UIButton *playText;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *labelMaxWidth;
+@property (weak, nonatomic) IBOutlet UIImageView *star1;
+@property (weak, nonatomic) IBOutlet UIImageView *star2;
+@property (weak, nonatomic) IBOutlet UIImageView *star3;
 @property(weak,nonatomic)id<lyricViewCellDelegate>delegate;
 - (instancetype)initWithStyle:(UITableViewCellStyle)style
               reuseIdentifier:(NSString *)reuseIdentifier;

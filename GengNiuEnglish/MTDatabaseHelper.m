@@ -25,7 +25,7 @@ static MTDatabaseHelper *singleInstance = nil;
     self = [super init];
     if(self){
         NSArray* path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-        NSString *userID =  [[NSUserDefaults standardUserDefaults] objectForKey:@"userID"];
+        NSString *userID =[AccountManager singleInstance].userID;
         NSString* DBname =[NSString stringWithFormat:@"%@/user.sqlite",userID];
         NSString *dbFilePath =[(NSString*)[path objectAtIndex:0] stringByAppendingPathComponent:DBname];
         queue = [FMDatabaseQueue databaseQueueWithPath:dbFilePath];

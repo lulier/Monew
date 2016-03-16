@@ -49,13 +49,14 @@ static NSString * const reuseIdentifierMaterial = @"MaterialCell";
     [self.navigationController.navigationBar setHidden:YES];
     UIImage *background=[CommonMethod imageWithImage:[UIImage imageNamed:@"background"] scaledToSize:CGSizeMake(self.collectionView.frame.size.width, self.collectionView.frame.size.height)];
     self.collectionView.backgroundView=[[UIImageView alloc]initWithImage:background];
+     self.automaticallyAdjustsScrollViewInsets = NO;
     [self initDatabase];
     [self reload:nil];
 }
 -(void)updateViewConstraints
 {
     [super updateViewConstraints];
-    NSLog(@"%f",[UIScreen mainScreen].bounds.size.height);
+//    NSLog(@"%f",[UIScreen mainScreen].bounds.size.height);
 //    self.labelTopConstraint.constant=100;
 //    if ([UIScreen mainScreen].bounds.size.height>320.0f)
 //    {
@@ -145,7 +146,13 @@ static NSString * const reuseIdentifierMaterial = @"MaterialCell";
     bookViewController.grade_id=material.text_id;
     [self.navigationController pushViewController:bookViewController animated:YES];
     // Animate
-    NSLog(@"log for index:%ld",indexPath.row);
+//    NSLog(@"log for index:%ld",indexPath.row);
+}
+- (IBAction)logoutButtonClick:(id)sender {
+    [[AccountManager singleInstance] deleteAccount];
+    [[NSUserDefaults standardUserDefaults] setValue:@"out" forKey:@"MeticStatus"];
+    [[NSUserDefaults standardUserDefaults] synchronize];
+    [self.navigationController popToRootViewControllerAnimated:YES];
 }
 
 @end

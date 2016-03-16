@@ -71,7 +71,7 @@
     NSMutableString *md5_str = [NSMutableString string];
     for (int i = 0; i < 16; i++)
         [md5_str appendFormat:@"%02x", result[i]];
-    NSLog(@"MD5: %@",md5_str);
+//    NSLog(@"MD5: %@",md5_str);
     return md5_str;
     
 }
@@ -156,11 +156,11 @@
 {
     //将nsstring转化为nsdata
     NSData *data = [string dataUsingEncoding:NSUTF8StringEncoding];
-    NSLog(@"log for data:%@",data);
+//    NSLog(@"log for data:%@",data);
     //使用密码对nsdata进行加密
     NSData *encryptedData = [data AES128EncryptWithKey:key];
     //    NSString *result=[[NSString alloc]initWithData:encryptedData encoding:NSUTF8StringEncoding];
-    NSLog(@"加密后的字符串 :%@",encryptedData);
+//    NSLog(@"加密后的字符串 :%@",encryptedData);
     
     return encryptedData;
 }

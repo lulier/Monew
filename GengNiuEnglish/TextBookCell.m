@@ -78,6 +78,7 @@
     if (![self.book checkDatabase])
     {
         NSLog(@"the book is nil");
+        [self.delegate clickCellButton:self.index];
         return;
     }
     UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
@@ -91,6 +92,7 @@
     if (![self.book checkDatabase])
     {
         NSLog(@"the book is nil");
+        [self.delegate clickCellButton:self.index];
         return;
     }
     UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
@@ -104,6 +106,7 @@
     if (![self.book checkDatabase])
     {
         NSLog(@"the book is nil");
+        [self.delegate clickCellButton:self.index];
         return;
     }
 }
@@ -112,6 +115,7 @@
     if (![self.book checkDatabase])
     {
         NSLog(@"the book is nil");
+        [self.delegate clickCellButton:self.index];
         return;
     }
     AppDelegate *appDelegate=[[UIApplication sharedApplication] delegate];

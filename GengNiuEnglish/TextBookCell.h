@@ -17,10 +17,16 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "NetworkingManager.h"
 
+@protocol textBookCellDelegate <NSObject>
+
+-(void)clickCellButton:(NSInteger)index;
+
+@end
 
 
 @interface TextBookCell : UICollectionViewCell<ReaderViewControllerDelegate,dismissDelegate>
 @property(strong,nonatomic)DataForCell *book;
+@property(nonatomic)NSInteger index;
 @property (weak, nonatomic) IBOutlet UIImageView *cellImage;
 @property (weak, nonatomic) IBOutlet UIButton *xiuLian;
 @property (weak, nonatomic) IBOutlet UIButton *moErDuo;
@@ -30,5 +36,6 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *moErDuoTopConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *chuangGuanTopConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *chuangGuanRightConstraint;
+@property(weak,nonatomic)id<textBookCellDelegate>delegate;
 - (IBAction)xiulianClick:(id)sender;
 @end
