@@ -14,5 +14,6 @@
 @interface MaterialCell : UICollectionViewCell
 @property(strong,nonatomic)DataForCell *material;
 @property (weak, nonatomic) IBOutlet UIImageView *cellImage;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *labelTopConstraint;
 @property (weak, nonatomic) IBOutlet UILabel *cellLabel;
 @end

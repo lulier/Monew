@@ -25,5 +25,10 @@
 @property (weak, nonatomic) IBOutlet UIButton *xiuLian;
 @property (weak, nonatomic) IBOutlet UIButton *moErDuo;
 @property (weak, nonatomic) IBOutlet UIButton *chuangGuan;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *labelTopConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *xiuLianTopConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *moErDuoTopConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *chuangGuanTopConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *chuangGuanRightConstraint;
 - (IBAction)xiulianClick:(id)sender;
 @end

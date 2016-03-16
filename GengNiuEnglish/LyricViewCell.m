@@ -21,6 +21,7 @@
 
     return self;
 }
+
 -(void)setLyricItem:(LyricItem *)lyricItem
 {
     self.cellText.text=lyricItem.lyricBody;
@@ -30,6 +31,8 @@
     self.recording=false;
     self.recordPlaying=false;
     _lyricItem=lyricItem;
+    CGFloat width=[UIScreen mainScreen].bounds.size.width;
+    self.labelMaxWidth.constant=width-95;
 }
 - (void)awakeFromNib {
     // Initialization code

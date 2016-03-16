@@ -49,6 +49,7 @@
 		F4B271B01C33B429009313CA /* LyricViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B271AF1C33B429009313CA /* LyricViewController.m */; };
 		F4F0E6CE1C94167600818C89 /* NSData+NSData_AES.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F0E6CD1C94167600818C89 /* NSData+NSData_AES.m */; };
 		F4F0E6DC1C95667600818C89 /* MHE_Rdg_Wonders_LvRdr_G4_On-Level_U4W2_17.lrc in Resources */ = {isa = PBXBuildFile; fileRef = F4F0E6DB1C95667600818C89 /* MHE_Rdg_Wonders_LvRdr_G4_On-Level_U4W2_17.lrc */; };
+		F4F0E6DF1C97BBEF00818C89 /* CustomCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F0E6DE1C97BBEF00818C89 /* CustomCollectionViewLayout.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -141,6 +142,8 @@
 		F4F0E6CC1C94167600818C89 /* NSData+NSData_AES.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+NSData_AES.h"; sourceTree = "<group>"; };
 		F4F0E6CD1C94167600818C89 /* NSData+NSData_AES.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+NSData_AES.m"; sourceTree = "<group>"; };
 		F4F0E6DB1C95667600818C89 /* MHE_Rdg_Wonders_LvRdr_G4_On-Level_U4W2_17.lrc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MHE_Rdg_Wonders_LvRdr_G4_On-Level_U4W2_17.lrc"; sourceTree = "<group>"; };
+		F4F0E6DD1C97BBEF00818C89 /* CustomCollectionViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomCollectionViewLayout.h; sourceTree = "<group>"; };
+		F4F0E6DE1C97BBEF00818C89 /* CustomCollectionViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomCollectionViewLayout.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -321,7 +324,6 @@
 		F49466FE1C27C95700806DEF /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				F4F0E6D21C94189200818C89 /* GTMBase64 */,
 				F42FA5EE1C8D29600033C9C9 /* MTDatabaseHelper.h */,
 				F42FA5EF1C8D29600033C9C9 /* MTDatabaseHelper.m */,
 				F4A9AF371C4D0D26004BC7BF /* CommonMethod.h */,
@@ -336,6 +338,8 @@
 				F42FA5F21C8D32C50033C9C9 /* UserAccount.m */,
 				F42FA5FA1C8EB1560033C9C9 /* AccountManager.h */,
 				F42FA5FB1C8EB1560033C9C9 /* AccountManager.m */,
+				F4F0E6DD1C97BBEF00818C89 /* CustomCollectionViewLayout.h */,
+				F4F0E6DE1C97BBEF00818C89 /* CustomCollectionViewLayout.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -347,13 +351,6 @@
 				F4F0E6CD1C94167600818C89 /* NSData+NSData_AES.m */,
 			);
 			name = Category;
-			sourceTree = "<group>";
-		};
-		F4F0E6D21C94189200818C89 /* GTMBase64 */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			name = GTMBase64;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -551,6 +548,7 @@
 				F4A9AF3F1C4D2435004BC7BF /* TextBookCell.m in Sources */,
 				F494670A1C28ECE900806DEF /* NetworkingManager.m in Sources */,
 				F4A9AF3C1C4D2418004BC7BF /* MaterialCell.m in Sources */,
+				F4F0E6DF1C97BBEF00818C89 /* CustomCollectionViewLayout.m in Sources */,
 				F42FA5FC1C8EB1560033C9C9 /* AccountManager.m in Sources */,
 				F49467041C27CE0900806DEF /* DataForCell.m in Sources */,
 				F4B271B01C33B429009313CA /* LyricViewController.m in Sources */,

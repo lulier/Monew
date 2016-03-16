@@ -15,6 +15,13 @@
     PracticeViewController *practiceViewController;
     ReaderViewController *readerViewController;
 }
+-(id)init
+{
+    if ((self = [super init])) {
+        
+    }
+    return self;
+}
 -(void)setBook:(DataForCell *)book
 {
     _book=book;
@@ -36,6 +43,14 @@
     singleTap.cancelsTouchesInView=NO;
     [self.cellImage addGestureRecognizer:singleTap];
     [self.cellImage setUserInteractionEnabled:YES];
+    self.labelTopConstraint.constant=110;
+    if ([UIScreen mainScreen].bounds.size.height>320.0f)
+    {
+        self.labelTopConstraint.constant=120;
+        if ([UIScreen mainScreen].bounds.size.height>375.0f) {
+            self.labelTopConstraint.constant=140;
+        }
+    }
     
     [self setNeedsLayout];
     [self setNeedsDisplay];
@@ -43,6 +58,17 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
+    if ([UIScreen mainScreen].bounds.size.height<=320.0f)
+    {
+        self.xiuLian.frame=CGRectMake(self.xiuLian.frame.origin.x, self.xiuLian.frame.origin.y, 36.0f, 32.0f);
+        self.moErDuo.frame=CGRectMake(self.moErDuo.frame.origin.x, self.moErDuo.frame.origin.y, 42.0f, 33.0f);
+        self.chuangGuan.frame=CGRectMake(self.chuangGuan.frame.origin.x, self.chuangGuan.frame.origin.y, 36.0f, 32.0f);
+        self.xiuLianTopConstraint.constant=-25;
+        self.moErDuoTopConstraint.constant=-25;
+        self.chuangGuanTopConstraint.constant=-25;
+        self.chuangGuanRightConstraint.constant=-10;
+        self.moErDuo.titleLabel.font=[UIFont italicSystemFontOfSize:13.0f];
+    }
 }
 -(void)dismissView
 {

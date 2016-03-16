@@ -30,6 +30,11 @@ static NSString* cellIdentifierLyric=@"LyricViewCell";
     [self.navigationController popViewControllerAnimated:YES];
     [self.delegate dismissView];
 }
+-(void)updateViewConstraints
+{
+    [super updateViewConstraints];
+    NSLog(@"%f",[UIScreen mainScreen].bounds.size.height);
+}
 -(void)initWithBook:(DataForCell *)book
 {
     endTime=0;

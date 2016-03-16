@@ -21,16 +21,36 @@
         NSLog(@"your material is nil");
     }
     [self.cellLabel setText:_material.text_name];
+    CGFloat screenHeight=[UIScreen mainScreen].bounds.size.height;
+    self.cellLabel.font=[UIFont italicSystemFontOfSize:15.0f];
+    if (screenHeight>320.0f)
+    {
+        if (screenHeight>375.0f)
+        {
+            self.cellLabel.font=[UIFont italicSystemFontOfSize:17.0f];
+        }
+        else
+            self.cellLabel.font=[UIFont italicSystemFontOfSize:16.0f];
+    }
     [self.cellImage setImage:[UIImage imageNamed:@"profile-image-placeholder"]];
     __weak __typeof__(self) weakSelf = self;
-    
     [NetworkingManager downloadImage:[NSURL URLWithString:_material.cover_url] block:^(UIImage *image) {
         [weakSelf.cellImage setImage:image];
     }];
     
+    self.labelTopConstraint.constant=110;
+    if ([UIScreen mainScreen].bounds.size.height>320.0f)
+    {
+        self.labelTopConstraint.constant=120;
+        if ([UIScreen mainScreen].bounds.size.height>375.0f) {
+            self.labelTopConstraint.constant=140;
+        }
+    }
 
+    
     [self setNeedsLayout];
     [self setNeedsDisplay];
+    
 }
 
 #pragma mark - UIView
@@ -38,8 +58,6 @@
 - (void)layoutSubviews {
     [super layoutSubviews];
     
-//    self.cellImage.frame = CGRectMake(10.0f, 10.0f, 50.0f, 50.0f);
-//    self.cellLabel.frame = CGRectMake(70.0f, 6.0f, 240.0f, 20.0f);
 }
 
 

@@ -12,5 +12,6 @@
 
 @interface MaterialViewController : UIViewController<UICollectionViewDelegateFlowLayout,UIScrollViewDelegate,UICollectionViewDelegate,UICollectionViewDataSource>
 @property(strong,nonatomic)NSArray *list;
+
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @end
