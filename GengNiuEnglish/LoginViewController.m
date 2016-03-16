@@ -42,11 +42,19 @@
 -(void)updateViewConstraints
 {
     [super updateViewConstraints];
-    NSLog(@"%f",[UIScreen mainScreen].bounds.size.height);
-    self.titleTopConstraint.constant=[UIScreen mainScreen].bounds.size.height>320.0f?7:4;
-    if ([UIScreen mainScreen].bounds.size.height>375.0f)
+//    NSLog(@"%f",[UIScreen mainScreen].bounds.size.height);
+    CGFloat height=[UIScreen mainScreen].bounds.size.height;
+    self.titleTopConstraint.constant=4;
+    self.inputTopConstraint.constant=20;
+    if (height>320.f)
     {
-        self.titleTopConstraint.constant=10;
+        self.titleTopConstraint.constant=7;
+        self.inputTopConstraint.constant=40;
+        if (height>375.0f)
+        {
+            self.titleTopConstraint.constant=10;
+            self.inputTopConstraint.constant=60;
+        }
     }
 }
 -(void)viewDidLoad

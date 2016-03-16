@@ -22,6 +22,7 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *titleTopConstraint;
 @property (weak, nonatomic) IBOutlet UIButton *sendVeriCode;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *registWithEmailConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *inputTopConstraint;
 
 
 

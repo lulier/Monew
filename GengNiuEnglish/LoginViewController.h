@@ -19,5 +19,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *loginButton;
 @property (weak, nonatomic) IBOutlet UIButton *registButton;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *titleTopConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *inputTopConstraint;
 
 @end

@@ -49,7 +49,6 @@ static NSString * const reuseIdentifierMaterial = @"MaterialCell";
     [self.navigationController.navigationBar setHidden:YES];
     UIImage *background=[CommonMethod imageWithImage:[UIImage imageNamed:@"background"] scaledToSize:CGSizeMake(self.collectionView.frame.size.width, self.collectionView.frame.size.height)];
     self.collectionView.backgroundView=[[UIImageView alloc]initWithImage:background];
-     self.automaticallyAdjustsScrollViewInsets = NO;
     [self initDatabase];
     [self reload:nil];
 }
@@ -119,9 +118,9 @@ static NSString * const reuseIdentifierMaterial = @"MaterialCell";
         {
             return UIEdgeInsetsMake(80, 100, 100, 100);
         }
-        return UIEdgeInsetsMake(80, 80, 100, 80);
+        return UIEdgeInsetsMake(60, 80, 80, 80);
     }
-    return UIEdgeInsetsMake(80, 60, 100, 60);
+    return UIEdgeInsetsMake(40, 60, 60, 60);
 }
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
 {

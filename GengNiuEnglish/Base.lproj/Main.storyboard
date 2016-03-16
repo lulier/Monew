@@ -703,7 +703,7 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="更牛" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="lY5-NA-NXk">
-                                <rect key="frame" x="311" y="25" width="44" height="26"/>
+                                <rect key="frame" x="311" y="25" width="44" height="26.5"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
                                 <color key="textColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 <nil key="highlightedColor"/>
@@ -718,7 +718,7 @@
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
                             <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="密码" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="52X-sC-dMN">
-                                <rect key="frame" x="210" y="145" width="247" height="30"/>
+                                <rect key="frame" x="210" y="139" width="247" height="30"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="247" id="8cI-hU-hSB"/>
                                 </constraints>
@@ -752,13 +752,13 @@
                                 </connections>
                             </button>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="使用其它社交帐号登陆" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="Qex-QP-Zqg">
-                                <rect key="frame" x="248" y="260" width="170" height="21"/>
+                                <rect key="frame" x="248" y="260" width="170" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="FON-Sx-BG9">
-                                <rect key="frame" x="248" y="286" width="40" height="40"/>
+                                <rect key="frame" x="248" y="285.5" width="40" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="40" id="HrT-sk-csl"/>
                                     <constraint firstAttribute="height" constant="40" id="xcX-ch-PRn"/>
@@ -766,7 +766,7 @@
                                 <state key="normal" backgroundImage="weixin"/>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VtK-0E-0Er">
-                                <rect key="frame" x="313" y="286" width="40" height="40"/>
+                                <rect key="frame" x="313" y="285.5" width="40" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="T8L-mq-aat"/>
                                     <constraint firstAttribute="width" constant="40" id="VIc-9R-s6G"/>
@@ -774,7 +774,7 @@
                                 <state key="normal" backgroundImage="qq"/>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tcj-yk-xhq">
-                                <rect key="frame" x="378" y="286" width="40" height="40"/>
+                                <rect key="frame" x="378" y="285.5" width="40" height="40"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="40" id="6Gi-jT-d5G"/>
                                     <constraint firstAttribute="width" constant="40" id="yg4-OU-atX"/>
@@ -795,12 +795,12 @@
                             <constraint firstItem="VtK-0E-0Er" firstAttribute="top" secondItem="Qex-QP-Zqg" secondAttribute="bottom" constant="5" id="BG2-Dr-oes"/>
                             <constraint firstItem="MtJ-4f-h5a" firstAttribute="top" secondItem="NSR-DT-qv9" secondAttribute="bottom" constant="5" id="BlD-f3-vWc"/>
                             <constraint firstItem="VtK-0E-0Er" firstAttribute="top" secondItem="Qex-QP-Zqg" secondAttribute="bottom" constant="5" id="CDr-bu-hZL"/>
-                            <constraint firstItem="52X-sC-dMN" firstAttribute="top" secondItem="ewf-a6-vhR" secondAttribute="bottom" constant="30" id="CEi-ia-FmP"/>
+                            <constraint firstItem="52X-sC-dMN" firstAttribute="top" secondItem="ewf-a6-vhR" secondAttribute="bottom" constant="24" id="CEi-ia-FmP"/>
                             <constraint firstItem="MtJ-4f-h5a" firstAttribute="trailing" secondItem="NSR-DT-qv9" secondAttribute="trailing" id="CZh-9F-olg"/>
                             <constraint firstItem="wm5-Ft-Oml" firstAttribute="centerX" secondItem="wHL-gl-VhR" secondAttribute="centerX" id="GwB-hD-wjo"/>
                             <constraint firstItem="tcj-yk-xhq" firstAttribute="top" secondItem="Qex-QP-Zqg" secondAttribute="bottom" constant="11" id="HYb-sa-Vmg"/>
                             <constraint firstItem="52X-sC-dMN" firstAttribute="centerX" secondItem="wHL-gl-VhR" secondAttribute="centerX" id="KEi-LS-sN1"/>
-                            <constraint firstItem="NSR-DT-qv9" firstAttribute="top" secondItem="52X-sC-dMN" secondAttribute="bottom" constant="18" id="Oea-MN-fLs"/>
+                            <constraint firstItem="NSR-DT-qv9" firstAttribute="top" secondItem="52X-sC-dMN" secondAttribute="bottom" constant="24" id="Oea-MN-fLs"/>
                             <constraint firstItem="FON-Sx-BG9" firstAttribute="top" secondItem="Qex-QP-Zqg" secondAttribute="bottom" constant="5" id="ZAd-nA-rzp"/>
                             <constraint firstItem="Qex-QP-Zqg" firstAttribute="centerX" secondItem="wHL-gl-VhR" secondAttribute="centerX" id="jNT-aY-1AG"/>
                             <constraint firstItem="VtK-0E-0Er" firstAttribute="leading" secondItem="FON-Sx-BG9" secondAttribute="trailing" constant="25" id="nwd-tF-ZLA"/>
@@ -821,6 +821,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="accountInput" destination="ewf-a6-vhR" id="yt6-po-O9T"/>
+                        <outlet property="inputTopConstraint" destination="5KG-2q-N2f" id="mYt-Dk-2dx"/>
                         <outlet property="loginButton" destination="NSR-DT-qv9" id="ovk-iv-knJ"/>
                         <outlet property="passwordInput" destination="52X-sC-dMN" id="MO2-ZG-sR6"/>
                         <outlet property="registButton" destination="MtJ-4f-h5a" id="rlx-kP-OQt"/>
@@ -961,6 +962,7 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="goBackButton" destination="uPW-0w-j0C" id="wZR-ZX-ncA"/>
+                        <outlet property="inputTopConstraint" destination="0S6-vP-t3a" id="I5I-w3-aDk"/>
                         <outlet property="passwordInput" destination="RW6-gr-una" id="f85-Yo-YUJ"/>
                         <outlet property="phoneNumInput" destination="WJz-7I-zOS" id="WCB-6Z-SXj"/>
                         <outlet property="registButton" destination="qLl-La-iuE" id="qpF-1w-gyZ"/>

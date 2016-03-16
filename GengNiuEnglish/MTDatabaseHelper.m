@@ -182,7 +182,7 @@ static MTDatabaseHelper *singleInstance = nil;
             [sql appendString:@", "];
         }
     }
-    NSLog(@"query sql: %@",sql);
+//    NSLog(@"query sql: %@",sql);
     
     [queue inDatabase:^(FMDatabase *db) {
         FMResultSet *s = [db executeQuery:sql];

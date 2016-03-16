@@ -164,9 +164,9 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
         {
             return UIEdgeInsetsMake(80, 100, 100, 100);
         }
-        return UIEdgeInsetsMake(80, 80, 100, 80);
+        return UIEdgeInsetsMake(60, 80, 80, 80);
     }
-    return UIEdgeInsetsMake(80, 60, 100, 60);
+    return UIEdgeInsetsMake(40, 60, 60, 60);
 }
 
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
