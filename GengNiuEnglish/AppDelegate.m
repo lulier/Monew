@@ -32,8 +32,7 @@ static NSString* const appSecret=@"2c2ca1b896f428d3d258743bf50076d9";
     
     Float32 bufferLength = 0.1;
     AudioSessionSetProperty(kAudioSessionProperty_PreferredHardwareIOBufferDuration, sizeof(bufferLength), &bufferLength);
-    
-    
+
     
     NSURLCache *URLCache=[[NSURLCache alloc]initWithMemoryCapacity:4*1024*1024 diskCapacity:20*1024*1024 diskPath:nil];
     [NSURLCache setSharedURLCache:URLCache];

@@ -25,6 +25,7 @@
 @property(nonatomic)NSInteger index;
 @property(nonatomic)BOOL recording;
 @property(nonatomic)BOOL recordPlaying;
+@property(nonatomic)BOOL textPlaying;
 @property (weak, nonatomic) IBOutlet UILabel *cellText;
 @property (weak, nonatomic) IBOutlet UIButton *recordVoice;
 @property (weak, nonatomic) IBOutlet UIButton *playVoice;

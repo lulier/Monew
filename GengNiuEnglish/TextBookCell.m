@@ -99,6 +99,7 @@
     lyricViewController=[storyboard instantiateViewControllerWithIdentifier:@"LyricViewController"];
     [lyricViewController initWithBook:self.book];
     lyricViewController.delegate=self;
+    lyricViewController.imageURL=self.book.cover_url;
     UINavigationController *navigationController=(UINavigationController*)self.window.rootViewController;
     [navigationController pushViewController:lyricViewController animated:YES];
 }

@@ -81,6 +81,19 @@
     NSDictionary *dict=[NSDictionary dictionaryWithObjectsAndKeys:emailAddress,@"account",passWord,@"password",nil];
     [AccountManager registAccount:REGEmail parameters:dict success:^(NSURLSessionTask * _Nullable task, id  _Nullable responseObject) {
         long int status=[[responseObject objectForKey:@"status"] integerValue];
+        SCLAlertView *alert=[[SCLAlertView alloc]init];
+        switch (status)
+        {
+            case NORMAL_RESPONSE:
+                [alert showSuccess:self title:@"成功" subTitle:@"验证邮件已经发送到您的邮箱，请查收" closeButtonTitle:@"确定" duration:0.0f];
+                break;
+            case USER_EXIST:
+                [alert showNotice:self title:@"错误" subTitle:@"该邮箱已注册过更牛帐号" closeButtonTitle:nil duration:1.0f];
+                break;
+            default:
+                [alert showError:self title:@"错误" subTitle:@"注册失败，请重新尝试" closeButtonTitle:nil duration:1.0f];
+                break;
+        }
     } failure:^(NSURLSessionTask * _Nullable task, NSError * _Nullable error) {
         
     }];

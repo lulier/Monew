@@ -30,6 +30,7 @@ typedef NS_ENUM(NSInteger,RequestURL)
 };
 enum Return_Code
 {
+    NORMAL_RESPONSE=0,
     TEXT_VERSION_ERR=91,
     PASSWD_UNSET=92,
     BIND_PHONE_ERROR=93,

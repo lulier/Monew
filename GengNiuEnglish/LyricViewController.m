@@ -35,19 +35,19 @@
     {
         case STKAudioPlayerStateReady:
             [self startPlayMP3];
-            [self.playButton setTitle:@"pause" forState:UIControlStateNormal];
+//            [self.playButton setTitle:@"pause" forState:UIControlStateNormal];
             break;
         case STKAudioPlayerStateStopped:
             [self startPlayMP3];
-            [self.playButton setTitle:@"pause" forState:UIControlStateNormal];
+//            [self.playButton setTitle:@"pause" forState:UIControlStateNormal];
             break;
         case STKAudioPlayerStatePaused:
             [audioPlayer resume];
-            [self.playButton setTitle:@"pause" forState:UIControlStateNormal];
+//            [self.playButton setTitle:@"pause" forState:UIControlStateNormal];
             break;
         case STKAudioPlayerStatePlaying:
             [audioPlayer pause];
-            [self.playButton setTitle:@"play" forState:UIControlStateNormal];
+//            [self.playButton setTitle:@"play" forState:UIControlStateNormal];
             break;
         default:
             break;
@@ -60,7 +60,6 @@
     NSString *path=[[self.book getDocumentPath] stringByAppendingPathComponent:[self.book getFileName:FTMP3]];
     NSURL *url=[NSURL fileURLWithPath:path];
     STKDataSource* dataSource = [STKAudioPlayer dataSourceFromURL:url];
-    
     [audioPlayer setDataSource:dataSource withQueueItemId:[[SampleQueueId alloc] initWithUrl:url andCount:0]];
 }
 -(void)initWithBook:(DataForCell *)book
@@ -83,6 +82,18 @@
     [self.lyricText setText:[self getLyric]];
     UIImage *background=[CommonMethod imageWithImage:[UIImage imageNamed:@"naked_background"] scaledToSize:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height)];
     self.view.backgroundColor=[UIColor colorWithPatternImage:background];
+    [self playButtonClick:nil];
+    __weak __typeof(self)weakSelf=self;
+    [NetworkingManager downloadImage:[NSURL URLWithString:self.imageURL] block:^(UIImage * _Nullable image) {
+        [weakSelf.coverImageView setImage:image];
+    }];
+    NSError *categoryError = nil;
+    [[AVAudioSession sharedInstance]
+     setCategory:AVAudioSessionCategoryPlayback
+     error:&categoryError];
+    if (categoryError) {
+        NSLog(@"Error setting category!");
+    }
     // Do any additional setup after loading the view.
 }
 

@@ -12,12 +12,15 @@
 #import "STKAudioPlayer.h"
 #import "CommonMethod.h"
 #import "SampleQueueId.h"
+#import "NetworkingManager.h"
+#import <AVFoundation/AVFoundation.h>
 
 @interface LyricViewController : UIViewController<STKAudioPlayerDelegate>
 @property(nonatomic,strong)NSArray *lyricItems;
 
 @property (weak, nonatomic) IBOutlet UITextView *lyricText;
-@property (weak, nonatomic) IBOutlet UIButton *playButton;
+@property (weak, nonatomic) IBOutlet UIImageView *coverImageView;
+@property(nonatomic,strong)NSString *imageURL;
 @property(weak,nonatomic)id<dismissDelegate>delegate;
 @property(nonatomic,weak)DataForCell *book;
 -(void)initWithBook:(DataForCell*)book;

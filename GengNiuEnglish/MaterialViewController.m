@@ -13,6 +13,7 @@
 #import "BookViewController.h"
 #import "MTDatabaseHelper.h"
 #import "CustomCollectionViewLayout.h"
+#import "SCLAlertView.h"
 
 @interface MaterialViewController ()
 
@@ -141,6 +142,13 @@ static NSString * const reuseIdentifierMaterial = @"MaterialCell";
     [self.navigationController pushViewController:bookViewController animated:YES];
 }
 - (IBAction)logoutButtonClick:(id)sender {
+    SCLAlertView *alert=[[SCLAlertView alloc]init];
+    [alert addButton:@"确定" target:self selector:@selector(logout)];
+    [alert showNotice:self title:@"提示" subTitle:@"您确定要退出当前账号？" closeButtonTitle:@"取消" duration:0.0f];
+
+}
+-(void)logout
+{
     [[AccountManager singleInstance] deleteAccount];
     [[NSUserDefaults standardUserDefaults] setValue:@"out" forKey:@"MeticStatus"];
     [[NSUserDefaults standardUserDefaults] synchronize];
