@@ -41,6 +41,7 @@
         self.text_id=[attributes objectForKey:@"grade_id"];
         self.text_name=[attributes objectForKey:@"grade_name"];
         self.cover_url=[attributes objectForKey:@"cover_url"];
+        self.text_count=[attributes objectForKey:@"text_count"];
         self.category=nil;
         self.fileNames=nil;
         self.downloadURL=nil;
@@ -51,7 +52,8 @@
     
 }
 +(NSURLSessionTask*)getGradeList:(void (^)(NSArray *, NSError *))block{
-    NSDictionary *parameters=[[NSDictionary alloc]initWithObjectsAndKeys:@"1",@"user_id", nil];
+    NSString *userID=[AccountManager singleInstance].userID;
+    NSDictionary *parameters=[[NSDictionary alloc]initWithObjectsAndKeys:userID,@"user_id", nil];
     NSMutableArray *mutableBooks=[[NSMutableArray alloc]init];
     return [NetworkingManager httpRequest:RTGet url:RUGrade_list parameters:parameters progress:nil
     success:^(NSURLSessionTask *task,id JSON)
@@ -97,11 +99,12 @@
         [[MTDatabaseHelper sharedInstance] insertToTable:@"GradeList" withColumns:colums andValues:values];
     }
 }
-+(NSURLSessionTask*)getTextList:(void (^)(NSArray *, NSError *))block grade_id:(NSString*)grade_id{
++(void)getTextList:(void (^)(NSArray *, NSError *))block grade_id:(NSString*)grade_id text_id:(NSString*)text_id{
     
-    NSDictionary *parameters=[[NSDictionary alloc]initWithObjectsAndKeys:@"1",@"user_id",grade_id,@"grade_id", nil];
+    NSString *userID=[AccountManager singleInstance].userID;
+    NSDictionary *parameters=[[NSDictionary alloc]initWithObjectsAndKeys:userID,@"user_id",grade_id,@"grade_id",text_id,@"text_id",nil];
     NSMutableArray *mutableBooks=[[NSMutableArray alloc]init];
-    return [NetworkingManager httpRequest:RTGet url:RUText_list parameters:parameters progress:nil
+    [NetworkingManager httpRequest:RTGet url:RUText_list parameters:parameters progress:nil
         success:^(NSURLSessionTask *task,id JSON)
             {
                 NSArray *list=[JSON valueForKey:@"text_list"];

@@ -42,7 +42,8 @@ static NSString * const reuseIdentifierMaterial = @"MaterialCell";
     }];
 }
 
-- (void)viewDidLoad {
+- (void)viewDidLoad
+{
     [super viewDidLoad];
     self.collectionView.delegate=self;
     // Do any additional setup after loading the view.
@@ -55,13 +56,6 @@ static NSString * const reuseIdentifierMaterial = @"MaterialCell";
 -(void)updateViewConstraints
 {
     [super updateViewConstraints];
-//    NSLog(@"%f",[UIScreen mainScreen].bounds.size.height);
-//    self.labelTopConstraint.constant=100;
-//    if ([UIScreen mainScreen].bounds.size.height>320.0f)
-//    {
-//        self.labelTopConstraint.constant=120;
-//    }
-    
 }
 
 -(void)initDatabase
@@ -143,9 +137,8 @@ static NSString * const reuseIdentifierMaterial = @"MaterialCell";
     BookViewController *bookViewController=[storyboard instantiateViewControllerWithIdentifier:@"BookViewController"];
     DataForCell *material=self.list[indexPath.row];
     bookViewController.grade_id=material.text_id;
+    bookViewController.textCount=material.text_count;
     [self.navigationController pushViewController:bookViewController animated:YES];
-    // Animate
-//    NSLog(@"log for index:%ld",indexPath.row);
 }
 - (IBAction)logoutButtonClick:(id)sender {
     [[AccountManager singleInstance] deleteAccount];

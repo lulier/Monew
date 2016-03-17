@@ -67,7 +67,7 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
             [weakSelf.collectionView reloadData];
         });
     }];
-    NSURLSessionTask *task=[DataForCell getTextList:^(NSArray *data, NSError *error) {
+    [DataForCell getTextList:^(NSArray *data, NSError *error) {
         if(data!=nil)
         {
             weakSelf.list=data;
@@ -76,7 +76,7 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
             });
         }
         
-    } grade_id:self.grade_id];
+    } grade_id:self.grade_id text_id:@"-1"];
 }
 - (IBAction)goBackClick:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
@@ -85,10 +85,6 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    
-    // Uncomment the following line to preserve selection between presentations
-    // self.clearsSelectionOnViewWillAppear = NO;
-    
     // Register cell classes
     self.collectionView.delegate=self;
     // Do any additional setup after loading the view.
@@ -103,16 +99,6 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
     [super didReceiveMemoryWarning];
     // Dispose of any resources that can be recreated.
 }
-
-/*
- #pragma mark - Navigation
- 
- // In a storyboard-based application, you will often want to do a little preparation before navigation
- - (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
- // Get the new view controller using [segue destinationViewController].
- // Pass the selected object to the new view controller.
- }
- */
 
 #pragma mark <UICollectionViewDataSource>
 
@@ -182,6 +168,39 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
     }
     return 60.0f;
 }
+-(void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath
+{
+    if ([self.list count]==[self.textCount integerValue])
+    {
+        return;
+    }
+    if (indexPath.item==[self.list count]-1)
+    {
+        __weak __typeof__(self) weakSelf = self;
+        //load data
+        NSInteger maxID=-1;
+        for (DataForCell *data in self.list)
+        {
+            if ([data.text_id integerValue]>maxID)
+            {
+                maxID=[data.text_id integerValue];
+            }
+        }
+        [DataForCell getTextList:^(NSArray *data, NSError *error)
+        {
+            if(data!=nil)
+            {
+                NSMutableArray *books=[[NSMutableArray alloc]initWithArray:self.list];
+                [books addObjectsFromArray:data];
+                self.list=nil;
+                self.list=books;
+                dispatch_async(dispatch_get_main_queue(), ^{
+                    [weakSelf.collectionView reloadData];
+                });
+            }
+        } grade_id:self.grade_id text_id:[NSString stringWithFormat:@"%ld",maxID]];
+    }
+}
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     TextBookCell *cell=(TextBookCell*)[collectionView cellForItemAtIndexPath:indexPath];
@@ -193,7 +212,6 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
     //这里还没有处理下载出错的情况
     NSDictionary *parameters=[NSDictionary dictionaryWithObjectsAndKeys:book.downloadURL,@"url",nil];
     __weak __typeof__(self) weakSelf = self;
-//    __block MRProgressOverlayView *progressView=[MRProgressOverlayView showOverlayAddedTo:cell title:@"downloading" mode:MRProgressOverlayViewModeDeterminateCircular animated:YES];
     __block DAProgressOverlayView *progressView=[[DAProgressOverlayView alloc]initWithFrame:cell.bounds];
     [progressView setHidden:NO];
     progressView.progress = 0;
@@ -235,18 +253,6 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
          }
      }];
     book.task=task;
-//    progressView.stopBlock = ^(MRProgressOverlayView *view){
-//        if (task.state==NSURLSessionTaskStateSuspended)
-//        {
-//            [view setTitleLabelText:@"downloading"];
-//            [task resume];
-//        }
-//        else
-//        {
-//            [view setTitleLabelText:@"suspended"];
-//            [task suspend];
-//        }
-//    };
 }
 
 

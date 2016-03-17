@@ -154,6 +154,7 @@ static NSString* cellIdentifierLyric=@"LyricViewCell";
     cell.index=indexPath.row;
     cell.delegate=self;
     cell.playText.hidden=YES;
+    cell.cellText.textColor=[UIColor blackColor];
     [cell.star1 setImage:[UIImage imageNamed:@"star_unlight"]];
     [cell.star2 setImage:[UIImage imageNamed:@"star_unlight"]];
     [cell.star3 setImage:[UIImage imageNamed:@"star_unlight"]];
