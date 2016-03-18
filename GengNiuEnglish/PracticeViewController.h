@@ -32,5 +32,6 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
 @property (weak, nonatomic) IBOutlet UIButton *goBack;
 @property (weak, nonatomic) IBOutlet UILabel *testReconition;
+@property(nonatomic)BOOL PlayingText;
 -(void)initWithBook:(DataForCell*)book;
 @end

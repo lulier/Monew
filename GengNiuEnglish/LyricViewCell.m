@@ -44,7 +44,7 @@
     // Configure the view for the selected state
 }
 - (IBAction)recordVoiceClick:(id)sender {
-    if (self.recordPlaying||self.textPlaying)
+    if (self.recordPlaying||[self.delegate isPlayingText])
     {
         return;
     }
@@ -60,7 +60,7 @@
     [self.delegate initRecorder:self.index words:self.lyricItem.lyricWords];
 }
 - (IBAction)playVoiceClick:(id)sender {
-    if (self.recording||self.textPlaying)
+    if (self.recording||[self.delegate isPlayingText])
     {
         return;
     }
@@ -80,13 +80,6 @@
     {
         return;
     }
-    if (self.textPlaying)
-    {
-        [self.delegate playText:self.index];
-        self.textPlaying=false;
-        return;
-    }
-    self.textPlaying=true;
     [self.delegate playText:self.index];
 }
 @end

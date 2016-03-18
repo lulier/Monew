@@ -11,7 +11,8 @@
 
 typedef NS_ENUM(NSInteger,StarNum)
 {
-    oneStar=0,
+    noStar=0,
+    oneStar,
     twoStar,
     threeStar,
 };
@@ -123,6 +124,7 @@ static NSString* cellIdentifierLyric=@"LyricViewCell";
     {
         [timer invalidate];
         [audioPlayer pause];
+        self.PlayingText=false;
     }
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
@@ -266,11 +268,13 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
 }
 -(void)stopRecorder:(NSArray*)words index:(NSInteger)index
 {
-//    [[OEPocketsphinxController sharedInstance] suspendRecognition];
     [audioRecorder stop];
     [self runRecognition:index];
     
-//    [self mergeWavHeaderData:_audioBuffer index:index];
+    LyricViewCell *cell=[self.tableview cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
+    [cell.star1 setImage:[UIImage imageNamed:@"star_unlight"]];
+    [cell.star2 setImage:[UIImage imageNamed:@"star_unlight"]];
+    [cell.star3 setImage:[UIImage imageNamed:@"star_unlight"]];
 }
 -(void)playRecord:(NSInteger)index
 {
@@ -333,6 +337,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
 }
 -(void)playText:(NSInteger)index
 {
+    self.PlayingText=true;
     LyricItem *item=self.lyricItems[index];
     endTime=item.endTime;
     [self setPlayerTime:item.beginTime];
@@ -340,6 +345,10 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     {
         [audioPlayer resume];
     }
+}
+-(BOOL)isPlayingText
+{
+    return self.PlayingText?YES:NO;
 }
 #pragma mark -
 #pragma mark OEEventsObserver delegate methods
@@ -355,6 +364,10 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
             if(![tmp isEqualToString:@""])
             [recognitionResult addObject:[tmp uppercaseString]];
         }
+    }
+    else
+    {
+        return;
     }
     NSMutableAttributedString *resultString=[[NSMutableAttributedString alloc]init];
     NSInteger correct=0;
@@ -394,7 +407,6 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     {
         if (cell.index==self.selectedIndex.row)
         {
-//            cell.cellText.attributedText=resultString;
             switch (number) {
                 case oneStar:
                     [cell.star1 setImage:[UIImage imageNamed:@"star_light"]];

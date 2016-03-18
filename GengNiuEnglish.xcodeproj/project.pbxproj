@@ -423,7 +423,7 @@
 				TargetAttributes = {
 					F42799251C18514200240736 = {
 						CreatedOnToolsVersion = 7.1.1;
-						DevelopmentTeam = 5Y787D7K6C;
+						DevelopmentTeam = BQWKD37TRB;
 					};
 					F427993E1C18514300240736 = {
 						CreatedOnToolsVersion = 7.1.1;
@@ -701,6 +701,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -713,8 +714,9 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULEMAP_FILE = "${PROJECT_DIR}/module.modulemap";
-				PRODUCT_BUNDLE_IDENTIFIER = com.leolu.GengNiuEnglish;
+				PRODUCT_BUNDLE_IDENTIFIER = com.monew.enterprise.english;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Debug;
@@ -725,6 +727,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
 				CODE_SIGN_IDENTITY = "iPhone Developer";
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				DEFINES_MODULE = YES;
 				ENABLE_BITCODE = NO;
 				FRAMEWORK_SEARCH_PATHS = (
@@ -737,8 +740,9 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULEMAP_FILE = "${PROJECT_DIR}/module.modulemap";
-				PRODUCT_BUNDLE_IDENTIFIER = com.leolu.GengNiuEnglish;
+				PRODUCT_BUNDLE_IDENTIFIER = com.monew.enterprise.english;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = "1,2";
 			};
 			name = Release;
