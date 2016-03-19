@@ -14,7 +14,13 @@
 -(void)dismissView;
 
 @end
-
+typedef NS_ENUM(NSInteger,IphoneType)
+{
+    Iphone5s=0,
+    Iphone6,
+    Iphone6p,
+    Ipad
+};
 @interface CommonMethod : NSObject
 //打包一个dictionary.传入参数格式: value,key,value,key...
 +(NSMutableDictionary*)packParamsInDictionary:(id) params,...;
@@ -35,5 +41,5 @@
 + (UIImage *)imageWithImage:(UIImage *)image scaledToSize:(CGSize)newSize;
 +(UIViewController*)getCurrentVC;
 +(NSString*)getPath:(NSString*)fileName;
-
++(IphoneType)checkIphoneType;
 @end

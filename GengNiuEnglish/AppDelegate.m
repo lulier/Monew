@@ -23,7 +23,6 @@ static NSString* const appSecret=@"2c2ca1b896f428d3d258743bf50076d9";
 
 
 - (BOOL)application:(UIApplication *)application didFinishLaunchingWithOptions:(NSDictionary *)launchOptions {
-    
     //streamingkit init
     NSError* error;
     

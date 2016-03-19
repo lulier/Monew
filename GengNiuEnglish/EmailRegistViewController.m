@@ -13,10 +13,19 @@
 {
     [super updateViewConstraints];
 //    NSLog(@"%f",[UIScreen mainScreen].bounds.size.height);
-    self.titleTopConstraint.constant=[UIScreen mainScreen].bounds.size.height>320.0f?7:4;
-    if ([UIScreen mainScreen].bounds.size.height>375.0f)
-    {
-        self.titleTopConstraint.constant=10;
+    IphoneType type=[CommonMethod checkIphoneType];
+    switch (type) {
+        case Iphone5s:
+            self.titleTopConstraint.constant=4;
+            break;
+        case Iphone6:
+            self.titleTopConstraint.constant=7;
+            break;
+        case Iphone6p:
+            self.titleTopConstraint.constant=10;
+            break;
+        default:
+            break;
     }
 }
 -(void)viewDidLoad

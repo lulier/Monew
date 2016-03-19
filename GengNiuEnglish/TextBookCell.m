@@ -43,13 +43,20 @@
     singleTap.cancelsTouchesInView=NO;
     [self.cellImage addGestureRecognizer:singleTap];
     [self.cellImage setUserInteractionEnabled:YES];
-    self.labelTopConstraint.constant=110;
-    if ([UIScreen mainScreen].bounds.size.height>320.0f)
-    {
-        self.labelTopConstraint.constant=120;
-        if ([UIScreen mainScreen].bounds.size.height>375.0f) {
+    
+    IphoneType type=[CommonMethod checkIphoneType];
+    switch (type) {
+        case Iphone5s:
+            self.labelTopConstraint.constant=110;
+            break;
+        case Iphone6:
+            self.labelTopConstraint.constant=120;
+            break;
+        case Iphone6p:
             self.labelTopConstraint.constant=140;
-        }
+            break;
+        default:
+            break;
     }
     [self setNeedsLayout];
     [self setNeedsDisplay];
@@ -57,7 +64,8 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    if ([UIScreen mainScreen].bounds.size.height<=320.0f)
+    IphoneType type=[CommonMethod checkIphoneType];
+    if (type==Iphone5s)
     {
         self.xiuLian.frame=CGRectMake(self.xiuLian.frame.origin.x, self.xiuLian.frame.origin.y, 36.0f, 32.0f);
         self.moErDuo.frame=CGRectMake(self.moErDuo.frame.origin.x, self.moErDuo.frame.origin.y, 42.0f, 33.0f);

@@ -88,48 +88,55 @@ static NSString * const reuseIdentifierMaterial = @"MaterialCell";
     cell.material=self.list[indexPath.row];
     return cell;
 }
-
 - (CGSize)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout sizeForItemAtIndexPath:(NSIndexPath *)indexPath
 {
     //6s width:180 height:250 6s width:160 height:220 5 width:150 height:200
-    CGFloat screenHeight=[UIScreen mainScreen].bounds.size.height;
-    if (screenHeight>320.0f)
+    IphoneType type=[CommonMethod checkIphoneType];
+    switch (type)
     {
-        if (screenHeight>375.0f)
-        {
+        case Iphone5s:
+            return CGSizeMake(150, 180);
+        case Iphone6:
+            return CGSizeMake(160, 200);
+        case Iphone6p:
             return CGSizeMake(180, 220);
-        }
-        return CGSizeMake(160, 200);
+        default:
+            return CGSizeMake(150, 180);
     }
-    return CGSizeMake(150, 180);
 }
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section
 {
     //6s: 100, 100, 100, 100 6: 90, 80, 100, 80 5: 90, 60, 100, 60
-    CGFloat screenHeight=[UIScreen mainScreen].bounds.size.height;
-    if (screenHeight>320.0f)
+    IphoneType type=[CommonMethod checkIphoneType];
+    switch (type)
     {
-        if (screenHeight>375.0f)
-        {
+        case Iphone5s:
+            return UIEdgeInsetsMake(40, 60, 60, 60);
+        case Iphone6:
+            return UIEdgeInsetsMake(60, 80, 80, 80);
+        case Iphone6p:
             return UIEdgeInsetsMake(80, 100, 100, 100);
-        }
-        return UIEdgeInsetsMake(60, 80, 80, 80);
+        default:
+            return UIEdgeInsetsMake(40, 60, 60, 60);
     }
-    return UIEdgeInsetsMake(40, 60, 60, 60);
 }
+
 - (CGFloat)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout minimumLineSpacingForSectionAtIndex:(NSInteger)section
 {
-    CGFloat screenHeight=[UIScreen mainScreen].bounds.size.height;
-    if (screenHeight>320.0f)
+    IphoneType type=[CommonMethod checkIphoneType];
+    switch (type)
     {
-        if (screenHeight>375.0f)
-        {
+        case Iphone5s:
+            return 60.0f;
+        case Iphone6:
+            return 80.0f;
+        case Iphone6p:
             return 100.0f;
-        }
-        return 80.0f;
+        default:
+            return 60.0f;
     }
-    return 60.0f;
 }
+
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
     // Prepare for animation

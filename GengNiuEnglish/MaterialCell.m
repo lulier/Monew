@@ -7,6 +7,7 @@
 //
 
 #import "MaterialCell.h"
+#import "CommonMethod.h"
 
 
 @implementation MaterialCell
@@ -21,16 +22,22 @@
         NSLog(@"your material is nil");
     }
     [self.cellLabel setText:_material.text_name];
-    CGFloat screenHeight=[UIScreen mainScreen].bounds.size.height;
-    self.cellLabel.font=[UIFont italicSystemFontOfSize:15.0f];
-    if (screenHeight>320.0f)
-    {
-        if (screenHeight>375.0f)
-        {
-            self.cellLabel.font=[UIFont italicSystemFontOfSize:17.0f];
-        }
-        else
+    IphoneType type=[CommonMethod checkIphoneType];
+    switch (type) {
+        case Iphone5s:
+            self.cellLabel.font=[UIFont italicSystemFontOfSize:15.0f];
+            self.labelTopConstraint.constant=110;
+            break;
+        case Iphone6:
+            self.labelTopConstraint.constant=120;
             self.cellLabel.font=[UIFont italicSystemFontOfSize:16.0f];
+            break;
+        case Iphone6p:
+            self.labelTopConstraint.constant=140;
+            self.cellLabel.font=[UIFont italicSystemFontOfSize:17.0f];
+            break;
+        default:
+            break;
     }
     [self.cellImage setImage:[UIImage imageNamed:@"profile-image-placeholder"]];
     __weak __typeof__(self) weakSelf = self;
@@ -38,14 +45,7 @@
         [weakSelf.cellImage setImage:image];
     }];
     
-    self.labelTopConstraint.constant=110;
-    if ([UIScreen mainScreen].bounds.size.height>320.0f)
-    {
-        self.labelTopConstraint.constant=120;
-        if ([UIScreen mainScreen].bounds.size.height>375.0f) {
-            self.labelTopConstraint.constant=140;
-        }
-    }
+    
 
     
     [self setNeedsLayout];

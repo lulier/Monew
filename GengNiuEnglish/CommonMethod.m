@@ -176,6 +176,23 @@
     NSLog(@"解密后的字符串 :%@",str);
     return str;
 }
-
++(IphoneType)checkIphoneType
+{
+    CGFloat height=[UIScreen mainScreen].bounds.size.height;
+    CGFloat width=[UIScreen mainScreen].bounds.size.width;
+    if ((height==320.0f&&width==568.0f)||(height==568.0f&&width==320.0f))
+    {
+        return Iphone5s;
+    }
+    if ((height==375.0f&&width==667.0f)||(height==667.0f&&width==375.0f))
+    {
+        return Iphone6;
+    }
+    if ((height==414.0f&&width==736.0f)||(height==736.0f&&width==414.0f))
+    {
+        return Iphone6p;
+    }
+    return Iphone5s;
+}
 
 @end

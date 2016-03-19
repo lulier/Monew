@@ -15,18 +15,22 @@
 {
     [super updateViewConstraints];
 //    NSLog(@"%f",[UIScreen mainScreen].bounds.size.height);
-    CGFloat height=[UIScreen mainScreen].bounds.size.height;
-    self.titleTopConstraint.constant=4;
-    self.inputTopConstraint.constant=20;
-    if (height>320.f)
-    {
-        self.titleTopConstraint.constant=7;
-        self.inputTopConstraint.constant=40;
-        if (height>375.0f)
-        {
+    IphoneType type=[CommonMethod checkIphoneType];
+    switch (type) {
+        case Iphone5s:
+            self.titleTopConstraint.constant=4;
+            self.inputTopConstraint.constant=20;
+            break;
+        case Iphone6:
+            self.titleTopConstraint.constant=7;
+            self.inputTopConstraint.constant=40;
+            break;
+        case Iphone6p:
             self.titleTopConstraint.constant=10;
             self.inputTopConstraint.constant=60;
-        }
+            break;
+        default:
+            break;
     }
     if (self.sendVeriCode.hidden==NO)
     {
