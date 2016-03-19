@@ -118,6 +118,7 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
     cell.index=indexPath.row;
     cell.delegate=self;
     return cell;
+    //需要维护当前的process
 }
 -(void)clickCellButton:(NSInteger)index
 {
@@ -211,7 +212,7 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
 {
     TextBookCell *cell=(TextBookCell*)[collectionView cellForItemAtIndexPath:indexPath];
     DataForCell *book=self.list[indexPath.row];
-    if ([book checkDatabase]||book.task!=nil)//检查是否下载过
+    if (book.task!=nil||[book checkDatabase])//检查是否下载过
     {
         return;
     }

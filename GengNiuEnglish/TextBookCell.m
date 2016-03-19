@@ -29,10 +29,10 @@
     {
         NSLog(@"your book is nil");
     }
-    
+    [self.cellImage sd_cancelCurrentImageLoad];
     [self.cellImage setImage:[UIImage imageNamed:@"profile-image-placeholder"]];
     __weak __typeof__(self) weakSelf = self;
-    
+    //需要判断正在下载的图片跟当前要下载的图片是否相同
     [NetworkingManager downloadImage:[NSURL URLWithString:_book.cover_url] block:^(UIImage *image) {
         [weakSelf.cellImage setImage:image];
     }];
@@ -48,12 +48,20 @@
     switch (type) {
         case Iphone5s:
             self.labelTopConstraint.constant=110;
+            self.xiuLianWidth.constant=40;
+            self.moErDuoWidth.constant=40;
+            self.chuangGuanWidth.constant=40;
+            self.moErDuo.titleLabel.font=[UIFont italicSystemFontOfSize:11.0f];
+            self.xiuLian.titleLabel.font=[UIFont italicSystemFontOfSize:12.0f];
+            self.chuangGuan.titleLabel.font=[UIFont italicSystemFontOfSize:12.0f];
             break;
         case Iphone6:
             self.labelTopConstraint.constant=120;
             break;
         case Iphone6p:
             self.labelTopConstraint.constant=140;
+            self.xiuLianLeftConstraint.constant=8;
+            self.chuangGuanRightConstraint.constant=8;
             break;
         default:
             break;
@@ -64,18 +72,7 @@
 
 - (void)layoutSubviews {
     [super layoutSubviews];
-    IphoneType type=[CommonMethod checkIphoneType];
-    if (type==Iphone5s)
-    {
-        self.xiuLian.frame=CGRectMake(self.xiuLian.frame.origin.x, self.xiuLian.frame.origin.y, 36.0f, 32.0f);
-        self.moErDuo.frame=CGRectMake(self.moErDuo.frame.origin.x, self.moErDuo.frame.origin.y, 42.0f, 33.0f);
-        self.chuangGuan.frame=CGRectMake(self.chuangGuan.frame.origin.x, self.chuangGuan.frame.origin.y, 36.0f, 32.0f);
-        self.xiuLianTopConstraint.constant=-25;
-        self.moErDuoTopConstraint.constant=-25;
-        self.chuangGuanTopConstraint.constant=-25;
-        self.chuangGuanRightConstraint.constant=-10;
-        self.moErDuo.titleLabel.font=[UIFont italicSystemFontOfSize:13.0f];
-    }
+    
 }
 -(void)dismissView
 {

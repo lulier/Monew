@@ -86,6 +86,7 @@
     __weak __typeof(self)weakSelf=self;
     [NetworkingManager downloadImage:[NSURL URLWithString:self.imageURL] block:^(UIImage * _Nullable image) {
         [weakSelf.coverImageView setImage:image];
+        weakSelf.coverImageView.alpha=0.5f;
     }];
     NSError *categoryError = nil;
     [[AVAudioSession sharedInstance]

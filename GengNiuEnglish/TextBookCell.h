@@ -34,8 +34,12 @@
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *labelTopConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *xiuLianTopConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *moErDuoTopConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *xiuLianLeftConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *chuangGuanTopConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *chuangGuanRightConstraint;
 @property(weak,nonatomic)id<textBookCellDelegate>delegate;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *xiuLianWidth;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *moErDuoWidth;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *chuangGuanWidth;
 - (IBAction)xiulianClick:(id)sender;
 @end

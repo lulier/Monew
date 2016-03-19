@@ -292,7 +292,7 @@
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="2Ep-bL-3Nm">
                                 <rect key="frame" x="20" y="61" width="627" height="22"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="8"/>
-                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
@@ -496,170 +496,96 @@
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Yia-Sd-ZVC">
                                                     <rect key="frame" x="12" y="8" width="174" height="169"/>
                                                 </imageView>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="label_bg" translatesAutoresizingMaskIntoConstraints="NO" id="wIG-AR-4k4">
-                                                    <rect key="frame" x="2" y="128" width="194" height="59"/>
-                                                </imageView>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sLQ-wg-v5D">
-                                                    <rect key="frame" x="5" y="142" width="45" height="40"/>
+                                                <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="StG-cE-QeJ">
+                                                    <rect key="frame" x="4" y="128" width="191" height="62"/>
+                                                    <subviews>
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="label_bg" translatesAutoresizingMaskIntoConstraints="NO" id="wIG-AR-4k4">
+                                                            <rect key="frame" x="0.0" y="0.0" width="191" height="62"/>
+                                                        </imageView>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mg1-Ay-eU7">
+                                                            <rect key="frame" x="73" y="10" width="45" height="46"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="45" id="C1a-Uq-zZW"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="13"/>
+                                                            <state key="normal" title="磨耳朵" backgroundImage="med_bg">
+                                                                <color key="titleColor" red="1" green="0.0" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
+                                                            </state>
+                                                            <connections>
+                                                                <action selector="moErDuoClick:" destination="Z2k-AG-gxt" eventType="touchUpInside" id="7QW-T5-A9z"/>
+                                                            </connections>
+                                                        </button>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QHE-Td-72e">
+                                                            <rect key="frame" x="142" y="10" width="45" height="46"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="45" id="UeP-R9-I4P"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                            <state key="normal" title="闯关" backgroundImage="cg_bg">
+                                                                <color key="titleColor" red="1" green="0.0" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
+                                                            </state>
+                                                            <connections>
+                                                                <action selector="chuangGuanClick:" destination="Z2k-AG-gxt" eventType="touchUpInside" id="2iG-98-t2A"/>
+                                                            </connections>
+                                                        </button>
+                                                        <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="sLQ-wg-v5D">
+                                                            <rect key="frame" x="4" y="10" width="45" height="46"/>
+                                                            <constraints>
+                                                                <constraint firstAttribute="width" constant="45" id="jCa-xp-MFT"/>
+                                                            </constraints>
+                                                            <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                                            <state key="normal" title="修炼" backgroundImage="xl_bg">
+                                                                <color key="titleColor" red="1" green="0.0" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
+                                                            </state>
+                                                            <connections>
+                                                                <action selector="xiulianClick:" destination="Z2k-AG-gxt" eventType="touchUpInside" id="d6z-Bl-dcY"/>
+                                                            </connections>
+                                                        </button>
+                                                    </subviews>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
-                                                        <constraint firstAttribute="width" constant="45" id="8TR-d9-TMQ"/>
-                                                        <constraint firstAttribute="width" constant="50" id="EQd-7T-4W4"/>
-                                                        <constraint firstAttribute="height" constant="40" id="QeF-yh-UQ7"/>
-                                                        <constraint firstAttribute="height" constant="40" id="qXp-7e-Xey"/>
+                                                        <constraint firstItem="sLQ-wg-v5D" firstAttribute="top" secondItem="StG-cE-QeJ" secondAttribute="top" constant="10" id="09R-nF-Z0Q"/>
+                                                        <constraint firstItem="QHE-Td-72e" firstAttribute="top" secondItem="StG-cE-QeJ" secondAttribute="top" constant="10" id="7kB-TI-iqJ"/>
+                                                        <constraint firstAttribute="bottom" secondItem="mg1-Ay-eU7" secondAttribute="bottom" constant="6" id="8EG-AH-416"/>
+                                                        <constraint firstItem="sLQ-wg-v5D" firstAttribute="leading" secondItem="StG-cE-QeJ" secondAttribute="leading" constant="4" id="Eo5-nk-3hd"/>
+                                                        <constraint firstItem="mg1-Ay-eU7" firstAttribute="centerX" secondItem="StG-cE-QeJ" secondAttribute="centerX" id="OAv-yf-41E"/>
+                                                        <constraint firstAttribute="trailing" secondItem="wIG-AR-4k4" secondAttribute="trailing" id="Phn-Ji-RZp"/>
+                                                        <constraint firstItem="wIG-AR-4k4" firstAttribute="leading" secondItem="StG-cE-QeJ" secondAttribute="leading" id="Xzr-0Z-aRv"/>
+                                                        <constraint firstAttribute="bottom" secondItem="sLQ-wg-v5D" secondAttribute="bottom" constant="6" id="bQG-QH-PEk"/>
+                                                        <constraint firstAttribute="bottom" secondItem="QHE-Td-72e" secondAttribute="bottom" constant="6" id="ecU-0d-CNn"/>
+                                                        <constraint firstItem="mg1-Ay-eU7" firstAttribute="top" secondItem="StG-cE-QeJ" secondAttribute="top" constant="10" id="fN9-Ro-S0Y"/>
+                                                        <constraint firstItem="wIG-AR-4k4" firstAttribute="top" secondItem="StG-cE-QeJ" secondAttribute="top" id="ftI-6o-Oop"/>
+                                                        <constraint firstAttribute="trailing" secondItem="QHE-Td-72e" secondAttribute="trailing" constant="4" id="hLp-0T-cJ1"/>
+                                                        <constraint firstAttribute="bottom" secondItem="wIG-AR-4k4" secondAttribute="bottom" id="tBJ-B4-10Z"/>
                                                     </constraints>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="15"/>
-                                                    <state key="normal" title="修炼" backgroundImage="xl_bg">
-                                                        <color key="titleColor" red="1" green="0.0" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
-                                                    </state>
-                                                    <variation key="default">
-                                                        <mask key="constraints">
-                                                            <exclude reference="EQd-7T-4W4"/>
-                                                            <exclude reference="QeF-yh-UQ7"/>
-                                                        </mask>
-                                                    </variation>
-                                                    <connections>
-                                                        <action selector="xiulianClick:" destination="Z2k-AG-gxt" eventType="touchUpInside" id="d6z-Bl-dcY"/>
-                                                    </connections>
-                                                </button>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="mg1-Ay-eU7">
-                                                    <rect key="frame" x="77" y="142" width="45" height="40"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="50" id="IrN-Pu-yWc"/>
-                                                        <constraint firstAttribute="height" constant="40" id="OWw-lZ-oYO"/>
-                                                        <constraint firstAttribute="width" constant="45" id="jzh-MN-sFF"/>
-                                                        <constraint firstAttribute="height" constant="40" id="s0D-Kg-QRh"/>
-                                                    </constraints>
-                                                    <state key="normal" title="磨耳朵" backgroundImage="med_bg">
-                                                        <color key="titleColor" red="1" green="0.0" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
-                                                    </state>
-                                                    <variation key="default">
-                                                        <mask key="constraints">
-                                                            <exclude reference="IrN-Pu-yWc"/>
-                                                            <exclude reference="OWw-lZ-oYO"/>
-                                                        </mask>
-                                                    </variation>
-                                                    <connections>
-                                                        <action selector="moErDuoClick:" destination="Z2k-AG-gxt" eventType="touchUpInside" id="7QW-T5-A9z"/>
-                                                    </connections>
-                                                </button>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" showsTouchWhenHighlighted="YES" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="QHE-Td-72e">
-                                                    <rect key="frame" x="148" y="142" width="45" height="40"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="45" id="4Fr-F2-cN2"/>
-                                                        <constraint firstAttribute="height" constant="40" id="7R5-XY-u3d"/>
-                                                        <constraint firstAttribute="height" constant="40" id="L07-o7-v7n"/>
-                                                        <constraint firstAttribute="width" constant="50" id="Yvw-Wv-rHL"/>
-                                                    </constraints>
-                                                    <state key="normal" title="闯关" backgroundImage="cg_bg">
-                                                        <color key="titleColor" red="1" green="0.0" blue="0.50196081400000003" alpha="1" colorSpace="calibratedRGB"/>
-                                                    </state>
-                                                    <variation key="default">
-                                                        <mask key="constraints">
-                                                            <exclude reference="7R5-XY-u3d"/>
-                                                            <exclude reference="Yvw-Wv-rHL"/>
-                                                        </mask>
-                                                    </variation>
-                                                    <connections>
-                                                        <action selector="chuangGuanClick:" destination="Z2k-AG-gxt" eventType="touchUpInside" id="2iG-98-t2A"/>
-                                                    </connections>
-                                                </button>
+                                                </view>
                                             </subviews>
                                             <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                         </view>
                                         <constraints>
-                                            <constraint firstItem="wIG-AR-4k4" firstAttribute="top" secondItem="Z2k-AG-gxt" secondAttribute="topMargin" constant="120" id="0Vz-ae-NbN"/>
-                                            <constraint firstItem="wIG-AR-4k4" firstAttribute="leading" secondItem="sLQ-wg-v5D" secondAttribute="trailing" constant="-56" id="0WD-FR-KwW"/>
                                             <constraint firstAttribute="bottomMargin" secondItem="Yia-Sd-ZVC" secondAttribute="bottom" constant="20" id="1bY-XN-fkC"/>
-                                            <constraint firstItem="mg1-Ay-eU7" firstAttribute="leading" secondItem="sLQ-wg-v5D" secondAttribute="trailing" constant="3" id="1rE-od-sk2"/>
-                                            <constraint firstItem="mg1-Ay-eU7" firstAttribute="top" secondItem="wIG-AR-4k4" secondAttribute="bottom" constant="-44" id="8ut-rG-TrF"/>
                                             <constraint firstAttribute="trailingMargin" secondItem="Yia-Sd-ZVC" secondAttribute="trailing" constant="4" id="A5n-tK-gbH"/>
-                                            <constraint firstItem="QHE-Td-72e" firstAttribute="top" secondItem="wIG-AR-4k4" secondAttribute="bottom" constant="-43" id="B94-mS-RLu"/>
-                                            <constraint firstItem="sLQ-wg-v5D" firstAttribute="top" secondItem="Yia-Sd-ZVC" secondAttribute="bottom" constant="-28" id="BCV-P3-S7t"/>
-                                            <constraint firstItem="wIG-AR-4k4" firstAttribute="leading" secondItem="sLQ-wg-v5D" secondAttribute="trailing" constant="-72" id="BKu-G9-Pyw"/>
-                                            <constraint firstAttribute="bottom" secondItem="sLQ-wg-v5D" secondAttribute="bottom" constant="37" id="Fgj-P7-Z8z"/>
-                                            <constraint firstItem="sLQ-wg-v5D" firstAttribute="top" secondItem="wIG-AR-4k4" secondAttribute="bottom" constant="-44" id="GUb-8h-xa4"/>
-                                            <constraint firstItem="mg1-Ay-eU7" firstAttribute="top" secondItem="Z2k-AG-gxt" secondAttribute="top" constant="173" id="Hh4-Iz-ESd"/>
-                                            <constraint firstItem="QHE-Td-72e" firstAttribute="leading" secondItem="mg1-Ay-eU7" secondAttribute="trailing" constant="17" id="J31-B9-29a"/>
-                                            <constraint firstItem="mg1-Ay-eU7" firstAttribute="top" secondItem="Yia-Sd-ZVC" secondAttribute="bottom" constant="-28" id="K8K-sf-Qa5"/>
-                                            <constraint firstItem="QHE-Td-72e" firstAttribute="leading" secondItem="wIG-AR-4k4" secondAttribute="trailing" constant="-69" id="LoM-5Y-W8q"/>
-                                            <constraint firstAttribute="trailingMargin" secondItem="QHE-Td-72e" secondAttribute="trailing" constant="-3" id="Mdn-o2-642"/>
-                                            <constraint firstItem="sLQ-wg-v5D" firstAttribute="top" secondItem="Z2k-AG-gxt" secondAttribute="top" constant="173" id="NIr-JW-QdE"/>
-                                            <constraint firstAttribute="trailing" secondItem="QHE-Td-72e" secondAttribute="trailing" constant="6" id="NhD-gp-NLR"/>
-                                            <constraint firstItem="mg1-Ay-eU7" firstAttribute="top" secondItem="Yia-Sd-ZVC" secondAttribute="bottom" constant="-35" id="Pcx-uz-nSq"/>
-                                            <constraint firstItem="wIG-AR-4k4" firstAttribute="leading" secondItem="Z2k-AG-gxt" secondAttribute="leadingMargin" constant="-6" id="S8x-sI-bhg"/>
-                                            <constraint firstItem="QHE-Td-72e" firstAttribute="top" secondItem="Z2k-AG-gxt" secondAttribute="top" constant="174" id="Saq-HN-FjU"/>
-                                            <constraint firstAttribute="bottomMargin" secondItem="wIG-AR-4k4" secondAttribute="bottom" constant="10" id="T0O-EI-sOj"/>
-                                            <constraint firstAttribute="trailingMargin" secondItem="wIG-AR-4k4" secondAttribute="trailing" constant="-6" id="V59-Cy-0mD"/>
-                                            <constraint firstItem="QHE-Td-72e" firstAttribute="leading" secondItem="mg1-Ay-eU7" secondAttribute="trailing" constant="17" id="XIe-uX-4IR"/>
-                                            <constraint firstAttribute="bottom" secondItem="mg1-Ay-eU7" secondAttribute="bottom" constant="37" id="Xie-XP-Iyx"/>
-                                            <constraint firstItem="sLQ-wg-v5D" firstAttribute="top" secondItem="Yia-Sd-ZVC" secondAttribute="bottom" constant="-35" id="YT3-YC-6WA"/>
-                                            <constraint firstAttribute="leadingMargin" secondItem="sLQ-wg-v5D" secondAttribute="leading" id="b5f-KL-qf7"/>
-                                            <constraint firstItem="sLQ-wg-v5D" firstAttribute="top" secondItem="wIG-AR-4k4" secondAttribute="bottom" constant="-44" id="bdn-Ip-X6W"/>
-                                            <constraint firstItem="sLQ-wg-v5D" firstAttribute="top" secondItem="wIG-AR-4k4" secondAttribute="bottom" constant="-44" id="cGY-Yp-Dbq"/>
-                                            <constraint firstItem="mg1-Ay-eU7" firstAttribute="leading" secondItem="sLQ-wg-v5D" secondAttribute="trailing" constant="17" id="dss-Fk-u5h"/>
-                                            <constraint firstItem="sLQ-wg-v5D" firstAttribute="leading" secondItem="Z2k-AG-gxt" secondAttribute="leading" constant="8" id="gLU-49-fL4"/>
-                                            <constraint firstItem="sLQ-wg-v5D" firstAttribute="leading" secondItem="Z2k-AG-gxt" secondAttribute="leading" constant="10" id="hQD-yZ-kkV"/>
-                                            <constraint firstItem="mg1-Ay-eU7" firstAttribute="leading" secondItem="sLQ-wg-v5D" secondAttribute="trailing" constant="3" id="ifi-kh-rhh"/>
-                                            <constraint firstItem="mg1-Ay-eU7" firstAttribute="leading" secondItem="sLQ-wg-v5D" secondAttribute="trailing" constant="17" id="kar-AK-PBz"/>
-                                            <constraint firstItem="wIG-AR-4k4" firstAttribute="top" secondItem="Yia-Sd-ZVC" secondAttribute="bottom" constant="-36" id="oda-zR-Ck1"/>
-                                            <constraint firstItem="wIG-AR-4k4" firstAttribute="leading" secondItem="sLQ-wg-v5D" secondAttribute="trailing" constant="-72" id="pIm-eE-JFo"/>
-                                            <constraint firstItem="sLQ-wg-v5D" firstAttribute="leading" secondItem="Z2k-AG-gxt" secondAttribute="leadingMargin" constant="-3" id="qm1-YB-YJR"/>
+                                            <constraint firstItem="StG-cE-QeJ" firstAttribute="leading" secondItem="Z2k-AG-gxt" secondAttribute="leadingMargin" constant="-4" id="Pqn-4f-fCP"/>
+                                            <constraint firstAttribute="trailingMargin" secondItem="StG-cE-QeJ" secondAttribute="trailing" constant="-5" id="WWj-uX-KUR"/>
+                                            <constraint firstAttribute="bottomMargin" secondItem="StG-cE-QeJ" secondAttribute="bottom" constant="7" id="Xcr-iZ-KEk"/>
+                                            <constraint firstItem="StG-cE-QeJ" firstAttribute="top" secondItem="Z2k-AG-gxt" secondAttribute="topMargin" constant="120" id="aK7-ue-b0K"/>
                                             <constraint firstItem="Yia-Sd-ZVC" firstAttribute="leading" secondItem="Z2k-AG-gxt" secondAttribute="leadingMargin" constant="4" id="rYh-ni-x6Z"/>
-                                            <constraint firstItem="mg1-Ay-eU7" firstAttribute="leading" secondItem="sLQ-wg-v5D" secondAttribute="trailing" constant="17" id="rgF-U1-mHf"/>
-                                            <constraint firstItem="mg1-Ay-eU7" firstAttribute="centerX" secondItem="Z2k-AG-gxt" secondAttribute="centerX" id="tJD-fv-wFX"/>
                                             <constraint firstAttribute="topMargin" secondItem="Yia-Sd-ZVC" secondAttribute="top" id="tbR-Lg-u8S"/>
-                                            <constraint firstItem="QHE-Td-72e" firstAttribute="leading" secondItem="mg1-Ay-eU7" secondAttribute="trailing" constant="17" id="uKm-Nd-Bl9"/>
-                                            <constraint firstItem="wIG-AR-4k4" firstAttribute="leading" secondItem="sLQ-wg-v5D" secondAttribute="trailing" constant="-58" id="uLF-Pp-iTs"/>
-                                            <constraint firstItem="QHE-Td-72e" firstAttribute="top" secondItem="Yia-Sd-ZVC" secondAttribute="bottom" constant="-35" id="vba-y1-vTi"/>
-                                            <constraint firstAttribute="bottom" secondItem="QHE-Td-72e" secondAttribute="bottom" constant="36" id="xC2-fc-eXJ"/>
-                                            <constraint firstItem="mg1-Ay-eU7" firstAttribute="leading" secondItem="sLQ-wg-v5D" secondAttribute="trailing" constant="17" id="zi5-My-0PX"/>
                                         </constraints>
-                                        <variation key="default">
-                                            <mask key="constraints">
-                                                <exclude reference="0WD-FR-KwW"/>
-                                                <exclude reference="BKu-G9-Pyw"/>
-                                                <exclude reference="oda-zR-Ck1"/>
-                                                <exclude reference="pIm-eE-JFo"/>
-                                                <exclude reference="uLF-Pp-iTs"/>
-                                                <exclude reference="BCV-P3-S7t"/>
-                                                <exclude reference="Fgj-P7-Z8z"/>
-                                                <exclude reference="GUb-8h-xa4"/>
-                                                <exclude reference="NIr-JW-QdE"/>
-                                                <exclude reference="b5f-KL-qf7"/>
-                                                <exclude reference="bdn-Ip-X6W"/>
-                                                <exclude reference="cGY-Yp-Dbq"/>
-                                                <exclude reference="gLU-49-fL4"/>
-                                                <exclude reference="hQD-yZ-kkV"/>
-                                                <exclude reference="1rE-od-sk2"/>
-                                                <exclude reference="8ut-rG-TrF"/>
-                                                <exclude reference="Hh4-Iz-ESd"/>
-                                                <exclude reference="K8K-sf-Qa5"/>
-                                                <exclude reference="Xie-XP-Iyx"/>
-                                                <exclude reference="dss-Fk-u5h"/>
-                                                <exclude reference="ifi-kh-rhh"/>
-                                                <exclude reference="kar-AK-PBz"/>
-                                                <exclude reference="rgF-U1-mHf"/>
-                                                <exclude reference="zi5-My-0PX"/>
-                                                <exclude reference="B94-mS-RLu"/>
-                                                <exclude reference="J31-B9-29a"/>
-                                                <exclude reference="LoM-5Y-W8q"/>
-                                                <exclude reference="NhD-gp-NLR"/>
-                                                <exclude reference="Saq-HN-FjU"/>
-                                                <exclude reference="XIe-uX-4IR"/>
-                                                <exclude reference="uKm-Nd-Bl9"/>
-                                                <exclude reference="xC2-fc-eXJ"/>
-                                            </mask>
-                                        </variation>
                                         <connections>
                                             <outlet property="cellImage" destination="Yia-Sd-ZVC" id="BMm-9I-tFr"/>
                                             <outlet property="chuangGuan" destination="QHE-Td-72e" id="0mJ-08-D8A"/>
-                                            <outlet property="chuangGuanRightConstraint" destination="Mdn-o2-642" id="adK-Gd-80e"/>
-                                            <outlet property="chuangGuanTopConstraint" destination="vba-y1-vTi" id="GJe-Zp-ABx"/>
-                                            <outlet property="labelTopConstraint" destination="0Vz-ae-NbN" id="lz3-tI-2Yf"/>
+                                            <outlet property="chuangGuanRightConstraint" destination="hLp-0T-cJ1" id="zGs-6d-CzQ"/>
+                                            <outlet property="chuangGuanTopConstraint" destination="7kB-TI-iqJ" id="vwq-Se-B3g"/>
+                                            <outlet property="chuangGuanWidth" destination="UeP-R9-I4P" id="xtD-U6-gnZ"/>
+                                            <outlet property="labelTopConstraint" destination="aK7-ue-b0K" id="wbu-3I-Duc"/>
                                             <outlet property="moErDuo" destination="mg1-Ay-eU7" id="mcF-FS-4Wq"/>
-                                            <outlet property="moErDuoTopConstraint" destination="Pcx-uz-nSq" id="Jkg-NC-ecX"/>
+                                            <outlet property="moErDuoTopConstraint" destination="fN9-Ro-S0Y" id="Imj-3F-vlF"/>
+                                            <outlet property="moErDuoWidth" destination="C1a-Uq-zZW" id="gc0-fk-oAQ"/>
                                             <outlet property="xiuLian" destination="sLQ-wg-v5D" id="9bj-0J-iEJ"/>
-                                            <outlet property="xiuLianTopConstraint" destination="YT3-YC-6WA" id="B2t-yV-Gl6"/>
+                                            <outlet property="xiuLianLeftConstraint" destination="Eo5-nk-3hd" id="fR4-fB-uyh"/>
+                                            <outlet property="xiuLianTopConstraint" destination="09R-nF-Z0Q" id="ENc-GW-Pud"/>
+                                            <outlet property="xiuLianWidth" destination="jCa-xp-MFT" id="K7e-Cf-iy4"/>
                                         </connections>
                                     </collectionViewCell>
                                 </cells>

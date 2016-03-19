@@ -48,7 +48,6 @@
 		F4AFCFAC1C842C9B0003B7F2 /* OpenEars.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4AFCFAA1C842C9B0003B7F2 /* OpenEars.framework */; };
 		F4B271B01C33B429009313CA /* LyricViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B271AF1C33B429009313CA /* LyricViewController.m */; };
 		F4F0E6CE1C94167600818C89 /* NSData+NSData_AES.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F0E6CD1C94167600818C89 /* NSData+NSData_AES.m */; };
-		F4F0E6DC1C95667600818C89 /* MHE_Rdg_Wonders_LvRdr_G4_On-Level_U4W2_17.lrc in Resources */ = {isa = PBXBuildFile; fileRef = F4F0E6DB1C95667600818C89 /* MHE_Rdg_Wonders_LvRdr_G4_On-Level_U4W2_17.lrc */; };
 		F4F0E6DF1C97BBEF00818C89 /* CustomCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F0E6DE1C97BBEF00818C89 /* CustomCollectionViewLayout.m */; };
 /* End PBXBuildFile section */
 
@@ -141,7 +140,6 @@
 		F4B271AF1C33B429009313CA /* LyricViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LyricViewController.m; sourceTree = "<group>"; };
 		F4F0E6CC1C94167600818C89 /* NSData+NSData_AES.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+NSData_AES.h"; sourceTree = "<group>"; };
 		F4F0E6CD1C94167600818C89 /* NSData+NSData_AES.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+NSData_AES.m"; sourceTree = "<group>"; };
-		F4F0E6DB1C95667600818C89 /* MHE_Rdg_Wonders_LvRdr_G4_On-Level_U4W2_17.lrc */ = {isa = PBXFileReference; lastKnownFileType = file; path = "MHE_Rdg_Wonders_LvRdr_G4_On-Level_U4W2_17.lrc"; sourceTree = "<group>"; };
 		F4F0E6DD1C97BBEF00818C89 /* CustomCollectionViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomCollectionViewLayout.h; sourceTree = "<group>"; };
 		F4F0E6DE1C97BBEF00818C89 /* CustomCollectionViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomCollectionViewLayout.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -221,7 +219,6 @@
 		F427991D1C18514200240736 = {
 			isa = PBXGroup;
 			children = (
-				F4F0E6DB1C95667600818C89 /* MHE_Rdg_Wonders_LvRdr_G4_On-Level_U4W2_17.lrc */,
 				F42799281C18514200240736 /* GengNiuEnglish */,
 				F42799421C18514300240736 /* GengNiuEnglishTests */,
 				F427994D1C18514300240736 /* GengNiuEnglishUITests */,
@@ -467,7 +464,6 @@
 			files = (
 				F42799391C18514200240736 /* LaunchScreen.storyboard in Resources */,
 				F42799361C18514200240736 /* Assets.xcassets in Resources */,
-				F4F0E6DC1C95667600818C89 /* MHE_Rdg_Wonders_LvRdr_G4_On-Level_U4W2_17.lrc in Resources */,
 				F42799341C18514200240736 /* Main.storyboard in Resources */,
 				F4AFCFAB1C842C9B0003B7F2 /* AcousticModelEnglish.bundle in Resources */,
 			);
