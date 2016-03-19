@@ -51,7 +51,6 @@
             self.labelTopConstraint.constant=140;
         }
     }
-    
     [self setNeedsLayout];
     [self setNeedsDisplay];
 }

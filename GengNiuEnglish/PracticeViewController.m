@@ -70,9 +70,6 @@ static NSString* cellIdentifierLyric=@"LyricViewCell";
     UIImage *background=[CommonMethod imageWithImage:[UIImage imageNamed:@"naked_background"] scaledToSize:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height)];
     self.view.backgroundColor=[UIColor colorWithPatternImage:background];
     self.selectedIndex=[NSIndexPath indexPathForRow:0 inSection:0];
-//    [self.tableview reloadData];
-//    [self tableView:self.tableview didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
-
     // Do any additional setup after loading the view.
     UIImageView *tempImageView = [[UIImageView alloc] initWithImage:[UIImage imageNamed:@"tableview_bg.png"]];
     [tempImageView setFrame:self.tableview.frame];
@@ -242,6 +239,9 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
 //当前的heightlight从一个cell转到另一个cell的时候需要停止前一个cell的所有的录音，播放，识别
 -(void)initRecorder:(NSInteger)index words:(NSArray *)words
 {
+    AVAudioSession *audioSession = [AVAudioSession sharedInstance];
+    NSError *err = nil;
+    [audioSession setCategory :AVAudioSessionCategoryPlayAndRecord error:&err];
     if (recognitionResult!=nil)
     {
         recognitionResult=nil;
@@ -337,6 +337,9 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
 }
 -(void)playText:(NSInteger)index
 {
+    AVAudioSession *audioSession=[AVAudioSession sharedInstance];
+    NSError* err;
+    [audioSession setCategory:AVAudioSessionCategoryPlayback withOptions:AVAudioSessionCategoryOptionMixWithOthers error:&err];
     self.PlayingText=true;
     LyricItem *item=self.lyricItems[index];
     endTime=item.endTime;
