@@ -26,8 +26,10 @@
 		F46A45071C93CD5A002BC9D4 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F46A45061C93CD5A002BC9D4 /* libicucore.tbd */; };
 		F46A45081C93CD6D002BC9D4 /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F46A44FD1C93CA65002BC9D4 /* libstdc++.tbd */; };
 		F46A450A1C93CD7D002BC9D4 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F46A45091C93CD7D002BC9D4 /* JavaScriptCore.framework */; };
-		F46A450D1C93CE34002BC9D4 /* MOBFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F46A450B1C93CE34002BC9D4 /* MOBFoundation.framework */; };
-		F46A450E1C93CE34002BC9D4 /* SMS_SDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F46A450C1C93CE34002BC9D4 /* SMS_SDK.framework */; };
+		F478C87B1C9D955500746E2C /* MOBFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F478C8771C9D955500746E2C /* MOBFoundation.framework */; };
+		F478C87C1C9D955500746E2C /* SMS_SDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F478C8781C9D955500746E2C /* SMS_SDK.framework */; };
+		F478C87D1C9D955500746E2C /* AcousticModelEnglish.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F478C8791C9D955500746E2C /* AcousticModelEnglish.bundle */; };
+		F478C87E1C9D955500746E2C /* OpenEars.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F478C87A1C9D955500746E2C /* OpenEars.framework */; };
 		F486C77C1C3A492000CBFBD1 /* LyricItem.m in Sources */ = {isa = PBXBuildFile; fileRef = F486C77B1C3A492000CBFBD1 /* LyricItem.m */; };
 		F486C7801C3B8B7C00CBFBD1 /* SampleQueueId.m in Sources */ = {isa = PBXBuildFile; fileRef = F486C77F1C3B8B7C00CBFBD1 /* SampleQueueId.m */; };
 		F49467041C27CE0900806DEF /* DataForCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F49467031C27CE0900806DEF /* DataForCell.m */; };
@@ -44,8 +46,6 @@
 		F4AD05691C2C1034006554FF /* MessageUI.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4AD05681C2C1034006554FF /* MessageUI.framework */; };
 		F4AFCF921C8025C10003B7F2 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4AFCF911C8025C10003B7F2 /* AVFoundation.framework */; };
 		F4AFCF9A1C803DE30003B7F2 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4AFCF991C803DE30003B7F2 /* AudioToolbox.framework */; };
-		F4AFCFAB1C842C9B0003B7F2 /* AcousticModelEnglish.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F4AFCFA91C842C9B0003B7F2 /* AcousticModelEnglish.bundle */; };
-		F4AFCFAC1C842C9B0003B7F2 /* OpenEars.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4AFCFAA1C842C9B0003B7F2 /* OpenEars.framework */; };
 		F4B271B01C33B429009313CA /* LyricViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B271AF1C33B429009313CA /* LyricViewController.m */; };
 		F4F0E6CE1C94167600818C89 /* NSData+NSData_AES.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F0E6CD1C94167600818C89 /* NSData+NSData_AES.m */; };
 		F4F0E6DF1C97BBEF00818C89 /* CustomCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F0E6DE1C97BBEF00818C89 /* CustomCollectionViewLayout.m */; };
@@ -105,8 +105,10 @@
 		F46A45011C93CBDC002BC9D4 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		F46A45061C93CD5A002BC9D4 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
 		F46A45091C93CD7D002BC9D4 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/PrivateFrameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		F46A450B1C93CE34002BC9D4 /* MOBFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MOBFoundation.framework; path = SMS_SDK/MOBFoundation.framework; sourceTree = "<group>"; };
-		F46A450C1C93CE34002BC9D4 /* SMS_SDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SMS_SDK.framework; path = SMS_SDK/SMS_SDK.framework; sourceTree = "<group>"; };
+		F478C8771C9D955500746E2C /* MOBFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MOBFoundation.framework; path = framwork/MOBFoundation.framework; sourceTree = "<group>"; };
+		F478C8781C9D955500746E2C /* SMS_SDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SMS_SDK.framework; path = framwork/SMS_SDK.framework; sourceTree = "<group>"; };
+		F478C8791C9D955500746E2C /* AcousticModelEnglish.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = AcousticModelEnglish.bundle; path = framwork/AcousticModelEnglish.bundle; sourceTree = "<group>"; };
+		F478C87A1C9D955500746E2C /* OpenEars.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenEars.framework; path = framwork/OpenEars.framework; sourceTree = "<group>"; };
 		F486C77A1C3A492000CBFBD1 /* LyricItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LyricItem.h; sourceTree = "<group>"; };
 		F486C77B1C3A492000CBFBD1 /* LyricItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LyricItem.m; sourceTree = "<group>"; };
 		F486C77E1C3B8B7C00CBFBD1 /* SampleQueueId.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleQueueId.h; sourceTree = "<group>"; };
@@ -134,8 +136,6 @@
 		F4AD05681C2C1034006554FF /* MessageUI.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MessageUI.framework; path = System/Library/Frameworks/MessageUI.framework; sourceTree = SDKROOT; };
 		F4AFCF911C8025C10003B7F2 /* AVFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AVFoundation.framework; path = System/Library/Frameworks/AVFoundation.framework; sourceTree = SDKROOT; };
 		F4AFCF991C803DE30003B7F2 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
-		F4AFCFA91C842C9B0003B7F2 /* AcousticModelEnglish.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; path = AcousticModelEnglish.bundle; sourceTree = "<group>"; };
-		F4AFCFAA1C842C9B0003B7F2 /* OpenEars.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OpenEars.framework; sourceTree = "<group>"; };
 		F4B271AE1C33B429009313CA /* LyricViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LyricViewController.h; sourceTree = "<group>"; };
 		F4B271AF1C33B429009313CA /* LyricViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LyricViewController.m; sourceTree = "<group>"; };
 		F4F0E6CC1C94167600818C89 /* NSData+NSData_AES.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+NSData_AES.h"; sourceTree = "<group>"; };
@@ -149,15 +149,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F46A450D1C93CE34002BC9D4 /* MOBFoundation.framework in Frameworks */,
-				F46A450E1C93CE34002BC9D4 /* SMS_SDK.framework in Frameworks */,
+				F478C87B1C9D955500746E2C /* MOBFoundation.framework in Frameworks */,
 				F46A450A1C93CD7D002BC9D4 /* JavaScriptCore.framework in Frameworks */,
+				F478C87C1C9D955500746E2C /* SMS_SDK.framework in Frameworks */,
 				F46A45081C93CD6D002BC9D4 /* libstdc++.tbd in Frameworks */,
 				F4AD05691C2C1034006554FF /* MessageUI.framework in Frameworks */,
 				F46A45071C93CD5A002BC9D4 /* libicucore.tbd in Frameworks */,
 				F46A45051C93CD50002BC9D4 /* libz.tbd in Frameworks */,
+				F478C87E1C9D955500746E2C /* OpenEars.framework in Frameworks */,
 				F46A44FA1C93CA37002BC9D4 /* CoreTelephony.framework in Frameworks */,
-				F4AFCFAC1C842C9B0003B7F2 /* OpenEars.framework in Frameworks */,
 				F4AFCF9A1C803DE30003B7F2 /* AudioToolbox.framework in Frameworks */,
 				F4AFCF921C8025C10003B7F2 /* AVFoundation.framework in Frameworks */,
 				F4AD05671C2C102C006554FF /* ImageIO.framework in Frameworks */,
@@ -195,8 +195,10 @@
 		5F4697E4BCC7D6FEE1E67A97 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				F46A450B1C93CE34002BC9D4 /* MOBFoundation.framework */,
-				F46A450C1C93CE34002BC9D4 /* SMS_SDK.framework */,
+				F478C8771C9D955500746E2C /* MOBFoundation.framework */,
+				F478C8781C9D955500746E2C /* SMS_SDK.framework */,
+				F478C8791C9D955500746E2C /* AcousticModelEnglish.bundle */,
+				F478C87A1C9D955500746E2C /* OpenEars.framework */,
 				F46A45091C93CD7D002BC9D4 /* JavaScriptCore.framework */,
 				F46A45061C93CD5A002BC9D4 /* libicucore.tbd */,
 				F46A45011C93CBDC002BC9D4 /* MobileCoreServices.framework */,
@@ -204,8 +206,6 @@
 				F46A44FD1C93CA65002BC9D4 /* libstdc++.tbd */,
 				F46A44FB1C93CA5B002BC9D4 /* libz.tbd */,
 				F46A44F91C93CA37002BC9D4 /* CoreTelephony.framework */,
-				F4AFCFA91C842C9B0003B7F2 /* AcousticModelEnglish.bundle */,
-				F4AFCFAA1C842C9B0003B7F2 /* OpenEars.framework */,
 				F4AFCF991C803DE30003B7F2 /* AudioToolbox.framework */,
 				F4AFCF911C8025C10003B7F2 /* AVFoundation.framework */,
 				F4AD05681C2C1034006554FF /* MessageUI.framework */,
@@ -463,9 +463,9 @@
 			buildActionMask = 2147483647;
 			files = (
 				F42799391C18514200240736 /* LaunchScreen.storyboard in Resources */,
+				F478C87D1C9D955500746E2C /* AcousticModelEnglish.bundle in Resources */,
 				F42799361C18514200240736 /* Assets.xcassets in Resources */,
 				F42799341C18514200240736 /* Main.storyboard in Resources */,
-				F4AFCFAB1C842C9B0003B7F2 /* AcousticModelEnglish.bundle in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -710,6 +710,7 @@
 					"$(PROJECT_DIR)",
 					"$(SDKROOT)$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks",
 					"$(PROJECT_DIR)/SMS_SDK",
+					"$(PROJECT_DIR)/framwork",
 				);
 				INFOPLIST_FILE = GengNiuEnglish/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
@@ -736,6 +737,7 @@
 					"$(PROJECT_DIR)",
 					"$(SDKROOT)$(SYSTEM_LIBRARY_DIR)/PrivateFrameworks",
 					"$(PROJECT_DIR)/SMS_SDK",
+					"$(PROJECT_DIR)/framwork",
 				);
 				INFOPLIST_FILE = GengNiuEnglish/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;

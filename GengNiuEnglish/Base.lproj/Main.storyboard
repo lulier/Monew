@@ -26,7 +26,7 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="磨耳朵" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="icP-7e-ypX">
-                                <rect key="frame" x="301" y="20" width="66" height="26"/>
+                                <rect key="frame" x="301" y="20" width="66" height="27"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
                                 <color key="textColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 <nil key="highlightedColor"/>
@@ -39,7 +39,7 @@
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Eqk-qA-CkV">
-                                <rect key="frame" x="180" y="90" width="307" height="189"/>
+                                <rect key="frame" x="140" y="80" width="387" height="235"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="307" id="B0Q-dE-lrL"/>
                                     <constraint firstAttribute="height" constant="155" id="M6p-ft-3m5"/>
@@ -52,10 +52,10 @@
                                 </variation>
                             </imageView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="leolu is wonderful !!!!" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="HG3-ay-HTn">
-                                <rect key="frame" x="40" y="306" width="587" height="50"/>
+                                <rect key="frame" x="50" y="168" width="567" height="39"/>
                                 <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="50" id="5v4-Lu-TWb"/>
+                                    <constraint firstAttribute="height" constant="39" id="5v4-Lu-TWb"/>
                                     <constraint firstAttribute="height" constant="42" id="Ujj-dQ-dhh"/>
                                     <constraint firstAttribute="height" constant="128" id="eCG-SQ-13q"/>
                                     <constraint firstAttribute="width" constant="560" id="ucC-Ip-y53"/>
@@ -75,19 +75,25 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="1dC-r8-qUu" firstAttribute="centerX" secondItem="VFW-jp-szo" secondAttribute="centerX" id="0kz-27-TEi"/>
-                            <constraint firstAttribute="trailing" secondItem="HG3-ay-HTn" secondAttribute="trailing" constant="40" id="BaN-8k-qlZ"/>
+                            <constraint firstAttribute="trailing" secondItem="HG3-ay-HTn" secondAttribute="trailing" constant="50" id="BaN-8k-qlZ"/>
                             <constraint firstItem="HG3-ay-HTn" firstAttribute="top" secondItem="1dC-r8-qUu" secondAttribute="bottom" constant="63" id="Cxc-IK-IXi"/>
-                            <constraint firstItem="HG3-ay-HTn" firstAttribute="leading" secondItem="VFW-jp-szo" secondAttribute="leading" constant="40" id="ELh-Y2-pjA"/>
-                            <constraint firstItem="HG3-ay-HTn" firstAttribute="top" secondItem="Eqk-qA-CkV" secondAttribute="bottom" constant="27" id="F1K-Wp-prf"/>
+                            <constraint firstItem="HG3-ay-HTn" firstAttribute="centerY" secondItem="VFW-jp-szo" secondAttribute="centerY" id="DQ0-uD-P0V"/>
+                            <constraint firstItem="HG3-ay-HTn" firstAttribute="leading" secondItem="VFW-jp-szo" secondAttribute="leading" constant="50" id="ELh-Y2-pjA"/>
+                            <constraint firstItem="HG3-ay-HTn" firstAttribute="top" secondItem="Eqk-qA-CkV" secondAttribute="bottom" constant="-130" id="F1K-Wp-prf"/>
+                            <constraint firstItem="Eqk-qA-CkV" firstAttribute="top" secondItem="1dC-r8-qUu" secondAttribute="bottom" constant="20" id="G6G-mQ-OMS"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="HG3-ay-HTn" secondAttribute="trailing" constant="30" id="IQq-zC-6bg"/>
+                            <constraint firstItem="Eqk-qA-CkV" firstAttribute="top" secondItem="1dC-r8-qUu" secondAttribute="bottom" constant="20" id="JAk-7N-Two"/>
                             <constraint firstItem="icP-7e-ypX" firstAttribute="centerX" secondItem="1dC-r8-qUu" secondAttribute="centerX" id="JaB-LM-SUu"/>
-                            <constraint firstItem="Eqk-qA-CkV" firstAttribute="leading" secondItem="VFW-jp-szo" secondAttribute="leadingMargin" constant="160" id="KTZ-8x-WXa"/>
+                            <constraint firstItem="Eqk-qA-CkV" firstAttribute="leading" secondItem="VFW-jp-szo" secondAttribute="leadingMargin" constant="120" id="KTZ-8x-WXa"/>
                             <constraint firstItem="HG3-ay-HTn" firstAttribute="centerX" secondItem="VFW-jp-szo" secondAttribute="centerX" id="Lv3-Xt-TPe"/>
                             <constraint firstItem="icP-7e-ypX" firstAttribute="centerY" secondItem="1dC-r8-qUu" secondAttribute="centerY" id="XWg-h5-s56"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Eqk-qA-CkV" secondAttribute="trailing" constant="160" id="YUo-2U-yXW"/>
-                            <constraint firstItem="Mkt-AQ-EK2" firstAttribute="top" secondItem="Eqk-qA-CkV" secondAttribute="bottom" constant="96" id="aIu-DN-hYW"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Eqk-qA-CkV" secondAttribute="trailing" constant="120" id="YUo-2U-yXW"/>
+                            <constraint firstItem="Mkt-AQ-EK2" firstAttribute="top" secondItem="Eqk-qA-CkV" secondAttribute="bottom" constant="60" id="aIu-DN-hYW"/>
                             <constraint firstItem="HG3-ay-HTn" firstAttribute="leading" secondItem="VFW-jp-szo" secondAttribute="leadingMargin" constant="8" id="c4Q-lK-KlD"/>
+                            <constraint firstItem="Mkt-AQ-EK2" firstAttribute="top" secondItem="Eqk-qA-CkV" secondAttribute="bottom" constant="60" id="dSn-PA-qEK"/>
                             <constraint firstItem="Eqk-qA-CkV" firstAttribute="centerY" secondItem="VFW-jp-szo" secondAttribute="centerY" constant="-3" id="djb-Yr-Eko"/>
                             <constraint firstItem="1dC-r8-qUu" firstAttribute="top" secondItem="VFW-jp-szo" secondAttribute="top" constant="5" id="jgR-El-iy4"/>
+                            <constraint firstItem="HG3-ay-HTn" firstAttribute="leading" secondItem="VFW-jp-szo" secondAttribute="leadingMargin" constant="30" id="mEZ-zk-Y2g"/>
                             <constraint firstItem="HG3-ay-HTn" firstAttribute="centerX" secondItem="VFW-jp-szo" secondAttribute="centerX" id="pMe-hM-mTE"/>
                             <constraint firstItem="Eqk-qA-CkV" firstAttribute="centerY" secondItem="VFW-jp-szo" secondAttribute="centerY" constant="-3" id="qKI-kh-WtF"/>
                             <constraint firstAttribute="trailingMargin" secondItem="HG3-ay-HTn" secondAttribute="trailing" constant="8" id="r8R-3D-j4Z"/>
@@ -95,12 +101,18 @@
                         </constraints>
                         <variation key="default">
                             <mask key="constraints">
+                                <exclude reference="G6G-mQ-OMS"/>
                                 <exclude reference="djb-Yr-Eko"/>
+                                <exclude reference="qKI-kh-WtF"/>
+                                <exclude reference="BaN-8k-qlZ"/>
                                 <exclude reference="Cxc-IK-IXi"/>
+                                <exclude reference="ELh-Y2-pjA"/>
+                                <exclude reference="F1K-Wp-prf"/>
                                 <exclude reference="c4Q-lK-KlD"/>
                                 <exclude reference="pMe-hM-mTE"/>
                                 <exclude reference="r8R-3D-j4Z"/>
                                 <exclude reference="uUF-ll-79Z"/>
+                                <exclude reference="aIu-DN-hYW"/>
                             </mask>
                         </variation>
                     </view>
@@ -173,7 +185,7 @@
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4vz-PU-mv9">
-                                                    <rect key="frame" x="55" y="0.0" width="34" height="36"/>
+                                                    <rect key="frame" x="54" y="0.0" width="34" height="36"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="34" id="6wi-Dg-dhP"/>
                                                         <constraint firstAttribute="height" constant="40" id="Fkz-fU-Rmp"/>
