@@ -26,7 +26,7 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="磨耳朵" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="icP-7e-ypX">
-                                <rect key="frame" x="301" y="20" width="66" height="27"/>
+                                <rect key="frame" x="301" y="20" width="66" height="26"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
                                 <color key="textColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 <nil key="highlightedColor"/>
@@ -52,10 +52,10 @@
                                 </variation>
                             </imageView>
                             <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" editable="NO" text="leolu is wonderful !!!!" textAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="HG3-ay-HTn">
-                                <rect key="frame" x="50" y="168" width="567" height="39"/>
+                                <rect key="frame" x="50" y="173" width="567" height="50"/>
                                 <color key="backgroundColor" white="1" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
-                                    <constraint firstAttribute="height" constant="39" id="5v4-Lu-TWb"/>
+                                    <constraint firstAttribute="height" constant="50" id="5v4-Lu-TWb"/>
                                     <constraint firstAttribute="height" constant="42" id="Ujj-dQ-dhh"/>
                                     <constraint firstAttribute="height" constant="128" id="eCG-SQ-13q"/>
                                     <constraint firstAttribute="width" constant="560" id="ucC-Ip-y53"/>
@@ -77,7 +77,7 @@
                             <constraint firstItem="1dC-r8-qUu" firstAttribute="centerX" secondItem="VFW-jp-szo" secondAttribute="centerX" id="0kz-27-TEi"/>
                             <constraint firstAttribute="trailing" secondItem="HG3-ay-HTn" secondAttribute="trailing" constant="50" id="BaN-8k-qlZ"/>
                             <constraint firstItem="HG3-ay-HTn" firstAttribute="top" secondItem="1dC-r8-qUu" secondAttribute="bottom" constant="63" id="Cxc-IK-IXi"/>
-                            <constraint firstItem="HG3-ay-HTn" firstAttribute="centerY" secondItem="VFW-jp-szo" secondAttribute="centerY" id="DQ0-uD-P0V"/>
+                            <constraint firstItem="HG3-ay-HTn" firstAttribute="centerY" secondItem="VFW-jp-szo" secondAttribute="centerY" constant="10" id="DQ0-uD-P0V"/>
                             <constraint firstItem="HG3-ay-HTn" firstAttribute="leading" secondItem="VFW-jp-szo" secondAttribute="leading" constant="50" id="ELh-Y2-pjA"/>
                             <constraint firstItem="HG3-ay-HTn" firstAttribute="top" secondItem="Eqk-qA-CkV" secondAttribute="bottom" constant="-130" id="F1K-Wp-prf"/>
                             <constraint firstItem="Eqk-qA-CkV" firstAttribute="top" secondItem="1dC-r8-qUu" secondAttribute="bottom" constant="20" id="G6G-mQ-OMS"/>

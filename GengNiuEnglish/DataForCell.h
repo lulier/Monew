@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import "SSZipArchive.h"
 #import "ReaderViewController.h"
+#import "DAProgressOverlayView.h"
 @import UIKit;
 
 typedef NS_ENUM(NSInteger,FileType)
@@ -31,6 +32,7 @@ typedef NS_ENUM(NSInteger,FileType)
 @property(strong,nonatomic)NSMutableArray *fileNames;
 @property(strong,nonatomic)NSURLSessionTask *task;
 @property(strong,nonatomic)NSString *text_count;
+@property(nonatomic,strong)DAProgressOverlayView *progressView;
 
 -(instancetype)initWithAttributes:(NSDictionary *)attributes;
 +(NSURLSessionTask*)getGradeList:(void(^)(NSArray *data,NSError *error))block;

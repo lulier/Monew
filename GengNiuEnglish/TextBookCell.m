@@ -85,12 +85,7 @@
         [self.delegate clickCellButton:self.index];
         return;
     }
-    UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    practiceViewController=[storyboard instantiateViewControllerWithIdentifier:@"PracticeViewController"];
-    [practiceViewController initWithBook:self.book];
-    practiceViewController.delegate=self;
-    UINavigationController *navigationController=(UINavigationController*)self.window.rootViewController;
-    [navigationController pushViewController:practiceViewController animated:YES];
+    [self openBook];
 }
 - (IBAction)moErDuoClick:(id)sender {
     if (![self.book checkDatabase])
@@ -114,6 +109,12 @@
         [self.delegate clickCellButton:self.index];
         return;
     }
+    UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    practiceViewController=[storyboard instantiateViewControllerWithIdentifier:@"PracticeViewController"];
+    [practiceViewController initWithBook:self.book];
+    practiceViewController.delegate=self;
+    UINavigationController *navigationController=(UINavigationController*)self.window.rootViewController;
+    [navigationController pushViewController:practiceViewController animated:YES];
 }
 -(void)openBook
 {

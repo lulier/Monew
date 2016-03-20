@@ -16,6 +16,7 @@
 #import "LyricViewController.h"
 #import "FMDB.h"
 #import "DAProgressOverlayView.h"
+#define PROGRESSVIEW_TAG 1234
 
 @interface BookViewController ()
 {
@@ -117,6 +118,15 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
     cell.book=self.list[indexPath.row];
     cell.index=indexPath.row;
     cell.delegate=self;
+    DataForCell* data=self.list[indexPath.row];
+    if ([cell.contentView viewWithTag:PROGRESSVIEW_TAG]!=nil)
+    {
+        [[cell.contentView viewWithTag:PROGRESSVIEW_TAG] removeFromSuperview];
+    }
+    if (data.progressView!=nil)
+    {
+        [cell.contentView addSubview:data.progressView];
+    }
     return cell;
     //需要维护当前的process
 }
@@ -219,11 +229,13 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
     //这里还没有处理下载出错的情况
     NSDictionary *parameters=[NSDictionary dictionaryWithObjectsAndKeys:book.downloadURL,@"url",nil];
     __weak __typeof__(self) weakSelf = self;
-    __block DAProgressOverlayView *progressView=[[DAProgressOverlayView alloc]initWithFrame:cell.bounds];
-    [progressView setHidden:NO];
-    progressView.progress = 0;
-    [cell addSubview:progressView];
-    [progressView displayOperationWillTriggerAnimation];
+    DataForCell *data=self.list[indexPath.row];
+    data.progressView=[[DAProgressOverlayView alloc]initWithFrame:cell.bounds];
+    [data.progressView setHidden:NO];
+    data.progressView.progress = 0;
+    data.progressView.tag=PROGRESSVIEW_TAG;
+    [cell.contentView addSubview:data.progressView];
+    [data.progressView displayOperationWillTriggerAnimation];
     __block NSURLSessionTask *task=
     [NetworkingManager httpRequest:RTDownload url:RUCustom parameters:parameters
                           progress:^(NSProgress *downloadProgress)
@@ -231,20 +243,19 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
          if (downloadProgress)
          {
              dispatch_async(dispatch_get_main_queue(), ^{
-                 [progressView setProgress:downloadProgress.fractionCompleted];
-                 if (downloadProgress.fractionCompleted == 1.0000) {
-                     [progressView displayOperationDidFinishAnimation];
-                     double delayInSeconds = progressView.stateChangeAnimationDuration;
+                 [data.progressView setProgress:downloadProgress.fractionCompleted];
+                 if (downloadProgress.fractionCompleted == 1.0000)
+                 {
+                     [data.progressView displayOperationDidFinishAnimation];
+                     double delayInSeconds = data.progressView.stateChangeAnimationDuration;
                      dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
                      dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                         [progressView removeFromSuperview];
-                         progressView = nil;
+                         [data.progressView removeFromSuperview];
+                         data.progressView = nil;
                      });
                      NSLog(@"download complete");
-                     if(progressView!=nil)
+                     if(data.progressView!=nil)
                          NSLog(@"progressView is not nil");
-                 } else {
-                     
                  }
              });
          }

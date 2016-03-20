@@ -13,6 +13,7 @@
 #import "FMDB.h"
 #import "MTDatabaseHelper.h"
 #import "CommonMethod.h"
+
 @implementation DataForCell
 {
     ReaderViewController *readerViewController;
@@ -34,6 +35,7 @@
         self.downloadURL=[attributes objectForKey:@"courseware_url"];
         self.zipFileName=[[[[self.downloadURL componentsSeparatedByString:@"/"] lastObject] componentsSeparatedByString:@"?"] objectAtIndex:0];
         self.fileNames=[[NSMutableArray alloc]init];
+        self.progressView=nil;
         [self checkDatabase];
     }
     else
@@ -46,6 +48,7 @@
         self.fileNames=nil;
         self.downloadURL=nil;
         self.zipFileName=nil;
+        self.progressView=nil;
     }
     self.task=nil;
     return self;
