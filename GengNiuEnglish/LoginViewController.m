@@ -11,6 +11,7 @@
 @interface LoginViewController()
 {
     UIViewController *launchView;
+    UIView *blackView;
 }
 @end
 @implementation LoginViewController
@@ -21,17 +22,31 @@
     [self checkLogin];
     self.passwordInput.text=@"";
 }
+-(void)showBlackView
+{
+    if (!blackView) {
+        CGRect screen = [UIScreen mainScreen].bounds;
+        blackView = [[UIView alloc]initWithFrame:CGRectMake(0, 0, screen.size.width, screen.size.height)];
+        [blackView setBackgroundColor:[UIColor blackColor]];
+    }
+    UIWindow *window = [UIApplication sharedApplication].delegate.window;
+    [window addSubview:blackView];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [blackView removeFromSuperview];
+        blackView = nil;
+    });
+}
 -(void)showLaunchView
 {
-    launchView=[[UIViewController alloc]init];
-    UIImage *background=[CommonMethod imageWithImage:[UIImage imageNamed:@"background"] scaledToSize:CGSizeMake(launchView.view.frame.size.width, launchView.view.frame.size.height)];
-    launchView.view.backgroundColor=[UIColor colorWithPatternImage:background];
+    UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    launchView=[storyboard instantiateViewControllerWithIdentifier:@"LaunchViewController"];
     launchView.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
     [self.navigationController presentViewController:launchView animated:NO completion:
      ^{
+         [blackView removeFromSuperview];
+         blackView = nil;
          dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
              [launchView dismissViewControllerAnimated:YES completion:nil];
-             
          });
      }];
 }
@@ -82,6 +97,8 @@
 }
 -(void)viewDidLoad
 {
+    [self showBlackView];
+    [self showLaunchView];
     [self.navigationController setNavigationBarHidden:YES];
     UIImage *background=[CommonMethod imageWithImage:[UIImage imageNamed:@"naked_background"] scaledToSize:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height)];
     self.view.backgroundColor=[UIColor colorWithPatternImage:background];
@@ -89,7 +106,6 @@
     self.passwordInput.delegate=self;
     self.passwordInput.text=@"";
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(onKeyboardHide) name:UIKeyboardWillHideNotification object:nil];
-    [self showLaunchView];
 }
 -(void)onKeyboardHide
 {
