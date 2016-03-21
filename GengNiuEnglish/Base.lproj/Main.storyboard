@@ -61,7 +61,7 @@
                                     <constraint firstAttribute="width" constant="560" id="ucC-Ip-y53"/>
                                 </constraints>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="18"/>
+                                <fontDescription key="fontDescription" type="boldSystem" pointSize="18"/>
                                 <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
                                 <variation key="default">
                                     <mask key="constraints">
@@ -120,7 +120,9 @@
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
                         <outlet property="coverImageView" destination="Eqk-qA-CkV" id="co5-Zr-u8M"/>
+                        <outlet property="imageViewTopConstraint" destination="JAk-7N-Two" id="2lq-wW-3Si"/>
                         <outlet property="lyricText" destination="HG3-ay-HTn" id="2Ns-Ih-a1w"/>
+                        <outlet property="lyricTextAlignY" destination="DQ0-uD-P0V" id="JRz-Gh-DMz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="q0f-mn-Y1r" userLabel="First Responder" sceneMemberID="firstResponder"/>

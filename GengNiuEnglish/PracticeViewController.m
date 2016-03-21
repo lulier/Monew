@@ -241,7 +241,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     AVAudioSession *audioSession = [AVAudioSession sharedInstance];
     NSError *err = nil;
-    [audioSession setCategory :AVAudioSessionCategoryPlayAndRecord error:&err];
+    [audioSession setCategory :AVAudioSessionCategoryRecord error:&err];
     if (recognitionResult!=nil)
     {
         recognitionResult=nil;
@@ -278,6 +278,9 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
 }
 -(void)playRecord:(NSInteger)index
 {
+    AVAudioSession *audioSession=[AVAudioSession sharedInstance];
+    NSError* err;
+    [audioSession setCategory:AVAudioSessionCategoryPlayback withOptions:AVAudioSessionCategoryOptionMixWithOthers error:&err];
     if (recordAudioPlayer!=nil)
     {
         recordAudioPlayer=nil;

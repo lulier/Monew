@@ -11,7 +11,6 @@
 #import "CommonMethod.h"
 #import "DataForCell.h"
 #import "NetworkingManager.h"
-#import "MRProgress.h"
 #import <AVFoundation/AVFoundation.h>
 #import "LyricViewController.h"
 #import "FMDB.h"
@@ -208,6 +207,17 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
             if(data!=nil)
             {
                 NSMutableArray *books=[[NSMutableArray alloc]initWithArray:self.list];
+                //检查是否有重复
+                for (DataForCell *tmp in data)
+                {
+                    for (DataForCell *cache in books)
+                    {
+                        if ([tmp.text_id integerValue]==[cache.text_id integerValue])
+                        {
+                            [books removeObject:cache];
+                        }
+                    }
+                }
                 [books addObjectsFromArray:data];
                 self.list=nil;
                 self.list=books;

@@ -20,6 +20,8 @@
 
 @property (weak, nonatomic) IBOutlet UITextView *lyricText;
 @property (weak, nonatomic) IBOutlet UIImageView *coverImageView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *imageViewTopConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *lyricTextAlignY;
 @property(nonatomic,strong)NSString *imageURL;
 @property(weak,nonatomic)id<dismissDelegate>delegate;
 @property(nonatomic,weak)DataForCell *book;

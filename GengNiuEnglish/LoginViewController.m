@@ -8,7 +8,11 @@
 
 #import "LoginViewController.h"
 #define CIPHER_KEY @"24BF8C08A00AFA00"
-
+@interface LoginViewController()
+{
+    UIViewController *launchView;
+}
+@end
 @implementation LoginViewController
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -16,6 +20,20 @@
     [super viewWillAppear:animated];
     [self checkLogin];
     self.passwordInput.text=@"";
+}
+-(void)showLaunchView
+{
+    launchView=[[UIViewController alloc]init];
+    UIImage *background=[CommonMethod imageWithImage:[UIImage imageNamed:@"background"] scaledToSize:CGSizeMake(launchView.view.frame.size.width, launchView.view.frame.size.height)];
+    launchView.view.backgroundColor=[UIColor colorWithPatternImage:background];
+    launchView.modalTransitionStyle = UIModalTransitionStyleCrossDissolve;
+    [self.navigationController presentViewController:launchView animated:NO completion:
+     ^{
+         dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2.f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+             [launchView dismissViewControllerAnimated:YES completion:nil];
+             
+         });
+     }];
 }
 -(void)checkLogin
 {
@@ -27,6 +45,7 @@
         self.accountInput.text=accountManager.account;
         if (!isIn)
         {
+            self.accountInput.text=@"";
             self.passwordInput.text=@"";
             [accountManager deleteAccount];
             return;
@@ -70,6 +89,7 @@
     self.passwordInput.delegate=self;
     self.passwordInput.text=@"";
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(onKeyboardHide) name:UIKeyboardWillHideNotification object:nil];
+    [self showLaunchView];
 }
 -(void)onKeyboardHide
 {

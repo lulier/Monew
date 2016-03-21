@@ -20,6 +20,27 @@
     NSTimer *timer;
     NSInteger endTime;
 }
+-(void)updateViewConstraints
+{
+    [super updateViewConstraints];
+    //    NSLog(@"%f",[UIScreen mainScreen].bounds.size.height);
+    IphoneType type=[CommonMethod checkIphoneType];
+    switch (type) {
+        case Iphone5s:
+            self.imageViewTopConstraint.constant=20;
+            break;
+        case Iphone6:
+            self.imageViewTopConstraint.constant=30;
+            self.lyricTextAlignY.constant=15;
+            break;
+        case Iphone6p:
+            self.imageViewTopConstraint.constant=40;
+            self.lyricTextAlignY.constant=25;
+            break;
+        default:
+            break;
+    }
+}
 - (IBAction)goBack:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
     [self.delegate dismissView];
@@ -86,7 +107,7 @@
     __weak __typeof(self)weakSelf=self;
     [NetworkingManager downloadImage:[NSURL URLWithString:self.imageURL] block:^(UIImage * _Nullable image) {
         [weakSelf.coverImageView setImage:image];
-        weakSelf.coverImageView.alpha=0.5f;
+        weakSelf.coverImageView.alpha=0.3f;
     }];
     NSError *categoryError = nil;
     [[AVAudioSession sharedInstance]
@@ -139,13 +160,13 @@
     {
         if (item.endTime>=audioPlayer.progress*1000)
         {
-            NSLog(@"endTime:%ld progress:%f",item.endTime,audioPlayer.progress);
+//            NSLog(@"endTime:%ld progress:%f",item.endTime,audioPlayer.progress);
             content=item.lyricBody;
             endTime=item.endTime;
             break;
         }
     }
-    NSLog(@"%@",content);
+//    NSLog(@"%@",content);
     return content;
 }
 -(void) audioPlayer:(STKAudioPlayer*)audioPlayer stateChanged:(STKAudioPlayerState)state previousState:(STKAudioPlayerState)previousState

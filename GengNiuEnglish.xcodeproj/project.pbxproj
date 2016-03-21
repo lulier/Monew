@@ -30,6 +30,8 @@
 		F478C87C1C9D955500746E2C /* SMS_SDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F478C8781C9D955500746E2C /* SMS_SDK.framework */; };
 		F478C87D1C9D955500746E2C /* AcousticModelEnglish.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F478C8791C9D955500746E2C /* AcousticModelEnglish.bundle */; };
 		F478C87E1C9D955500746E2C /* OpenEars.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F478C87A1C9D955500746E2C /* OpenEars.framework */; };
+		F478C8811C9EDA9A00746E2C /* UIImageView+MTTag.m in Sources */ = {isa = PBXBuildFile; fileRef = F478C8801C9EDA9A00746E2C /* UIImageView+MTTag.m */; };
+		F478C8841C9EDAF400746E2C /* MTImageGetter.m in Sources */ = {isa = PBXBuildFile; fileRef = F478C8831C9EDAF400746E2C /* MTImageGetter.m */; };
 		F486C77C1C3A492000CBFBD1 /* LyricItem.m in Sources */ = {isa = PBXBuildFile; fileRef = F486C77B1C3A492000CBFBD1 /* LyricItem.m */; };
 		F486C7801C3B8B7C00CBFBD1 /* SampleQueueId.m in Sources */ = {isa = PBXBuildFile; fileRef = F486C77F1C3B8B7C00CBFBD1 /* SampleQueueId.m */; };
 		F49467041C27CE0900806DEF /* DataForCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F49467031C27CE0900806DEF /* DataForCell.m */; };
@@ -109,6 +111,10 @@
 		F478C8781C9D955500746E2C /* SMS_SDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SMS_SDK.framework; path = framwork/SMS_SDK.framework; sourceTree = "<group>"; };
 		F478C8791C9D955500746E2C /* AcousticModelEnglish.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = AcousticModelEnglish.bundle; path = framwork/AcousticModelEnglish.bundle; sourceTree = "<group>"; };
 		F478C87A1C9D955500746E2C /* OpenEars.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenEars.framework; path = framwork/OpenEars.framework; sourceTree = "<group>"; };
+		F478C87F1C9EDA9A00746E2C /* UIImageView+MTTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+MTTag.h"; sourceTree = "<group>"; };
+		F478C8801C9EDA9A00746E2C /* UIImageView+MTTag.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UIImageView+MTTag.m"; sourceTree = "<group>"; };
+		F478C8821C9EDAF400746E2C /* MTImageGetter.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTImageGetter.h; sourceTree = "<group>"; };
+		F478C8831C9EDAF400746E2C /* MTImageGetter.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTImageGetter.m; sourceTree = "<group>"; };
 		F486C77A1C3A492000CBFBD1 /* LyricItem.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LyricItem.h; sourceTree = "<group>"; };
 		F486C77B1C3A492000CBFBD1 /* LyricItem.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LyricItem.m; sourceTree = "<group>"; };
 		F486C77E1C3B8B7C00CBFBD1 /* SampleQueueId.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SampleQueueId.h; sourceTree = "<group>"; };
@@ -321,6 +327,8 @@
 		F49466FE1C27C95700806DEF /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				F478C8821C9EDAF400746E2C /* MTImageGetter.h */,
+				F478C8831C9EDAF400746E2C /* MTImageGetter.m */,
 				F42FA5EE1C8D29600033C9C9 /* MTDatabaseHelper.h */,
 				F42FA5EF1C8D29600033C9C9 /* MTDatabaseHelper.m */,
 				F4A9AF371C4D0D26004BC7BF /* CommonMethod.h */,
@@ -344,6 +352,8 @@
 		F4AFCFAF1C84394D0003B7F2 /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				F478C87F1C9EDA9A00746E2C /* UIImageView+MTTag.h */,
+				F478C8801C9EDA9A00746E2C /* UIImageView+MTTag.m */,
 				F4F0E6CC1C94167600818C89 /* NSData+NSData_AES.h */,
 				F4F0E6CD1C94167600818C89 /* NSData+NSData_AES.m */,
 			);
@@ -545,6 +555,7 @@
 				F42FA5F31C8D32C50033C9C9 /* UserAccount.m in Sources */,
 				F4A9AF4E1C4F7258004BC7BF /* PracticeViewController.m in Sources */,
 				F427992B1C18514200240736 /* main.m in Sources */,
+				F478C8811C9EDA9A00746E2C /* UIImageView+MTTag.m in Sources */,
 				F486C7801C3B8B7C00CBFBD1 /* SampleQueueId.m in Sources */,
 				F4A9AF3F1C4D2435004BC7BF /* TextBookCell.m in Sources */,
 				F494670A1C28ECE900806DEF /* NetworkingManager.m in Sources */,
@@ -554,6 +565,7 @@
 				F49467041C27CE0900806DEF /* DataForCell.m in Sources */,
 				F4B271B01C33B429009313CA /* LyricViewController.m in Sources */,
 				F42FA5EA1C8C01570033C9C9 /* MobileRegistViewController.m in Sources */,
+				F478C8841C9EDAF400746E2C /* MTImageGetter.m in Sources */,
 				F42FA5F01C8D29600033C9C9 /* MTDatabaseHelper.m in Sources */,
 				F4F0E6CE1C94167600818C89 /* NSData+NSData_AES.m in Sources */,
 				F4A9AF481C4E2040004BC7BF /* MaterialViewController.m in Sources */,

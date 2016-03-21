@@ -8,6 +8,7 @@
 
 #import "MaterialCell.h"
 #import "CommonMethod.h"
+#import "MTImageGetter.h"
 
 
 @implementation MaterialCell
@@ -39,9 +40,10 @@
         default:
             break;
     }
-    [self.cellImage setImage:[UIImage imageNamed:@"profile-image-placeholder"]];
     __weak __typeof__(self) weakSelf = self;
-    [NetworkingManager downloadImage:[NSURL URLWithString:_material.cover_url] block:^(UIImage *image) {
+    NSString *cacheKey=[[SDWebImageManager sharedManager] cacheKeyForURL:[NSURL URLWithString:material.cover_url]];
+    MTImageGetter *imageGetter=[[MTImageGetter alloc]initWithImageView:self.cellImage imageName:cacheKey downloadURL:[NSURL URLWithString:material.cover_url]];
+    [imageGetter getImageComplete:^(UIImage *image) {
         [weakSelf.cellImage setImage:image];
     }];
     

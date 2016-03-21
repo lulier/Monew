@@ -7,6 +7,8 @@
 //
 
 #import "TextBookCell.h"
+#import "MTImageGetter.h"
+
 
 
 @implementation TextBookCell
@@ -29,13 +31,21 @@
     {
         NSLog(@"your book is nil");
     }
-    [self.cellImage sd_cancelCurrentImageLoad];
-    [self.cellImage setImage:[UIImage imageNamed:@"profile-image-placeholder"]];
     __weak __typeof__(self) weakSelf = self;
-    //需要判断正在下载的图片跟当前要下载的图片是否相同
-    [NetworkingManager downloadImage:[NSURL URLWithString:_book.cover_url] block:^(UIImage *image) {
+    NSString *cacheKey=[[SDWebImageManager sharedManager] cacheKeyForURL:[NSURL URLWithString:book.cover_url]];
+    MTImageGetter *imageGetter=[[MTImageGetter alloc]initWithImageView:self.cellImage imageName:cacheKey downloadURL:[NSURL URLWithString:book.cover_url]];
+    [imageGetter getImageComplete:^(UIImage *image) {
         [weakSelf.cellImage setImage:image];
     }];
+    
+    
+    
+    
+    
+    //需要判断正在下载的图片跟当前要下载的图片是否相同
+//    [NetworkingManager downloadImage:[NSURL URLWithString:_book.cover_url] block:^(UIImage *image) {
+//        [weakSelf.cellImage setImage:image];
+//    }];
     
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(openBook)];
     singleTap.numberOfTapsRequired = 1;
