@@ -28,14 +28,15 @@
     switch (type) {
         case Iphone5s:
             self.imageViewTopConstraint.constant=20;
+            self.lyricTextAlignY.constant=20;
             break;
         case Iphone6:
             self.imageViewTopConstraint.constant=30;
-            self.lyricTextAlignY.constant=15;
+            self.lyricTextAlignY.constant=30;
             break;
         case Iphone6p:
             self.imageViewTopConstraint.constant=40;
-            self.lyricTextAlignY.constant=25;
+            self.lyricTextAlignY.constant=40;
             break;
         default:
             break;
@@ -107,7 +108,7 @@
     __weak __typeof(self)weakSelf=self;
     [NetworkingManager downloadImage:[NSURL URLWithString:self.imageURL] block:^(UIImage * _Nullable image) {
         [weakSelf.coverImageView setImage:image];
-        weakSelf.coverImageView.alpha=0.3f;
+        weakSelf.coverImageView.alpha=0.1f;
     }];
     NSError *categoryError = nil;
     [[AVAudioSession sharedInstance]

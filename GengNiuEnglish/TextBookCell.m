@@ -8,6 +8,7 @@
 
 #import "TextBookCell.h"
 #import "MTImageGetter.h"
+#import "SlideNavigationController.h"
 
 
 
@@ -147,15 +148,16 @@
         readerViewController.modalTransitionStyle=UIModalTransitionStyleCrossDissolve;
         readerViewController.modalPresentationStyle=UIModalPresentationFullScreen;
         readerViewController.delegate=self;
-        [currentVC presentViewController:readerViewController animated:YES
-                              completion:nil];
+        SlideNavigationController *nav=currentVC;
+        [nav pushViewController:readerViewController animated:YES];
     }
 }
 -(void)dismissReaderViewController:(ReaderViewController *)viewController
 {
     AppDelegate *appDelegate=[[UIApplication sharedApplication] delegate];
     appDelegate.isReaderView=false;
-    [[CommonMethod getCurrentVC] dismissViewControllerAnimated:NO completion:NULL];
+    SlideNavigationController *nav=[CommonMethod getCurrentVC];
+    [nav popViewControllerAnimated:YES];
     readerViewController=nil;
 }
 @end

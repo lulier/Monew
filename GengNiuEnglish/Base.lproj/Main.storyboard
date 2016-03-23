@@ -26,7 +26,7 @@
                                 </constraints>
                             </imageView>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="磨耳朵" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="icP-7e-ypX">
-                                <rect key="frame" x="301" y="20" width="66" height="26"/>
+                                <rect key="frame" x="301" y="20" width="66" height="27"/>
                                 <fontDescription key="fontDescription" type="boldSystem" pointSize="22"/>
                                 <color key="textColor" name="controlBackgroundColor" catalog="System" colorSpace="catalog"/>
                                 <nil key="highlightedColor"/>
@@ -39,7 +39,7 @@
                                 </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="Eqk-qA-CkV">
-                                <rect key="frame" x="140" y="80" width="387" height="235"/>
+                                <rect key="frame" x="80" y="80" width="507" height="295"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="307" id="B0Q-dE-lrL"/>
                                     <constraint firstAttribute="height" constant="155" id="M6p-ft-3m5"/>
@@ -84,13 +84,13 @@
                             <constraint firstAttribute="trailingMargin" secondItem="HG3-ay-HTn" secondAttribute="trailing" constant="30" id="IQq-zC-6bg"/>
                             <constraint firstItem="Eqk-qA-CkV" firstAttribute="top" secondItem="1dC-r8-qUu" secondAttribute="bottom" constant="20" id="JAk-7N-Two"/>
                             <constraint firstItem="icP-7e-ypX" firstAttribute="centerX" secondItem="1dC-r8-qUu" secondAttribute="centerX" id="JaB-LM-SUu"/>
-                            <constraint firstItem="Eqk-qA-CkV" firstAttribute="leading" secondItem="VFW-jp-szo" secondAttribute="leadingMargin" constant="120" id="KTZ-8x-WXa"/>
+                            <constraint firstItem="Eqk-qA-CkV" firstAttribute="leading" secondItem="VFW-jp-szo" secondAttribute="leadingMargin" constant="60" id="KTZ-8x-WXa"/>
                             <constraint firstItem="HG3-ay-HTn" firstAttribute="centerX" secondItem="VFW-jp-szo" secondAttribute="centerX" id="Lv3-Xt-TPe"/>
                             <constraint firstItem="icP-7e-ypX" firstAttribute="centerY" secondItem="1dC-r8-qUu" secondAttribute="centerY" id="XWg-h5-s56"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Eqk-qA-CkV" secondAttribute="trailing" constant="120" id="YUo-2U-yXW"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="Eqk-qA-CkV" secondAttribute="trailing" constant="60" id="YUo-2U-yXW"/>
                             <constraint firstItem="Mkt-AQ-EK2" firstAttribute="top" secondItem="Eqk-qA-CkV" secondAttribute="bottom" constant="60" id="aIu-DN-hYW"/>
                             <constraint firstItem="HG3-ay-HTn" firstAttribute="leading" secondItem="VFW-jp-szo" secondAttribute="leadingMargin" constant="8" id="c4Q-lK-KlD"/>
-                            <constraint firstItem="Mkt-AQ-EK2" firstAttribute="top" secondItem="Eqk-qA-CkV" secondAttribute="bottom" constant="60" id="dSn-PA-qEK"/>
+                            <constraint firstItem="Mkt-AQ-EK2" firstAttribute="top" secondItem="Eqk-qA-CkV" secondAttribute="bottom" id="dSn-PA-qEK"/>
                             <constraint firstItem="Eqk-qA-CkV" firstAttribute="centerY" secondItem="VFW-jp-szo" secondAttribute="centerY" constant="-3" id="djb-Yr-Eko"/>
                             <constraint firstItem="1dC-r8-qUu" firstAttribute="top" secondItem="VFW-jp-szo" secondAttribute="top" constant="5" id="jgR-El-iy4"/>
                             <constraint firstItem="HG3-ay-HTn" firstAttribute="leading" secondItem="VFW-jp-szo" secondAttribute="leadingMargin" constant="30" id="mEZ-zk-Y2g"/>
@@ -356,10 +356,10 @@
             </objects>
             <point key="canvasLocation" x="1173.5" y="1402.5"/>
         </scene>
-        <!--Navigation Controller-->
+        <!--Slide Navigation Controller-->
         <scene sceneID="uiy-vy-9g0">
             <objects>
-                <navigationController id="hw0-uc-bVX" sceneMemberID="viewController">
+                <navigationController id="hw0-uc-bVX" customClass="SlideNavigationController" sceneMemberID="viewController">
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <navigationBar key="navigationBar" contentMode="scaleToFill" id="6CU-or-OIS">
@@ -1085,7 +1085,7 @@
         <image name="go_back" width="88" height="86"/>
         <image name="label_bg" width="268" height="100"/>
         <image name="loginButtonBG" width="600" height="80"/>
-        <image name="logout" width="128" height="128"/>
+        <image name="logout" width="88" height="86"/>
         <image name="med_bg" width="100" height="86"/>
         <image name="playText" width="40" height="40"/>
         <image name="qq" width="62" height="62"/>
