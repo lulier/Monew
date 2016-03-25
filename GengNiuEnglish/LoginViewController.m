@@ -179,7 +179,7 @@
                 [self.navigationController pushViewController:materialViewController animated:NO];
             });
         }
-        if (status==USER_NOT_EXIST||status==PASSWD_INCORRECT)
+        if (status==USER_NOT_EXISTS||status==PASSWD_INCORRECT)
         {
             SCLAlertView *alert=[[SCLAlertView alloc]init];
             [alert showError:self title:@"错误" subTitle:@"您输入的用户名或密码错误" closeButtonTitle:nil duration:1.0f];

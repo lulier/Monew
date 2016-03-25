@@ -27,16 +27,11 @@
     IphoneType type=[CommonMethod checkIphoneType];
     switch (type) {
         case Iphone5s:
-            self.imageViewTopConstraint.constant=20;
-            self.lyricTextAlignY.constant=20;
             break;
         case Iphone6:
-            self.imageViewTopConstraint.constant=30;
-            self.lyricTextAlignY.constant=30;
+            self.lyricTextTopConstraint.constant=80;
             break;
         case Iphone6p:
-            self.imageViewTopConstraint.constant=40;
-            self.lyricTextAlignY.constant=40;
             break;
         default:
             break;
@@ -105,11 +100,11 @@
     UIImage *background=[CommonMethod imageWithImage:[UIImage imageNamed:@"naked_background"] scaledToSize:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height)];
     self.view.backgroundColor=[UIColor colorWithPatternImage:background];
     [self playButtonClick:nil];
-    __weak __typeof(self)weakSelf=self;
-    [NetworkingManager downloadImage:[NSURL URLWithString:self.imageURL] block:^(UIImage * _Nullable image) {
-        [weakSelf.coverImageView setImage:image];
-        weakSelf.coverImageView.alpha=0.1f;
-    }];
+//    __weak __typeof(self)weakSelf=self;
+//    [NetworkingManager downloadImage:[NSURL URLWithString:self.imageURL] block:^(UIImage * _Nullable image) {
+//        [weakSelf.coverImageView setImage:image];
+//        weakSelf.coverImageView.alpha=0.1f;
+//    }];
     NSError *categoryError = nil;
     [[AVAudioSession sharedInstance]
      setCategory:AVAudioSessionCategoryPlayback

@@ -96,7 +96,7 @@
             case NORMAL_RESPONSE:
                 [alert showSuccess:self title:@"成功" subTitle:@"验证邮件已经发送到您的邮箱，请查收" closeButtonTitle:@"确定" duration:0.0f];
                 break;
-            case USER_EXIST:
+            case USER_EXISTS:
                 [alert showNotice:self title:@"错误" subTitle:@"该邮箱已注册过更牛帐号" closeButtonTitle:nil duration:1.0f];
                 break;
             default:

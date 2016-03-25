@@ -16,7 +16,10 @@
 #import "SCLAlertView.h"
 
 @interface MaterialViewController ()
-
+{
+    BOOL hideCache;
+    BOOL deleteCache;
+}
 @end
 
 @implementation MaterialViewController
@@ -42,7 +45,34 @@ static NSString * const reuseIdentifierMaterial = @"MaterialCell";
         }
     }];
 }
-
+-(void)viewWillAppear:(BOOL)animated
+{
+    //每次进入materialview的时候检查一下当前的action code状态
+    [self getActionCode];
+}
+-(void)getActionCode
+{
+    AccountManager *accountManager=[AccountManager singleInstance];
+    NSString *accountNum=accountManager.userID;
+    NSMutableString* sign=[CommonMethod MD5EncryptionWithString:[NSString stringWithFormat:@"%@",accountNum]];
+    NSDictionary *dict=[NSDictionary dictionaryWithObjectsAndKeys:accountNum,@"user_id",sign,@"sign",nil];
+    [NetworkingManager httpRequest:RTGet url:RUActionCode parameters:dict progress:nil success:^(NSURLSessionTask * _Nullable task, id  _Nullable responseObject) {
+        long int status=[[responseObject objectForKey:@"status"] integerValue];
+        if (status==0)
+        {
+            NSInteger actionCode=[[responseObject objectForKey:@"action_code"] integerValue];
+            deleteCache=1&actionCode;
+            hideCache=2&actionCode;
+        }
+        else
+        {
+            deleteCache=false;
+            hideCache=false;
+        }
+    } failure:^(NSURLSessionTask * _Nullable task, NSError * _Nullable error) {
+        
+    } completionHandler:nil];
+}
 - (void)viewDidLoad
 {
     [super viewDidLoad];
@@ -146,6 +176,7 @@ static NSString * const reuseIdentifierMaterial = @"MaterialCell";
     DataForCell *material=self.list[indexPath.row];
     bookViewController.grade_id=material.text_id;
     bookViewController.textCount=material.text_count;
+    bookViewController.hideCache=hideCache;
     [self.navigationController pushViewController:bookViewController animated:YES];
 }
 - (IBAction)logoutButtonClick:(id)sender {

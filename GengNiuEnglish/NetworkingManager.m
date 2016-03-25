@@ -16,6 +16,7 @@ static const NSString *URLForRegist=@"http://120.25.103.72:8002/student/register
 static const NSString *URLForLogin=@"http://120.25.103.72:8002/student/login/";
 static const NSString *URLForGetSalt=@"http://120.25.103.72:8002/student/get_salt/";
 static const NSString *URLForCheckAvail=@"http://120.25.103.72:8002/student/phone/check_avail/";
+static const NSString *URLForActionCode=@"http://120.25.103.72:8002/courseware/get_app_status/";
 @implementation NetworkingManager
 
 +(NSURLSessionTask*)httpRequest:(RequestType)type url:(RequestURL)url parameters:(NSDictionary*)parameters progress:(nullable void (^)(NSProgress *downloadProgress))downloadProgressBlock success:(nullable void (^)( NSURLSessionTask * _Nullable task, id _Nullable responseObject))success failure:(nullable void (^)(NSURLSessionTask * _Nullable task, NSError * _Nullable error))failure completionHandler:(nullable void (^)(NSURLResponse * _Nullable response, NSURL * _Nullable filePath, NSError * _Nullable error))completionHandler
@@ -56,6 +57,8 @@ static const NSString *URLForCheckAvail=@"http://120.25.103.72:8002/student/phon
             return URLForGetSalt;
         case RUCheckAvail:
             return URLForCheckAvail;
+        case RUActionCode:
+            return URLForActionCode;
         case RUCustom:
             return nil;
         default:
