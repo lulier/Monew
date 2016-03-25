@@ -39,15 +39,6 @@
         [weakSelf.cellImage setImage:image];
     }];
     
-    
-    
-    
-    
-    //需要判断正在下载的图片跟当前要下载的图片是否相同
-//    [NetworkingManager downloadImage:[NSURL URLWithString:_book.cover_url] block:^(UIImage *image) {
-//        [weakSelf.cellImage setImage:image];
-//    }];
-    
     UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(openBook)];
     singleTap.numberOfTapsRequired = 1;
     singleTap.numberOfTouchesRequired = 1;
@@ -148,16 +139,14 @@
         readerViewController.modalTransitionStyle=UIModalTransitionStyleCrossDissolve;
         readerViewController.modalPresentationStyle=UIModalPresentationFullScreen;
         readerViewController.delegate=self;
-        SlideNavigationController *nav=currentVC;
-        [nav pushViewController:readerViewController animated:YES];
+        [currentVC presentViewController:readerViewController animated:YES completion:nil];
     }
 }
 -(void)dismissReaderViewController:(ReaderViewController *)viewController
 {
     AppDelegate *appDelegate=[[UIApplication sharedApplication] delegate];
     appDelegate.isReaderView=false;
-    SlideNavigationController *nav=[CommonMethod getCurrentVC];
-    [nav popViewControllerAnimated:YES];
+    [[CommonMethod getCurrentVC] dismissViewControllerAnimated:readerViewController completion:nil];
     readerViewController=nil;
 }
 @end

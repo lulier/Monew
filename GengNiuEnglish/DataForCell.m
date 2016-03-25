@@ -35,6 +35,7 @@
         self.downloadURL=[attributes objectForKey:@"courseware_url"];
         self.zipFileName=[[[[self.downloadURL componentsSeparatedByString:@"/"] lastObject] componentsSeparatedByString:@"?"] objectAtIndex:0];
         self.fileNames=[[NSMutableArray alloc]init];
+        self.text_gradeID=[attributes objectForKey:@"grade_id"];
         self.progressView=nil;
         [self checkDatabase];
     }
@@ -113,8 +114,10 @@
                 NSArray *list=[JSON valueForKey:@"text_list"];
                 //在数据库中纪录text_list
                 [DataForCell recordTextList:list gradeID:grade_id];
-                for (NSDictionary *attributes in list)
+                for (NSDictionary *tmp in list)
                 {
+                    NSMutableDictionary *attributes=[NSMutableDictionary dictionaryWithDictionary:tmp];
+                    [attributes setObject:grade_id forKey:@"grade_id"];
                     DataForCell *data=[[DataForCell alloc]initWithAttributes:attributes];
                     [mutableBooks addObject:data];
                 }
@@ -233,7 +236,7 @@
     FMResultSet *result=[database executeQuery:[NSString stringWithFormat:@"SELECT * FROM Books WHERE BookID=%@",self.text_id]];
     if(![result next])
     {
-        BOOL success=[database executeUpdate:@"INSERT INTO Books (BookID,BookName,CoverURL,Category,DownloadURL,ZipName,DocumentName,LMName,LRCName,PDFName,MP3Name) VALUES (?,?,?,?,?,?,?,?,?,?,?)",self.text_id,self.text_name,self.cover_url,self.category,self.downloadURL,self.zipFileName,[NSNull null],[NSNull null],[NSNull null],[NSNull null],[NSNull null]];
+        BOOL success=[database executeUpdate:@"INSERT INTO Books (BookID,GradeID,BookName,CoverURL,Category,DownloadURL,ZipName,DocumentName,LMName,LRCName,PDFName,MP3Name) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)",self.text_id,self.text_gradeID,self.text_name,self.cover_url,self.category,self.downloadURL,self.zipFileName,[NSNull null],[NSNull null],[NSNull null],[NSNull null],[NSNull null]];
         if (!success)
         {
             NSLog(@"error: %@",[database lastError]);
@@ -264,7 +267,7 @@
         NSLog(@"database open failed");
         return;
     }
-    
+    //在这里需要更新gradelist表里面的已下载课本数量
     NSString *update=[NSString stringWithFormat:@"UPDATE Books SET DocumentName='%@',LMName='%@',LRCName='%@',PDFName='%@',MP3Name='%@' WHERE BookID=%@",[self getFileName:FTDocument],[self getFileName:FTLM],[self getFileName:FTLRC],[self getFileName:FTPDF],[self getFileName:FTMP3],self.text_id];
     BOOL success=[database executeUpdate:update];
     if (!success)

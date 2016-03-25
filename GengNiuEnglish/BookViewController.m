@@ -42,7 +42,7 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
     FMResultSet *result=[database executeQuery:@"select * from Books"];
     if (![result next])
     {
-        NSString *createTable=@"create table Books(BookID  integer,BookName varchar(255),CoverURL varchar(512),Category integer,DownloadURL varchar(512),ZipName varchar(255),DocumentName varchar(255),LMName varchar(255),LRCName varchar(255),PDFName varchar(255),MP3Name varchar(255));";
+        NSString *createTable=@"create table Books(BookID  integer,GradeID integer,BookName varchar(255),CoverURL varchar(512),Category integer,DownloadURL varchar(512),ZipName varchar(255),DocumentName varchar(255),LMName varchar(255),LRCName varchar(255),PDFName varchar(255),MP3Name varchar(255));";
         BOOL success=[database executeUpdate:createTable];
         if (!success)
         {

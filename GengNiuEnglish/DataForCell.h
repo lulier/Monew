@@ -23,7 +23,8 @@ typedef NS_ENUM(NSInteger,FileType)
 
 @interface DataForCell : NSObject<ReaderViewControllerDelegate,SSZipArchiveDelegate>
 @property(strong,nonatomic)NSString *text_name;
-@property(nonatomic)NSString *text_id;
+@property(nonatomic,strong)NSString *text_id;
+@property(nonatomic,strong)NSString *text_gradeID;
 @property(strong,nonatomic)NSString *cover_url;
 @property(nonatomic)NSString *category;
 @property(strong,nonatomic)NSString *downloadURL;
