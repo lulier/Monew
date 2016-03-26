@@ -95,6 +95,7 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
 
 - (void)viewDidLoad {
     [super viewDidLoad];
+    self.isLoading=false;
     // Register cell classes
     self.collectionView.delegate=self;
     // Do any additional setup after loading the view.
@@ -203,12 +204,13 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
 }
 -(void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([self.list count]>=[self.textCount integerValue])
+    if ([self.list count]>=[self.textCount integerValue]||self.isLoading)
     {
         return;
     }
     if (indexPath.item==[self.list count]-1)
     {
+        self.isLoading=true;
         __weak __typeof__(self) weakSelf = self;
         //load data
         NSInteger maxID=-1;
@@ -223,7 +225,7 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
         {
             if(data!=nil)
             {
-                NSMutableArray *books=[[NSMutableArray alloc]initWithArray:self.list];
+                NSMutableArray *books=[NSMutableArray arrayWithArray:self.list];
                 //检查是否有重复
                 for (DataForCell *tmp in data)
                 {
@@ -240,6 +242,7 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
                 self.list=books;
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [weakSelf.collectionView reloadData];
+                    self.isLoading=false;
                 });
             }
         } grade_id:self.grade_id text_id:[NSString stringWithFormat:@"%ld",maxID]];

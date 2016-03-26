@@ -8,7 +8,6 @@
 
 #import "TextBookCell.h"
 #import "MTImageGetter.h"
-#import "SlideNavigationController.h"
 
 
 
@@ -33,6 +32,7 @@
         NSLog(@"your book is nil");
     }
     __weak __typeof__(self) weakSelf = self;
+//    [self.cellImage setImageWithURL:[NSURL URLWithString:book.cover_url] placeholderImage:[UIImage imageNamed:@"profile-image-placeholder"]];
     NSString *cacheKey=[[SDWebImageManager sharedManager] cacheKeyForURL:[NSURL URLWithString:book.cover_url]];
     MTImageGetter *imageGetter=[[MTImageGetter alloc]initWithImageView:self.cellImage imageName:cacheKey downloadURL:[NSURL URLWithString:book.cover_url]];
     [imageGetter getImageComplete:^(UIImage *image) {

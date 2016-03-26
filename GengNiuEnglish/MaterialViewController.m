@@ -57,7 +57,7 @@ static NSString * const reuseIdentifierMaterial = @"MaterialCell";
                             if (cacheData!=nil)
                             {
                                 cacheList=nil;
-                                NSMutableArray *tmp=[[NSMutableArray alloc]initWithArray:cacheData];
+                                NSMutableArray *tmp=[NSMutableArray arrayWithArray:cacheData];
                                 cacheList=[NSArray arrayWithArray:tmp];
                                 [tmp addObjectsFromArray:weakSelf.list];
                                 weakSelf.list=tmp;

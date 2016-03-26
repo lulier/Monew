@@ -17,7 +17,6 @@
 @implementation LoginViewController
 -(void)viewWillAppear:(BOOL)animated
 {
-    
     //检查是否登陆过  在nsdefual中查询是否存在userid字段，同时是否是active，如果是自动登陆，同时跳到主界面
     [super viewWillAppear:animated];
     [self checkLogin];
@@ -72,6 +71,9 @@
             [accountManager deleteAccount];
             return;
         }
+        UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        MaterialViewController *materialViewController=[storyboard instantiateViewControllerWithIdentifier:@"MaterialViewController"];
+        [self.navigationController pushViewController:materialViewController animated:NO];
         [self login];
     }
     else
@@ -222,14 +224,20 @@
             accountManager.completeInfo=[responseObject objectForKey:@"info_complete"];
             accountManager.loginTime=[responseObject objectForKey:@"logintime"];
             [accountManager saveAccount];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
-                MaterialViewController *materialViewController=[storyboard instantiateViewControllerWithIdentifier:@"MaterialViewController"];
-                [self.navigationController pushViewController:materialViewController animated:NO];
+        }
+        if (status==USER_NOT_EXISTS||status==PASSWD_INCORRECT)
+        {
+            //deleteaccount
+            [[NSUserDefaults standardUserDefaults] setValue:@"out" forKey:@"MeticStatus"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                //force to login
+                [self.navigationController popToRootViewControllerAnimated:YES];
             });
         }
+        
     } failure:^(NSURLSessionTask * _Nullable task, NSError * _Nullable error) {
-
+        
     } completionHandler:nil];
 }
 - (IBAction)registButtonClick:(id)sender {

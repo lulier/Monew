@@ -115,10 +115,13 @@ static NSString * const ACCOUNT_KEYCHAIN = @"GNAccount20160311";
                 failure(task,error);
             } completionHandler:nil];
         }
-        
+        else
+        {
+            success(task,responseObject);
+        }
         
     } failure:^(NSURLSessionTask * _Nullable task, NSError * _Nullable error) {
-        
+        failure(task,error);
     } completionHandler:nil];
 }
 +(void)registAccount:(RegistType)type parameters:(NSDictionary *)parameters success:(void (^)(NSURLSessionTask * _Nullable, id _Nullable))success failure:(void (^)(NSURLSessionTask * _Nullable, NSError * _Nullable))failure

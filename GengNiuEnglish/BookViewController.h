@@ -14,6 +14,7 @@
 @property(strong,nonatomic)NSString *grade_id;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 @property (weak, nonatomic) IBOutlet UIButton *goBackButton;
+@property(atomic)BOOL isLoading;
 @property(nonatomic)BOOL showCache;
 @property(strong,nonatomic)NSString *textCount;
 @end
