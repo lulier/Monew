@@ -29,9 +29,10 @@
         case Iphone5s:
             break;
         case Iphone6:
-            self.lyricTextTopConstraint.constant=80;
+            self.lyricTextTopConstraint.constant=90;
             break;
         case Iphone6p:
+            self.lyricTextTopConstraint.constant=120;
             break;
         default:
             break;
