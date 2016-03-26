@@ -17,10 +17,17 @@
 @implementation LoginViewController
 -(void)viewWillAppear:(BOOL)animated
 {
+    
     //检查是否登陆过  在nsdefual中查询是否存在userid字段，同时是否是active，如果是自动登陆，同时跳到主界面
     [super viewWillAppear:animated];
     [self checkLogin];
     self.passwordInput.text=@"";
+}
+-(void)hideLoginButton
+{
+    self.weiBoLogin.hidden=YES;
+    self.qqLogin.hidden=YES;
+    self.weiXinLogin.hidden=YES;
 }
 -(void)showBlackView
 {

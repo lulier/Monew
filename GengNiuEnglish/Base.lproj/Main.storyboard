@@ -794,8 +794,11 @@
                         <outlet property="inputTopConstraint" destination="5KG-2q-N2f" id="mYt-Dk-2dx"/>
                         <outlet property="loginButton" destination="NSR-DT-qv9" id="ovk-iv-knJ"/>
                         <outlet property="passwordInput" destination="52X-sC-dMN" id="MO2-ZG-sR6"/>
+                        <outlet property="qqLogin" destination="VtK-0E-0Er" id="sln-NP-Ytt"/>
                         <outlet property="registButton" destination="MtJ-4f-h5a" id="rlx-kP-OQt"/>
                         <outlet property="titleTopConstraint" destination="7F7-Mc-gi8" id="GGK-ar-eKc"/>
+                        <outlet property="weiBoLogin" destination="tcj-yk-xhq" id="BSY-sj-ciZ"/>
+                        <outlet property="weiXinLogin" destination="FON-Sx-BG9" id="tIZ-We-Wlz"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="jCQ-Ku-21n" userLabel="First Responder" sceneMemberID="firstResponder"/>
