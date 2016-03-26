@@ -19,6 +19,7 @@
 {
     BOOL hideCache;
     BOOL deleteCache;
+    NSArray *cacheList;
 }
 @end
 
@@ -41,6 +42,32 @@ static NSString * const reuseIdentifierMaterial = @"MaterialCell";
             weakSelf.list=data;
             dispatch_async(dispatch_get_main_queue(), ^{
                 [weakSelf.collectionView reloadData];
+                if (deleteCache)
+                {
+                    //deletecache
+                    [DataForCell deleteCache:weakSelf.list];
+                }
+                else
+                {
+                    if (!hideCache)
+                    {
+                        //unhidecache
+//                        weakSelf.list=[NSArray arrayWithObject:[weakSelf.list lastObject]]; //test
+                        [DataForCell showCache:^(NSArray *cacheData) {
+                            if (cacheData!=nil)
+                            {
+                                cacheList=nil;
+                                NSMutableArray *tmp=[[NSMutableArray alloc]initWithArray:cacheData];
+                                cacheList=[NSArray arrayWithArray:tmp];
+                                [tmp addObjectsFromArray:weakSelf.list];
+                                weakSelf.list=tmp;
+                                dispatch_async(dispatch_get_main_queue(), ^{
+                                    [weakSelf.collectionView reloadData];
+                                });
+                            }
+                        } currentData:weakSelf.list];
+                    }
+                }
             });
         }
     }];
@@ -49,6 +76,7 @@ static NSString * const reuseIdentifierMaterial = @"MaterialCell";
 {
     //每次进入materialview的时候检查一下当前的action code状态
     [self getActionCode];
+    [self reload:nil];
 }
 -(void)getActionCode
 {
@@ -60,7 +88,9 @@ static NSString * const reuseIdentifierMaterial = @"MaterialCell";
         long int status=[[responseObject objectForKey:@"status"] integerValue];
         if (status==0)
         {
-            NSInteger actionCode=[[responseObject objectForKey:@"action_code"] integerValue];
+            NSDictionary *response=[responseObject objectForKey:@"response"];
+            NSInteger actionCode=[[response objectForKey:@"action_code"] integerValue];
+//            actionCode=0;
             deleteCache=1&actionCode;
             hideCache=2&actionCode;
         }
@@ -82,7 +112,6 @@ static NSString * const reuseIdentifierMaterial = @"MaterialCell";
     UIImage *background=[CommonMethod imageWithImage:[UIImage imageNamed:@"background"] scaledToSize:CGSizeMake(self.collectionView.frame.size.width, self.collectionView.frame.size.height)];
     self.collectionView.backgroundView=[[UIImageView alloc]initWithImage:background];
     [self initDatabase];
-    [self reload:nil];
 }
 -(void)updateViewConstraints
 {
@@ -176,7 +205,15 @@ static NSString * const reuseIdentifierMaterial = @"MaterialCell";
     DataForCell *material=self.list[indexPath.row];
     bookViewController.grade_id=material.text_id;
     bookViewController.textCount=material.text_count;
-    bookViewController.hideCache=hideCache;
+    bookViewController.showCache=false;
+    for (DataForCell *tmp in cacheList)
+    {
+        if ([material.text_id integerValue]==[tmp.text_id integerValue])
+        {
+            bookViewController.showCache=true;
+            bookViewController.textCount=0;
+        }
+    }
     [self.navigationController pushViewController:bookViewController animated:YES];
 }
 - (IBAction)logoutButtonClick:(id)sender {

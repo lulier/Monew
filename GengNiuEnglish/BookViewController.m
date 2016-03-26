@@ -78,6 +78,16 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
         
     } grade_id:self.grade_id text_id:@"-1"];
 }
+-(void)loadCacheBooks
+{
+    __weak __typeof__(self) weakSelf = self;
+    [DataForCell getCacheBooks:self.grade_id block:^(NSArray *data) {
+        weakSelf.list=data;
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [weakSelf.collectionView reloadData];
+        });
+    }];
+}
 - (IBAction)goBackClick:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
 }
@@ -92,7 +102,14 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
     UIImage *background=[CommonMethod imageWithImage:[UIImage imageNamed:@"background"] scaledToSize:CGSizeMake(self.collectionView.frame.size.width, self.collectionView.frame.size.height)];
     self.collectionView.backgroundView=[[UIImageView alloc]initWithImage:background];
     [self initDatabase];
-    [self reload:nil];
+    if (!self.showCache) {
+        [self reload:nil];
+    }
+    else
+    {
+        //read cache files
+        [self loadCacheBooks];
+    }
 }
 
 - (void)didReceiveMemoryWarning {
@@ -186,7 +203,7 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
 }
 -(void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    if ([self.list count]==[self.textCount integerValue])
+    if ([self.list count]>=[self.textCount integerValue])
     {
         return;
     }

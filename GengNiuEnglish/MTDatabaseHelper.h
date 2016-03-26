@@ -58,7 +58,8 @@
 //2. defaultValue为nil时，表中等字段默认值为空（NULL）
 -(void)addsColumntoTable:(NSString*)tableName addsColumn:(NSString*)column withDefault:(id)defaultValue;
 
-
+//批量primary key查找
+-(void)queryTable:(NSString*)tableName withSelect:(NSArray*)selects column:(NSString*)column andIDs:(NSArray*)wheres completion:(void(^)(NSMutableArray* resultsArray))block;
 
 
 @end

@@ -46,4 +46,7 @@ typedef NS_ENUM(NSInteger,FileType)
 -(NSString*)getDocumentPath;
 +(void)queryGradeList:(void (^)(NSArray*data))block;
 +(void)queryTextList:(NSString*)gradeID block:(void (^)(NSArray*data))block;
++(void)deleteCache:(NSArray*)data;
++(void)showCache:(void(^)(NSArray *cacheData))block currentData:(NSArray*)currentData;
++(void)getCacheBooks:(NSString*)gradeID block:(void (^)(NSArray*data))block;
 @end

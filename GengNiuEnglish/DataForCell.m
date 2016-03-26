@@ -379,4 +379,184 @@
     NSString *filePath=[doctPath stringByAppendingPathComponent:[self getFileName:FTDocument]];
     return filePath;
 }
++(void)deleteCache:(NSArray *)data
+{
+    [[MTDatabaseHelper sharedInstance] queryTable:@"GradeList" withSelect:@[@"*"] andWhere:nil completion:
+     ^(NSMutableArray *resultsArray) {
+         NSMutableArray *deleteGrade=[[NSMutableArray alloc]init];
+         if (resultsArray!=nil)
+         {
+             
+             for (NSDictionary*tmp in resultsArray)
+             {
+                 BOOL shouldDelete=true;
+                 for (DataForCell *currentGrade in data)
+                 {
+                     if ([[tmp objectForKey:@"grade_id"] integerValue]==[currentGrade.text_id integerValue])
+                     {
+                         shouldDelete=false;
+                         break;
+                     }
+                 }
+                 if (shouldDelete)
+                 {
+                     [deleteGrade addObject:[tmp objectForKey:@"grade_id"]];
+                 }
+             }
+             [DataForCell deleteListAndFiles:deleteGrade];
+         }
+     }];
+}
+//delete gradelist item booklist item and cache files
++(void)deleteListAndFiles:(NSArray*)gradeList
+{
+    //delete gradelist textlist
+    for (NSString* item in gradeList)
+    {
+        NSDictionary *where=[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%@",item],@"grade_id",nil];
+        [[MTDatabaseHelper sharedInstance]deleteTurpleFromTable:@"GradeList" withWhere:where];
+        [[MTDatabaseHelper sharedInstance] deleteTurpleFromTable:@"TextList" withWhere:where];
+    }
+    //delete books and files
+    for (NSString* item in gradeList)
+    {
+        [DataForCell deleteBooks:item];
+    }
+}
++(void)deleteBooks:(NSString*)gradeID
+{
+    NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *doctPath=[paths lastObject];
+    NSString *databasePath=[doctPath stringByAppendingPathComponent:@"user.sqlite"];
+    FMDatabase *database=[FMDatabase databaseWithPath:databasePath];
+    if (![database open])
+    {
+        NSLog(@"database open failed");
+        return;
+    }
+    FMResultSet* result=[database executeQuery:[NSString stringWithFormat:@"SELECT * FROM Books WHERE GradeID=%@",gradeID]];
+    while([result next])
+    {
+        NSString *documentName=[result stringForColumn:@"DocumentName"];
+        NSString *BookID=[result stringForColumn:@"BookID"];
+        if (documentName!=nil)
+        {
+            //delete files
+            NSString *Path=[CommonMethod getPath:[NSString stringWithFormat:@"%@",documentName]];
+            BOOL isDir;
+            if ([[NSFileManager defaultManager] fileExistsAtPath:Path isDirectory:&isDir])
+            {
+                [[NSFileManager defaultManager] removeItemAtPath:Path error:nil];
+            }
+        }
+        BOOL success=[database executeUpdate:[NSString stringWithFormat:@"DELETE FROM Books WHERE BookID=%@",BookID]];
+        if (!success)
+        {
+            NSLog(@"delete from books failed with bookID:%@",BookID);
+        }
+    }
+    [database close];
+}
++(void)showCache:(void (^)(NSArray *cacheData))block currentData:(NSArray *)currentData
+{
+    NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *doctPath=[paths lastObject];
+    NSString *databasePath=[doctPath stringByAppendingPathComponent:@"user.sqlite"];
+    FMDatabase *database=[FMDatabase databaseWithPath:databasePath];
+    if (![database open])
+    {
+        NSLog(@"database open failed");
+        return;
+    }
+    FMResultSet* result=[database executeQuery:[NSString stringWithFormat:@"SELECT * FROM Books"]];
+    NSMutableSet *cacheGradeList=[[NSMutableSet alloc]init];
+    while([result next])
+    {
+        NSString *documentName=[result stringForColumn:@"DocumentName"];
+        NSString *GradeID=[result stringForColumn:@"GradeID"];
+        BOOL isCache=true;
+        for (DataForCell* tmp in currentData)
+        {
+            if ([GradeID integerValue]==[tmp.text_id integerValue])
+            {
+                isCache=false;
+            }
+        }
+        if (isCache)
+        {
+            if (documentName!=nil)
+            {
+                NSString *Path=[CommonMethod getPath:[NSString stringWithFormat:@"%@",documentName]];
+                BOOL isDir;
+                if ([[NSFileManager defaultManager] fileExistsAtPath:Path isDirectory:&isDir])
+                {
+                    [cacheGradeList addObject:GradeID];
+                }
+            }
+        }
+    }
+    [database close];
+    NSMutableArray *where=[[NSMutableArray alloc]init];
+    for (NSString* item in cacheGradeList)
+    {
+        [where addObject:item];
+    }
+    [[MTDatabaseHelper sharedInstance] queryTable:@"GradeList" withSelect:@[@"*"] column:@"grade_id" andIDs:where completion:
+     ^(NSMutableArray *resultsArray) {
+         NSMutableArray *mutableBooks=[[NSMutableArray alloc]init];
+         if (resultsArray!=nil)
+         {
+             for (NSDictionary*tmp in resultsArray)
+             {
+                 DataForCell *data=[[DataForCell alloc]initWithAttributes:tmp];
+                 [mutableBooks addObject:data];
+             }
+         }
+         if (block)
+         {
+             block([NSArray arrayWithArray:mutableBooks]);
+         }
+     }];
+}
++(void)getCacheBooks:(NSString*)gradeID block:(void (^)(NSArray*data))block
+{
+    NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+    NSString *doctPath=[paths lastObject];
+    NSString *databasePath=[doctPath stringByAppendingPathComponent:@"user.sqlite"];
+    FMDatabase *database=[FMDatabase databaseWithPath:databasePath];
+    if (![database open])
+    {
+        NSLog(@"database open failed");
+        return;
+    }
+    FMResultSet* result=[database executeQuery:[NSString stringWithFormat:@"SELECT * FROM Books WHERE GradeID=%@",gradeID]];
+    NSMutableArray *where=[[NSMutableArray alloc]init];
+    while([result next])
+    {
+        NSString *documentName=[result stringForColumn:@"DocumentName"];
+        NSString *BookID=[result stringForColumn:@"BookID"];
+        if (documentName!=nil)
+        {
+            //query textlist
+            [where addObject:BookID];
+        }
+    }
+    [[MTDatabaseHelper sharedInstance] queryTable:@"TextList" withSelect:@[@"*"] column:@"text_id" andIDs:where completion:
+     ^(NSMutableArray *resultsArray) {
+         NSMutableArray *mutableBooks=[[NSMutableArray alloc]init];
+         if (resultsArray!=nil)
+         {
+             for (NSDictionary*tmp in resultsArray)
+             {
+                 DataForCell *data=[[DataForCell alloc]initWithAttributes:tmp];
+                 [mutableBooks addObject:data];
+             }
+         }
+         if (block)
+         {
+             block([NSArray arrayWithArray:mutableBooks]);
+         }
+     }];
+    [database close];
+}
 @end

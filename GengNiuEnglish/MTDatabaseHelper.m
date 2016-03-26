@@ -241,6 +241,37 @@ static MTDatabaseHelper *singleInstance = nil;
     
 }
 
+-(void)queryTable:(NSString *)tableName withSelect:(NSArray *)selects column:(NSString *)column andIDs:(NSArray *)wheres completion:(void (^)(NSMutableArray *))block
+{
+    if (!tableName || [tableName isEqualToString:@""]) {
+        NSLog(@"input data error");
+        return ;
+    }
+    NSMutableString* sql;
+    if (wheres && wheres.count > 0) {
+        sql = [[NSMutableString alloc]initWithFormat:@"SELECT * FROM %@ WHERE ",tableName];
+        NSInteger wheresCount = wheres.count;
+        for (int i = 0; i < wheresCount; i++) {
+            NSString* value =[wheres objectAtIndex:i];
+            [sql appendFormat:@"%@ = %@",column, value];
+            if (i != wheresCount-1) {
+                [sql appendString:@" or "];
+            }
+        }
+        
+    }
+    [queue inDatabase:^(FMDatabase *db) {
+        FMResultSet *s = [db executeQuery:sql];
+        NSMutableArray* resultArray = [[NSMutableArray alloc]init];
+        while ([s next]) {
+            [resultArray addObject:[s resultDictionary]];
+        }
+        [s close];
+        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+            block(resultArray);
+        });
+    }];
+}
 
 
 @end
