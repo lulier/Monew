@@ -170,13 +170,13 @@ static NSString * const reuseIdentifierMaterial = @"MaterialCell";
     switch (type)
     {
         case Iphone5s:
-            return UIEdgeInsetsMake(40, 60, 60, 60);
+            return UIEdgeInsetsMake(60, 60, 60, 60);
         case Iphone6:
-            return UIEdgeInsetsMake(60, 80, 80, 80);
+            return UIEdgeInsetsMake(70, 80, 80, 80);
         case Iphone6p:
-            return UIEdgeInsetsMake(80, 100, 100, 100);
+            return UIEdgeInsetsMake(90, 100, 100, 100);
         default:
-            return UIEdgeInsetsMake(40, 60, 60, 60);
+            return UIEdgeInsetsMake(60, 60, 60, 60);
     }
 }
 
