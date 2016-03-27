@@ -325,6 +325,10 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
         recordAudioPlayer.delegate=self;
         [recordAudioPlayer play];
     }
+    else
+    {
+        [self stopCellWorking];
+    }
 }
 -(void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag
 {

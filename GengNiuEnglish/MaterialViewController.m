@@ -57,9 +57,9 @@ static NSString * const reuseIdentifierMaterial = @"MaterialCell";
                             if (cacheData!=nil)
                             {
                                 cacheList=nil;
-                                NSMutableArray *tmp=[NSMutableArray arrayWithArray:cacheData];
-                                cacheList=[NSArray arrayWithArray:tmp];
-                                [tmp addObjectsFromArray:weakSelf.list];
+                                NSMutableArray *tmp=[NSMutableArray arrayWithArray:weakSelf.list];
+                                cacheList=[NSArray arrayWithArray:cacheData];
+                                [tmp addObjectsFromArray:cacheData];
                                 weakSelf.list=tmp;
                                 dispatch_async(dispatch_get_main_queue(), ^{
                                     [weakSelf.collectionView reloadData];
@@ -90,7 +90,7 @@ static NSString * const reuseIdentifierMaterial = @"MaterialCell";
         {
             NSDictionary *response=[responseObject objectForKey:@"response"];
             NSInteger actionCode=[[response objectForKey:@"action_code"] integerValue];
-//            actionCode=0;
+            actionCode=0;
             deleteCache=1&actionCode;
             hideCache=2&actionCode;
         }

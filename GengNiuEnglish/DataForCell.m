@@ -247,6 +247,7 @@
         
         NSString *documentName=[result stringForColumn:@"DocumentName"];
         NSString *zipfileName=[result stringForColumn:@"ZipName"];
+        NSString *BookID=[result stringForColumn:@"BookID"];
         if (![zipfileName isEqualToString:self.zipFileName]||documentName==nil)
         {
             [database close];
@@ -258,6 +259,11 @@
             BOOL existence=[CommonMethod checkFileExistence:path];
             if (!existence)
             {
+                BOOL success=[database executeUpdate:[NSString stringWithFormat:@"DELETE FROM Books WHERE BookID=%@",BookID]];
+                if (!success)
+                {
+                    NSLog(@"delete from books failed with bookID:%@",BookID);
+                }
                 return NO;
             }
         }
