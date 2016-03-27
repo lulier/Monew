@@ -14,6 +14,7 @@
 @property(nonatomic)NSInteger endTime;
 @property(nonatomic,strong)NSString *lyricBody;
 @property(nonatomic,strong)NSArray *lyricWords;
+@property(nonatomic)NSInteger stars;
 +(NSArray*)parseLyric:(NSString*)filePath;
 -(instancetype)initWithAttributes:(NSDictionary *)attributes;
 @end

@@ -22,6 +22,7 @@
     self.endTime=[[attributes objectForKey:@"endTime"] integerValue];
     self.lyricBody=[attributes objectForKey:@"lyricBody"];
     self.lyricWords=[LyricItem extractWords:self.lyricBody];
+    self.stars=0;
     return self;
 }
 +(NSString*)parseToMillisecond:(NSString*)time

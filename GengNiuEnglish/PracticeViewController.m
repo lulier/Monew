@@ -79,7 +79,6 @@ static NSString* cellIdentifierLyric=@"LyricViewCell";
     self.openEarsEventsObserver = [[OEEventsObserver alloc] init];
     self.openEarsEventsObserver.delegate = self;
     cashIndex=0;
-    
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [self initRecorderSettings];
     });
@@ -157,6 +156,22 @@ static NSString* cellIdentifierLyric=@"LyricViewCell";
     [cell.star1 setImage:[UIImage imageNamed:@"star_unlight"]];
     [cell.star2 setImage:[UIImage imageNamed:@"star_unlight"]];
     [cell.star3 setImage:[UIImage imageNamed:@"star_unlight"]];
+    switch (cell.lyricItem.stars) {
+        case oneStar:
+            [cell.star1 setImage:[UIImage imageNamed:@"star_light"]];
+            break;
+        case twoStar:
+            [cell.star1 setImage:[UIImage imageNamed:@"star_light"]];
+            [cell.star2 setImage:[UIImage imageNamed:@"star_light"]];
+            break;
+        case threeStar:
+            [cell.star1 setImage:[UIImage imageNamed:@"star_light"]];
+            [cell.star2 setImage:[UIImage imageNamed:@"star_light"]];
+            [cell.star3 setImage:[UIImage imageNamed:@"star_light"]];
+            break;
+        default:
+            break;
+    }
     if (self.selectedIndex.row==cell.index)
     {
         cell.playText.hidden=NO;
@@ -184,9 +199,6 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
         if (cell.index!=indexPath.row)
         {
             LyricItem *item=self.lyricItems[cell.index];
-            [cell.star1 setImage:[UIImage imageNamed:@"star_unlight"]];
-            [cell.star2 setImage:[UIImage imageNamed:@"star_unlight"]];
-            [cell.star3 setImage:[UIImage imageNamed:@"star_unlight"]];
             cell.cellText.text=item.lyricBody;
             cell.cellText.textColor=[UIColor blackColor];
         }
@@ -196,12 +208,32 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
             cell.cellText.textColor=[UIColor colorWithRed:2/255.f green:196/255.f blue:188/255.f alpha:1.0];
         }
     }
-    if (![indexPath compare:self.selectedIndex]==NSOrderedSame)
+    if ([indexPath compare:self.selectedIndex]!=NSOrderedSame)
     {
+        [self stopCellWorking];
         self.selectedIndex=indexPath;
     }
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     [tableView endUpdates];
+}
+-(void)stopCellWorking
+{
+    LyricViewCell *cell=[self.tableview cellForRowAtIndexPath:self.selectedIndex];
+    if (cell!=nil)
+    {
+        if (cell.recording)
+        {
+            [cell recordVoiceClick:nil];
+        }
+        if (cell.recordPlaying)
+        {
+            [cell playVoiceClick:nil];
+        }
+    }
+}
+-(void)scrollViewWillBeginDragging:(UIScrollView *)scrollView
+{
+    [self stopCellWorking];
 }
 -(void)initRecorderSettings
 {
@@ -270,8 +302,8 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
     [audioRecorder stop];
     [self runRecognition:index];
-    
     LyricViewCell *cell=[self.tableview cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
+    cell.lyricItem.stars=0;
     [cell.star1 setImage:[UIImage imageNamed:@"star_unlight"]];
     [cell.star2 setImage:[UIImage imageNamed:@"star_unlight"]];
     [cell.star3 setImage:[UIImage imageNamed:@"star_unlight"]];
@@ -290,8 +322,13 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     if ([fileMagager fileExistsAtPath:path.absoluteString])
     {
         recordAudioPlayer=[[AVAudioPlayer alloc]initWithContentsOfURL:path error:nil];
+        recordAudioPlayer.delegate=self;
         [recordAudioPlayer play];
     }
+}
+-(void)audioPlayerDidFinishPlaying:(AVAudioPlayer *)player successfully:(BOOL)flag
+{
+    [self stopCellWorking];
 }
 -(void)stopRecorderPlaying
 {
@@ -416,15 +453,18 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
             switch (number) {
                 case oneStar:
                     [cell.star1 setImage:[UIImage imageNamed:@"star_light"]];
+                    cell.lyricItem.stars=1;
                     break;
                 case twoStar:
                     [cell.star1 setImage:[UIImage imageNamed:@"star_light"]];
                     [cell.star2 setImage:[UIImage imageNamed:@"star_light"]];
+                    cell.lyricItem.stars=2;
                     break;
                 case threeStar:
                     [cell.star1 setImage:[UIImage imageNamed:@"star_light"]];
                     [cell.star2 setImage:[UIImage imageNamed:@"star_light"]];
                     [cell.star3 setImage:[UIImage imageNamed:@"star_light"]];
+                    cell.lyricItem.stars=3;
                     break;
                 default:
                     break;

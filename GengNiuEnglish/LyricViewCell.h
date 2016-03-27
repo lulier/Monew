@@ -34,6 +34,8 @@
 @property (weak, nonatomic) IBOutlet UIImageView *star1;
 @property (weak, nonatomic) IBOutlet UIImageView *star2;
 @property (weak, nonatomic) IBOutlet UIImageView *star3;
+- (IBAction)recordVoiceClick:(id)sender;
+- (IBAction)playVoiceClick:(id)sender;
 @property(weak,nonatomic)id<lyricViewCellDelegate>delegate;
 - (instancetype)initWithStyle:(UITableViewCellStyle)style
               reuseIdentifier:(NSString *)reuseIdentifier;
