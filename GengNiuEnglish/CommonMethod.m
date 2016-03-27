@@ -194,5 +194,14 @@
     }
     return Iphone5s;
 }
-
++(BOOL)checkFileExistence:(NSString*)path
+{
+    BOOL isDir;
+    if ([[NSFileManager defaultManager] fileExistsAtPath:path isDirectory:&isDir])
+    {
+        return YES;
+    }
+    else
+        return NO;
+}
 @end

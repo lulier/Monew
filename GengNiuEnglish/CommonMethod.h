@@ -42,4 +42,5 @@ typedef NS_ENUM(NSInteger,IphoneType)
 +(UIViewController*)getCurrentVC;
 +(NSString*)getPath:(NSString*)fileName;
 +(IphoneType)checkIphoneType;
++(BOOL)checkFileExistence:(NSString*)path;
 @end

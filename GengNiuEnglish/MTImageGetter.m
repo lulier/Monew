@@ -34,14 +34,13 @@
 
 -(void)getImageComplete:(void (^)(UIImage* image))block
 {
-    [self.imageView sd_cancelCurrentImageLoad];
     UIImage *placeHolder =[UIImage imageNamed:@"profile-image-placeholder"];
     
     if(![self.imageView.downloadName isEqualToString:self.imageName]){
+        [self.imageView sd_cancelCurrentImageLoad];
         self.imageView.image = placeHolder;
         self.imageView.downloadName = self.imageName;
-    }else return;
-//    __weak __typeof__(self) weakSelf = self;
+    }
     NSString *cacheKey=[[SDWebImageManager sharedManager] cacheKeyForURL:self.downloadURL];
     [[SDImageCache sharedImageCache] queryDiskCacheForKey:cacheKey done:
      ^(UIImage *image, SDImageCacheType cacheType) {

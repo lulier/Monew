@@ -40,6 +40,10 @@
     NSMutableArray *lyrics=[[NSMutableArray alloc]init];
     NSData *secretText=[NSData dataWithContentsOfFile:filePath];
     NSString *result=[CommonMethod decryptAESData:secretText app_key:CIPHER_KEY];
+    if (result==nil)
+    {
+        return nil;
+    }
     NSString *tmp=[result stringByReplacingOccurrencesOfString:@"[ENDASH]" withString:@"–"];
     NSString *content=[tmp stringByReplacingOccurrencesOfString:@"[EMDASH]" withString:@"—"];
     NSArray *contents=[content componentsSeparatedByString:@"\n"];

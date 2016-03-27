@@ -252,6 +252,15 @@
             [database close];
             return NO;
         }
+        if (documentName!=nil)
+        {
+            NSString *path=[CommonMethod getPath:documentName];
+            BOOL existence=[CommonMethod checkFileExistence:path];
+            if (!existence)
+            {
+                return NO;
+            }
+        }
     }
     [database close];
     return YES;

@@ -33,6 +33,7 @@
     }
     __weak __typeof__(self) weakSelf = self;
 //    [self.cellImage setImageWithURL:[NSURL URLWithString:book.cover_url] placeholderImage:[UIImage imageNamed:@"profile-image-placeholder"]];
+    self.cellImage.downloadName=nil;
     NSString *cacheKey=[[SDWebImageManager sharedManager] cacheKeyForURL:[NSURL URLWithString:book.cover_url]];
     MTImageGetter *imageGetter=[[MTImageGetter alloc]initWithImageView:self.cellImage imageName:cacheKey downloadURL:[NSURL URLWithString:book.cover_url]];
     [imageGetter getImageComplete:^(UIImage *image) {
@@ -49,21 +50,19 @@
     IphoneType type=[CommonMethod checkIphoneType];
     switch (type) {
         case Iphone5s:
-            self.labelTopConstraint.constant=110;
-            self.xiuLianWidth.constant=40;
-            self.moErDuoWidth.constant=40;
-            self.chuangGuanWidth.constant=40;
-            self.moErDuo.titleLabel.font=[UIFont italicSystemFontOfSize:11.0f];
-            self.xiuLian.titleLabel.font=[UIFont italicSystemFontOfSize:12.0f];
-            self.chuangGuan.titleLabel.font=[UIFont italicSystemFontOfSize:12.0f];
+            self.labelTopConstraint.constant=100;
             break;
         case Iphone6:
             self.labelTopConstraint.constant=120;
+            self.xiuLianWidth.constant=50;
+            self.moErDuoWidth.constant=50;
+            self.chuangGuanWidth.constant=50;
             break;
         case Iphone6p:
             self.labelTopConstraint.constant=140;
-            self.xiuLianLeftConstraint.constant=8;
-            self.chuangGuanRightConstraint.constant=8;
+            self.xiuLianWidth.constant=55;
+            self.moErDuoWidth.constant=55;
+            self.chuangGuanWidth.constant=55;
             break;
         default:
             break;

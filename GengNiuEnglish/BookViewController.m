@@ -161,11 +161,11 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
     switch (type)
     {
         case Iphone5s:
-            return CGSizeMake(150, 180);
+            return CGSizeMake(190, 180);
         case Iphone6:
-            return CGSizeMake(160, 200);
+            return CGSizeMake(210, 200);
         case Iphone6p:
-            return CGSizeMake(180, 220);
+            return CGSizeMake(230, 220);
         default:
             return CGSizeMake(150, 180);
     }
