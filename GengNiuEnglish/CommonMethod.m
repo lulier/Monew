@@ -174,6 +174,7 @@
 //    NSLog(@"log for path:%@",filePath);
 //    BOOL is=[[NSFileManager defaultManager] fileExistsAtPath:filePath];
 //    NSString *content=[NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:nil];
+//    content=@"Chapter 1 Waiting\n\"I can't wait for Jeff to get here!\"Lee said.";
 //    NSData *result=[CommonMethod encryptAESData:content app_key:key];
     
     

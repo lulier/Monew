@@ -54,7 +54,7 @@ static NSString * const reuseIdentifierMaterial = @"MaterialCell";
                         //unhidecache
 //                        weakSelf.list=[NSArray arrayWithObject:[weakSelf.list lastObject]]; //test
                         [DataForCell showCache:^(NSArray *cacheData) {
-                            if (cacheData!=nil)
+                            if (cacheData!=nil||[cacheData count]==0)
                             {
                                 cacheList=nil;
                                 NSMutableArray *tmp=[NSMutableArray arrayWithArray:weakSelf.list];
@@ -90,7 +90,7 @@ static NSString * const reuseIdentifierMaterial = @"MaterialCell";
         {
             NSDictionary *response=[responseObject objectForKey:@"response"];
             NSInteger actionCode=[[response objectForKey:@"action_code"] integerValue];
-            actionCode=0;
+//            actionCode=0;
             deleteCache=1&actionCode;
             hideCache=2&actionCode;
         }

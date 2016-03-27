@@ -50,6 +50,21 @@
 
 - (NSData *)AES128DecryptWithKey:(NSString *)key//解密
 {
+    
+    
+    NSData *keyData      = [key dataUsingEncoding:NSUTF8StringEncoding];
+    NSData *ivData       =[gIv dataUsingEncoding:NSUTF8StringEncoding];
+    
+    NSError *error;
+    NSData *current = [NSData doCipher:self
+                                  iv:ivData
+                                 key:keyData
+                             context:kCCDecrypt
+                               error:&error];
+    
+    return current;
+    
+    
     char keyPtr[kCCKeySizeAES128+1];
     bzero(keyPtr, sizeof(keyPtr));
     [key getCString:keyPtr maxLength:sizeof(keyPtr) encoding:NSUTF8StringEncoding];
@@ -64,7 +79,7 @@
     size_t numBytesDecrypted = 0;
     CCCryptorStatus cryptStatus = CCCrypt(kCCDecrypt,
                                           kCCAlgorithmAES128,
-                                          kCCOptionPKCS7Padding,
+                                          0x0000,
                                           keyPtr,
                                           kCCBlockSizeAES128,
                                           ivPtr,
@@ -78,6 +93,43 @@
     }
     free(buffer);
     return nil;
+}
+
++ (NSData *)doCipher:(NSData *)dataIn
+                  iv:(NSData *)iv
+                 key:(NSData *)symmetricKey
+             context:(CCOperation)encryptOrDecrypt // kCCEncrypt or kCCDecrypt
+               error:(NSError **)error
+{
+    CCCryptorStatus ccStatus   = kCCSuccess;
+    size_t          cryptBytes = 0;
+    NSMutableData  *dataOut    = [NSMutableData dataWithLength:dataIn.length + kCCBlockSizeAES128];
+    
+    ccStatus = CCCrypt( encryptOrDecrypt,
+                       kCCAlgorithmAES128,
+                       0, //kCCOptionPKCS7Padding,
+                       symmetricKey.bytes,
+                       kCCKeySizeAES128,
+                       iv.bytes,
+                       dataIn.bytes,
+                       dataIn.length,
+                       dataOut.mutableBytes,
+                       dataOut.length,
+                       &cryptBytes);
+    
+    if (ccStatus == kCCSuccess) {
+        dataOut.length = cryptBytes;
+    }
+    else {
+        if (error) {
+            *error = [NSError errorWithDomain:@"kEncryptionError"
+                                         code:ccStatus
+                                     userInfo:nil];
+        }
+        dataOut = nil;
+    }
+    
+    return dataOut;
 }
 
 @end

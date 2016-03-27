@@ -41,7 +41,34 @@
         self.imageView.image = placeHolder;
         self.imageView.downloadName = self.imageName;
     }
+    else
+        return;
+    NSLog(@"%@",self.imageView.downloadName);
     NSString *cacheKey=[[SDWebImageManager sharedManager] cacheKeyForURL:self.downloadURL];
+    NSURL *downloadPath=[self.downloadURL copy];
+    if ([[SDWebImageManager sharedManager] diskImageExistsForURL:[NSURL URLWithString:cacheKey]])
+    {
+        downloadPath=[NSURL URLWithString:cacheKey];
+    }
+    [self.imageView sd_setImageWithURL:downloadPath placeholderImage:placeHolder completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+        if (image)
+        {
+            dispatch_async(dispatch_get_main_queue(),^{
+                NSString *cacheKey=[[SDWebImageManager sharedManager] cacheKeyForURL:self.downloadURL];
+                [[SDImageCache sharedImageCache] storeImage:image forKey:cacheKey];
+            });
+        }
+    }];
+    
+    return;
+    
+    
+    
+    
+    
+    
+    
+    
     [[SDImageCache sharedImageCache] queryDiskCacheForKey:cacheKey done:
      ^(UIImage *image, SDImageCacheType cacheType) {
          if (![self.imageView.downloadName isEqualToString:self.imageName])
@@ -55,36 +82,27 @@
          else
          {
           
-//             [self.imageView sd_setImageWithURL:self.downloadURL placeholderImage:placeHolder completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
-//                 if (image)
-//                 {
-//                     dispatch_async(dispatch_get_main_queue(),^{
-//                         block(image);
-//                         NSString *cacheKey=[[SDWebImageManager sharedManager] cacheKeyForURL:self.downloadURL];
-//                         [[SDImageCache sharedImageCache] storeImage:image forKey:cacheKey];
-//                     });
-//                 }
-//             }];
-             SDWebImageDownloader *downloader = [SDWebImageDownloader sharedDownloader];
-             [downloader downloadImageWithURL:self.downloadURL
-                                      options:0
-                                     progress:^(NSInteger receivedSize, NSInteger expectedSize){
-                                         // progression tracking code
-                                     }
-                                    completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished){
-                                        if (![self.imageView.downloadName isEqualToString:self.imageName])
-                                            return ;
-                                        if (image && finished)
-                                        {
-                                            // do something with image
-                                            dispatch_async(dispatch_get_main_queue(),^{
-                                                block(image);
-                                                NSString *cacheKey=[[SDWebImageManager sharedManager] cacheKeyForURL:self.downloadURL];
-                                                [[SDImageCache sharedImageCache] storeImage:image forKey:cacheKey];
-                                            });
-                                            
-                                        }
-                                    }];
+             
+//             SDWebImageDownloader *downloader = [SDWebImageDownloader sharedDownloader];
+//             [downloader downloadImageWithURL:self.downloadURL
+//                                      options:0
+//                                     progress:^(NSInteger receivedSize, NSInteger expectedSize){
+//                                         // progression tracking code
+//                                     }
+//                                    completed:^(UIImage *image, NSData *data, NSError *error, BOOL finished){
+//                                        if (![self.imageView.downloadName isEqualToString:self.imageName])
+//                                            return ;
+//                                        if (image && finished)
+//                                        {
+//                                            // do something with image
+//                                            dispatch_async(dispatch_get_main_queue(),^{
+//                                                block(image);
+//                                                NSString *cacheKey=[[SDWebImageManager sharedManager] cacheKeyForURL:self.downloadURL];
+//                                                [[SDImageCache sharedImageCache] storeImage:image forKey:cacheKey];
+//                                            });
+//                                            
+//                                        }
+//                                    }];
 
          }
      }];
