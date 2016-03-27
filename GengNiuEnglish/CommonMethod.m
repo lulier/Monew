@@ -169,6 +169,14 @@
 //将带密码的data转成string
 +(NSString*)decryptAESData:(NSData*)data  app_key:(NSString*)key
 {
+    //test for encode
+//    NSString* filePath=[[NSBundle mainBundle] pathForResource:@"b" ofType:@"lrc"];
+//    NSLog(@"log for path:%@",filePath);
+//    BOOL is=[[NSFileManager defaultManager] fileExistsAtPath:filePath];
+//    NSString *content=[NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:nil];
+//    NSData *result=[CommonMethod encryptAESData:content app_key:key];
+    
+    
     //使用密码对data进行解密
     NSData *decryData = [data AES128DecryptWithKey:key];
     //将解了密码的nsdata转化为nsstring

@@ -36,7 +36,6 @@
 		F486C7801C3B8B7C00CBFBD1 /* SampleQueueId.m in Sources */ = {isa = PBXBuildFile; fileRef = F486C77F1C3B8B7C00CBFBD1 /* SampleQueueId.m */; };
 		F49467041C27CE0900806DEF /* DataForCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F49467031C27CE0900806DEF /* DataForCell.m */; };
 		F494670A1C28ECE900806DEF /* NetworkingManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F49467091C28ECE900806DEF /* NetworkingManager.m */; };
-		F495B29D1CA7ADE400C7C5D3 /* MHE_Rdg_Wonders_LvRdr_G3_Approach_U1W1_01(1).lrc in Resources */ = {isa = PBXBuildFile; fileRef = F495B29C1CA7ADE400C7C5D3 /* MHE_Rdg_Wonders_LvRdr_G3_Approach_U1W1_01(1).lrc */; };
 		F4A9AF391C4D0D26004BC7BF /* CommonMethod.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A9AF381C4D0D26004BC7BF /* CommonMethod.m */; };
 		F4A9AF3C1C4D2418004BC7BF /* MaterialCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A9AF3B1C4D2418004BC7BF /* MaterialCell.m */; };
 		F4A9AF3F1C4D2435004BC7BF /* TextBookCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F4A9AF3E1C4D2435004BC7BF /* TextBookCell.m */; };
@@ -124,7 +123,6 @@
 		F49467031C27CE0900806DEF /* DataForCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DataForCell.m; sourceTree = "<group>"; };
 		F49467081C28ECE900806DEF /* NetworkingManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = NetworkingManager.h; sourceTree = "<group>"; };
 		F49467091C28ECE900806DEF /* NetworkingManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = NetworkingManager.m; sourceTree = "<group>"; };
-		F495B29C1CA7ADE400C7C5D3 /* MHE_Rdg_Wonders_LvRdr_G3_Approach_U1W1_01(1).lrc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = "MHE_Rdg_Wonders_LvRdr_G3_Approach_U1W1_01(1).lrc"; sourceTree = "<group>"; };
 		F4A9AF371C4D0D26004BC7BF /* CommonMethod.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CommonMethod.h; sourceTree = "<group>"; };
 		F4A9AF381C4D0D26004BC7BF /* CommonMethod.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CommonMethod.m; sourceTree = "<group>"; };
 		F4A9AF3A1C4D2418004BC7BF /* MaterialCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MaterialCell.h; sourceTree = "<group>"; };
@@ -227,7 +225,6 @@
 		F427991D1C18514200240736 = {
 			isa = PBXGroup;
 			children = (
-				F495B29C1CA7ADE400C7C5D3 /* MHE_Rdg_Wonders_LvRdr_G3_Approach_U1W1_01(1).lrc */,
 				F42799281C18514200240736 /* GengNiuEnglish */,
 				F42799421C18514300240736 /* GengNiuEnglishTests */,
 				F427994D1C18514300240736 /* GengNiuEnglishUITests */,
@@ -478,7 +475,6 @@
 				F42799391C18514200240736 /* LaunchScreen.storyboard in Resources */,
 				F478C87D1C9D955500746E2C /* AcousticModelEnglish.bundle in Resources */,
 				F42799361C18514200240736 /* Assets.xcassets in Resources */,
-				F495B29D1CA7ADE400C7C5D3 /* MHE_Rdg_Wonders_LvRdr_G3_Approach_U1W1_01(1).lrc in Resources */,
 				F42799341C18514200240736 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
