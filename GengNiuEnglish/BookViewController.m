@@ -15,6 +15,7 @@
 #import "LyricViewController.h"
 #import "FMDB.h"
 #import "DAProgressOverlayView.h"
+#import "MRProgress.h"
 #define PROGRESSVIEW_TAG 1234
 
 @interface BookViewController ()
@@ -60,6 +61,7 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
 
 
 -(void)reload:(__unused id)sender{
+    MRProgressOverlayView *progressView=[MRProgressOverlayView showOverlayAddedTo:self.view title:@"加载中" mode:MRProgressOverlayViewModeIndeterminateSmallDefault animated:YES];
     __weak __typeof__(self) weakSelf = self;
     [DataForCell queryTextList:weakSelf.grade_id block:^(NSArray*cells){
         weakSelf.list=cells;
@@ -68,6 +70,7 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
         });
     }];
     [DataForCell getTextList:^(NSArray *data, NSError *error) {
+        [progressView dismiss:YES];
         if(data!=nil)
         {
             weakSelf.list=data;

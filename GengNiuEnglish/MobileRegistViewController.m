@@ -209,7 +209,8 @@
                     [alert showError:self title:@"错误" subTitle:@"注册失败，请重新尝试" closeButtonTitle:nil duration:1.0f];
                 }
             } failure:^(NSURLSessionTask * _Nullable task, NSError * _Nullable error) {
-                
+                SCLAlertView *alert = [[SCLAlertView alloc] init];
+                [alert showError:self title:@"错误" subTitle:@"网络错误，请重新尝试" closeButtonTitle:nil duration:1.0f];
             }];
         }
         

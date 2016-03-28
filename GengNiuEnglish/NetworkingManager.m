@@ -9,14 +9,18 @@
 #import "NetworkingManager.h"
 #import "AFNetworking.h"
 
-static const NSString *URLForGradeList=@"http://120.25.103.72:8002/courseware/grade_list_query/";
-static const NSString *URLForTextList=@"http://120.25.103.72:8002/courseware/text_list_query/";
-static const NSString *URLForTextDetai=@"http://120.25.103.72:8002/courseware/text_detail_query/";
-static const NSString *URLForRegist=@"http://120.25.103.72:8002/student/register/";
-static const NSString *URLForLogin=@"http://120.25.103.72:8002/student/login/";
-static const NSString *URLForGetSalt=@"http://120.25.103.72:8002/student/get_salt/";
-static const NSString *URLForCheckAvail=@"http://120.25.103.72:8002/student/phone/check_avail/";
-static const NSString *URLForActionCode=@"http://120.25.103.72:8002/courseware/get_app_status/";
+#define domain @"http://120.25.103.72:8002"
+//#define domain @"http://english.mo-new.com"
+
+static const NSString *URLForGradeList=@"/courseware/grade_list_query/";
+static const NSString *URLForTextList=@"/courseware/text_list_query/";
+static const NSString *URLForTextDetai=@"/courseware/text_detail_query/";
+static const NSString *URLForRegist=@"/student/register/";
+static const NSString *URLForLogin=@"/student/login/";
+static const NSString *URLForGetSalt=@"/student/get_salt/";
+static const NSString *URLForCheckAvail=@"/student/phone/check_avail/";
+static const NSString *URLForActionCode=@"/courseware/get_app_status/";
+
 @implementation NetworkingManager
 
 +(NSURLSessionTask*)httpRequest:(RequestType)type url:(RequestURL)url parameters:(NSDictionary*)parameters progress:(nullable void (^)(NSProgress *downloadProgress))downloadProgressBlock success:(nullable void (^)( NSURLSessionTask * _Nullable task, id _Nullable responseObject))success failure:(nullable void (^)(NSURLSessionTask * _Nullable task, NSError * _Nullable error))failure completionHandler:(nullable void (^)(NSURLResponse * _Nullable response, NSURL * _Nullable filePath, NSError * _Nullable error))completionHandler
@@ -44,21 +48,21 @@ static const NSString *URLForActionCode=@"http://120.25.103.72:8002/courseware/g
     switch (url)
     {
         case RUText_list:
-            return URLForTextList;
+            return [NSString stringWithFormat:@"%@%@",domain,URLForTextList];
         case RUText_detail:
-            return URLForTextDetai;
+            return [NSString stringWithFormat:@"%@%@",domain,URLForTextDetai];
         case RUGrade_list:
-            return URLForGradeList;
+            return [NSString stringWithFormat:@"%@%@",domain,URLForGradeList];
         case RURegist:
-            return URLForRegist;
+            return [NSString stringWithFormat:@"%@%@",domain,URLForRegist];
         case RULogin:
-            return URLForLogin;
+            return [NSString stringWithFormat:@"%@%@",domain,URLForLogin];
         case RUGetSalt:
-            return URLForGetSalt;
+            return [NSString stringWithFormat:@"%@%@",domain,URLForGetSalt];
         case RUCheckAvail:
-            return URLForCheckAvail;
+            return [NSString stringWithFormat:@"%@%@",domain,URLForCheckAvail];
         case RUActionCode:
-            return URLForActionCode;
+            return [NSString stringWithFormat:@"%@%@",domain,URLForActionCode];
         case RUCustom:
             return nil;
         default:

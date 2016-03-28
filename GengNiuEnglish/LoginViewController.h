@@ -23,5 +23,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *weiXinLogin;
 @property (weak, nonatomic) IBOutlet UIButton *qqLogin;
 @property (weak, nonatomic) IBOutlet UIButton *weiBoLogin;
+@property (weak, nonatomic) IBOutlet UILabel *otherLoginTitle;
 
 @end

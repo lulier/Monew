@@ -21,9 +21,11 @@
     [super viewWillAppear:animated];
     [self checkLogin];
     self.passwordInput.text=@"";
+    [self hideLoginButton];
 }
 -(void)hideLoginButton
 {
+    self.otherLoginTitle.hidden=YES;
     self.weiBoLogin.hidden=YES;
     self.qqLogin.hidden=YES;
     self.weiXinLogin.hidden=YES;
@@ -71,10 +73,13 @@
             [accountManager deleteAccount];
             return;
         }
-        UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        MaterialViewController *materialViewController=[storyboard instantiateViewControllerWithIdentifier:@"MaterialViewController"];
-        [self.navigationController pushViewController:materialViewController animated:NO];
-        [self login];
+        else
+        {
+            UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            MaterialViewController *materialViewController=[storyboard instantiateViewControllerWithIdentifier:@"MaterialViewController"];
+            [self.navigationController pushViewController:materialViewController animated:NO];
+            [self login];
+        }
     }
     else
     {
@@ -197,6 +202,8 @@
         
     } failure:^(NSURLSessionTask * _Nullable task, NSError * _Nullable error) {
         [progressView dismiss:YES];
+        SCLAlertView *alert = [[SCLAlertView alloc] init];
+        [alert showError:self title:@"错误" subTitle:@"网络错误，请重新尝试" closeButtonTitle:nil duration:1.0f];
     }];
 }
 -(void)login
@@ -228,7 +235,7 @@
         if (status==USER_NOT_EXISTS||status==PASSWD_INCORRECT)
         {
             //deleteaccount
-            [[NSUserDefaults standardUserDefaults] setValue:@"out" forKey:@"MeticStatus"];
+            [[NSUserDefaults standardUserDefaults] setValue:@"out" forKey:@"AccountStatus"];
             [[NSUserDefaults standardUserDefaults] synchronize];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 //force to login
@@ -237,7 +244,8 @@
         }
         
     } failure:^(NSURLSessionTask * _Nullable task, NSError * _Nullable error) {
-        
+        SCLAlertView *alert = [[SCLAlertView alloc] init];
+        [alert showError:self title:@"错误" subTitle:@"网络错误，请重新尝试" closeButtonTitle:nil duration:1.0f];
     } completionHandler:nil];
 }
 - (IBAction)registButtonClick:(id)sender {

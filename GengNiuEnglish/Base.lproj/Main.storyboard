@@ -793,6 +793,7 @@
                         <outlet property="accountInput" destination="ewf-a6-vhR" id="yt6-po-O9T"/>
                         <outlet property="inputTopConstraint" destination="5KG-2q-N2f" id="mYt-Dk-2dx"/>
                         <outlet property="loginButton" destination="NSR-DT-qv9" id="ovk-iv-knJ"/>
+                        <outlet property="otherLoginTitle" destination="Qex-QP-Zqg" id="T57-ti-1g7"/>
                         <outlet property="passwordInput" destination="52X-sC-dMN" id="MO2-ZG-sR6"/>
                         <outlet property="qqLogin" destination="VtK-0E-0Er" id="sln-NP-Ytt"/>
                         <outlet property="registButton" destination="MtJ-4f-h5a" id="rlx-kP-OQt"/>
