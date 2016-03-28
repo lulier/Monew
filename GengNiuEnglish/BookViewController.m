@@ -275,6 +275,7 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
                  [book.progressView setProgress:downloadProgress.fractionCompleted];
                  if (downloadProgress.fractionCompleted == 1.0000)
                  {
+                     book.task=nil;
                      [book.progressView displayOperationDidFinishAnimation];
                      double delayInSeconds = book.progressView.stateChangeAnimationDuration;
                      dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
@@ -288,7 +289,12 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
          }
      }
     success:^(NSURLSessionTask * _Nullable task, id  _Nullable responseObject) {
-        
+        if (book.progressView!=nil)
+        {
+            [book.progressView removeFromSuperview];
+            book.progressView=nil;
+            book.task=nil;
+        }
     } failure:^(NSURLSessionTask * _Nullable task, NSError * _Nullable error) {
         if (book.progressView!=nil)
         {
