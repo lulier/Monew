@@ -8,7 +8,6 @@
 
 /* Begin PBXBuildFile section */
 		4685CC87E9EF4168376FEC31 /* libPods.a in Frameworks */ = {isa = PBXBuildFile; fileRef = 031E0EC8D723D8F072A5F16D /* libPods.a */; };
-		F40C6AD21CA7F28D0024D03A /* b.lrc in Resources */ = {isa = PBXBuildFile; fileRef = F40C6AD11CA7F28D0024D03A /* b.lrc */; };
 		F427992B1C18514200240736 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = F427992A1C18514200240736 /* main.m */; };
 		F427992E1C18514200240736 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F427992D1C18514200240736 /* AppDelegate.m */; };
 		F42799341C18514200240736 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = F42799321C18514200240736 /* Main.storyboard */; };
@@ -75,7 +74,6 @@
 		031E0EC8D723D8F072A5F16D /* libPods.a */ = {isa = PBXFileReference; explicitFileType = archive.ar; includeInIndex = 0; path = libPods.a; sourceTree = BUILT_PRODUCTS_DIR; };
 		54041F2906AF47C7E50BB8DF /* Pods.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.release.xcconfig; path = "Pods/Target Support Files/Pods/Pods.release.xcconfig"; sourceTree = "<group>"; };
 		5BA9EAF69182FF3E5087B909 /* Pods.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = Pods.debug.xcconfig; path = "Pods/Target Support Files/Pods/Pods.debug.xcconfig"; sourceTree = "<group>"; };
-		F40C6AD11CA7F28D0024D03A /* b.lrc */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = text; path = b.lrc; sourceTree = "<group>"; };
 		F42799261C18514200240736 /* GengNiuEnglish.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = GengNiuEnglish.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		F427992A1C18514200240736 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		F427992C1C18514200240736 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -227,7 +225,6 @@
 		F427991D1C18514200240736 = {
 			isa = PBXGroup;
 			children = (
-				F40C6AD11CA7F28D0024D03A /* b.lrc */,
 				F42799281C18514200240736 /* GengNiuEnglish */,
 				F42799421C18514300240736 /* GengNiuEnglishTests */,
 				F427994D1C18514300240736 /* GengNiuEnglishUITests */,
@@ -477,7 +474,6 @@
 			files = (
 				F42799391C18514200240736 /* LaunchScreen.storyboard in Resources */,
 				F478C87D1C9D955500746E2C /* AcousticModelEnglish.bundle in Resources */,
-				F40C6AD21CA7F28D0024D03A /* b.lrc in Resources */,
 				F42799361C18514200240736 /* Assets.xcassets in Resources */,
 				F42799341C18514200240736 /* Main.storyboard in Resources */,
 			);

@@ -102,7 +102,7 @@ static NSString * const ACCOUNT_KEYCHAIN = @"GNAccount20160311";
             salt=[responseObject objectForKey:@"salt"];
             NSMutableString* md5_str = [CommonMethod MD5EncryptionWithString:[NSString stringWithFormat:@"%@%@",password,salt]];
             NSMutableString* sign=[CommonMethod MD5EncryptionWithString:[NSString stringWithFormat:@"%@%@",accountNum,loginType]];
-            NSDictionary *dict=[NSDictionary dictionaryWithObjectsAndKeys:loginType,@"type",accountNum,@"account",md5_str,@"passwd",sign,@"sign",nil];
+            NSDictionary *dict=[NSDictionary dictionaryWithObjectsAndKeys:loginType,@"type",accountNum,@"account",md5_str,@"passwd",0,@"channel",sign,@"sign",nil];
             AccountManager *accountManager=[AccountManager singleInstance];
             accountManager.account=accountNum;
             accountManager.password=md5_str;
@@ -141,7 +141,7 @@ static NSString * const ACCOUNT_KEYCHAIN = @"GNAccount20160311";
     NSString* salt = [CommonMethod randomStringWithLength:6];
     NSMutableString* md5_str = [CommonMethod MD5EncryptionWithString:[NSString stringWithFormat:@"%@%@",password,salt]];
     NSMutableString* sign=[CommonMethod MD5EncryptionWithString:[NSString stringWithFormat:@"%@%@",accountNum,reType]];
-    NSDictionary *dict=[NSDictionary dictionaryWithObjectsAndKeys:reType,@"type",accountNum,@"account",md5_str,@"passwd",salt,@"salt",sign,@"sign",nil];
+    NSDictionary *dict=[NSDictionary dictionaryWithObjectsAndKeys:reType,@"type",accountNum,@"account",md5_str,@"passwd",salt,@"salt",0,@"channel",sign,@"sign",nil];
     [NetworkingManager httpRequest:RTPost url:RURegist parameters:dict progress:nil success:success failure:failure completionHandler:nil];
 }
 -(void)createTable

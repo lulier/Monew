@@ -14,7 +14,7 @@
 @property (nonatomic, strong) NSString *imageName;
 @property(nonatomic,strong)NSURL *downloadURL;
 @end
-//
+
 @implementation MTImageGetter
 
 -(instancetype)initWithImageView:(UIImageView*)imageView  imageName:(NSString *)imageName downloadURL:(NSURL *)downloadURL
@@ -38,19 +38,18 @@
     
     if(![self.imageView.downloadName isEqualToString:self.imageName]){
         [self.imageView sd_cancelCurrentImageLoad];
-        self.imageView.image = placeHolder;
         self.imageView.downloadName = self.imageName;
     }
     else
         return;
-    NSLog(@"%@",self.imageView.downloadName);
+//    NSLog(@"%@",self.imageView.downloadName);
     NSString *cacheKey=[[SDWebImageManager sharedManager] cacheKeyForURL:self.downloadURL];
     NSURL *downloadPath=[self.downloadURL copy];
     if ([[SDWebImageManager sharedManager] diskImageExistsForURL:[NSURL URLWithString:cacheKey]])
     {
         downloadPath=[NSURL URLWithString:cacheKey];
     }
-    [self.imageView sd_setImageWithURL:downloadPath placeholderImage:placeHolder completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
+    [self.imageView sd_setImageWithURL:downloadPath placeholderImage:placeHolder options:SDWebImageRetryFailed completed:^(UIImage *image, NSError *error, SDImageCacheType cacheType, NSURL *imageURL) {
         if (image)
         {
             dispatch_async(dispatch_get_main_queue(),^{
@@ -60,29 +59,21 @@
         }
     }];
     
-    return;
     
-    
-    
-    
-    
-    
-    
-    
-    [[SDImageCache sharedImageCache] queryDiskCacheForKey:cacheKey done:
-     ^(UIImage *image, SDImageCacheType cacheType) {
-         if (![self.imageView.downloadName isEqualToString:self.imageName])
-             return ;
-         if (image!=nil)
-         {
-             dispatch_async(dispatch_get_main_queue(),^{
-                 block(image);
-             });
-         }
-         else
-         {
-          
-             
+//    [[SDImageCache sharedImageCache] queryDiskCacheForKey:cacheKey done:
+//     ^(UIImage *image, SDImageCacheType cacheType) {
+//         if (![self.imageView.downloadName isEqualToString:self.imageName])
+//             return ;
+//         if (image!=nil)
+//         {
+//             dispatch_async(dispatch_get_main_queue(),^{
+//                 block(image);
+//             });
+//         }
+//         else
+//         {
+//          
+//             
 //             SDWebImageDownloader *downloader = [SDWebImageDownloader sharedDownloader];
 //             [downloader downloadImageWithURL:self.downloadURL
 //                                      options:0
@@ -103,9 +94,9 @@
 //                                            
 //                                        }
 //                                    }];
-
-         }
-     }];
+//
+//         }
+//     }];
 }
 
 @end

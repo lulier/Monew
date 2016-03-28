@@ -52,7 +52,8 @@ enum Return_Code
     BIND_PHONE_ERROR3=82,
     BIND_PHONE_ERROR4=81,
     UNBIND_PHONE_ERROR1=80,
-    UNBIND_PHONE_ERROR2=79
+    UNBIND_PHONE_ERROR2=79,
+    PARAM_ERROR_NULL_PASSWORD=78
 };
 
 @interface NetworkingManager : NSObject

@@ -43,6 +43,7 @@
     __weak __typeof__(self) weakSelf = self;
     NSString *cacheKey=[[SDWebImageManager sharedManager] cacheKeyForURL:[NSURL URLWithString:material.cover_url]];
     MTImageGetter *imageGetter=[[MTImageGetter alloc]initWithImageView:self.cellImage imageName:cacheKey downloadURL:[NSURL URLWithString:material.cover_url]];
+    self.cellImage.downloadName=nil;
     [imageGetter getImageComplete:^(UIImage *image) {
         [weakSelf.cellImage setImage:image];
     }];

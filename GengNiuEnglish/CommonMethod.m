@@ -170,12 +170,19 @@
 +(NSString*)decryptAESData:(NSData*)data  app_key:(NSString*)key
 {
     //test for encode
-//    NSString* filePath=[[NSBundle mainBundle] pathForResource:@"b" ofType:@"lrc"];
+    NSString* filePath=[CommonMethod getPath:@"a.lrc"];
 //    NSLog(@"log for path:%@",filePath);
-//    BOOL is=[[NSFileManager defaultManager] fileExistsAtPath:filePath];
+    BOOL is=[[NSFileManager defaultManager] fileExistsAtPath:filePath];
 //    NSString *content=[NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:nil];
 //    content=@"Chapter 1 Waiting\n\"I can't wait for Jeff to get here!\"Lee said.";
 //    NSData *result=[CommonMethod encryptAESData:content app_key:key];
+    
+    NSData *test=[NSData dataWithContentsOfFile:filePath];
+    
+    
+    
+    
+    
     
     
     //使用密码对data进行解密

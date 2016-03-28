@@ -29,6 +29,7 @@ typedef NS_ENUM(NSInteger,LoginType)
 @property(nonatomic,)LoginType type;
 @property(nonatomic)BOOL isActive;
 @property(nonatomic,strong)NSString *loginTime;
+@property(nonatomic)NSInteger channel;
 @property(nonatomic)BOOL completeInfo;
 
 + (AccountManager *)singleInstance;
