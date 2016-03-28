@@ -259,13 +259,12 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
     //这里还没有处理下载出错的情况
     NSDictionary *parameters=[NSDictionary dictionaryWithObjectsAndKeys:book.downloadURL,@"url",nil];
     __weak __typeof__(self) weakSelf = self;
-    DataForCell *data=self.list[indexPath.row];
-    data.progressView=[[DAProgressOverlayView alloc]initWithFrame:cell.bounds];
-    [data.progressView setHidden:NO];
-    data.progressView.progress = 0;
-    data.progressView.tag=PROGRESSVIEW_TAG;
-    [cell.contentView addSubview:data.progressView];
-    [data.progressView displayOperationWillTriggerAnimation];
+    book.progressView=[[DAProgressOverlayView alloc]initWithFrame:cell.bounds];
+    [book.progressView setHidden:NO];
+    book.progressView.progress = 0;
+    book.progressView.tag=PROGRESSVIEW_TAG;
+    [cell.contentView addSubview:book.progressView];
+    [book.progressView displayOperationWillTriggerAnimation];
     __block NSURLSessionTask *task=
     [NetworkingManager httpRequest:RTDownload url:RUCustom parameters:parameters
                           progress:^(NSProgress *downloadProgress)
@@ -273,28 +272,41 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
          if (downloadProgress)
          {
              dispatch_async(dispatch_get_main_queue(), ^{
-                 [data.progressView setProgress:downloadProgress.fractionCompleted];
+                 [book.progressView setProgress:downloadProgress.fractionCompleted];
                  if (downloadProgress.fractionCompleted == 1.0000)
                  {
-                     [data.progressView displayOperationDidFinishAnimation];
-                     double delayInSeconds = data.progressView.stateChangeAnimationDuration;
+                     [book.progressView displayOperationDidFinishAnimation];
+                     double delayInSeconds = book.progressView.stateChangeAnimationDuration;
                      dispatch_time_t popTime = dispatch_time(DISPATCH_TIME_NOW, (int64_t)(delayInSeconds * NSEC_PER_SEC));
                      dispatch_after(popTime, dispatch_get_main_queue(), ^(void){
-                         [data.progressView removeFromSuperview];
-                         data.progressView = nil;
+                         [book.progressView removeFromSuperview];
+                         book.progressView = nil;
                      });
                      NSLog(@"download complete");
-                     if(data.progressView!=nil)
-                         NSLog(@"progressView is not nil");
                  }
              });
          }
      }
-    success:nil failure:nil
+    success:^(NSURLSessionTask * _Nullable task, id  _Nullable responseObject) {
+        
+    } failure:^(NSURLSessionTask * _Nullable task, NSError * _Nullable error) {
+        if (book.progressView!=nil)
+        {
+            [book.progressView removeFromSuperview];
+            book.progressView=nil;
+            book.task=nil;
+        }
+    }
     completionHandler:^(NSURLResponse * _Nullable response, NSURL * _Nullable filePath, NSError * _Nullable error)
      {
          NSLog(@"log for download response:%@",response);
          NSLog(@"File downloaded to: %@", filePath.absoluteString);
+         if (book.progressView!=nil)
+         {
+             [book.progressView removeFromSuperview];
+             book.progressView=nil;
+             book.task=nil;
+         }
          if ([[NSFileManager defaultManager] fileExistsAtPath:[filePath.absoluteString substringFromIndex:7]])
          {
              [weakSelf unzipDownloadFile:[filePath.absoluteString substringFromIndex:7] index:indexPath.row];
