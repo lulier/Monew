@@ -131,7 +131,7 @@
         [self.veriButton setTitle:@"获取验证码" forState:UIControlStateNormal];
         [self.veriButton setEnabled:YES];
         SCLAlertView *alert = [[SCLAlertView alloc] init];
-        [alert showError:self title:@"错误" subTitle:message closeButtonTitle:@"确定" duration:0.0f];
+        [alert showError:self title:@"错误" subTitle:@"网络错误，请重新尝试" closeButtonTitle:@"确定" duration:0.0f];
     }];
 }
 - (void)refreshWaitingCount:(id)sender {
