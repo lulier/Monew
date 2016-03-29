@@ -75,9 +75,6 @@
         }
         else
         {
-            UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
-            MaterialViewController *materialViewController=[storyboard instantiateViewControllerWithIdentifier:@"MaterialViewController"];
-            [self.navigationController pushViewController:materialViewController animated:NO];
             [self login];
         }
     }
@@ -231,6 +228,9 @@
             accountManager.completeInfo=[responseObject objectForKey:@"info_complete"];
             accountManager.loginTime=[responseObject objectForKey:@"logintime"];
             [accountManager saveAccount];
+            UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            MaterialViewController *materialViewController=[storyboard instantiateViewControllerWithIdentifier:@"MaterialViewController"];
+            [self.navigationController pushViewController:materialViewController animated:NO];
         }
         if (status==USER_NOT_EXISTS||status==PASSWD_INCORRECT)
         {
@@ -244,8 +244,9 @@
         }
         
     } failure:^(NSURLSessionTask * _Nullable task, NSError * _Nullable error) {
-        SCLAlertView *alert = [[SCLAlertView alloc] init];
-        [alert showError:self title:@"错误" subTitle:@"网络错误，请重新尝试" closeButtonTitle:nil duration:1.0f];
+        UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        MaterialViewController *materialViewController=[storyboard instantiateViewControllerWithIdentifier:@"MaterialViewController"];
+        [self.navigationController pushViewController:materialViewController animated:NO];
     } completionHandler:nil];
 }
 - (IBAction)registButtonClick:(id)sender {

@@ -9,13 +9,13 @@
 #import <Foundation/Foundation.h>
 #import <SDWebImage/UIImageView+WebCache.h>
 
-//切换服务器的时候要退出帐户先
+//切换服务器的之前要退出帐户先
 
-//#define MONEWDOMAIN @"http://120.25.103.72:8002"
-//#define MONEWFOLDER @"monew_debug_folder"
+#define MONEWDOMAIN @"http://120.25.103.72:8002"
+#define MONEWFOLDER @"monew_debug_folder"
 
-#define MONEWDOMAIN @"http://english.mo-new.com"
-#define MONEWFOLDER @"monew_official_folder"
+//#define MONEWDOMAIN @"http://english.mo-new.com"
+//#define MONEWFOLDER @"monew_official_folder"
 
 
 typedef NS_ENUM(NSInteger,RequestType)
