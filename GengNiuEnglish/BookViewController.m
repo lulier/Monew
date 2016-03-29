@@ -22,6 +22,7 @@
 {
     ReaderViewController *readerViewController;
     LyricViewController *lyricViewController;
+    SCLAlertView *alert;
 }
 @end
 
@@ -224,6 +225,7 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
         }
         [DataForCell getTextList:^(NSArray *data, NSError *error)
         {
+            self.isLoading=false;
             if(data!=nil)
             {
                 NSMutableArray *books=[NSMutableArray arrayWithArray:self.list];
@@ -243,7 +245,6 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
                 self.list=books;
                 dispatch_async(dispatch_get_main_queue(), ^{
                     [weakSelf.collectionView reloadData];
-                    self.isLoading=false;
                 });
             }
         } grade_id:self.grade_id text_id:[NSString stringWithFormat:@"%ld",maxID]];
@@ -314,9 +315,21 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
              book.progressView=nil;
              book.task=nil;
          }
-         if ([[NSFileManager defaultManager] fileExistsAtPath:[filePath.absoluteString substringFromIndex:7]])
+         if ([[NSFileManager defaultManager] fileExistsAtPath:[filePath.absoluteString substringFromIndex:7]]&&error==nil)
          {
              [weakSelf unzipDownloadFile:[filePath.absoluteString substringFromIndex:7] index:indexPath.row];
+         }
+         else
+         {
+             if (alert==nil)
+             {
+                 alert=[[SCLAlertView alloc]init];
+                 [alert showError:self title:@"错误" subTitle:@"下载失败，请重新尝试" closeButtonTitle:nil duration:1.0f];
+                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.2f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                     alert=nil;
+                 });
+             }
+             
          }
      }];
     book.task=task;

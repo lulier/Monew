@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "TextBookCell.h"
+#import "SCLAlertView.h"
 
 @interface BookViewController : UIViewController<UICollectionViewDelegateFlowLayout,UIScrollViewDelegate,UICollectionViewDelegate,UICollectionViewDataSource,textBookCellDelegate>
 @property(strong,nonatomic)NSArray *list;

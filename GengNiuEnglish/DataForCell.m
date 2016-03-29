@@ -249,7 +249,12 @@
         NSString *documentName=[result stringForColumn:@"DocumentName"];
         NSString *zipfileName=[result stringForColumn:@"ZipName"];
         NSString *BookID=[result stringForColumn:@"BookID"];
-        if (![zipfileName isEqualToString:self.zipFileName]||documentName==nil)
+//        if (![zipfileName isEqualToString:self.zipFileName]||documentName==nil)
+//        {
+//            [database close];
+//            return NO;
+//        }
+        if (documentName==nil)
         {
             [database close];
             return NO;

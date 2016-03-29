@@ -53,7 +53,6 @@ static NSString * const reuseIdentifierMaterial = @"MaterialCell";
                     if (!hideCache)
                     {
                         //unhidecache
-//                        weakSelf.list=[NSArray arrayWithObject:[weakSelf.list lastObject]]; //test
                         [DataForCell showCache:^(NSArray *cacheData) {
                             if (cacheData!=nil||[cacheData count]==0)
                             {
