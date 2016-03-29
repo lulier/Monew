@@ -152,6 +152,7 @@ static NSString* cellIdentifierLyric=@"LyricViewCell";
     cell.index=indexPath.row;
     cell.delegate=self;
     cell.playText.hidden=YES;
+    cell.playVoice.hidden=YES;
     cell.cellText.textColor=[UIColor blackColor];
     [cell.star1 setImage:[UIImage imageNamed:@"star_unlight"]];
     [cell.star2 setImage:[UIImage imageNamed:@"star_unlight"]];
@@ -176,6 +177,12 @@ static NSString* cellIdentifierLyric=@"LyricViewCell";
     {
         cell.playText.hidden=NO;
         cell.cellText.textColor=[UIColor colorWithRed:2/255.f green:196/255.f blue:188/255.f alpha:1.0];
+    }
+    NSURL *path=[NSURL URLWithString:[CommonMethod getPath:[NSString stringWithFormat:@"sound%ld.wav",indexPath.row]]];
+    NSFileManager *fileMagager=[NSFileManager defaultManager];
+    if ([fileMagager fileExistsAtPath:path.absoluteString])
+    {
+        [cell.playVoice setHidden:NO];
     }
     return cell;
 }
@@ -304,6 +311,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     [self runRecognition:index];
     LyricViewCell *cell=[self.tableview cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
     cell.lyricItem.stars=0;
+    cell.playVoice.hidden=NO;
     [cell.star1 setImage:[UIImage imageNamed:@"star_unlight"]];
     [cell.star2 setImage:[UIImage imageNamed:@"star_unlight"]];
     [cell.star3 setImage:[UIImage imageNamed:@"star_unlight"]];
