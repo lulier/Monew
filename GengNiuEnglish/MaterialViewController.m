@@ -111,18 +111,10 @@ static NSString * const reuseIdentifierMaterial = @"MaterialCell";
     [self.navigationController.navigationBar setHidden:YES];
     UIImage *background=[CommonMethod imageWithImage:[UIImage imageNamed:@"background"] scaledToSize:CGSizeMake(self.collectionView.frame.size.width, self.collectionView.frame.size.height)];
     self.collectionView.backgroundView=[[UIImageView alloc]initWithImage:background];
-    [self initDatabase];
 }
 -(void)updateViewConstraints
 {
     [super updateViewConstraints];
-}
-
--(void)initDatabase
-{
-    [[MTDatabaseHelper sharedInstance] createTableWithTableName:@"GradeList" indexesWithProperties:@[@"grade_id  INTEGER PRIMARY KEY UNIQUE",@"grade_name varchar(255)",@"cover_url varchar(512)",@"text_count integer"]];
-    [[MTDatabaseHelper sharedInstance] createTableWithTableName:@"TextList" indexesWithProperties:@[@"text_id  INTEGER PRIMARY KEY UNIQUE",@"grade_id  INTEGER",@"text_name varchar(255)",@"cover_url varchar(512)",@"courseware_url varchar(512)",@"desc varchar(255)",@"challenge_goal integer",@"challenge_score integer",@"listen_count integer",@"practise_goal integer",@"star_count integer",@"listen_goal integer",@"practise_count integer",@"version integer"]];
-    return;
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

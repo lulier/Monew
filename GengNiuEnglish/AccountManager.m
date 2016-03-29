@@ -107,8 +107,6 @@ static NSString * const ACCOUNT_KEYCHAIN = @"GNAccount20160311";
             accountManager.account=accountNum;
             accountManager.password=md5_str;
             accountManager.type=type;
-            
-            
             [NetworkingManager httpRequest:RTPost url:RULogin parameters:dict progress:nil success:^(NSURLSessionTask * _Nullable task, id  _Nullable responseObject) {
                 success(task,responseObject);
             } failure:^(NSURLSessionTask * _Nullable task, NSError * _Nullable error) {
@@ -153,6 +151,8 @@ static NSString * const ACCOUNT_KEYCHAIN = @"GNAccount20160311";
         [[NSFileManager defaultManager] createDirectoryAtPath:dbPath withIntermediateDirectories:YES attributes:nil error:nil];
     }
     [[MTDatabaseHelper sharedInstance] createTableWithTableName:@"AccountInfo" indexesWithProperties:@[@"user_id  INTEGER PRIMARY KEY UNIQUE",@"account varchar(255)",@"password varchar(512)",@"type integer",@"login_time varchar(255)"]];
+    [[MTDatabaseHelper sharedInstance] createTableWithTableName:@"GradeList" indexesWithProperties:@[@"grade_id  INTEGER PRIMARY KEY UNIQUE",@"grade_name varchar(255)",@"cover_url varchar(512)",@"text_count integer"]];
+    [[MTDatabaseHelper sharedInstance] createTableWithTableName:@"TextList" indexesWithProperties:@[@"text_id  INTEGER PRIMARY KEY UNIQUE",@"grade_id  INTEGER",@"text_name varchar(255)",@"cover_url varchar(512)",@"courseware_url varchar(512)",@"desc varchar(255)",@"challenge_goal integer",@"challenge_score integer",@"listen_count integer",@"practise_goal integer",@"star_count integer",@"listen_goal integer",@"practise_count integer",@"version integer"]];
 }
 -(void)saveAccount
 {

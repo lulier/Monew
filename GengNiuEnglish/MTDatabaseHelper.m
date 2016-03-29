@@ -41,7 +41,7 @@ static MTDatabaseHelper *singleInstance = nil;
     return singleInstance;
 }
 
--(void) inDatabase:(void(^)(FMDatabase*))block
+-(void)inDatabase:(void(^)(FMDatabase*))block
 {
     [queue inDatabase:^(FMDatabase *db){
         block(db);
