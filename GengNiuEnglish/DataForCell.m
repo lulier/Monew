@@ -227,7 +227,7 @@
 {
     NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *doctPath=[paths lastObject];
-    NSString *databasePath=[doctPath stringByAppendingPathComponent:@"user.sqlite"];
+    NSString *databasePath=[doctPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_user.sqlite",MONEWFOLDER]];
     FMDatabase *database=[FMDatabase databaseWithPath:databasePath];
     if (![database open])
     {
@@ -276,7 +276,7 @@
 {
     NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *doctPath=[paths lastObject];
-    NSString *databasePath=[doctPath stringByAppendingPathComponent:@"user.sqlite"];
+    NSString *databasePath=[doctPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_user.sqlite",MONEWFOLDER]];
     FMDatabase *database=[FMDatabase databaseWithPath:databasePath];
     if (![database open])
     {
@@ -296,7 +296,7 @@
 {
     NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *doctPath=[paths lastObject];
-    NSString *databasePath=[doctPath stringByAppendingPathComponent:@"user.sqlite"];
+    NSString *databasePath=[doctPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_user.sqlite",MONEWFOLDER]];
     FMDatabase *database=[FMDatabase databaseWithPath:databasePath];
     if (![database open])
     {
@@ -443,7 +443,7 @@
 {
     NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *doctPath=[paths lastObject];
-    NSString *databasePath=[doctPath stringByAppendingPathComponent:@"user.sqlite"];
+    NSString *databasePath=[doctPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_user.sqlite",MONEWFOLDER]];
     FMDatabase *database=[FMDatabase databaseWithPath:databasePath];
     if (![database open])
     {
@@ -477,7 +477,7 @@
 {
     NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *doctPath=[paths lastObject];
-    NSString *databasePath=[doctPath stringByAppendingPathComponent:@"user.sqlite"];
+    NSString *databasePath=[doctPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_user.sqlite",MONEWFOLDER]];
     FMDatabase *database=[FMDatabase databaseWithPath:databasePath];
     if (![database open])
     {
@@ -538,7 +538,7 @@
 {
     NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
     NSString *doctPath=[paths lastObject];
-    NSString *databasePath=[doctPath stringByAppendingPathComponent:@"user.sqlite"];
+    NSString *databasePath=[doctPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_user.sqlite",MONEWFOLDER]];
     FMDatabase *database=[FMDatabase databaseWithPath:databasePath];
     if (![database open])
     {

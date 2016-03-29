@@ -9,8 +9,10 @@
 #import "NetworkingManager.h"
 #import "AFNetworking.h"
 
-#define domain @"http://120.25.103.72:8002"
-//#define domain @"http://english.mo-new.com"
+
+
+//#define DEBUGFOLDER @"DEBUGFOLDER"
+//#define OFFICIALFOLDER @"OFFICIALFOLDER"
 
 static const NSString *URLForGradeList=@"/courseware/grade_list_query/";
 static const NSString *URLForTextList=@"/courseware/text_list_query/";
@@ -48,21 +50,21 @@ static const NSString *URLForActionCode=@"/courseware/get_app_status/";
     switch (url)
     {
         case RUText_list:
-            return [NSString stringWithFormat:@"%@%@",domain,URLForTextList];
+            return [NSString stringWithFormat:@"%@%@",MONEWDOMAIN,URLForTextList];
         case RUText_detail:
-            return [NSString stringWithFormat:@"%@%@",domain,URLForTextDetai];
+            return [NSString stringWithFormat:@"%@%@",MONEWDOMAIN,URLForTextDetai];
         case RUGrade_list:
-            return [NSString stringWithFormat:@"%@%@",domain,URLForGradeList];
+            return [NSString stringWithFormat:@"%@%@",MONEWDOMAIN,URLForGradeList];
         case RURegist:
-            return [NSString stringWithFormat:@"%@%@",domain,URLForRegist];
+            return [NSString stringWithFormat:@"%@%@",MONEWDOMAIN,URLForRegist];
         case RULogin:
-            return [NSString stringWithFormat:@"%@%@",domain,URLForLogin];
+            return [NSString stringWithFormat:@"%@%@",MONEWDOMAIN,URLForLogin];
         case RUGetSalt:
-            return [NSString stringWithFormat:@"%@%@",domain,URLForGetSalt];
+            return [NSString stringWithFormat:@"%@%@",MONEWDOMAIN,URLForGetSalt];
         case RUCheckAvail:
-            return [NSString stringWithFormat:@"%@%@",domain,URLForCheckAvail];
+            return [NSString stringWithFormat:@"%@%@",MONEWDOMAIN,URLForCheckAvail];
         case RUActionCode:
-            return [NSString stringWithFormat:@"%@%@",domain,URLForActionCode];
+            return [NSString stringWithFormat:@"%@%@",MONEWDOMAIN,URLForActionCode];
         case RUCustom:
             return nil;
         default:

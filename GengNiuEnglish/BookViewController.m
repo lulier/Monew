@@ -32,7 +32,7 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
 
 -(void)initDatabase
 {
-    NSString *databasePath=[CommonMethod getPath:@"user.sqlite"];
+    NSString *databasePath=[CommonMethod getPath:[NSString stringWithFormat:@"%@_user.sqlite",MONEWFOLDER]];
     FMDatabase *database=[FMDatabase databaseWithPath:databasePath];
     if (![database open])
     {
@@ -61,7 +61,6 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
 
 
 -(void)reload:(__unused id)sender{
-    MRProgressOverlayView *progressView=[MRProgressOverlayView showOverlayAddedTo:self.view title:@"加载中" mode:MRProgressOverlayViewModeIndeterminateSmallDefault animated:YES];
     __weak __typeof__(self) weakSelf = self;
     [DataForCell queryTextList:weakSelf.grade_id block:^(NSArray*cells){
         weakSelf.list=cells;
@@ -70,7 +69,6 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
         });
     }];
     [DataForCell getTextList:^(NSArray *data, NSError *error) {
-        [progressView dismiss:YES];
         if(data!=nil)
         {
             weakSelf.list=data;

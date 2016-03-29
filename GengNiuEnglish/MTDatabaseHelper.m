@@ -10,6 +10,7 @@
 #import "FMDatabaseQueue.h"
 #import "FMDatabase.h"
 #import "UserAccount.h"
+#import "NetworkingManager.h"
 
 
 static MTDatabaseHelper *singleInstance = nil;
@@ -26,7 +27,7 @@ static MTDatabaseHelper *singleInstance = nil;
     if(self){
         NSArray* path = NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
         NSString *userID =[AccountManager singleInstance].userID;
-        NSString* DBname =[NSString stringWithFormat:@"%@/user.sqlite",userID];
+        NSString* DBname =[NSString stringWithFormat:@"%@/%@/user.sqlite",MONEWFOLDER,userID];
         NSString *dbFilePath =[(NSString*)[path objectAtIndex:0] stringByAppendingPathComponent:DBname];
         queue = [FMDatabaseQueue databaseQueueWithPath:dbFilePath];
     }

@@ -170,25 +170,22 @@
 +(NSString*)decryptAESData:(NSData*)data  app_key:(NSString*)key
 {
     //test for encode
-    NSString* filePath=[CommonMethod getPath:@"a.lrc"];
+    NSString* filePath=[CommonMethod getPath:@"3.cipher"];
 //    NSLog(@"log for path:%@",filePath);
     BOOL is=[[NSFileManager defaultManager] fileExistsAtPath:filePath];
 //    NSString *content=[NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:nil];
-//    content=@"Chapter 1 Waiting\n\"I can't wait for Jeff to get here!\"Lee said.";
 //    NSData *result=[CommonMethod encryptAESData:content app_key:key];
+//    [result writeToFile:[CommonMethod getPath:@"test.lrc"] atomically:YES];
     
-    NSData *test=[NSData dataWithContentsOfFile:filePath];
-    
-    
-    
-    
+//    NSData *test=[NSData dataWithContentsOfFile:filePath];
+
     
     
     
     //使用密码对data进行解密
     NSData *decryData = [data AES128DecryptWithKey:key];
     //将解了密码的nsdata转化为nsstring
-    NSString *str = [[NSString alloc] initWithData:decryData encoding:NSUTF8StringEncoding];
+    NSString *str = [[NSString alloc] initWithData:decryData encoding:NSASCIIStringEncoding];
     NSLog(@"解密后的字符串 :%@",str);
     return str;
 }

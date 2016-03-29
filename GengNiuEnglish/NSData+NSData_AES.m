@@ -107,7 +107,7 @@
     
     ccStatus = CCCrypt( encryptOrDecrypt,
                        kCCAlgorithmAES128,
-                       0, //kCCOptionPKCS7Padding,
+                       kCCOptionPKCS7Padding, //kCCOptionPKCS7Padding,
                        symmetricKey.bytes,
                        kCCKeySizeAES128,
                        iv.bytes,

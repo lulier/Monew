@@ -146,7 +146,7 @@ static NSString * const ACCOUNT_KEYCHAIN = @"GNAccount20160311";
 }
 -(void)createTable
 {
-    NSString *dbPath=[CommonMethod getPath:[NSString stringWithFormat:@"%@",self.userID]];
+    NSString *dbPath=[CommonMethod getPath:[NSString stringWithFormat:@"%@/%@",MONEWFOLDER,self.userID]];
     BOOL isDir;
     if (![[NSFileManager defaultManager] fileExistsAtPath:dbPath isDirectory:&isDir])
     {
