@@ -219,7 +219,10 @@ static NSString * const reuseIdentifierMaterial = @"MaterialCell";
     [[AccountManager singleInstance] deleteAccount];
     [[NSUserDefaults standardUserDefaults] setValue:@"out" forKey:@"MeticStatus"];
     [[NSUserDefaults standardUserDefaults] synchronize];
-    [self.navigationController popToRootViewControllerAnimated:YES];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+       [self.navigationController popToRootViewControllerAnimated:YES];
+    });
+    
 }
 
 @end
