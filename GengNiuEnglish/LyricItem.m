@@ -33,7 +33,7 @@
     NSInteger ms=[timeData[2] integerValue];
     ms=ms<100?ms*10:ms;
     ms=minute*60*1000+second*1000+ms;
-    return [NSString stringWithFormat:@"%ld",ms];
+    return [NSString stringWithFormat:@"%lu",(unsigned long)ms];
 }
 +(NSArray *)parseLyric:(NSString *)filePath
 {

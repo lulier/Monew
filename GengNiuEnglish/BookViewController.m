@@ -304,6 +304,7 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
             book.progressView=nil;
             book.task=nil;
         }
+        
     }
     completionHandler:^(NSURLResponse * _Nullable response, NSURL * _Nullable filePath, NSError * _Nullable error)
      {

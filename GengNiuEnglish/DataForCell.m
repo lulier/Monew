@@ -288,8 +288,10 @@
         NSLog(@"database open failed");
         return;
     }
+
     //在这里需要更新gradelist表里面的已下载课本数量
     NSString *update=[NSString stringWithFormat:@"UPDATE Books SET DocumentName='%@',LMName='%@',LRCName='%@',PDFName='%@',MP3Name='%@' WHERE BookID=%@",[self getFileName:FTDocument],[self getFileName:FTLM],[self getFileName:FTLRC],[self getFileName:FTPDF],[self getFileName:FTMP3],self.text_id];
+    
     BOOL success=[database executeUpdate:update];
     if (!success)
     {
