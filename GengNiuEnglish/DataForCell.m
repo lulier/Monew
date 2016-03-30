@@ -34,7 +34,7 @@
         self.cover_url=[attributes objectForKey:@"cover_url"];
         self.category=[attributes objectForKey:@"category"];
         self.downloadURL=[attributes objectForKey:@"courseware_url"];
-        self.zipFileName=[[[[self.downloadURL componentsSeparatedByString:@"/"] lastObject] componentsSeparatedByString:@"?"] objectAtIndex:0];
+        self.zipFileName=[[[[[self.downloadURL componentsSeparatedByString:@"/"] lastObject] componentsSeparatedByString:@"?"] objectAtIndex:0]stringByReplacingOccurrencesOfString:@"\%2F" withString:@"_"];
         self.fileNames=[[NSMutableArray alloc]init];
         self.text_gradeID=[attributes objectForKey:@"grade_id"];
         self.progressView=nil;

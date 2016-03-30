@@ -339,12 +339,16 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
 
 -(void)unzipDownloadFile:(NSString*)filePath index:(NSInteger)index
 {
-    NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *doctPath=[paths objectAtIndex:0];
-    NSString *zipFileName=[[filePath componentsSeparatedByString:@"/"] lastObject];
-    DataForCell *book=self.list[index];
-    book.download_zipFileName=zipFileName;
-    [SSZipArchive unzipFileAtPath:filePath toDestination:doctPath delegate:book];
+    NSFileManager *fileManager=[NSFileManager defaultManager];
+    if ([fileManager fileExistsAtPath:filePath])
+    {
+        NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+        NSString *doctPath=[paths objectAtIndex:0];
+        NSString *zipFileName=[[filePath componentsSeparatedByString:@"/"] lastObject];
+        DataForCell *book=self.list[index];
+        book.download_zipFileName=zipFileName;
+        [SSZipArchive unzipFileAtPath:filePath toDestination:doctPath delegate:book];
+    }
 }
 
 -(void)dismissReaderViewController:(ReaderViewController *)viewController

@@ -8,6 +8,7 @@
 
 #import "NetworkingManager.h"
 #import "AFNetworking.h"
+#import "CommonMethod.h"
 
 
 
@@ -104,6 +105,19 @@ static const NSString *URLForActionCode=@"/courseware/get_app_status/";
 }
 +(NSURLSessionDownloadTask *)httpDownload:(NSString *)url parameters:(NSDictionary *)parameters progress:(nullable void (^)(NSProgress *downloadProgress))downloadProgressBlock completionHandler:(nullable void (^)(NSURLResponse * _Nullable response, NSURL * _Nullable filePath, NSError * _Nullable error))completionHandler
 {
+    //delete file if exist
+    NSFileManager *fileManager=[NSFileManager defaultManager];
+    NSString *fileName=[CommonMethod getPath:[[[[url componentsSeparatedByString:@"/"] lastObject] componentsSeparatedByString:@"?"] objectAtIndex:0]];
+    NSString *file=[fileName stringByReplacingOccurrencesOfString:@"\%2F" withString:@"_"];
+    if ([fileManager fileExistsAtPath:file])
+    {
+        BOOL success=[fileManager removeItemAtPath:file error:nil];
+        if (!success)
+        {
+            NSLog(@"delete exist download file failed");
+        }
+    }
+    
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
     
