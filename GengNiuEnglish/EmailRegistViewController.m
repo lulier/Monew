@@ -88,7 +88,13 @@
         return;
     }
     NSDictionary *dict=[NSDictionary dictionaryWithObjectsAndKeys:emailAddress,@"account",passWord,@"password",nil];
+    __block MRProgressOverlayView *progressView=[MRProgressOverlayView showOverlayAddedTo:self.view title:@"发送中" mode:MRProgressOverlayViewModeIndeterminate animated:YES];
     [AccountManager registAccount:REGEmail parameters:dict success:^(NSURLSessionTask * _Nullable task, id  _Nullable responseObject) {
+        if (progressView!=nil)
+        {
+            [progressView dismiss:NO];
+            progressView=nil;
+        }
         long int status=[[responseObject objectForKey:@"status"] integerValue];
         SCLAlertView *alert=[[SCLAlertView alloc]init];
         switch (status)
@@ -107,6 +113,11 @@
                 break;
         }
     } failure:^(NSURLSessionTask * _Nullable task, NSError * _Nullable error) {
+        if (progressView!=nil)
+        {
+            [progressView dismiss:NO];
+            progressView=nil;
+        }
         SCLAlertView *alert = [[SCLAlertView alloc] init];
         [alert showError:self title:@"错误" subTitle:@"网络错误，请重新尝试" closeButtonTitle:nil duration:1.0f];
     }];

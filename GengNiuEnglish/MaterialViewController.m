@@ -37,6 +37,8 @@ static NSString * const reuseIdentifierMaterial = @"MaterialCell";
 //            [weakSelf.collectionView reloadData];
 //        });
 //    }];
+    self.list=nil;
+    cacheList=nil;
     [DataForCell showCache:^(NSArray *cacheData) {
         if (cacheData!=nil&&[cacheData count]!=0)
         {

@@ -10,6 +10,7 @@
 #import "CommonMethod.h"
 #import "AccountManager.h"
 #import "SCLAlertView.h"
+#import "MRProgress.h"
 
 @interface EmailRegistViewController : UIViewController<UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *goBackButton;

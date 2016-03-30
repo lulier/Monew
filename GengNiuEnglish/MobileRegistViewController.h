@@ -11,6 +11,7 @@
 #import "EmailRegistViewController.h"
 #import "SCLAlertView.h"
 #import "MaterialViewController.h"
+#import "MRProgress.h"
 
 @interface MobileRegistViewController : UIViewController<UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *goBackButton;

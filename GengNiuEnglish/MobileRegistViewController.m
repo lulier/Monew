@@ -164,7 +164,13 @@
     }
 //    SCLAlertView *alert=[[SCLAlertView alloc]init];
 //    [alert showSuccess:self title:nil subTitle:@"正在验证手机号，请稍候" closeButtonTitle:nil duration:0.5f];
+    __block MRProgressOverlayView *progressView=[MRProgressOverlayView showOverlayAddedTo:self.view title:@"发送中" mode:MRProgressOverlayViewModeIndeterminate animated:YES];
     [SMSSDK commitVerificationCode:verificationCode phoneNumber:phoneNumber zone:@"+86" result:^(NSError *error) {
+        if (progressView!=nil)
+        {
+            [progressView dismiss:NO];
+            progressView=nil;
+        }
         if (!error) {
             NSLog(@"验证成功");
             SCLAlertView *alert=[[SCLAlertView alloc]init];
@@ -184,7 +190,13 @@
     NSString* phoneNum=self.phoneNumInput.text;
     NSString* password=self.passwordInput.text;
     NSDictionary *dic=[NSDictionary dictionaryWithObjectsAndKeys:phoneNum,@"account",password,@"password", nil];
+    __block MRProgressOverlayView *progressView=[MRProgressOverlayView showOverlayAddedTo:self.view title:@"正在注册" mode:MRProgressOverlayViewModeIndeterminate animated:YES];
     [AccountManager registAccount:REGPhone parameters:dic success:^(NSURLSessionTask * _Nullable task, id  _Nullable responseObject) {
+        if (progressView!=nil)
+        {
+            [progressView dismiss:NO];
+            progressView=nil;
+        }
         long int status=[[responseObject objectForKey:@"status"] integerValue];
         if(status==0)
         {
@@ -206,16 +218,27 @@
                 else
                 {
                     SCLAlertView *alert=[[SCLAlertView alloc]init];
-                    [alert showError:self title:@"错误" subTitle:@"注册失败，请重新尝试" closeButtonTitle:nil duration:1.0f];
+                    [alert showError:self title:@"错误" subTitle:@"登录失败，请重新尝试" closeButtonTitle:nil duration:1.0f];
                 }
             } failure:^(NSURLSessionTask * _Nullable task, NSError * _Nullable error) {
                 SCLAlertView *alert = [[SCLAlertView alloc] init];
                 [alert showError:self title:@"错误" subTitle:@"网络错误，请重新尝试" closeButtonTitle:nil duration:1.0f];
             }];
         }
+        else
+        {
+            SCLAlertView *alert=[[SCLAlertView alloc]init];
+            [alert showError:self title:@"错误" subTitle:@"注册失败，请重新尝试" closeButtonTitle:nil duration:1.0f];
+        }
         
     } failure:^(NSURLSessionTask * _Nullable task, NSError * _Nullable error) {
-        
+        if (progressView!=nil)
+        {
+            [progressView dismiss:NO];
+            progressView=nil;
+        }
+        SCLAlertView *alert = [[SCLAlertView alloc] init];
+        [alert showError:self title:@"错误" subTitle:@"网络错误，请重新尝试" closeButtonTitle:nil duration:1.0f];
     }];
 }
 
