@@ -31,16 +31,27 @@ static NSString * const reuseIdentifierMaterial = @"MaterialCell";
 
 -(void)reload:(__unused id)sender{
     __weak __typeof__(self) weakSelf = self;
-    [DataForCell queryGradeList:^(NSArray*cells){
-        weakSelf.list=cells;
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [weakSelf.collectionView reloadData];
-        });
-    }];
+//    [DataForCell queryGradeList:^(NSArray*cells){
+//        weakSelf.list=cells;
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            [weakSelf.collectionView reloadData];
+//        });
+//    }];
+    [DataForCell showCache:^(NSArray *cacheData) {
+        if (cacheData!=nil&&[cacheData count]!=0)
+        {
+            weakSelf.list=cacheData;
+            cacheList=cacheData;
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [weakSelf.collectionView reloadData];
+            });
+        }
+    } currentData:weakSelf.list];
     NSURLSessionTask *task=[DataForCell getGradeList:^(NSArray *data, NSError *error) {
         if(data!=nil)
         {
             weakSelf.list=data;
+            cacheList=nil;
             dispatch_async(dispatch_get_main_queue(), ^{
                 [weakSelf.collectionView reloadData];
                 if (deleteCache)
@@ -54,7 +65,7 @@ static NSString * const reuseIdentifierMaterial = @"MaterialCell";
                     {
                         //unhidecache
                         [DataForCell showCache:^(NSArray *cacheData) {
-                            if (cacheData!=nil||[cacheData count]==0)
+                            if (cacheData!=nil&&[cacheData count]!=0)
                             {
                                 cacheList=nil;
                                 NSMutableArray *tmp=[NSMutableArray arrayWithArray:weakSelf.list];
