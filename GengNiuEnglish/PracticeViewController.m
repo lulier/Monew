@@ -21,7 +21,6 @@ typedef NS_ENUM(NSInteger,StarNum)
 {
     STKAudioPlayer *audioPlayer;
     NSInteger endTime;
-    NSTimer *timer;
     AVAudioRecorder *audioRecorder;
     AVAudioPlayer *recordAudioPlayer;
     NSMutableDictionary *recordSettings;
@@ -63,7 +62,10 @@ static NSString* cellIdentifierLyric=@"LyricViewCell";
     STKDataSource* dataSource = [STKAudioPlayer dataSourceFromURL:url];
     
     [audioPlayer setDataSource:dataSource withQueueItemId:[[SampleQueueId alloc] initWithUrl:url andCount:0]];
-    [self setPlayerTime:0];
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [audioPlayer pause];
+    });
+//    [self setPlayerTime:0 duration:0];
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
@@ -90,7 +92,6 @@ static NSString* cellIdentifierLyric=@"LyricViewCell";
 -(void)viewDidDisappear:(BOOL)animated
 {
     [super viewDidDisappear:animated];
-    [timer invalidate];
     if (audioPlayer!=nil)
     {
         [audioPlayer stop];
@@ -102,26 +103,18 @@ static NSString* cellIdentifierLyric=@"LyricViewCell";
             if(error)NSLog(@"Error stopping listening in stopButtonAction: %@", error);
     }
 }
--(void)setPlayerTime:(NSInteger)value
+-(void)setPlayerTime:(NSInteger)value duration:(NSInteger)duration
 {
     double time=(double)value;
     [audioPlayer seekToTime:time/1000];
-    __weak __typeof(self)weakself=self;
-    timer=[NSTimer scheduledTimerWithTimeInterval:0.1 target:weakself selector:@selector(updateControls) userInfo:nil repeats:YES];
-    [timer fire];
-}
--(void)updateControls
-{
-    if (audioPlayer==nil)
-    {
-        return;
-    }
-    if (endTime<=audioPlayer.progress*1000)
-    {
-        [timer invalidate];
-        [audioPlayer pause];
-        self.PlayingText=false;
-    }
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(duration * NSEC_PER_MSEC)), dispatch_get_main_queue(), ^{
+        if (audioPlayer!=nil)
+        {
+            [audioPlayer pause];
+            self.PlayingText=false;
+        }
+    });
 }
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
@@ -396,7 +389,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     self.PlayingText=true;
     LyricItem *item=self.lyricItems[index];
     endTime=item.endTime;
-    [self setPlayerTime:item.beginTime];
+    [self setPlayerTime:item.beginTime duration:endTime-item.beginTime];
     if (audioPlayer.state!=STKAudioPlayerStatePlaying)
     {
         [audioPlayer resume];
