@@ -178,12 +178,6 @@ static NSString* cellIdentifierLyric=@"LyricViewCell";
         cell.playText.hidden=NO;
         cell.cellText.textColor=[UIColor colorWithRed:2/255.f green:196/255.f blue:188/255.f alpha:1.0];
     }
-    NSURL *path=[NSURL URLWithString:[CommonMethod getPath:[NSString stringWithFormat:@"sound%ld.wav",indexPath.row]]];
-    NSFileManager *fileMagager=[NSFileManager defaultManager];
-    if ([fileMagager fileExistsAtPath:path.absoluteString])
-    {
-        [cell.playVoice setHidden:NO];
-    }
     return cell;
 }
 
@@ -225,6 +219,13 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
 }
 -(void)stopCellWorking
 {
+    for (LyricViewCell *cell in [self.tableview visibleCells])
+    {
+        if (cell.index!=self.selectedIndex.row)
+        {
+            cell.playVoice.hidden=YES;
+        }
+    }
     LyricViewCell *cell=[self.tableview cellForRowAtIndexPath:self.selectedIndex];
     if (cell!=nil)
     {
