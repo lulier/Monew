@@ -70,7 +70,7 @@ static MTDatabaseHelper *singleInstance = nil;
     }
     
     [sql appendString:@")"];
-//    NSLog(@"create table sql: %@",sql);
+    NSLog(@"create table sql: %@",sql);
     
 
     [queue inDatabase:^(FMDatabase *db) {
@@ -110,7 +110,7 @@ static MTDatabaseHelper *singleInstance = nil;
         }
     }
     [sql appendString:@")"];
-//    NSLog(@"insert into table sql: %@",sql);
+    NSLog(@"insert into table sql: %@",sql);
     [queue inDatabase:^(FMDatabase *db) {
         [db executeUpdate:sql];
     }];
@@ -147,7 +147,7 @@ static MTDatabaseHelper *singleInstance = nil;
             [sql appendString:@", "];
         }
     }
-//    NSLog(@"update sql: %@",sql);
+    NSLog(@"update sql: %@",sql);
     [queue inDatabase:^(FMDatabase *db) {
         [db executeUpdate:sql];
     }];
@@ -183,7 +183,7 @@ static MTDatabaseHelper *singleInstance = nil;
             [sql appendString:@", "];
         }
     }
-//    NSLog(@"query sql: %@",sql);
+    NSLog(@"query sql: %@",sql);
     
     [queue inDatabase:^(FMDatabase *db) {
         FMResultSet *s = [db executeQuery:sql];
@@ -249,8 +249,8 @@ static MTDatabaseHelper *singleInstance = nil;
         return ;
     }
     NSMutableString* sql;
+    sql = [[NSMutableString alloc]initWithFormat:@"SELECT * FROM %@ WHERE ",tableName];
     if (wheres && wheres.count > 0) {
-        sql = [[NSMutableString alloc]initWithFormat:@"SELECT * FROM %@ WHERE ",tableName];
         NSInteger wheresCount = wheres.count;
         for (int i = 0; i < wheresCount; i++) {
             NSString* value =[wheres objectAtIndex:i];

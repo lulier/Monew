@@ -24,7 +24,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *sendVeriCode;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *registWithEmailConstraint;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *inputTopConstraint;
-
+@property(nonatomic)BOOL codeVerified;
 
 
 @end

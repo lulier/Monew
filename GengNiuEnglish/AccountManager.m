@@ -158,7 +158,7 @@ static NSString * const ACCOUNT_KEYCHAIN = @"GNAccount20160311";
 {
     [self createTable];
     NSArray *colums=[[NSArray alloc]initWithObjects:@"user_id",@"account",@"password",@"type",@"login_time", nil];
-    NSArray *values=[[NSArray alloc]initWithObjects:[NSString stringWithFormat:@"'%@'",self.userID],[NSString stringWithFormat:@"'%@'",self.account],[NSString stringWithFormat:@"'%@'",self.password],[NSString stringWithFormat:@"%ld",self.type],[NSString stringWithFormat:@"'%@'",self.loginTime], nil];
+    NSArray *values=[[NSArray alloc]initWithObjects:[NSString stringWithFormat:@"'%@'",self.userID],[NSString stringWithFormat:@"'%@'",self.account],[NSString stringWithFormat:@"'%@'",self.password],[NSString stringWithFormat:@"%lu",(unsigned long)self.type],[NSString stringWithFormat:@"'%@'",self.loginTime], nil];
     [[MTDatabaseHelper sharedInstance] insertToTable:@"AccountInfo" withColumns:colums andValues:values];
     [[NSUserDefaults standardUserDefaults] setObject:@"in" forKey:@"AccountStatus"];
     [[NSUserDefaults standardUserDefaults] synchronize];

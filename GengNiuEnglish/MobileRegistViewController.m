@@ -48,6 +48,9 @@
     self.passwordInput.delegate=self;
     self.passwordInput.hidden=YES;
     self.registButton.hidden=YES;
+    self.veriButton.enabled=YES;
+    self.phoneNumInput.enabled=YES;
+    self.codeVerified=NO;
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(onKeyboardHide) name:UIKeyboardWillHideNotification object:nil];
 }
 -(void)onKeyboardHide
@@ -146,7 +149,9 @@
     }else {
         [timer invalidate];
         [self.veriButton setTitle:@"获取验证码" forState:UIControlStateNormal];
-        [self.veriButton setEnabled:YES];
+        if (!self.codeVerified) {
+            [self.veriButton setEnabled:YES];
+        }
     }
 }
 - (IBAction)sendVeriCodeButtonClick:(id)sender {
@@ -162,8 +167,6 @@
         [alert showError:self title:@"错误" subTitle:@"请输入验证码" closeButtonTitle:@"确定" duration:0.0f];
         return;
     }
-//    SCLAlertView *alert=[[SCLAlertView alloc]init];
-//    [alert showSuccess:self title:nil subTitle:@"正在验证手机号，请稍候" closeButtonTitle:nil duration:0.5f];
     __block MRProgressOverlayView *progressView=[MRProgressOverlayView showOverlayAddedTo:self.view title:@"发送中" mode:MRProgressOverlayViewModeIndeterminate animated:YES];
     [SMSSDK commitVerificationCode:verificationCode phoneNumber:phoneNumber zone:@"+86" result:^(NSError *error) {
         if (progressView!=nil)
@@ -178,6 +181,10 @@
             self.sendVeriCode.hidden=YES;
             self.passwordInput.hidden=NO;
             self.registButton.hidden=NO;
+            self.phoneNumInput.enabled=NO;
+            self.veriButton.enabled=NO;
+            self.codeVerified=YES;
+            self.veriInput.enabled=NO;
             [self updateViewConstraints];
         } else {
             NSLog(@"验证失败");
