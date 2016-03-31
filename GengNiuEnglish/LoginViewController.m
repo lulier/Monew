@@ -196,7 +196,12 @@
             SCLAlertView *alert=[[SCLAlertView alloc]init];
             [alert showError:self title:@"错误" subTitle:@"您输入的用户名或密码错误" closeButtonTitle:nil duration:1.0f];
         }
+        if (status==USER_NOT_ACTIVE)
+        {
+            SCLAlertView *alert=[[SCLAlertView alloc]init];
+            [alert showNotice:self title:@"成功" subTitle:@"该邮箱已注册，请到邮箱激活" closeButtonTitle:@"确定" duration:0.0f];
 
+        }
         
     } failure:^(NSURLSessionTask * _Nullable task, NSError * _Nullable error) {
         [progressView dismiss:YES];
