@@ -17,7 +17,7 @@
 @implementation LoginViewController
 -(void)viewWillAppear:(BOOL)animated
 {
-    //检查是否登陆过  在nsdefual中查询是否存在userid字段，同时是否是active，如果是自动登陆，同时跳到主界面
+    //检查是否登录过  在nsdefual中查询是否存在userid字段，同时是否是active，如果是自动登录，同时跳到主界面
     [super viewWillAppear:animated];
     [self checkLogin];
     self.passwordInput.text=@"";
@@ -175,7 +175,7 @@
     MRProgressOverlayView *progressView=[MRProgressOverlayView showOverlayAddedTo:self.view title:@"登录中" mode:MRProgressOverlayViewModeIndeterminate animated:YES];
     NSDictionary *dict=[NSDictionary dictionaryWithObjectsAndKeys:account,@"account",passWord,@"password" ,nil];
     [AccountManager login:type parameters:dict success:^(NSURLSessionTask * _Nullable task, id  _Nullable responseObject) {
-        //纪录登陆信息，跳转到主界面
+        //记录登录信息，跳转到主界面
         [progressView dismiss:YES];
         long int status=[[responseObject objectForKey:@"status"] integerValue];
         if (status==0)
