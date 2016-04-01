@@ -7,6 +7,7 @@
 //
 
 #import "EmailRegistViewController.h"
+#import "LoginViewController.h"
 
 @implementation EmailRegistViewController
 -(void)updateViewConstraints
@@ -100,10 +101,12 @@
         switch (status)
         {
             case NORMAL_RESPONSE:
-                [alert showSuccess:self title:@"成功" subTitle:@"验证邮件已经发送到您的邮箱，请查收" closeButtonTitle:@"确定" duration:0.0f];
+                [alert showSuccess:self title:@"成功" subTitle:@"验证邮件已经发送到您的邮箱，请查收" closeButtonTitle:nil duration:1.0f];
+                [self goBackToLogin:emailAddress];
                 break;
             case USER_NOT_ACTIVE:
-                [alert showSuccess:self title:@"成功" subTitle:@"该邮箱已注册，请到邮箱激活" closeButtonTitle:@"确定" duration:0.0f];
+                [alert showSuccess:self title:@"成功" subTitle:@"该邮箱已注册，请到邮箱激活" closeButtonTitle:nil duration:1.0f];
+                [self goBackToLogin:emailAddress];
                 break;
             case USER_EXISTS:
                 [alert showNotice:self title:@"错误" subTitle:@"该邮箱已注册过更牛帐号" closeButtonTitle:nil duration:1.0f];
@@ -121,5 +124,14 @@
         SCLAlertView *alert = [[SCLAlertView alloc] init];
         [alert showError:self title:@"错误" subTitle:@"网络错误，请重新尝试" closeButtonTitle:nil duration:1.0f];
     }];
+}
+-(void)goBackToLogin:(NSString*)account
+{
+    LoginViewController *loginViewController=(LoginViewController*)[self.navigationController.viewControllers objectAtIndex:0];
+    loginViewController.accountInput.text=account;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.2f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self.navigationController popToRootViewControllerAnimated:YES];
+    });
+    
 }
 @end

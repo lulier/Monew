@@ -65,7 +65,6 @@
     if ([AccountManager isExist])
     {
         AccountManager *accountManager=[AccountManager singleInstance];
-//        [accountManager deleteAccount];
         self.accountInput.text=accountManager.account;
         if (!isIn)
         {
