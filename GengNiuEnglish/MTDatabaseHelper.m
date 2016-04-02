@@ -9,7 +9,6 @@
 #import "MTDatabaseHelper.h"
 #import "FMDatabaseQueue.h"
 #import "FMDatabase.h"
-#import "UserAccount.h"
 #import "NetworkingManager.h"
 
 

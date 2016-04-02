@@ -19,7 +19,6 @@
 		F42FA5EA1C8C01570033C9C9 /* MobileRegistViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F42FA5E91C8C01570033C9C9 /* MobileRegistViewController.m */; };
 		F42FA5ED1C8C017B0033C9C9 /* EmailRegistViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F42FA5EC1C8C017B0033C9C9 /* EmailRegistViewController.m */; };
 		F42FA5F01C8D29600033C9C9 /* MTDatabaseHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = F42FA5EF1C8D29600033C9C9 /* MTDatabaseHelper.m */; };
-		F42FA5F31C8D32C50033C9C9 /* UserAccount.m in Sources */ = {isa = PBXBuildFile; fileRef = F42FA5F21C8D32C50033C9C9 /* UserAccount.m */; };
 		F42FA5FC1C8EB1560033C9C9 /* AccountManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F42FA5FB1C8EB1560033C9C9 /* AccountManager.m */; };
 		F46A44FA1C93CA37002BC9D4 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F46A44F91C93CA37002BC9D4 /* CoreTelephony.framework */; };
 		F46A45051C93CD50002BC9D4 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F46A44FB1C93CA5B002BC9D4 /* libz.tbd */; };
@@ -96,8 +95,6 @@
 		F42FA5EC1C8C017B0033C9C9 /* EmailRegistViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = EmailRegistViewController.m; sourceTree = "<group>"; };
 		F42FA5EE1C8D29600033C9C9 /* MTDatabaseHelper.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MTDatabaseHelper.h; sourceTree = "<group>"; };
 		F42FA5EF1C8D29600033C9C9 /* MTDatabaseHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTDatabaseHelper.m; sourceTree = "<group>"; };
-		F42FA5F11C8D32C50033C9C9 /* UserAccount.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = UserAccount.h; sourceTree = "<group>"; };
-		F42FA5F21C8D32C50033C9C9 /* UserAccount.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = UserAccount.m; sourceTree = "<group>"; };
 		F42FA5FA1C8EB1560033C9C9 /* AccountManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountManager.h; sourceTree = "<group>"; };
 		F42FA5FB1C8EB1560033C9C9 /* AccountManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountManager.m; sourceTree = "<group>"; };
 		F46A44F91C93CA37002BC9D4 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
@@ -253,8 +250,6 @@
 				F49466FC1C27C93E00806DEF /* Controller */,
 				F427992C1C18514200240736 /* AppDelegate.h */,
 				F427992D1C18514200240736 /* AppDelegate.m */,
-				F49467081C28ECE900806DEF /* NetworkingManager.h */,
-				F49467091C28ECE900806DEF /* NetworkingManager.m */,
 				F42799321C18514200240736 /* Main.storyboard */,
 				F42799351C18514200240736 /* Assets.xcassets */,
 				F42799371C18514200240736 /* LaunchScreen.storyboard */,
@@ -339,12 +334,12 @@
 				F486C77B1C3A492000CBFBD1 /* LyricItem.m */,
 				F486C77E1C3B8B7C00CBFBD1 /* SampleQueueId.h */,
 				F486C77F1C3B8B7C00CBFBD1 /* SampleQueueId.m */,
-				F42FA5F11C8D32C50033C9C9 /* UserAccount.h */,
-				F42FA5F21C8D32C50033C9C9 /* UserAccount.m */,
 				F42FA5FA1C8EB1560033C9C9 /* AccountManager.h */,
 				F42FA5FB1C8EB1560033C9C9 /* AccountManager.m */,
 				F4F0E6DD1C97BBEF00818C89 /* CustomCollectionViewLayout.h */,
 				F4F0E6DE1C97BBEF00818C89 /* CustomCollectionViewLayout.m */,
+				F49467081C28ECE900806DEF /* NetworkingManager.h */,
+				F49467091C28ECE900806DEF /* NetworkingManager.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -430,7 +425,7 @@
 				TargetAttributes = {
 					F42799251C18514200240736 = {
 						CreatedOnToolsVersion = 7.1.1;
-						DevelopmentTeam = BQWKD37TRB;
+						DevelopmentTeam = 56ZKXR2BF7;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -552,7 +547,6 @@
 				F486C77C1C3A492000CBFBD1 /* LyricItem.m in Sources */,
 				F4A9AF391C4D0D26004BC7BF /* CommonMethod.m in Sources */,
 				F427992E1C18514200240736 /* AppDelegate.m in Sources */,
-				F42FA5F31C8D32C50033C9C9 /* UserAccount.m in Sources */,
 				F4A9AF4E1C4F7258004BC7BF /* PracticeViewController.m in Sources */,
 				F427992B1C18514200240736 /* main.m in Sources */,
 				F478C8811C9EDA9A00746E2C /* UIImageView+MTTag.m in Sources */,
@@ -731,7 +725,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.monew.english;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -758,7 +752,7 @@
 				PRODUCT_BUNDLE_IDENTIFIER = com.monew.english;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
-				TARGETED_DEVICE_FAMILY = "1,2";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
