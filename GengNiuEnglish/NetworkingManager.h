@@ -67,5 +67,4 @@ enum Return_Code
 
 +(nonnull NSURLSessionTask*)httpRequest:(RequestType)type url:(RequestURL)url parameters:(nullable NSDictionary*)parameters progress:(nullable void (^)(NSProgress * _Nullable downloadProgress))downloadProgressBlock success:(nullable void (^)( NSURLSessionTask * _Nullable task, id _Nullable responseObject))success failure:(nullable void (^)(NSURLSessionTask * _Nullable task, NSError * _Nullable error))failure completionHandler:(nullable void (^)(NSURLResponse * _Nullable response, NSURL * _Nullable filePath, NSError * _Nullable error))completionHandler;
 +(nonnull NSString*)requestURL:(RequestURL)url;
-+(void)downloadImage:(NSURL*_Nullable)downloadURL block:(nonnull void (^)(UIImage* _Nullable image))block;
 @end
