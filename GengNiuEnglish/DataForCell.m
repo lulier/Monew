@@ -15,6 +15,7 @@
 #import "CommonMethod.h"
 #import "MRProgress.h"
 
+
 @implementation DataForCell
 {
     ReaderViewController *readerViewController;
@@ -272,6 +273,16 @@
                 }
                 return NO;
             }
+            //兼容旧版没有在下载完成进行解密
+            else
+            {
+                NSString *fileName=[NSString stringWithFormat:@"original_%@",[self getFileName:FTLRC]];
+                path=[path stringByAppendingPathComponent:fileName];
+                if (![CommonMethod checkFileExistence:path])
+                {
+                    [self parseLyric:[self getFileName:FTLRC]];
+                }
+            }
         }
     }
     [database close];
@@ -375,6 +386,24 @@
     [self updateDatabase];
     //delete zip file after extracting
     [self deleteZipFile];
+    [self parseLyric:[self getFileName:FTLRC]];
+}
+- (void)parseLyric:(NSString *)fileName
+{
+    NSString *filePath=[self getDocumentPath];
+    filePath=[filePath stringByAppendingPathComponent:fileName];
+    NSString *newFilePath=[self getDocumentPath];
+    newFilePath=[newFilePath stringByAppendingPathComponent:[NSString stringWithFormat:@"original_%@",fileName]];
+    NSData *secretText=[NSData dataWithContentsOfFile:filePath];
+    NSString *result=[CommonMethod decryptAESData:secretText app_key:CIPHER_KEY];
+    NSFileManager *fileManager=[NSFileManager defaultManager];
+    if ([fileManager moveItemAtPath:filePath toPath:newFilePath error:nil])
+    {
+        if (![result writeToFile:filePath atomically:YES encoding:NSUTF8StringEncoding error:nil])
+        {
+            NSLog(@"write decode file failed");
+        }
+    }
 }
 -(void)deleteZipFile
 {
@@ -524,22 +553,27 @@
     {
         [where addObject:item];
     }
-    [[MTDatabaseHelper sharedInstance] queryTable:@"GradeList" withSelect:@[@"*"] column:@"grade_id" andIDs:where completion:
-     ^(NSMutableArray *resultsArray) {
-         NSMutableArray *mutableBooks=[[NSMutableArray alloc]init];
-         if (resultsArray!=nil)
-         {
-             for (NSDictionary*tmp in resultsArray)
+    if ([where count]>0)
+    {
+        [[MTDatabaseHelper sharedInstance] queryTable:@"GradeList" withSelect:@[@"*"] column:@"grade_id" andIDs:where completion:
+         ^(NSMutableArray *resultsArray) {
+             NSMutableArray *mutableBooks=[[NSMutableArray alloc]init];
+             if (resultsArray!=nil)
              {
-                 DataForCell *data=[[DataForCell alloc]initWithAttributes:tmp];
-                 [mutableBooks addObject:data];
+                 for (NSDictionary*tmp in resultsArray)
+                 {
+                     DataForCell *data=[[DataForCell alloc]initWithAttributes:tmp];
+                     [mutableBooks addObject:data];
+                 }
              }
-         }
-         if (block)
-         {
-             block([NSArray arrayWithArray:mutableBooks]);
-         }
-     }];
+             if (block)
+             {
+                 block([NSArray arrayWithArray:mutableBooks]);
+             }
+         }];
+    }
+    else
+        block(nil);
 }
 +(void)getCacheBooks:(NSString*)gradeID block:(void (^)(NSArray*data))block
 {

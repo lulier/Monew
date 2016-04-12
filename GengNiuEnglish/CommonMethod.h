@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import <CommonCrypto/CommonCrypto.h>
+#define CIPHER_KEY @"24BF8C08A00AFA00"
 @protocol dismissDelegate <NSObject>
 
 -(void)dismissView;
