@@ -31,6 +31,7 @@ typedef NS_ENUM(NSInteger,IphoneType)
 +(NSMutableString*)MD5EncryptionWithString:(NSString*)str;
 +(BOOL)isEmailValid:(NSString *)email;
 + (BOOL)isPhoneNumberVaild:(NSString *)phoneNumber;
++(float)calculateTextHeight:(NSString*)text width:(float)width fontSize:(float)fsize;
 
 
 

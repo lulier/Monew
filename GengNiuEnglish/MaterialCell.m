@@ -22,19 +22,22 @@
     {
         NSLog(@"your material is nil");
     }
-    [self.cellLabel setText:_material.text_name];
+    unichar chr[1] = {'\n'};
+    NSString *singleCR = [NSString stringWithCharacters:(const unichar *)chr length:1];
+    NSString *cellName=[material.text_name stringByReplacingOccurrencesOfString:@" " withString:singleCR];
+    [self.cellLabel setText:cellName];
     IphoneType type=[CommonMethod checkIphoneType];
     switch (type) {
         case Iphone5s:
             self.cellLabel.font=[UIFont italicSystemFontOfSize:15.0f];
-            self.labelTopConstraint.constant=110;
+            self.labelTopConstraint.constant=105;
             break;
         case Iphone6:
-            self.labelTopConstraint.constant=120;
+            self.labelTopConstraint.constant=115;
             self.cellLabel.font=[UIFont italicSystemFontOfSize:16.0f];
             break;
         case Iphone6p:
-            self.labelTopConstraint.constant=140;
+            self.labelTopConstraint.constant=135;
             self.cellLabel.font=[UIFont italicSystemFontOfSize:17.0f];
             break;
         default:

@@ -92,6 +92,15 @@
     BOOL isMatch = [pred evaluateWithObject:phoneNumber];
     return isMatch;
 }
++(float)calculateTextHeight:(NSString*)text width:(float)width fontSize:(float)fsize
+{
+    float height = 0;
+    UIFont *font = [UIFont systemFontOfSize:fsize];
+    CGSize size = CGSizeMake(width,2000);
+    CGRect labelRect = [text boundingRectWithSize:size options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading)  attributes:[NSDictionary dictionaryWithObject:font forKey:NSFontAttributeName] context:nil];
+    height = ceil(labelRect.size.height);
+    return height;
+}
 
 
 

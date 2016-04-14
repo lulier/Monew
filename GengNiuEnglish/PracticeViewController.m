@@ -53,6 +53,7 @@ static NSString* cellIdentifierLyric=@"LyricViewCell";
     audioPlayer = [[STKAudioPlayer alloc] initWithOptions:(STKAudioPlayerOptions){ .flushQueueOnSeek = YES, .enableVolumeMixer = NO, .equalizerBandFrequencies = {50, 100, 200, 400, 800, 1600, 2600, 16000} }];
     audioPlayer.meteringEnabled = YES;
     audioPlayer.volume = 1;
+    
     [self setupMP3];
 }
 -(void)setupMP3
@@ -60,11 +61,11 @@ static NSString* cellIdentifierLyric=@"LyricViewCell";
     NSString *path=[[self.book getDocumentPath] stringByAppendingPathComponent:[self.book getFileName:FTMP3]];
     NSURL *url=[NSURL fileURLWithPath:path];
     STKDataSource* dataSource = [STKAudioPlayer dataSourceFromURL:url];
-    
     [audioPlayer setDataSource:dataSource withQueueItemId:[[SampleQueueId alloc] initWithUrl:url andCount:0]];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.1 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [audioPlayer pause];
     });
+    
 //    [self setPlayerTime:0 duration:0];
 }
 - (void)viewDidLoad {
@@ -121,6 +122,7 @@ static NSString* cellIdentifierLyric=@"LyricViewCell";
 }
 
 - (NSInteger)tableView:(UITableView *)tableView numberOfRowsInSection:(NSInteger)section {
+    LyricItem *item=[self.lyricItems lastObject];
     return [self.lyricItems count];
 }
 -(CGFloat)tableView:(UITableView *)tableView heightForHeaderInSection:(NSInteger)section
@@ -177,11 +179,15 @@ static NSString* cellIdentifierLyric=@"LyricViewCell";
 - (CGFloat)tableView:(__unused UITableView *)tableView
 heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
+    LyricItem *iterm=self.lyricItems[indexPath.row];
+    NSString *content=iterm.lyricBody;
+    CGFloat width=[UIScreen mainScreen].bounds.size.width-95;
+    CGFloat height=[CommonMethod calculateTextHeight:content width:width fontSize:16.0f];
     if ([indexPath compare:self.selectedIndex]==NSOrderedSame)
     {
-        return 100.0f;
+        return height+50.0f;
     }
-    return 50.0f;
+    return height;
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -389,6 +395,10 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     self.PlayingText=true;
     LyricItem *item=self.lyricItems[index];
     endTime=item.endTime;
+    if (endTime==-1)
+    {
+        endTime=audioPlayer.duration*1000;
+    }
     [self setPlayerTime:item.beginTime duration:endTime-item.beginTime];
     if (audioPlayer.state!=STKAudioPlayerStatePlaying)
     {

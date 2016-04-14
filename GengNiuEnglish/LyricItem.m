@@ -18,7 +18,12 @@
         return nil;
     }
     self.beginTime=[[attributes objectForKey:@"beginTime"] integerValue];
-    self.endTime=[[attributes objectForKey:@"endTime"] integerValue];
+    if ([attributes objectForKey:@"endTime"]!=nil)
+    {
+         self.endTime=[[attributes objectForKey:@"endTime"] integerValue];
+    }
+    else
+        self.endTime=-1;
     self.lyricBody=[attributes objectForKey:@"lyricBody"];
     self.lyricWords=[LyricItem extractWords:self.lyricBody];
     self.stars=0;
@@ -27,6 +32,11 @@
 +(NSString*)parseToMillisecond:(NSString*)time
 {
     NSArray *timeData=[[[time stringByReplacingOccurrencesOfString:@"[" withString:@""] stringByReplacingOccurrencesOfString:@"." withString:@":"] componentsSeparatedByString:@":"];
+    if ([timeData count]!=3)
+    {
+        NSLog(@"the script miss timestap");
+        return nil;
+    }
     NSInteger minute=[timeData[0] integerValue];
     NSInteger second=[timeData[1] integerValue];
     NSInteger ms=[timeData[2] integerValue];
@@ -53,7 +63,7 @@
         NSArray *next=[contents[i+1] componentsSeparatedByString:@"]"];
         NSString* beginTime=[LyricItem parseToMillisecond:current[0]];
         NSString* endTime=[LyricItem parseToMillisecond:next[0]];
-        NSDictionary *attribute=[NSDictionary dictionaryWithObjectsAndKeys:beginTime,@"beginTime",endTime,@"endTime",current[1],@"lyricBody",nil];
+        NSDictionary *attribute=[NSDictionary dictionaryWithObjectsAndKeys:beginTime,@"beginTime",current[1],@"lyricBody",endTime,@"endTime",nil];
         LyricItem *item=[[LyricItem alloc]initWithAttributes:attribute];
         [lyrics addObject:item];
     }

@@ -280,7 +280,7 @@
                 path=[path stringByAppendingPathComponent:fileName];
                 if (![CommonMethod checkFileExistence:path])
                 {
-                    [self parseLyric:[self getFileName:FTLRC]];
+                    [self decodeLyric:[self getFileName:FTLRC]];
                 }
             }
         }
@@ -386,9 +386,9 @@
     [self updateDatabase];
     //delete zip file after extracting
     [self deleteZipFile];
-    [self parseLyric:[self getFileName:FTLRC]];
+    [self decodeLyric:[self getFileName:FTLRC]];
 }
-- (void)parseLyric:(NSString *)fileName
+- (void)decodeLyric:(NSString *)fileName
 {
     NSString *filePath=[self getDocumentPath];
     filePath=[filePath stringByAppendingPathComponent:fileName];
