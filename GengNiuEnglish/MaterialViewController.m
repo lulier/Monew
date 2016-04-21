@@ -37,7 +37,6 @@ static NSString * const reuseIdentifierMaterial = @"MaterialCell";
 //            [weakSelf.collectionView reloadData];
 //        });
 //    }];
-    self.list=nil;
     cacheList=nil;
     [DataForCell showCache:^(NSArray *cacheData) {
         if (cacheData!=nil&&[cacheData count]!=0)
@@ -48,7 +47,7 @@ static NSString * const reuseIdentifierMaterial = @"MaterialCell";
                 [weakSelf.collectionView reloadData];
             });
         }
-    } currentData:weakSelf.list];
+    } currentData:nil];
     NSURLSessionTask *task=[DataForCell getGradeList:^(NSArray *data, NSError *error) {
         if(data!=nil)
         {

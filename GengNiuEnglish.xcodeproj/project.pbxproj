@@ -20,6 +20,7 @@
 		F42FA5ED1C8C017B0033C9C9 /* EmailRegistViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F42FA5EC1C8C017B0033C9C9 /* EmailRegistViewController.m */; };
 		F42FA5F01C8D29600033C9C9 /* MTDatabaseHelper.m in Sources */ = {isa = PBXBuildFile; fileRef = F42FA5EF1C8D29600033C9C9 /* MTDatabaseHelper.m */; };
 		F42FA5FC1C8EB1560033C9C9 /* AccountManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F42FA5FB1C8EB1560033C9C9 /* AccountManager.m */; };
+		F454F9331CC767B400326774 /* UITextView+ContentInset.m in Sources */ = {isa = PBXBuildFile; fileRef = F454F9321CC767B400326774 /* UITextView+ContentInset.m */; };
 		F46A44FA1C93CA37002BC9D4 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F46A44F91C93CA37002BC9D4 /* CoreTelephony.framework */; };
 		F46A45051C93CD50002BC9D4 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F46A44FB1C93CA5B002BC9D4 /* libz.tbd */; };
 		F46A45071C93CD5A002BC9D4 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F46A45061C93CD5A002BC9D4 /* libicucore.tbd */; };
@@ -97,6 +98,8 @@
 		F42FA5EF1C8D29600033C9C9 /* MTDatabaseHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTDatabaseHelper.m; sourceTree = "<group>"; };
 		F42FA5FA1C8EB1560033C9C9 /* AccountManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountManager.h; sourceTree = "<group>"; };
 		F42FA5FB1C8EB1560033C9C9 /* AccountManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountManager.m; sourceTree = "<group>"; };
+		F454F9311CC767B400326774 /* UITextView+ContentInset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextView+ContentInset.h"; sourceTree = "<group>"; };
+		F454F9321CC767B400326774 /* UITextView+ContentInset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextView+ContentInset.m"; sourceTree = "<group>"; };
 		F46A44F91C93CA37002BC9D4 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		F46A44FB1C93CA5B002BC9D4 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		F46A44FD1C93CA65002BC9D4 /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
@@ -351,6 +354,8 @@
 				F478C8801C9EDA9A00746E2C /* UIImageView+MTTag.m */,
 				F4F0E6CC1C94167600818C89 /* NSData+NSData_AES.h */,
 				F4F0E6CD1C94167600818C89 /* NSData+NSData_AES.m */,
+				F454F9311CC767B400326774 /* UITextView+ContentInset.h */,
+				F454F9321CC767B400326774 /* UITextView+ContentInset.m */,
 			);
 			name = Category;
 			sourceTree = "<group>";
@@ -425,7 +430,7 @@
 				TargetAttributes = {
 					F42799251C18514200240736 = {
 						CreatedOnToolsVersion = 7.1.1;
-						DevelopmentTeam = BQWKD37TRB;
+						DevelopmentTeam = 5Y787D7K6C;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -546,6 +551,7 @@
 				F4A9AF4B1C4E30E1004BC7BF /* BookViewController.m in Sources */,
 				F486C77C1C3A492000CBFBD1 /* LyricItem.m in Sources */,
 				F4A9AF391C4D0D26004BC7BF /* CommonMethod.m in Sources */,
+				F454F9331CC767B400326774 /* UITextView+ContentInset.m in Sources */,
 				F427992E1C18514200240736 /* AppDelegate.m in Sources */,
 				F4A9AF4E1C4F7258004BC7BF /* PracticeViewController.m in Sources */,
 				F427992B1C18514200240736 /* main.m in Sources */,
@@ -722,7 +728,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULEMAP_FILE = "${PROJECT_DIR}/module.modulemap";
-				PRODUCT_BUNDLE_IDENTIFIER = com.monew.enterprise.english;
+				PRODUCT_BUNDLE_IDENTIFIER = com.monew.test.english;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -749,7 +755,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULEMAP_FILE = "${PROJECT_DIR}/module.modulemap";
-				PRODUCT_BUNDLE_IDENTIFIER = com.monew.enterprise.english;
+				PRODUCT_BUNDLE_IDENTIFIER = com.monew.test.english;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;

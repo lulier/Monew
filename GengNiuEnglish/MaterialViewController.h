@@ -14,4 +14,5 @@
 @property(strong,nonatomic)NSArray *list;
 @property (weak, nonatomic) IBOutlet UIButton *logoutButton;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+-(void)reload:(__unused id)sender;
 @end

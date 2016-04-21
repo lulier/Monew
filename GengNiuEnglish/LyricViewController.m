@@ -19,6 +19,8 @@
     STKAudioPlayer *audioPlayer;
     NSTimer *timer;
     NSInteger endTime;
+    NSInteger playTimes;
+    BOOL isPlaying;
 }
 -(void)updateViewConstraints
 {
@@ -27,14 +29,16 @@
     IphoneType type=[CommonMethod checkIphoneType];
     switch (type) {
         case Iphone5s:
+            self.lyricContent.font=[self.lyricContent.font fontWithSize:24.0f];
             break;
         case Iphone6:
-            self.lyricTextTopConstraint.constant=90;
+            self.lyricContent.font=[self.lyricContent.font fontWithSize:25.0f];
             break;
         case Iphone6p:
-            self.lyricTextTopConstraint.constant=120;
+            self.lyricContent.font=[self.lyricContent.font fontWithSize:26.0f];
             break;
         default:
+            self.lyricContent.font=[self.lyricContent.font fontWithSize:23.0f];
             break;
     }
 }
@@ -46,66 +50,128 @@
 
     if (audioPlayer==nil)
     {
-        return;
+        audioPlayer = [[STKAudioPlayer alloc] initWithOptions:(STKAudioPlayerOptions){ .flushQueueOnSeek = YES, .enableVolumeMixer = NO, .equalizerBandFrequencies = {50, 100, 200, 400, 800, 1600, 2600, 16000} }];
+        audioPlayer.meteringEnabled = YES;
+        audioPlayer.volume = 1;
+        audioPlayer.delegate=self;
     }
-    NSLog(@"log for state:%ld",audioPlayer.state);
     switch (audioPlayer.state)
     {
         case STKAudioPlayerStateReady:
+            [self.playButton setImage:[UIImage imageNamed:@"stop"] forState:UIControlStateNormal];
+            playTimes=[self getPlayTimes];
             [self startPlayMP3];
-//            [self.playButton setTitle:@"pause" forState:UIControlStateNormal];
             break;
         case STKAudioPlayerStateStopped:
-            [self startPlayMP3];
-//            [self.playButton setTitle:@"pause" forState:UIControlStateNormal];
+            [self stopPlayingMP3];
             break;
         case STKAudioPlayerStatePaused:
             [audioPlayer resume];
-//            [self.playButton setTitle:@"pause" forState:UIControlStateNormal];
+            [self.playButton setImage:[UIImage imageNamed:@"stop"] forState:UIControlStateNormal];
             break;
         case STKAudioPlayerStatePlaying:
             [audioPlayer pause];
-//            [self.playButton setTitle:@"play" forState:UIControlStateNormal];
+            [self.playButton setImage:[UIImage imageNamed:@"broadcast"] forState:UIControlStateNormal];
             break;
         default:
             break;
     }
     
 }
-
+- (IBAction)minusButtonClick:(id)sender {
+    if (isPlaying)
+    {
+        //clear playing
+        playTimes=0;
+        [self stopPlayingMP3];
+        isPlaying=false;
+    }
+    NSInteger currentTime=[self getPlayTimes];
+    if (currentTime!=0)
+    {
+        if (currentTime!=1)
+        {
+            currentTime--;
+            self.timeLabel.text=[NSString stringWithFormat:@"%ld次",currentTime];
+        }
+    }
+}
+- (IBAction)plusButtonClick:(id)sender {
+    if (isPlaying)
+    {
+        //clear playing
+        playTimes=0;
+        [self stopPlayingMP3];
+        isPlaying=false;
+    }
+    NSInteger currentTime=[self getPlayTimes];
+    if (currentTime!=0)
+    {
+        if (currentTime!=99)
+        {
+            currentTime++;
+            self.timeLabel.text=[NSString stringWithFormat:@"%ld次",currentTime];
+        }
+    }
+}
+-(NSInteger)getPlayTimes
+{
+    NSString *times=[self.timeLabel text];
+    NSArray *tmp=[times componentsSeparatedByString:@"次"];
+    NSInteger currentTime=0;
+    currentTime=[[tmp firstObject] integerValue];
+    return currentTime;
+}
 -(void)startPlayMP3
 {
+    endTime=0;
+    isPlaying=true;
+     __weak __typeof(self)weakself=self;
+    timer=[NSTimer scheduledTimerWithTimeInterval:0.1 target:weakself selector:@selector(updateControls) userInfo:nil repeats:YES];
+    [timer fire];
     NSString *path=[[self.book getDocumentPath] stringByAppendingPathComponent:[self.book getFileName:FTMP3]];
     NSURL *url=[NSURL fileURLWithPath:path];
     STKDataSource* dataSource = [STKAudioPlayer dataSourceFromURL:url];
     [audioPlayer setDataSource:dataSource withQueueItemId:[[SampleQueueId alloc] initWithUrl:url andCount:0]];
 }
+-(void)stopPlayingMP3
+{
+    //首先是判断当前的循环次数是否到了，如果已经循环结束，就不需要再开始播放，如果还需要继续播放则调用startplaymp3
+    [timer invalidate];
+    if (playTimes>0)
+    {
+        playTimes--;
+    }
+    if (playTimes!=0)
+    {
+        [self startPlayMP3];
+    }
+    else
+    {
+        [self.playButton setImage:[UIImage imageNamed:@"broadcast"] forState:UIControlStateNormal];
+        if (audioPlayer!=nil)
+        {
+            [audioPlayer dispose];
+            audioPlayer.delegate=nil;
+            audioPlayer=nil;
+        }
+    }
+    
+}
 -(void)initWithBook:(DataForCell *)book
 {
-    endTime=0;
     self.book=book;
     NSString *filePath=[self.book getDocumentPath];
     filePath=[filePath stringByAppendingPathComponent:[self.book getFileName:FTLRC]];
     self.lyricItems=[LyricItem parseLyric:filePath];
-    audioPlayer = [[STKAudioPlayer alloc] initWithOptions:(STKAudioPlayerOptions){ .flushQueueOnSeek = YES, .enableVolumeMixer = NO, .equalizerBandFrequencies = {50, 100, 200, 400, 800, 1600, 2600, 16000} }];
-    audioPlayer.meteringEnabled = YES;
-    audioPlayer.volume = 1;
-    __weak __typeof(self)weakself=self;
-    timer=[NSTimer scheduledTimerWithTimeInterval:0.1 target:weakself selector:@selector(updateControls) userInfo:nil repeats:YES];
-    [timer fire];
 }
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    [self.lyricText setText:[self getLyric]];
+    [self.lyricContent setText:[self getLyric]];
     UIImage *background=[CommonMethod imageWithImage:[UIImage imageNamed:@"naked_background"] scaledToSize:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height)];
     self.view.backgroundColor=[UIColor colorWithPatternImage:background];
-    [self playButtonClick:nil];
-//    __weak __typeof(self)weakSelf=self;
-//    [NetworkingManager downloadImage:[NSURL URLWithString:self.imageURL] block:^(UIImage * _Nullable image) {
-//        [weakSelf.coverImageView setImage:image];
-//        weakSelf.coverImageView.alpha=0.1f;
-//    }];
+//    [self playButtonClick:nil];
     NSError *categoryError = nil;
     [[AVAudioSession sharedInstance]
      setCategory:AVAudioSessionCategoryPlayback
@@ -126,6 +192,7 @@
     if (audioPlayer!=nil)
     {
         [audioPlayer stop];
+        audioPlayer.delegate=nil;
         audioPlayer=nil;
     }
 }
@@ -137,7 +204,7 @@
     }
     if (endTime<=audioPlayer.progress*1000)
     {
-        [self.lyricText setText:[self getLyric]];
+        [self.lyricContent setText:[self getLyric]];
 //        if (audioPlayer.progress!=0)
 //        {
 //            [self playButtonClick:nil];
@@ -157,23 +224,32 @@
     {
         if (item.endTime>=audioPlayer.progress*1000)
         {
-//            NSLog(@"endTime:%ld progress:%f",item.endTime,audioPlayer.progress);
             content=item.lyricBody;
             endTime=item.endTime;
             break;
         }
     }
-//    NSLog(@"%@",content);
+    if (content!=nil)
+    {
+        CGFloat height=[CommonMethod calculateTextHeight:content width:self.lyricScrollView.frame.size.width fontSize:24.f];
+        if (height<self.lyricScrollView.frame.size.height)
+        {
+            self.lyricContentHeight.constant=self.lyricScrollView.frame.size.height;
+        }
+        else
+            self.lyricContentHeight.constant=height;
+        self.lyricScrollView.contentInset=UIEdgeInsetsMake(10, 0, 0, 0);
+    }
     return content;
 }
 -(void) audioPlayer:(STKAudioPlayer*)audioPlayer stateChanged:(STKAudioPlayerState)state previousState:(STKAudioPlayerState)previousState
 {
-    [self updateControls];
+    
 }
 
 -(void) audioPlayer:(STKAudioPlayer*)audioPlayer unexpectedError:(STKAudioPlayerErrorCode)errorCode
 {
-    [self updateControls];
+    
 }
 
 -(void) audioPlayer:(STKAudioPlayer*)audioPlayer didStartPlayingQueueItemId:(NSObject*)queueItemId
@@ -182,21 +258,20 @@
     
     NSLog(@"Started: %@", [queueId.url description]);
     
-    [self updateControls];
+    
 }
 
 -(void) audioPlayer:(STKAudioPlayer*)audioPlayer didFinishBufferingSourceWithQueueItemId:(NSObject*)queueItemId
 {
-    [self updateControls];
+    
     
 }
 
 -(void) audioPlayer:(STKAudioPlayer*)audioPlayer didFinishPlayingQueueItemId:(NSObject*)queueItemId withReason:(STKAudioPlayerStopReason)stopReason andProgress:(double)progress andDuration:(double)duration
 {
-    [self updateControls];
     
     SampleQueueId* queueId = (SampleQueueId*)queueItemId;
-    
+    [self stopPlayingMP3];
     NSLog(@"Finished: %@", [queueId.url description]);
 }
 

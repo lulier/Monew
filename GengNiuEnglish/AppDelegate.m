@@ -13,6 +13,8 @@
 #import <AVFoundation/AVFoundation.h>
 #import <SDWebImage/SDWebImageManager.h>
 #import <SMS_SDK/SMSSDK.h>
+#import "CommonMethod.h"
+#import "MaterialViewController.h"
 
 @interface AppDelegate ()
 
@@ -64,6 +66,17 @@ static NSString* const appSecret=@"2c2ca1b896f428d3d258743bf50076d9";
 
 - (void)applicationDidBecomeActive:(UIApplication *)application {
     // Restart any tasks that were paused (or not yet started) while the application was inactive. If the application was previously in the background, optionally refresh the user interface.
+    UINavigationController *current=[CommonMethod getCurrentVC];
+    if ([current isKindOfClass:[UINavigationController class]])
+    {
+        NSArray *viewContrlls=[current viewControllers];
+        MaterialViewController *tmp=[viewContrlls lastObject];
+        if ([tmp isKindOfClass:[MaterialViewController class]])
+        {
+            [tmp reload:nil];
+        }
+        
+    }
 }
 
 - (void)applicationWillTerminate:(UIApplication *)application {

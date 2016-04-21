@@ -96,7 +96,7 @@
 {
     float height = 0;
     UIFont *font = [UIFont systemFontOfSize:fsize];
-    CGSize size = CGSizeMake(width,2000);
+    CGSize size = CGSizeMake(width,FLT_MAX);
     CGRect labelRect = [text boundingRectWithSize:size options:(NSStringDrawingUsesLineFragmentOrigin|NSStringDrawingUsesFontLeading)  attributes:[NSDictionary dictionaryWithObject:font forKey:NSFontAttributeName] context:nil];
     height = ceil(labelRect.size.height);
     return height;

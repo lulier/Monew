@@ -18,9 +18,13 @@
 @interface LyricViewController : UIViewController<STKAudioPlayerDelegate>
 @property(nonatomic,strong)NSArray *lyricItems;
 
-@property (weak, nonatomic) IBOutlet UITextView *lyricText;
+
 @property (weak, nonatomic) IBOutlet UIImageView *coverImageView;
-@property (weak, nonatomic) IBOutlet NSLayoutConstraint *lyricTextTopConstraint;
+@property (weak, nonatomic) IBOutlet UIScrollView *lyricScrollView;
+@property (weak, nonatomic) IBOutlet UILabel *lyricContent;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *lyricContentHeight;
+@property (weak, nonatomic) IBOutlet UIButton *playButton;
+@property (weak, nonatomic) IBOutlet UILabel *timeLabel;
 @property(nonatomic,strong)NSString *imageURL;
 @property(weak,nonatomic)id<dismissDelegate>delegate;
 @property(nonatomic,weak)DataForCell *book;
