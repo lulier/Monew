@@ -207,7 +207,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="627" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v7a-pc-uDa">
+                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v7a-pc-uDa">
                                                     <rect key="frame" x="10" y="10" width="40" height="20"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" relation="lessThanOrEqual" constant="570" id="asA-mt-fhy"/>
@@ -254,25 +254,6 @@
                                                         <action selector="playVoiceClick:" destination="nrk-Bx-EJL" eventType="touchUpInside" id="LlD-N4-Fia"/>
                                                     </connections>
                                                 </button>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4vz-PU-mv9">
-                                                    <rect key="frame" x="55" y="0.0" width="34" height="36"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="34" id="6wi-Dg-dhP"/>
-                                                        <constraint firstAttribute="height" constant="40" id="Fkz-fU-Rmp"/>
-                                                        <constraint firstAttribute="height" constant="36" id="mgZ-U2-sJE"/>
-                                                    </constraints>
-                                                    <state key="normal" image="playText">
-                                                        <color key="titleColor" name="controlDarkShadowColor" catalog="System" colorSpace="catalog"/>
-                                                    </state>
-                                                    <variation key="default">
-                                                        <mask key="constraints">
-                                                            <exclude reference="Fkz-fU-Rmp"/>
-                                                        </mask>
-                                                    </variation>
-                                                    <connections>
-                                                        <action selector="playTextClick:" destination="nrk-Bx-EJL" eventType="touchUpInside" id="Y0C-kv-ndH"/>
-                                                    </connections>
-                                                </button>
                                                 <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="star_unlight" translatesAutoresizingMaskIntoConstraints="NO" id="w9l-ui-PO5">
                                                     <rect key="frame" x="524" y="30" width="27" height="32"/>
                                                     <constraints>
@@ -294,6 +275,35 @@
                                                         <constraint firstAttribute="height" constant="32" id="nPt-9l-6rI"/>
                                                     </constraints>
                                                 </imageView>
+                                                <textView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="The monkeys can." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="D4M-0M-d7T">
+                                                    <rect key="frame" x="4" y="0.0" width="50" height="30"/>
+                                                    <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="50" id="7qz-YB-w0W"/>
+                                                        <constraint firstAttribute="height" constant="30" id="sN7-xL-irx"/>
+                                                    </constraints>
+                                                    <fontDescription key="fontDescription" type="system" pointSize="16"/>
+                                                    <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                                                </textView>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4vz-PU-mv9">
+                                                    <rect key="frame" x="55" y="0.0" width="34" height="36"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="34" id="6wi-Dg-dhP"/>
+                                                        <constraint firstAttribute="height" constant="40" id="Fkz-fU-Rmp"/>
+                                                        <constraint firstAttribute="height" constant="36" id="mgZ-U2-sJE"/>
+                                                    </constraints>
+                                                    <state key="normal" image="playText">
+                                                        <color key="titleColor" name="controlDarkShadowColor" catalog="System" colorSpace="catalog"/>
+                                                    </state>
+                                                    <variation key="default">
+                                                        <mask key="constraints">
+                                                            <exclude reference="Fkz-fU-Rmp"/>
+                                                        </mask>
+                                                    </variation>
+                                                    <connections>
+                                                        <action selector="playTextClick:" destination="nrk-Bx-EJL" eventType="touchUpInside" id="Y0C-kv-ndH"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="djR-7G-fr4" firstAttribute="top" secondItem="4G9-2G-cvS" secondAttribute="top" id="47z-aI-D5r"/>
@@ -308,6 +318,7 @@
                                                 <constraint firstItem="v7a-pc-uDa" firstAttribute="top" secondItem="4G9-2G-cvS" secondAttribute="top" constant="10" id="V7e-gf-bAK"/>
                                                 <constraint firstItem="4vz-PU-mv9" firstAttribute="leading" secondItem="v7a-pc-uDa" secondAttribute="trailing" constant="5" id="VKf-vi-rl2"/>
                                                 <constraint firstItem="BVQ-mL-JXw" firstAttribute="leading" secondItem="F4G-Dc-kgP" secondAttribute="trailing" constant="2" id="Xaa-kM-kLd"/>
+                                                <constraint firstItem="D4M-0M-d7T" firstAttribute="top" secondItem="4G9-2G-cvS" secondAttribute="topMargin" constant="-8" id="YNn-FT-h3v"/>
                                                 <constraint firstAttribute="bottom" secondItem="v7a-pc-uDa" secondAttribute="bottom" id="aIL-4b-uTz"/>
                                                 <constraint firstItem="djR-7G-fr4" firstAttribute="leading" secondItem="0Ct-Zp-lOS" secondAttribute="trailing" constant="74" id="foj-AT-j2d"/>
                                                 <constraint firstItem="0Ct-Zp-lOS" firstAttribute="top" secondItem="v7a-pc-uDa" secondAttribute="bottom" constant="-10" id="gih-PO-7pu"/>
@@ -318,6 +329,8 @@
                                                 <constraint firstItem="djR-7G-fr4" firstAttribute="leading" secondItem="4G9-2G-cvS" secondAttribute="leadingMargin" constant="208" id="lr6-Oa-l3O"/>
                                                 <constraint firstItem="4vz-PU-mv9" firstAttribute="top" secondItem="v7a-pc-uDa" secondAttribute="top" id="p7H-qc-8cd"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="BVQ-mL-JXw" secondAttribute="trailing" constant="10" id="paD-ny-wzi"/>
+                                                <constraint firstItem="D4M-0M-d7T" firstAttribute="leading" secondItem="4G9-2G-cvS" secondAttribute="leadingMargin" constant="-4" id="qlK-uz-7yi"/>
+                                                <constraint firstItem="4vz-PU-mv9" firstAttribute="leading" secondItem="D4M-0M-d7T" secondAttribute="trailing" id="vxU-IB-zDd"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="4vz-PU-mv9" secondAttribute="bottom" constant="-0.5" id="xar-Tw-Lxd"/>
                                             </constraints>
                                             <variation key="default">
@@ -327,6 +340,7 @@
                                                     <exclude reference="aIL-4b-uTz"/>
                                                     <exclude reference="V19-Rh-oCK"/>
                                                     <exclude reference="p7H-qc-8cd"/>
+                                                    <exclude reference="vxU-IB-zDd"/>
                                                     <exclude reference="xar-Tw-Lxd"/>
                                                     <exclude reference="47z-aI-D5r"/>
                                                     <exclude reference="foj-AT-j2d"/>
@@ -335,6 +349,9 @@
                                             </variation>
                                         </tableViewCellContentView>
                                         <connections>
+                                            <outlet property="cellContent" destination="D4M-0M-d7T" id="vMy-jA-5tp"/>
+                                            <outlet property="cellContentHeight" destination="sN7-xL-irx" id="zeQ-P7-FTx"/>
+                                            <outlet property="cellContentWidth" destination="7qz-YB-w0W" id="EBb-EJ-wG4"/>
                                             <outlet property="cellText" destination="v7a-pc-uDa" id="QHw-dF-BwM"/>
                                             <outlet property="labelMaxWidth" destination="asA-mt-fhy" id="dXB-rf-wEU"/>
                                             <outlet property="playText" destination="4vz-PU-mv9" id="Hoe-60-nu5"/>

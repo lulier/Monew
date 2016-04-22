@@ -27,7 +27,7 @@ typedef NS_ENUM(NSInteger,StarNum)
     NSMutableSet *recognitionResult;
     NSString *lmPath ;
     NSString *dicPath ;
-    NSInteger cashIndex;
+    NSInteger playTextIndex;
     NSArray *currentWords;
 }
 @end
@@ -81,7 +81,6 @@ static NSString* cellIdentifierLyric=@"LyricViewCell";
     self.tableview.backgroundView = tempImageView;
     self.openEarsEventsObserver = [[OEEventsObserver alloc] init];
     self.openEarsEventsObserver.delegate = self;
-    cashIndex=0;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [self initRecorderSettings];
     });
@@ -104,13 +103,12 @@ static NSString* cellIdentifierLyric=@"LyricViewCell";
             if(error)NSLog(@"Error stopping listening in stopButtonAction: %@", error);
     }
 }
--(void)setPlayerTime:(NSInteger)value duration:(NSInteger)duration
+-(void)setPlayerTime:(NSInteger)value duration:(NSInteger)duration index:(NSInteger)index
 {
     double time=(double)value;
     [audioPlayer seekToTime:time/1000];
-    
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(duration * NSEC_PER_MSEC)), dispatch_get_main_queue(), ^{
-        if (audioPlayer!=nil)
+        if (audioPlayer!=nil&&playTextIndex==index)
         {
             [audioPlayer pause];
             self.PlayingText=false;
@@ -148,7 +146,9 @@ static NSString* cellIdentifierLyric=@"LyricViewCell";
     cell.delegate=self;
     cell.playText.hidden=YES;
     cell.playVoice.hidden=YES;
+    [cell.cellContent setUserInteractionEnabled:NO];
     cell.cellText.textColor=[UIColor blackColor];
+    cell.cellContent.textColor=[UIColor blackColor];
     [cell.star1 setImage:[UIImage imageNamed:@"star_unlight"]];
     [cell.star2 setImage:[UIImage imageNamed:@"star_unlight"]];
     [cell.star3 setImage:[UIImage imageNamed:@"star_unlight"]];
@@ -172,6 +172,7 @@ static NSString* cellIdentifierLyric=@"LyricViewCell";
     {
         cell.playText.hidden=NO;
         cell.cellText.textColor=[UIColor colorWithRed:2/255.f green:196/255.f blue:188/255.f alpha:1.0];
+        cell.cellContent.textColor=[UIColor colorWithRed:2/255.f green:196/255.f blue:188/255.f alpha:1.0];
     }
     return cell;
 }
@@ -201,11 +202,15 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
             LyricItem *item=self.lyricItems[cell.index];
             cell.cellText.text=item.lyricBody;
             cell.cellText.textColor=[UIColor blackColor];
+            cell.cellContent.textColor=[UIColor blackColor];
+            [cell.cellContent setUserInteractionEnabled:NO];
         }
         if (cell.index==indexPath.row)
         {
             cell.playText.hidden=NO;
             cell.cellText.textColor=[UIColor colorWithRed:2/255.f green:196/255.f blue:188/255.f alpha:1.0];
+            cell.cellContent.textColor=[UIColor colorWithRed:2/255.f green:196/255.f blue:188/255.f alpha:1.0];
+            [cell.cellContent setUserInteractionEnabled:YES];
         }
     }
     if ([indexPath compare:self.selectedIndex]!=NSOrderedSame)
@@ -365,12 +370,6 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
 }
 -(void)runRecognition:(NSInteger)index
 {
-    if (cashIndex!=index)
-    {
-        cashIndex=index;
-//        [[OEPocketsphinxController sharedInstance] stopListening];
-        
-    }
     if(![OEPocketsphinxController sharedInstance].isListening) {
         //设置输出音频数据
 //        [[OEPocketsphinxController sharedInstance] setVerbosePocketSphinx:YES];
@@ -389,6 +388,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
 }
 -(void)playText:(NSInteger)index
 {
+    playTextIndex=index;
     AVAudioSession *audioSession=[AVAudioSession sharedInstance];
     NSError* err;
     [audioSession setCategory:AVAudioSessionCategoryPlayback withOptions:AVAudioSessionCategoryOptionMixWithOthers error:&err];
@@ -399,7 +399,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     {
         endTime=audioPlayer.duration*1000;
     }
-    [self setPlayerTime:item.beginTime duration:endTime-item.beginTime];
+    [self setPlayerTime:item.beginTime duration:endTime-item.beginTime index:index];
     if (audioPlayer.state!=STKAudioPlayerStatePlaying)
     {
         [audioPlayer resume];

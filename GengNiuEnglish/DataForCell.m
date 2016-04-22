@@ -379,6 +379,22 @@
             break;
         }
     }
+    //为了适配学前班beyond中出现mp3后缀的文件
+    if (desName==nil&&[self.fileNames count]!=0)
+    {
+        str=[str lowercaseString];
+        NSString *path=[CommonMethod getPath:[self.fileNames objectAtIndex:0]];
+        NSArray *tmpList=[[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:nil];
+        for (NSString *name in tmpList)
+        {
+            NSRange range=[name rangeOfString:str];
+            if (range.length!=0)
+            {
+                desName=name;
+                break;
+            }
+        }
+    }
     return desName;
 }
 - (void)zipArchiveDidUnzipArchiveAtPath:(NSString *)path zipInfo:(unz_global_info)zipInfo unzippedPath:(NSString *)unzippedPath

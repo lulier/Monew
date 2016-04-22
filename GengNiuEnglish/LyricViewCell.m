@@ -24,15 +24,20 @@
 
 -(void)setLyricItem:(LyricItem *)lyricItem
 {
+    CGFloat labelWidth=[UIScreen mainScreen].bounds.size.width-95;
+    self.labelMaxWidth.constant=labelWidth;
     self.cellText.text=lyricItem.lyricBody;
+    CGFloat width=labelWidth;
+    CGFloat height=[CommonMethod calculateTextHeight:lyricItem.lyricBody width:width fontSize:16.f];
+    self.cellContentWidth.constant=width;
+    self.cellContentHeight.constant=height;
+    [self.cellContent setText:lyricItem.lyricBody];
     //clear cell color
     self.backgroundColor = [UIColor clearColor];
     self.selectionStyle=UITableViewCellSelectionStyleNone;
     self.recording=false;
     self.recordPlaying=false;
     _lyricItem=lyricItem;
-    CGFloat width=[UIScreen mainScreen].bounds.size.width;
-    self.labelMaxWidth.constant=width-95;
 }
 - (void)awakeFromNib {
     // Initialization code

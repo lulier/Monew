@@ -8,6 +8,7 @@
 
 #import <UIKit/UIKit.h>
 #import "LyricItem.h"
+#import "CommonMethod.h"
 
 
 @protocol lyricViewCellDelegate <NSObject>
@@ -36,6 +37,9 @@
 @property (weak, nonatomic) IBOutlet UIImageView *star3;
 - (IBAction)recordVoiceClick:(id)sender;
 - (IBAction)playVoiceClick:(id)sender;
+@property (weak, nonatomic) IBOutlet UITextView *cellContent;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *cellContentHeight;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *cellContentWidth;
 @property(weak,nonatomic)id<lyricViewCellDelegate>delegate;
 - (instancetype)initWithStyle:(UITableViewCellStyle)style
               reuseIdentifier:(NSString *)reuseIdentifier;

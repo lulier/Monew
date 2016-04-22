@@ -89,6 +89,10 @@
     NSInteger currentTime=[self getPlayTimes];
     if (currentTime!=0)
     {
+        if (currentTime==INT_MAX)
+        {
+            currentTime=10;
+        }
         if (currentTime!=1)
         {
             currentTime--;
@@ -107,18 +111,28 @@
     NSInteger currentTime=[self getPlayTimes];
     if (currentTime!=0)
     {
-        if (currentTime!=99)
+        if (currentTime<9)
         {
             currentTime++;
             self.timeLabel.text=[NSString stringWithFormat:@"%ld次",currentTime];
+        }
+        else
+        {
+            currentTime=INT_MAX;
+            self.timeLabel.text=@"∞ 次";
         }
     }
 }
 -(NSInteger)getPlayTimes
 {
-    NSString *times=[self.timeLabel text];
-    NSArray *tmp=[times componentsSeparatedByString:@"次"];
     NSInteger currentTime=0;
+    NSString *times=[self.timeLabel text];
+    if ([times isEqualToString:@"∞ 次"])
+    {
+        currentTime=INT_MAX;
+        return currentTime;
+    }
+    NSArray *tmp=[times componentsSeparatedByString:@"次"];
     currentTime=[[tmp firstObject] integerValue];
     return currentTime;
 }
