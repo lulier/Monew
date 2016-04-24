@@ -19,6 +19,8 @@
 #import <OpenEars/OEPocketsphinxController.h>
 #import <OpenEars/OEEventsObserver.h>
 #import <OpenEars/OELogging.h>
+#import "MenuControllerSupportingView.h"
+#import "MRProgress.h"
 
 
 
@@ -32,6 +34,7 @@
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
 @property (weak, nonatomic) IBOutlet UIButton *goBack;
 @property (weak, nonatomic) IBOutlet UILabel *testReconition;
+@property (weak, nonatomic) IBOutlet MenuControllerSupportingView *MCSupportingView;
 @property(nonatomic)BOOL PlayingText;
 -(void)initWithBook:(DataForCell*)book;
 @end

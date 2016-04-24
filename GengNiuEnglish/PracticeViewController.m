@@ -29,6 +29,9 @@ typedef NS_ENUM(NSInteger,StarNum)
     NSString *dicPath ;
     NSInteger playTextIndex;
     NSArray *currentWords;
+    UITapGestureRecognizer *gestureRecognizer;
+    NSString *currentCheckWord;
+    MRProgressOverlayView *progressView;
 }
 @end
 
@@ -38,6 +41,7 @@ static NSString* cellIdentifierLyric=@"LyricViewCell";
     [self.navigationController popViewControllerAnimated:YES];
     [self.delegate dismissView];
 }
+
 -(void)updateViewConstraints
 {
     [super updateViewConstraints];
@@ -81,9 +85,16 @@ static NSString* cellIdentifierLyric=@"LyricViewCell";
     self.tableview.backgroundView = tempImageView;
     self.openEarsEventsObserver = [[OEEventsObserver alloc] init];
     self.openEarsEventsObserver.delegate = self;
+    
+    self.MCSupportingView.delegate=self;
     dispatch_async(dispatch_get_global_queue(DISPATCH_QUEUE_PRIORITY_DEFAULT, 0), ^{
         [self initRecorderSettings];
     });
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self tableView:self.tableview didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
+    });
+    
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -97,6 +108,7 @@ static NSString* cellIdentifierLyric=@"LyricViewCell";
         [audioPlayer stop];
         audioPlayer=nil;
     }
+    
     if([OEPocketsphinxController sharedInstance].isListening) { // Stop if we are currently listening.
             NSError *error = nil;
             error = [[OEPocketsphinxController sharedInstance] stopListening];
@@ -173,6 +185,9 @@ static NSString* cellIdentifierLyric=@"LyricViewCell";
         cell.playText.hidden=NO;
         cell.cellText.textColor=[UIColor colorWithRed:2/255.f green:196/255.f blue:188/255.f alpha:1.0];
         cell.cellContent.textColor=[UIColor colorWithRed:2/255.f green:196/255.f blue:188/255.f alpha:1.0];
+        gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(textViewTapped:)];
+        gestureRecognizer.numberOfTapsRequired=1;
+        [cell.cellContent addGestureRecognizer:gestureRecognizer];
     }
     return cell;
 }
@@ -204,6 +219,8 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
             cell.cellText.textColor=[UIColor blackColor];
             cell.cellContent.textColor=[UIColor blackColor];
             [cell.cellContent setUserInteractionEnabled:NO];
+            //delete gesture detect
+            [cell.cellContent removeGestureRecognizer:gestureRecognizer];
         }
         if (cell.index==indexPath.row)
         {
@@ -211,6 +228,11 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
             cell.cellText.textColor=[UIColor colorWithRed:2/255.f green:196/255.f blue:188/255.f alpha:1.0];
             cell.cellContent.textColor=[UIColor colorWithRed:2/255.f green:196/255.f blue:188/255.f alpha:1.0];
             [cell.cellContent setUserInteractionEnabled:YES];
+            
+            //添加动作监控
+            gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(textViewTapped:)];
+            gestureRecognizer.numberOfTapsRequired=1;
+            [cell.cellContent addGestureRecognizer:gestureRecognizer];
         }
     }
     if ([indexPath compare:self.selectedIndex]!=NSOrderedSame)
@@ -221,6 +243,117 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     [tableView deselectRowAtIndexPath:indexPath animated:NO];
     [tableView endUpdates];
 }
+- (void)tableView:(UITableView *)tableView didEndDisplayingCell:(UITableViewCell *)cell forRowAtIndexPath:(NSIndexPath *)indexPath
+{
+    [cell removeGestureRecognizer:gestureRecognizer];
+}
+-(void)textViewTapped:(id)sender
+{
+    LyricViewCell *cell;
+    for (LyricViewCell *tmp in [self.tableview visibleCells])
+    {
+        if(tmp.index==self.selectedIndex.row)
+        {
+            cell=tmp;
+        }
+    }
+    if (cell==nil)
+    {
+        return;
+    }
+    UIMenuController *menucontroller=[UIMenuController sharedMenuController];
+    
+    if (menucontroller.isMenuVisible)
+    {
+        [menucontroller setMenuVisible:NO animated:YES];
+        return;
+    }
+    
+    NSLog(@"Clicked");
+    
+    CGPoint pos = [sender locationInView:cell.cellContent];
+    CGPoint menuPos=[sender locationInView:self.MCSupportingView];
+    UITextView *_tv = cell.cellContent;
+    
+    NSLog(@"Tap Gesture Coordinates: %.2f %.2f", pos.x, pos.y);
+    
+    //eliminate scroll offset
+    pos.y += _tv.contentOffset.y;
+    
+    //get location in text from textposition at point
+    UITextPosition *tapPos = [_tv closestPositionToPoint:pos];
+    
+    //fetch the word at this position (or nil, if not available)
+    UITextRange * wr = [_tv.tokenizer rangeEnclosingPosition:tapPos withGranularity:UITextGranularityWord inDirection:UITextLayoutDirectionRight];
+    [_tv setSelectedTextRange:wr];
+    NSLog(@"WORD: %@ %@", [_tv textInRange:wr],wr);
+    
+    if (wr==nil)
+    {
+        return;
+    }
+    
+    currentCheckWord=[_tv textInRange:wr];
+    
+    UIMenuItem *MenuitemA=[[UIMenuItem alloc] initWithTitle:@"查字典" action:@selector(define)];
+    
+    UIMenuItem *MenuitemB=[[UIMenuItem alloc] initWithTitle:@"加入生词本" action:@selector(addToUnknow)];
+    
+    [menucontroller setMenuItems:[NSArray arrayWithObjects:MenuitemA,MenuitemB,nil]];
+    
+    //It's mandatory
+    
+    [self.MCSupportingView becomeFirstResponder];
+    
+    //It's also mandatory ...remeber we've added a mehod on view class
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        if([self.MCSupportingView canBecomeFirstResponder])
+        {
+            
+            [menucontroller setTargetRect:CGRectMake(menuPos.x,menuPos.y, 0, 0) inView:self.view];
+            
+            [menucontroller setMenuVisible:YES animated:YES];
+        }
+    });
+}
+-(void)viewWillDisappear:(BOOL)animated
+{
+    if (progressView!=nil)
+    {
+        [progressView dismiss:NO];
+        progressView=nil;
+    }
+}
+-(void)define
+{
+   progressView=[MRProgressOverlayView showOverlayAddedTo:self.view title:@"正在查询单词" mode:MRProgressOverlayViewModeIndeterminate animated:YES];
+    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+        if ([UIReferenceLibraryViewController dictionaryHasDefinitionForTerm:currentCheckWord])
+        {
+            UIReferenceLibraryViewController* ref =
+            [[UIReferenceLibraryViewController alloc] initWithTerm:currentCheckWord];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                [self presentViewController:ref animated:YES completion:nil];
+            });
+        }
+        else
+        {
+            if(progressView != nil)
+            {
+                [progressView dismiss:NO];
+                progressView=nil;
+            }
+        }
+    });
+    
+    
+}
+-(void)addToUnknow
+{
+    
+}
+
+
 -(void)stopCellWorking
 {
     for (LyricViewCell *cell in [self.tableview visibleCells])

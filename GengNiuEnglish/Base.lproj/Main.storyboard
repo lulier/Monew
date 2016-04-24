@@ -195,6 +195,10 @@
                         <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="fFu-zf-cTh" customClass="MenuControllerSupportingView">
+                                <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
+                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
+                            </view>
                             <tableView clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="prototypes" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" translatesAutoresizingMaskIntoConstraints="NO" id="Dps-S7-wZ5">
                                 <rect key="frame" x="20" y="100" width="627" height="275"/>
                                 <color key="backgroundColor" name="alternateSelectedControlTextColor" catalog="System" colorSpace="catalog"/>
@@ -207,7 +211,7 @@
                                             <rect key="frame" x="0.0" y="0.0" width="627" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <label opaque="NO" multipleTouchEnabled="YES" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v7a-pc-uDa">
+                                                <label opaque="NO" multipleTouchEnabled="YES" alpha="0.0" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" lineBreakMode="wordWrap" numberOfLines="0" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="v7a-pc-uDa">
                                                     <rect key="frame" x="10" y="10" width="40" height="20"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" relation="lessThanOrEqual" constant="570" id="asA-mt-fhy"/>
@@ -275,7 +279,7 @@
                                                         <constraint firstAttribute="height" constant="32" id="nPt-9l-6rI"/>
                                                     </constraints>
                                                 </imageView>
-                                                <textView clipsSubviews="YES" userInteractionEnabled="NO" alpha="0.0" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="The monkeys can." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="D4M-0M-d7T">
+                                                <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="The monkeys can." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="D4M-0M-d7T" customClass="GNTextView">
                                                     <rect key="frame" x="4" y="0.0" width="50" height="30"/>
                                                     <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                                     <constraints>
@@ -399,12 +403,16 @@
                         <constraints>
                             <constraint firstItem="aVD-0q-p8O" firstAttribute="centerX" secondItem="Irh-qU-660" secondAttribute="centerX" id="8la-l1-CWX"/>
                             <constraint firstItem="Irh-qU-660" firstAttribute="top" secondItem="42J-dr-Wag" secondAttribute="top" constant="5" id="D0F-bR-CPt"/>
+                            <constraint firstItem="c0T-oW-Vj2" firstAttribute="top" secondItem="fFu-zf-cTh" secondAttribute="bottom" id="Ed4-ZA-oqH"/>
                             <constraint firstItem="c0T-oW-Vj2" firstAttribute="top" secondItem="Dps-S7-wZ5" secondAttribute="bottom" id="JZo-sk-KoR"/>
                             <constraint firstItem="Dps-S7-wZ5" firstAttribute="leading" secondItem="42J-dr-Wag" secondAttribute="leadingMargin" id="L5R-Ny-ts5"/>
                             <constraint firstAttribute="trailing" secondItem="Dps-S7-wZ5" secondAttribute="trailing" constant="20" id="On8-W4-dQ1"/>
                             <constraint firstAttribute="trailingMargin" secondItem="Dps-S7-wZ5" secondAttribute="trailing" id="Svx-lB-shF"/>
                             <constraint firstItem="Dps-S7-wZ5" firstAttribute="top" secondItem="bnO-Qc-zCb" secondAttribute="bottom" constant="80" id="VAa-tq-CXb"/>
+                            <constraint firstItem="fFu-zf-cTh" firstAttribute="top" secondItem="42J-dr-Wag" secondAttribute="topMargin" id="gbr-FZ-4cW"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="fFu-zf-cTh" secondAttribute="trailing" constant="-20" id="gc6-5f-vND"/>
                             <constraint firstItem="aVD-0q-p8O" firstAttribute="centerY" secondItem="Irh-qU-660" secondAttribute="centerY" id="pev-R2-OCm"/>
+                            <constraint firstItem="fFu-zf-cTh" firstAttribute="leading" secondItem="42J-dr-Wag" secondAttribute="leadingMargin" constant="-20" id="q0H-yr-Y6Q"/>
                             <constraint firstItem="Dps-S7-wZ5" firstAttribute="leading" secondItem="42J-dr-Wag" secondAttribute="leading" constant="20" id="wIA-oQ-Mmj"/>
                             <constraint firstItem="Irh-qU-660" firstAttribute="centerX" secondItem="42J-dr-Wag" secondAttribute="centerX" id="wjm-bI-ZB2"/>
                         </constraints>
@@ -418,6 +426,7 @@
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
+                        <outlet property="MCSupportingView" destination="fFu-zf-cTh" id="l2j-cr-e2s"/>
                         <outlet property="goBack" destination="cQx-ht-Um7" id="bb6-Q7-P2N"/>
                         <outlet property="tableview" destination="Dps-S7-wZ5" id="p1x-gO-H4l"/>
                         <outlet property="testReconition" destination="2Ep-bL-3Nm" id="v3g-Wv-ayd"/>
