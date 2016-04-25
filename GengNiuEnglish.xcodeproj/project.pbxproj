@@ -53,6 +53,7 @@
 		F4F0E6CE1C94167600818C89 /* NSData+NSData_AES.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F0E6CD1C94167600818C89 /* NSData+NSData_AES.m */; };
 		F4F0E6DF1C97BBEF00818C89 /* CustomCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F0E6DE1C97BBEF00818C89 /* CustomCollectionViewLayout.m */; };
 		F4F930CD1CCA68E5000425E2 /* GNTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F930CC1CCA68E5000425E2 /* GNTextView.m */; };
+		F4FABE1C1CCDF20800653A69 /* SettingViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4FABE1B1CCDF20800653A69 /* SettingViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -154,6 +155,8 @@
 		F4F0E6DE1C97BBEF00818C89 /* CustomCollectionViewLayout.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = CustomCollectionViewLayout.m; sourceTree = "<group>"; };
 		F4F930CB1CCA68E5000425E2 /* GNTextView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GNTextView.h; sourceTree = "<group>"; };
 		F4F930CC1CCA68E5000425E2 /* GNTextView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GNTextView.m; sourceTree = "<group>"; };
+		F4FABE1A1CCDF20800653A69 /* SettingViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingViewController.h; sourceTree = "<group>"; };
+		F4FABE1B1CCDF20800653A69 /* SettingViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -311,6 +314,8 @@
 				F42FA5E91C8C01570033C9C9 /* MobileRegistViewController.m */,
 				F42FA5EB1C8C017B0033C9C9 /* EmailRegistViewController.h */,
 				F42FA5EC1C8C017B0033C9C9 /* EmailRegistViewController.m */,
+				F4FABE1A1CCDF20800653A69 /* SettingViewController.h */,
+				F4FABE1B1CCDF20800653A69 /* SettingViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -563,6 +568,7 @@
 				F4A9AF391C4D0D26004BC7BF /* CommonMethod.m in Sources */,
 				F454F9331CC767B400326774 /* UITextView+ContentInset.m in Sources */,
 				F427992E1C18514200240736 /* AppDelegate.m in Sources */,
+				F4FABE1C1CCDF20800653A69 /* SettingViewController.m in Sources */,
 				F4A9AF4E1C4F7258004BC7BF /* PracticeViewController.m in Sources */,
 				F427992B1C18514200240736 /* main.m in Sources */,
 				F478C8811C9EDA9A00746E2C /* UIImageView+MTTag.m in Sources */,
