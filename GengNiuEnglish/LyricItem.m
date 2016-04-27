@@ -47,9 +47,26 @@
 +(NSArray *)parseLyric:(NSString *)filePath
 {
     NSMutableArray *lyrics=[[NSMutableArray alloc]init];
-//    NSData *secretText=[NSData dataWithContentsOfFile:filePath];
-//    NSString *result=[CommonMethod decryptAESData:secretText app_key:CIPHER_KEY];
     NSString *result=[NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:nil];
+    if (result==nil)
+    {
+        NSString *fileName=[[filePath componentsSeparatedByString:@"/"] lastObject];
+        NSString *path=[filePath stringByReplacingOccurrencesOfString:fileName withString:@""];
+        NSArray *tmpList=[[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:nil];
+        for (NSString *name in tmpList)
+        {
+            NSRange range=[name rangeOfString:@"original"];
+            if (range.length!=0)
+            {
+                NSData *secretText=[NSData dataWithContentsOfFile:[path stringByAppendingPathComponent:name]];
+                result=[CommonMethod decryptAESData:secretText app_key:CIPHER_KEY];
+                break;
+//                SCLAlertView *alert=[[SCLAlertView alloc]init];
+//                [alert showNotice:[CommonMethod getCurrentVC] title:path subTitle:name closeButtonTitle:@"确定" duration:0.0f];
+                
+            }
+        }
+    }
     if (result==nil)
     {
         return nil;

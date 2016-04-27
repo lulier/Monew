@@ -7,6 +7,8 @@
 //
 
 #import <Foundation/Foundation.h>
+#import "SCLAlertView.h"
+#import "CommonMethod.h"
 
 
 @interface LyricItem : NSObject
