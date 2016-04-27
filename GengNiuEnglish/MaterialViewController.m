@@ -38,17 +38,6 @@ static NSString * const reuseIdentifierMaterial = @"MaterialCell";
 //            [weakSelf.collectionView reloadData];
 //        });
 //    }];
-    cacheList=nil;
-    [DataForCell showCache:^(NSArray *cacheData) {
-        if (cacheData!=nil&&[cacheData count]!=0)
-        {
-            weakSelf.list=cacheData;
-            cacheList=cacheData;
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [weakSelf.collectionView reloadData];
-            });
-        }
-    } currentData:nil];
     NSURLSessionTask *task=[DataForCell getGradeList:^(NSArray *data, NSError *error) {
         if(data!=nil)
         {
@@ -82,6 +71,20 @@ static NSString * const reuseIdentifierMaterial = @"MaterialCell";
                     }
                 }
             });
+        }
+        else
+        {
+            cacheList=nil;
+            [DataForCell showCache:^(NSArray *cacheData) {
+                if (cacheData!=nil&&[cacheData count]!=0)
+                {
+                    weakSelf.list=cacheData;
+                    cacheList=cacheData;
+                    dispatch_async(dispatch_get_main_queue(), ^{
+                        [weakSelf.collectionView reloadData];
+                    });
+                }
+            } currentData:nil];
         }
     }];
 }
