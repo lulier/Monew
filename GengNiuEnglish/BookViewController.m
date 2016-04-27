@@ -291,20 +291,9 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
          }
      }
     success:^(NSURLSessionTask * _Nullable task, id  _Nullable responseObject) {
-        if (book.progressView!=nil)
-        {
-            [book.progressView removeFromSuperview];
-            book.progressView=nil;
-            book.task=nil;
-        }
-    } failure:^(NSURLSessionTask * _Nullable task, NSError * _Nullable error) {
-        if (book.progressView!=nil)
-        {
-            [book.progressView removeFromSuperview];
-            book.progressView=nil;
-            book.task=nil;
-        }
         
+    } failure:^(NSURLSessionTask * _Nullable task, NSError * _Nullable error) {
+
     }
     completionHandler:^(NSURLResponse * _Nullable response, NSURL * _Nullable filePath, NSError * _Nullable error)
      {
