@@ -24,6 +24,8 @@ static const NSString *URLForGetSalt=@"/student/get_salt/";
 static const NSString *URLForCheckAvail=@"/student/phone/check_avail/";
 static const NSString *URLForActionCode=@"/courseware/get_app_status/";
 static const NSString *URLForBindPhone=@"/student/phone/bind/";
+static const NSString *URLForUserInfo=@"/student/get_userinfo/";
+static const NSString *URLForSetUserInfo=@"/student/set_userinfo/";
 
 @implementation NetworkingManager
 
@@ -69,6 +71,10 @@ static const NSString *URLForBindPhone=@"/student/phone/bind/";
             return [NSString stringWithFormat:@"%@%@",MONEWDOMAIN,URLForActionCode];
         case RUBindPhone:
             return [NSString stringWithFormat:@"%@%@",MONEWDOMAIN,URLForBindPhone];
+        case RUUserInfo:
+            return [NSString stringWithFormat:@"%@%@",MONEWDOMAIN,URLForUserInfo];
+        case RUSetUserInfo:
+            return [NSString stringWithFormat:@"%@%@",MONEWDOMAIN,URLForSetUserInfo];
         case RUCustom:
             return nil;
         default:

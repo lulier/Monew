@@ -223,14 +223,14 @@ static NSString * const reuseIdentifierMaterial = @"MaterialCell";
 }
 - (IBAction)settingButtonClick:(id)sender {
     
-    UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    SettingViewController *settingViewController=[storyboard instantiateViewControllerWithIdentifier:@"SettingViewController"];
-    [self.navigationController pushViewController:settingViewController animated:YES];
+//    UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+//    SettingViewController *settingViewController=[storyboard instantiateViewControllerWithIdentifier:@"SettingViewController"];
+//    [self.navigationController pushViewController:settingViewController animated:YES];
     
     
-//    SCLAlertView *alert=[[SCLAlertView alloc]init];
-//    [alert addButton:@"确定" target:self selector:@selector(logout)];
-//    [alert showNotice:self title:@"提示" subTitle:@"您确定要退出当前账号？" closeButtonTitle:@"取消" duration:0.0f];
+    SCLAlertView *alert=[[SCLAlertView alloc]init];
+    [alert addButton:@"确定" target:self selector:@selector(logout)];
+    [alert showNotice:self title:@"提示" subTitle:@"您确定要退出当前账号？" closeButtonTitle:@"取消" duration:0.0f];
 
 }
 -(void)logout

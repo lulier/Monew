@@ -35,6 +35,8 @@ typedef NS_ENUM(NSInteger,RequestURL)
     RUCheckAvail,
     RUActionCode,
     RUBindPhone,
+    RUUserInfo,
+    RUSetUserInfo,
     RUCustom
 };
 enum Return_Code

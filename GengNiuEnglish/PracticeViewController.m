@@ -152,6 +152,11 @@ static NSString* cellIdentifierLyric=@"LyricViewCell";
         cell=[[LyricViewCell alloc]initWithStyle:UITableViewCellStyleSubtitle reuseIdentifier:cellIdentifierLyric];
     }
     // Configure the cell...
+    
+    //hide dictionary
+    [cell.cellContent setHidden:YES];
+    
+    
     cell.lyricItem=self.lyricItems[indexPath.row];
     cell.index=indexPath.row;
     cell.delegate=self;

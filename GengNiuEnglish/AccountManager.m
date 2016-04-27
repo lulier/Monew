@@ -176,6 +176,7 @@ static NSString * const ACCOUNT_KEYCHAIN = @"GNAccount20160311";
         [[NSFileManager defaultManager] createDirectoryAtPath:dbPath withIntermediateDirectories:YES attributes:nil error:nil];
     }
     [[MTDatabaseHelper sharedInstance] createTableWithTableName:@"AccountInfo" indexesWithProperties:@[@"user_id  INTEGER PRIMARY KEY UNIQUE",@"account varchar(255)",@"password varchar(512)",@"type integer",@"login_time varchar(255)"]];
+    [[MTDatabaseHelper sharedInstance] createTableWithTableName:@"UserInfo" indexesWithProperties:@[@"user_id  INTEGER PRIMARY KEY UNIQUE",@"gender INTEGER",@"nickname varchar(64)",@"portrait_key varchar(255)",@"extra varchar(255)"]];
     [[MTDatabaseHelper sharedInstance] createTableWithTableName:@"GradeList" indexesWithProperties:@[@"grade_id  INTEGER PRIMARY KEY UNIQUE",@"grade_name varchar(255)",@"cover_url varchar(512)",@"text_count integer"]];
     [[MTDatabaseHelper sharedInstance] createTableWithTableName:@"TextList" indexesWithProperties:@[@"text_id  INTEGER PRIMARY KEY UNIQUE",@"grade_id  INTEGER",@"text_name varchar(255)",@"cover_url varchar(512)",@"courseware_url varchar(512)",@"desc varchar(255)",@"challenge_goal integer",@"challenge_score integer",@"listen_count integer",@"practise_goal integer",@"star_count integer",@"listen_goal integer",@"practise_count integer",@"version integer"]];
 }
@@ -188,6 +189,31 @@ static NSString * const ACCOUNT_KEYCHAIN = @"GNAccount20160311";
     [[NSUserDefaults standardUserDefaults] setObject:@"in" forKey:@"AccountStatus"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     [FXKeychain defaultKeychain][ACCOUNT_KEYCHAIN] = self;
+    
+    
+    //getUserInfo
+    NSMutableString *sign=[CommonMethod MD5EncryptionWithString:[NSString stringWithFormat:@"%@",self.userID]];
+    NSDictionary *dict=[NSDictionary dictionaryWithObjectsAndKeys:self.userID,@"user_id",sign,@"sign",nil];
+    __weak __typeof(self)weakself=self;
+    [NetworkingManager httpRequest:RTPost url:RUUserInfo parameters:dict progress:nil success:^(NSURLSessionTask * _Nullable task, id  _Nullable responseObject) {
+        long int status=[[responseObject objectForKey:@"status"] integerValue];
+        if (status==0)
+        {
+            if ([[responseObject objectForKey:@"gender"] integerValue]==0)
+            {
+                weakself.gender=UGBoy;
+            }
+            else
+                weakself.gender=UGGirl;
+            weakself.nickName=[responseObject objectForKey:@"nickname"];
+            weakself.portraitKey=[responseObject objectForKey:@"avatar"];
+            NSArray *colums=[[NSArray alloc]initWithObjects:@"user_id",@"gender",@"nickname",@"portrait_key", nil];
+            NSArray *values=[[NSArray alloc]initWithObjects:[NSString stringWithFormat:@"'%@'",weakself.userID],[NSString stringWithFormat:@"%lu",weakself.gender],[NSString stringWithFormat:@"'%@'",weakself.nickName],[NSString stringWithFormat:@"'%@'",weakself.portraitKey], nil];
+            [[MTDatabaseHelper sharedInstance] insertToTable:@"UserInfo" withColumns:colums andValues:values];
+        }
+    } failure:^(NSURLSessionTask * _Nullable task, NSError * _Nullable error) {
+        
+    } completionHandler:nil];
 }
 
 - (void)deleteAccount {

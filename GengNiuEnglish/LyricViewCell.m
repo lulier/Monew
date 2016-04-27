@@ -40,6 +40,7 @@
     self.selectionStyle=UITableViewCellSelectionStyleNone;
     self.recording=false;
     self.recordPlaying=false;
+    [self.cellContent setHidden:YES];
     _lyricItem=lyricItem;
 }
 - (void)awakeFromNib {

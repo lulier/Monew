@@ -20,6 +20,11 @@ typedef NS_ENUM(NSInteger,LoginType)
     LTPhone,
     LTEmail
 };
+typedef NS_ENUM(NSInteger,UserGender)
+{
+    UGBoy,
+    UGGirl
+};
 
 @interface AccountManager : NSObject
 @property(nonatomic,strong)NSString *userID;
@@ -31,6 +36,11 @@ typedef NS_ENUM(NSInteger,LoginType)
 @property(nonatomic,strong)NSString *loginTime;
 @property(nonatomic)NSInteger channel;
 @property(nonatomic)BOOL completeInfo;
+
+//user info
+@property(nonatomic)UserGender gender;
+@property(strong,nonatomic)NSString *nickName;
+@property(strong,nonatomic)NSString *portraitKey;
 
 + (AccountManager *)singleInstance;
 - (void)saveAccount;
