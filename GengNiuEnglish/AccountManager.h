@@ -33,10 +33,11 @@ typedef NS_ENUM(NSInteger,LoginType)
 @property(nonatomic)BOOL completeInfo;
 
 + (AccountManager *)singleInstance;
--(void)saveAccount;
+- (void)saveAccount;
 - (void)deleteAccount;
 + (BOOL)isExist;
-+(void)login:(LoginType)type parameters:(nonnull NSDictionary *)parameters success:(nullable void (^)( NSURLSessionTask * _Nullable task, id _Nullable responseObject))success failure:(nullable void (^)(NSURLSessionTask * _Nullable task, NSError * _Nullable error))failure;
-+(void)registAccount:(RegistType)type parameters:(nonnull NSDictionary *)parameters success:(nullable void (^)( NSURLSessionTask * _Nullable task, id _Nullable responseObject))success failure:(nullable void (^)(NSURLSessionTask * _Nullable task, NSError * _Nullable error))failure;
-+ (void)checkPhoneInUse:(nonnull NSString *)phoneNumber success:(nullable void (^)(BOOL isInused))success failure:(nullable void (^)(NSString * _Nullable message))failure;
++ (void)login:(LoginType)type parameters:(NSDictionary *)parameters success:(void (^)( NSURLSessionTask * task, id responseObject))success failure:( void (^)(NSURLSessionTask *  task, NSError *  error))failure;
++ (void)registAccount:(RegistType)type parameters:( NSDictionary *)parameters success:( void (^)( NSURLSessionTask *  task, id  responseObject))success failure:( void (^)(NSURLSessionTask *  task, NSError *  error))failure;
++ (void)checkPhoneInUse:(NSString *)phoneNumber success:(void (^)(BOOL isInused))success failure:(void (^)(NSString * message))failure;
+- (void)bindPhone:(NSString*)phone bind:(BOOL)bind password:(NSString*)password success:(void (^)(BOOL bindSuccess))success failure:(void (^)(NSString * message))failure;
 @end

@@ -78,6 +78,7 @@
 -(void)dismissView
 {
     lyricViewController=nil;
+    practiceViewController=nil;
 }
 - (IBAction)xiulianClick:(id)sender {
     if (![self.book checkDatabase])

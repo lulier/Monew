@@ -15,6 +15,7 @@
 #import "CustomCollectionViewLayout.h"
 #import "SCLAlertView.h"
 #import "MRProgress.h"
+#import "SettingViewController.h"
 
 @interface MaterialViewController ()
 {
@@ -220,10 +221,16 @@ static NSString * const reuseIdentifierMaterial = @"MaterialCell";
     }
     [self.navigationController pushViewController:bookViewController animated:YES];
 }
-- (IBAction)logoutButtonClick:(id)sender {
-    SCLAlertView *alert=[[SCLAlertView alloc]init];
-    [alert addButton:@"确定" target:self selector:@selector(logout)];
-    [alert showNotice:self title:@"提示" subTitle:@"您确定要退出当前账号？" closeButtonTitle:@"取消" duration:0.0f];
+- (IBAction)settingButtonClick:(id)sender {
+    
+    UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    SettingViewController *settingViewController=[storyboard instantiateViewControllerWithIdentifier:@"SettingViewController"];
+    [self.navigationController pushViewController:settingViewController animated:YES];
+    
+    
+//    SCLAlertView *alert=[[SCLAlertView alloc]init];
+//    [alert addButton:@"确定" target:self selector:@selector(logout)];
+//    [alert showNotice:self title:@"提示" subTitle:@"您确定要退出当前账号？" closeButtonTitle:@"取消" duration:0.0f];
 
 }
 -(void)logout

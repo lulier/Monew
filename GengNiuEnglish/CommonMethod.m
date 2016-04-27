@@ -214,7 +214,7 @@
     {
         return Iphone6p;
     }
-    return Iphone5s;
+    return IphoneDefault;
 }
 +(BOOL)checkFileExistence:(NSString*)path
 {

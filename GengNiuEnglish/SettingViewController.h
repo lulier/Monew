@@ -7,8 +7,19 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "CommonMethod.h"
+#import "AccountManager.h"
+#import "SCLAlertView.h"
+#import "SettingCell.h"
+#import "BindPhoneViewController.h"
 
-@interface SettingViewController : UIViewController
+@interface SettingViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,settingCellDelegate>
 @property (weak, nonatomic) IBOutlet UIView *settingView;
+@property (weak, nonatomic) IBOutlet UITableView *settingTableView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *settingViewTop;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *settingViewLeft;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *settingViewRight;
+@property (weak, nonatomic) IBOutlet UILabel *userName;
+@property (weak, nonatomic) IBOutlet UIImageView *portraitImage;
 
 @end

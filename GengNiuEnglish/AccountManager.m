@@ -142,6 +142,31 @@ static NSString * const ACCOUNT_KEYCHAIN = @"GNAccount20160311";
     NSDictionary *dict=[NSDictionary dictionaryWithObjectsAndKeys:reType,@"type",accountNum,@"account",md5_str,@"passwd",salt,@"salt",@"0",@"channel",sign,@"sign",nil];
     [NetworkingManager httpRequest:RTPost url:RURegist parameters:dict progress:nil success:success failure:failure completionHandler:nil];
 }
+
+-(void)bindPhone:(NSString*)phone bind:(BOOL)bind password:(NSString*)password success:(void (^)(BOOL bindSuccess))success failure:(void (^)(NSString * message))failure;
+{
+    NSInteger bindSign=0;
+    if (bind)
+    {
+        bindSign=1;
+    }
+    NSMutableString* sign=[CommonMethod MD5EncryptionWithString:[NSString stringWithFormat:@"%@%@%ld",self.userID,phone,bindSign]];
+    NSDictionary *dict=[NSDictionary dictionaryWithObjectsAndKeys:self.userID,@"user_id",phone,@"phone",[NSString stringWithFormat:@"%ld",bindSign],@"bind",sign,@"sign",nil];
+    [NetworkingManager httpRequest:RTPost url:RUCheckAvail parameters:dict progress:nil success:^(NSURLSessionTask * _Nullable task, id  _Nullable responseObject) {
+        long int status=[[responseObject objectForKey:@"status"]integerValue];
+        if (status==0)
+        {
+            success(YES);
+        }
+        else
+            success(NO);
+    } failure:^(NSURLSessionTask * _Nullable task, NSError * _Nullable error) {
+        failure([NSString stringWithFormat:@"%@",error]);
+    } completionHandler:nil];
+}
+
+
+
 -(void)createTable
 {
     NSString *dbPath=[CommonMethod getPath:[NSString stringWithFormat:@"%@/%@",MONEWFOLDER,self.userID]];

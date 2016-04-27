@@ -12,7 +12,7 @@
 
 @interface MaterialViewController : UIViewController<UICollectionViewDelegateFlowLayout,UIScrollViewDelegate,UICollectionViewDelegate,UICollectionViewDataSource>
 @property(strong,nonatomic)NSArray *list;
-@property (weak, nonatomic) IBOutlet UIButton *logoutButton;
+@property (weak, nonatomic) IBOutlet UIButton *settingButton;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
 -(void)reload:(__unused id)sender;
 @end

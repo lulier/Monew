@@ -45,7 +45,6 @@ static NSString* cellIdentifierLyric=@"LyricViewCell";
 -(void)updateViewConstraints
 {
     [super updateViewConstraints];
-    NSLog(@"%f",[UIScreen mainScreen].bounds.size.height);
 }
 -(void)initWithBook:(DataForCell *)book
 {
@@ -328,22 +327,11 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
 {
    progressView=[MRProgressOverlayView showOverlayAddedTo:self.view title:@"正在查询单词" mode:MRProgressOverlayViewModeIndeterminate animated:YES];
     dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        if ([UIReferenceLibraryViewController dictionaryHasDefinitionForTerm:currentCheckWord])
-        {
-            UIReferenceLibraryViewController* ref =
-            [[UIReferenceLibraryViewController alloc] initWithTerm:currentCheckWord];
-            dispatch_async(dispatch_get_main_queue(), ^{
-                [self presentViewController:ref animated:YES completion:nil];
-            });
-        }
-        else
-        {
-            if(progressView != nil)
-            {
-                [progressView dismiss:NO];
-                progressView=nil;
-            }
-        }
+        UIReferenceLibraryViewController* ref =
+        [[UIReferenceLibraryViewController alloc] initWithTerm:currentCheckWord];
+        dispatch_async(dispatch_get_main_queue(), ^{
+            [self presentViewController:ref animated:YES completion:nil];
+        });
     });
     
     

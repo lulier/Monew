@@ -10,6 +10,8 @@
 #import <UIKit/UIKit.h>
 #import <CommonCrypto/CommonCrypto.h>
 #define CIPHER_KEY @"24BF8C08A00AFA00"
+#define IPHONE6TOIPHONE5S 0.85
+#define IPHONE6TOIPHONE6S 1.104
 @protocol dismissDelegate <NSObject>
 
 -(void)dismissView;
@@ -17,7 +19,8 @@
 @end
 typedef NS_ENUM(NSInteger,IphoneType)
 {
-    Iphone5s=0,
+    IphoneDefault=0,
+    Iphone5s,
     Iphone6,
     Iphone6p,
     Ipad

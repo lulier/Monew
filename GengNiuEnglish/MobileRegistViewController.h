@@ -12,6 +12,7 @@
 #import "SCLAlertView.h"
 #import "MaterialViewController.h"
 #import "MRProgress.h"
+#import <SMS_SDK/SMSSDK.h>
 
 @interface MobileRegistViewController : UIViewController<UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UIButton *goBackButton;

@@ -25,7 +25,7 @@
 
 
 
-@interface PracticeViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,lyricViewCellDelegate,OEEventsObserverDelegate,AVAudioPlayerDelegate>
+@interface PracticeViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,lyricViewCellDelegate,OEEventsObserverDelegate,AVAudioPlayerDelegate,MCSDelegate>
 @property(nonatomic,strong)NSArray *lyricItems;
 @property(weak,nonatomic)id<dismissDelegate>delegate;
 @property(nonatomic,weak)DataForCell *book;

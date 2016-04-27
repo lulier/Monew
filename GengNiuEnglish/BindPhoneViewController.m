@@ -1,53 +1,43 @@
 //
-//  MobileRegistViewController.m
+//  BindPhoneViewController.m
 //  GengNiuEnglish
 //
-//  Created by luzegeng on 16/3/6.
+//  Created by luzegeng on 16/4/26.
 //  Copyright © 2016年 luzegeng. All rights reserved.
 //
 
-#import "MobileRegistViewController.h"
+#import "BindPhoneViewController.h"
+
+@implementation BindPhoneViewController
 
 
-
-@implementation MobileRegistViewController
 -(void)updateViewConstraints
 {
     [super updateViewConstraints];
-//    NSLog(@"%f",[UIScreen mainScreen].bounds.size.height);
+    //    NSLog(@"%f",[UIScreen mainScreen].bounds.size.height);
     IphoneType type=[CommonMethod checkIphoneType];
     switch (type) {
         case Iphone5s:
             self.titleTopConstraint.constant=4;
-            self.inputTopConstraint.constant=20;
+
             break;
         case Iphone6:
             self.titleTopConstraint.constant=7;
-            self.inputTopConstraint.constant=40;
             break;
         case Iphone6p:
             self.titleTopConstraint.constant=10;
-            self.inputTopConstraint.constant=60;
             break;
         default:
             break;
     }
-    if (self.sendVeriCode.hidden==NO)
-    {
-        self.registWithEmailConstraint.constant=8;
-    }
-    else
-        self.registWithEmailConstraint.constant=53;
 }
+
 -(void)viewDidLoad
 {
     UIImage *background=[CommonMethod imageWithImage:[UIImage imageNamed:@"naked_background"] scaledToSize:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height)];
     self.view.backgroundColor=[UIColor colorWithPatternImage:background];
     self.phoneNumInput.delegate=self;
     self.veriInput.delegate=self;
-    self.passwordInput.delegate=self;
-    self.passwordInput.hidden=YES;
-    self.registButton.hidden=YES;
     self.veriButton.enabled=YES;
     self.phoneNumInput.enabled=YES;
     self.codeVerified=NO;
@@ -60,7 +50,6 @@
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
     [self.phoneNumInput resignFirstResponder];
     [self.veriInput resignFirstResponder];
-    [self.passwordInput resignFirstResponder];
     self.view.frame =CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
 }
 
@@ -87,7 +76,6 @@
 {
     [self.phoneNumInput resignFirstResponder];
     [self.veriButton resignFirstResponder];
-    [self.passwordInput resignFirstResponder];
 }
 - (IBAction)getVeriCode:(id)sender {
     [self resignKeyboard];
@@ -177,15 +165,14 @@
         if (!error) {
             NSLog(@"验证成功");
             SCLAlertView *alert=[[SCLAlertView alloc]init];
-            [alert showWaiting:self title:nil subTitle:@"验证成功，请输入登录密码" closeButtonTitle:nil duration:1.0f];
-            self.sendVeriCode.hidden=YES;
-            self.passwordInput.hidden=NO;
-            self.registButton.hidden=NO;
+            [alert showWaiting:self title:nil subTitle:@"验证成功" closeButtonTitle:nil duration:1.0f];
             self.phoneNumInput.enabled=NO;
             self.veriButton.enabled=NO;
             self.codeVerified=YES;
             self.veriInput.enabled=NO;
             [self updateViewConstraints];
+            //验证成功之后需要绑定手机号
+            [self bindPhone];
         } else {
             NSLog(@"验证失败");
             SCLAlertView *alert=[[SCLAlertView alloc]init];
@@ -193,69 +180,44 @@
         }
     }];
 }
-- (IBAction)registButtonClick:(id)sender {
-    NSString* phoneNum=self.phoneNumInput.text;
-    NSString* password=self.passwordInput.text;
-    NSDictionary *dic=[NSDictionary dictionaryWithObjectsAndKeys:phoneNum,@"account",password,@"password", nil];
-    __block MRProgressOverlayView *progressView=[MRProgressOverlayView showOverlayAddedTo:self.view title:@"正在注册" mode:MRProgressOverlayViewModeIndeterminate animated:YES];
-    [AccountManager registAccount:REGPhone parameters:dic success:^(NSURLSessionTask * _Nullable task, id  _Nullable responseObject) {
+-(void)bindPhone
+{
+    //绑定中
+    __block MRProgressOverlayView *progressView=[MRProgressOverlayView showOverlayAddedTo:self.view title:@"正在绑定手机" mode:MRProgressOverlayViewModeIndeterminate animated:YES];
+    NSString *phone=self.phoneNumInput.text;
+    AccountManager *accountManager=[AccountManager singleInstance];
+    [accountManager bindPhone:phone bind:YES password:nil success:^(BOOL bindSuccess) {
         if (progressView!=nil)
         {
             [progressView dismiss:NO];
             progressView=nil;
         }
-        long int status=[[responseObject objectForKey:@"status"] integerValue];
-        if(status==0)
+        if (bindSuccess)
         {
-            [AccountManager login:LTPhone parameters:dic success:^(NSURLSessionTask * _Nullable task, id  _Nullable responseObject) {
-                long int status=[[responseObject objectForKey:@"status"] integerValue];
-                if (status==0)
-                {
-                    AccountManager *accountManager=[AccountManager singleInstance];
-                    accountManager.userID=[responseObject objectForKey:@"userid"];
-                    accountManager.completeInfo=[responseObject objectForKey:@"info_complete"];
-                    accountManager.loginTime=[responseObject objectForKey:@"logintime"];
-                    [accountManager saveAccount];
-                    dispatch_async(dispatch_get_main_queue(), ^{
-                        UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
-                        MaterialViewController *materialViewController=[storyboard instantiateViewControllerWithIdentifier:@"MaterialViewController"];
-                        [self.navigationController pushViewController:materialViewController animated:NO];
-                    });
-                }
-                else
-                {
-                    SCLAlertView *alert=[[SCLAlertView alloc]init];
-                    [alert showError:self title:@"错误" subTitle:@"登录失败，请重新尝试" closeButtonTitle:nil duration:1.0f];
-                }
-            } failure:^(NSURLSessionTask * _Nullable task, NSError * _Nullable error) {
-                SCLAlertView *alert = [[SCLAlertView alloc] init];
-                [alert showError:self title:@"错误" subTitle:@"网络错误，请重新尝试" closeButtonTitle:nil duration:1.0f];
-            }];
+            SCLAlertView *alert=[[SCLAlertView alloc]init];
+            [alert showWaiting:self title:nil subTitle:@"绑定成功" closeButtonTitle:nil duration:1.0f];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self.navigationController popViewControllerAnimated:YES];
+            });
         }
         else
         {
             SCLAlertView *alert=[[SCLAlertView alloc]init];
-            [alert showError:self title:@"错误" subTitle:@"注册失败，请重新尝试" closeButtonTitle:nil duration:1.0f];
+            [alert showError:self title:nil subTitle:@"绑定手机失败" closeButtonTitle:@"确认" duration:0.0f];
         }
         
-    } failure:^(NSURLSessionTask * _Nullable task, NSError * _Nullable error) {
+    } failure:^(NSString *message) {
         if (progressView!=nil)
         {
             [progressView dismiss:NO];
             progressView=nil;
         }
         SCLAlertView *alert = [[SCLAlertView alloc] init];
-        [alert showError:self title:@"错误" subTitle:@"网络错误，请重新尝试" closeButtonTitle:nil duration:1.0f];
+        [alert showError:self title:@"错误" subTitle:@"网络错误，请重新尝试" closeButtonTitle:@"确定" duration:0.0f];
     }];
 }
-
 - (IBAction)goBack:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
-}
-- (IBAction)useEmail:(id)sender {
-    UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    EmailRegistViewController *emailRegistViewController=[storyboard instantiateViewControllerWithIdentifier:@"EmailRegistViewController"];
-    [self.navigationController pushViewController:emailRegistViewController animated:YES];
 }
 
 @end
