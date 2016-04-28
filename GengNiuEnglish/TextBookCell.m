@@ -53,16 +53,10 @@
             self.labelTopConstraint.constant=100;
             break;
         case Iphone6:
-            self.labelTopConstraint.constant=120;
-            self.xiuLianWidth.constant=50;
-            self.moErDuoWidth.constant=50;
-            self.chuangGuanWidth.constant=50;
+            self.labelTopConstraint.constant=110;
             break;
         case Iphone6p:
-            self.labelTopConstraint.constant=140;
-            self.xiuLianWidth.constant=55;
-            self.moErDuoWidth.constant=55;
-            self.chuangGuanWidth.constant=55;
+            self.labelTopConstraint.constant=130;
             break;
         default:
             break;
