@@ -63,7 +63,9 @@
             [self startPlayMP3];
             break;
         case STKAudioPlayerStateStopped:
-            [self stopPlayingMP3];
+            [self.playButton setImage:[UIImage imageNamed:@"stop"] forState:UIControlStateNormal];
+            playTimes=[self getPlayTimes];
+            [self startPlayMP3];
             break;
         case STKAudioPlayerStatePaused:
             [audioPlayer resume];
@@ -165,9 +167,7 @@
         [self.playButton setImage:[UIImage imageNamed:@"broadcast"] forState:UIControlStateNormal];
         if (audioPlayer!=nil)
         {
-            [audioPlayer dispose];
-            audioPlayer.delegate=nil;
-            audioPlayer=nil;
+            [audioPlayer stop];
         }
     }
     

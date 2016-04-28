@@ -27,6 +27,7 @@ typedef NS_ENUM(NSInteger,StarNum)
     NSMutableSet *recognitionResult;
     NSString *lmPath ;
     NSString *dicPath ;
+    NSInteger playTextID;
     NSInteger playTextIndex;
     NSArray *currentWords;
     UITapGestureRecognizer *gestureRecognizer;
@@ -94,6 +95,8 @@ static NSString* cellIdentifierLyric=@"LyricViewCell";
         [self tableView:self.tableview didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
     });
     
+    
+    playTextID=-1;
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -118,9 +121,15 @@ static NSString* cellIdentifierLyric=@"LyricViewCell";
 {
     double time=(double)value;
     [audioPlayer seekToTime:time/1000];
+    NSInteger currentID=playTextID;
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(duration * NSEC_PER_MSEC)), dispatch_get_main_queue(), ^{
-        if (audioPlayer!=nil&&playTextIndex==index)
+        if (audioPlayer!=nil&&playTextID==currentID)
         {
+            LyricViewCell *cell=[self.tableview cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
+            if(cell!=nil)
+            {
+                [cell.playText setImage:[UIImage imageNamed:@"playTextWW"] forState:UIControlStateNormal];
+            }
             [audioPlayer pause];
             self.PlayingText=false;
         }
@@ -156,7 +165,7 @@ static NSString* cellIdentifierLyric=@"LyricViewCell";
     //hide dictionary
     [cell.cellContent setHidden:YES];
     
-    
+    [cell.playText setImage:[UIImage imageNamed:@"playTextWW"] forState:UIControlStateNormal];
     cell.lyricItem=self.lyricItems[indexPath.row];
     cell.index=indexPath.row;
     cell.delegate=self;
@@ -187,6 +196,10 @@ static NSString* cellIdentifierLyric=@"LyricViewCell";
     if (self.selectedIndex.row==cell.index)
     {
         cell.playText.hidden=NO;
+        if (self.isPlayingText&&cell.index==playTextIndex)
+        {
+            [cell.playText setImage:[UIImage imageNamed:@"playText"] forState:UIControlStateNormal];
+        }
         cell.cellText.textColor=[UIColor colorWithRed:2/255.f green:196/255.f blue:188/255.f alpha:1.0];
         cell.cellContent.textColor=[UIColor colorWithRed:2/255.f green:196/255.f blue:188/255.f alpha:1.0];
         gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(textViewTapped:)];
@@ -216,6 +229,12 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     for (LyricViewCell *cell in [tableView visibleCells])
     {
         cell.playText.hidden=YES;
+        if (self.isPlayingText&&cell.index==playTextIndex)
+        {
+            [cell.playText setImage:[UIImage imageNamed:@"playText"] forState:UIControlStateNormal];
+        }
+        else
+            [cell.playText setImage:[UIImage imageNamed:@"playTextWW"] forState:UIControlStateNormal];
         if (cell.index!=indexPath.row)
         {
             LyricItem *item=self.lyricItems[cell.index];
@@ -514,7 +533,17 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
 }
 -(void)playText:(NSInteger)index
 {
+//    if (self.isPlayingText)
+//    {
+//        return;
+//    }
     playTextIndex=index;
+    LyricViewCell *cell=[self.tableview cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
+    if(cell!=nil)
+    {
+        [cell.playText setImage:[UIImage imageNamed:@"playText"] forState:UIControlStateNormal];
+    }
+    playTextID++;
     AVAudioSession *audioSession=[AVAudioSession sharedInstance];
     NSError* err;
     [audioSession setCategory:AVAudioSessionCategoryPlayback withOptions:AVAudioSessionCategoryOptionMixWithOthers error:&err];
