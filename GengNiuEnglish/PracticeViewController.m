@@ -33,6 +33,7 @@ typedef NS_ENUM(NSInteger,StarNum)
     UITapGestureRecognizer *gestureRecognizer;
     NSString *currentCheckWord;
     MRProgressOverlayView *progressView;
+    NSTimer *timer;
 }
 @end
 
@@ -122,10 +123,30 @@ static NSString* cellIdentifierLyric=@"LyricViewCell";
     double time=(double)value;
     [audioPlayer seekToTime:time/1000];
     NSInteger currentID=playTextID;
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(duration * NSEC_PER_MSEC)), dispatch_get_main_queue(), ^{
-        if (audioPlayer!=nil&&playTextID==currentID)
+//    dispatch_source_t timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_main_queue());
+//    dispatch_source_set_timer(timer, DISPATCH_TIME_NOW, duration * NSEC_PER_MSEC, 0 * NSEC_PER_SEC);
+//    dispatch_source_set_event_handler(timer, ^{
+//        if (audioPlayer!=nil&&playTextID==currentID)
+//        {
+//            LyricViewCell *cell=[self.tableview cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
+//            if(cell!=nil)
+//            {
+//                [cell.playText setImage:[UIImage imageNamed:@"playTextWW"] forState:UIControlStateNormal];
+//            }
+//            [audioPlayer pause];
+//            self.PlayingText=false;
+//        }
+//    });
+//    dispatch_resume(timer);
+}
+
+-(void)checkEndOfSentence
+{
+    if (endTime<=audioPlayer.progress*1000)
+    {
+        if (audioPlayer!=nil)
         {
-            LyricViewCell *cell=[self.tableview cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
+            LyricViewCell *cell=[self.tableview cellForRowAtIndexPath:[NSIndexPath indexPathForRow:playTextIndex inSection:0]];
             if(cell!=nil)
             {
                 [cell.playText setImage:[UIImage imageNamed:@"playTextWW"] forState:UIControlStateNormal];
@@ -133,8 +154,11 @@ static NSString* cellIdentifierLyric=@"LyricViewCell";
             [audioPlayer pause];
             self.PlayingText=false;
         }
-    });
+    }
 }
+
+
+
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {
     return 1;
 }
@@ -555,6 +579,17 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
         endTime=audioPlayer.duration*1000;
     }
     [self setPlayerTime:item.beginTime duration:endTime-item.beginTime index:index];
+    
+    //set the timer
+    if (timer!=nil)
+    {
+        [timer invalidate];
+    }
+    timer=[NSTimer scheduledTimerWithTimeInterval:0.1 target:self selector:@selector(checkEndOfSentence) userInfo:nil repeats:YES];
+    [timer fire];
+    
+    
+    
     if (audioPlayer.state!=STKAudioPlayerStatePlaying)
     {
         [audioPlayer resume];
