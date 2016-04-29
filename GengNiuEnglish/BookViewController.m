@@ -169,7 +169,7 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
         case Iphone6p:
             return CGSizeMake(230, 220);
         default:
-            return CGSizeMake(150, 180);
+            return CGSizeMake(180, 170);
     }
 }
 - (UIEdgeInsets)collectionView:(UICollectionView *)collectionView layout:(UICollectionViewLayout*)collectionViewLayout insetForSectionAtIndex:(NSInteger)section

@@ -15,6 +15,7 @@
 #import <SMS_SDK/SMSSDK.h>
 #import "CommonMethod.h"
 #import "MaterialViewController.h"
+#import "SettingViewController.h"
 
 @interface AppDelegate ()
 
@@ -47,6 +48,8 @@ static NSString* const appSecret=@"2c2ca1b896f428d3d258743bf50076d9";
     [SMSSDK registerApp:appKey withSecret:appSecret];
     
     // Override point for customization after application launch.
+    
+    self.isReaderView=self.isPickerView=false;
     return YES;
 }
 
@@ -90,6 +93,10 @@ static NSString* const appSecret=@"2c2ca1b896f428d3d258743bf50076d9";
         {
             return UIInterfaceOrientationMaskLandscape;
         }
+        return UIInterfaceOrientationMaskAll;
+    }
+    if (self.isPickerView)
+    {
         return UIInterfaceOrientationMaskAll;
     }
     else return UIInterfaceOrientationMaskLandscape;

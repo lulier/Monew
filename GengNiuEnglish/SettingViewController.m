@@ -10,7 +10,6 @@
 
 @implementation SettingViewController
 
-
 -(void)updateViewConstraints
 {
     [super updateViewConstraints];
@@ -52,6 +51,89 @@
     
     self.portraitImage.layer.cornerRadius=self.portraitImage.frame.size.width/2;
     self.portraitImage.clipsToBounds=YES;
+}
+-(void)viewWillAppear:(BOOL)animated
+{
+    AppDelegate *appDelegate=[[UIApplication sharedApplication] delegate];
+    appDelegate.isPickerView=false;
+}
+-(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
+{
+    UITouch *touch=[touches anyObject];
+    CGPoint pos=[touch locationInView:self.settingView];
+    if (CGRectContainsPoint(self.portraitImage.frame, pos))
+    {
+        [self setAndUploadPortrait];
+    }
+    if (CGRectContainsPoint(self.userName.frame, pos))
+    {
+        [self setAndUploadUserName];
+    }
+}
+
+-(void)setAndUploadPortrait
+{
+    UIActionSheet *sheet;
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
+    {
+        sheet=[[UIActionSheet alloc]initWithTitle:@"选择图片" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"拍照",@"从手机相册选择", nil];
+    }
+    else
+        sheet=[[UIActionSheet alloc]initWithTitle:@"选择图片" delegate:self cancelButtonTitle:@"取消" destructiveButtonTitle:nil otherButtonTitles:@"从手机相册选择", nil];
+    [sheet showInView:self.view];
+}
+
+-(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
+{
+    UIImagePickerControllerSourceType sourceType;
+    switch (buttonIndex)
+    {
+        case 0:
+            sourceType=UIImagePickerControllerSourceTypeCamera;
+            break;
+        case 1:
+            sourceType=UIImagePickerControllerSourceTypePhotoLibrary;
+            break;
+        case 2:
+            return;
+        default:
+            break;
+    }
+    UIImagePickerController *picker=[[UIImagePickerController alloc]init];
+    picker.delegate=self;
+    picker.allowsEditing=YES;
+    picker.sourceType=sourceType;
+    AppDelegate *appDelegate=[[UIApplication sharedApplication] delegate];
+    appDelegate.isPickerView=true;
+    [self presentViewController:picker animated:YES completion:nil];
+}
+
+-(void)imagePickerControllerDidCancel:(UIImagePickerController *)picker
+{
+    AppDelegate *appDelegate=[[UIApplication sharedApplication] delegate];
+    appDelegate.isPickerView=false;
+    [picker dismissViewControllerAnimated:YES completion:nil];
+}
+
+-(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
+{
+    [picker dismissViewControllerAnimated:YES completion:nil];
+    UIImage *image=[info objectForKey:UIImagePickerControllerEditedImage];
+    [self.portraitImage setImage:image];
+}
+
+
+-(void)setAndUploadUserName
+{
+    SCLAlertView *alert = [[SCLAlertView alloc] init];
+    
+    UITextField *textField = [alert addTextField:@"请输入您的用户名"];
+    
+    [alert addButton:@"确认" actionBlock:^(void) {
+        self.userName.text=textField.text;
+    }];
+    
+    [alert showEdit:self title:@"修改用户名" subTitle:nil closeButtonTitle:@"取消" duration:0.0f];
 }
 
 - (NSInteger)numberOfSectionsInTableView:(UITableView *)tableView {

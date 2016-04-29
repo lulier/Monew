@@ -59,6 +59,7 @@
             self.labelTopConstraint.constant=130;
             break;
         default:
+            self.labelTopConstraint.constant=93;
             break;
     }
     [self setNeedsLayout];

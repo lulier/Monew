@@ -12,8 +12,9 @@
 #import "SCLAlertView.h"
 #import "SettingCell.h"
 #import "BindPhoneViewController.h"
+#import "AppDelegate.h"
 
-@interface SettingViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,settingCellDelegate>
+@interface SettingViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,settingCellDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIView *settingView;
 @property (weak, nonatomic) IBOutlet UITableView *settingTableView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *settingViewTop;
