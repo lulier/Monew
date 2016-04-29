@@ -56,7 +56,10 @@
             self.labelTopConstraint.constant=110;
             break;
         case Iphone6p:
-            self.labelTopConstraint.constant=130;
+            self.labelTopConstraint.constant=135;
+            [self.xiuLian.titleLabel setFont:[UIFont systemFontOfSize:16.f]];
+            [self.moErDuo.titleLabel setFont:[UIFont systemFontOfSize:16.f]];
+            [self.chuangGuan.titleLabel setFont:[UIFont systemFontOfSize:16.f]];
             break;
         default:
             self.labelTopConstraint.constant=93;
