@@ -30,6 +30,7 @@
             self.inputTopConstraint.constant=60;
             break;
         default:
+            self.titleTopConstraint.constant=4;
             break;
     }
     if (self.sendVeriCode.hidden==NO)

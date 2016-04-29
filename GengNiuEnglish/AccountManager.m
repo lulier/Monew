@@ -150,8 +150,8 @@ static NSString * const ACCOUNT_KEYCHAIN = @"GNAccount20160311";
     {
         bindSign=1;
     }
-    NSMutableString* sign=[CommonMethod MD5EncryptionWithString:[NSString stringWithFormat:@"%@%@%ld",self.userID,phone,bindSign]];
-    NSDictionary *dict=[NSDictionary dictionaryWithObjectsAndKeys:self.userID,@"user_id",phone,@"phone",[NSString stringWithFormat:@"%ld",bindSign],@"bind",sign,@"sign",nil];
+    NSMutableString* sign=[CommonMethod MD5EncryptionWithString:[NSString stringWithFormat:@"%@%@%d",self.userID,phone,bindSign]];
+    NSDictionary *dict=[NSDictionary dictionaryWithObjectsAndKeys:self.userID,@"user_id",phone,@"phone",[NSString stringWithFormat:@"%d",bindSign],@"bind",sign,@"sign",nil];
     [NetworkingManager httpRequest:RTPost url:RUCheckAvail parameters:dict progress:nil success:^(NSURLSessionTask * _Nullable task, id  _Nullable responseObject) {
         long int status=[[responseObject objectForKey:@"status"]integerValue];
         if (status==0)
@@ -208,7 +208,7 @@ static NSString * const ACCOUNT_KEYCHAIN = @"GNAccount20160311";
             weakself.nickName=[responseObject objectForKey:@"nickname"];
             weakself.portraitKey=[responseObject objectForKey:@"avatar"];
             NSArray *colums=[[NSArray alloc]initWithObjects:@"user_id",@"gender",@"nickname",@"portrait_key", nil];
-            NSArray *values=[[NSArray alloc]initWithObjects:[NSString stringWithFormat:@"'%@'",weakself.userID],[NSString stringWithFormat:@"%lu",weakself.gender],[NSString stringWithFormat:@"'%@'",weakself.nickName],[NSString stringWithFormat:@"'%@'",weakself.portraitKey], nil];
+            NSArray *values=[[NSArray alloc]initWithObjects:[NSString stringWithFormat:@"'%@'",weakself.userID],[NSString stringWithFormat:@"%ld",weakself.gender],[NSString stringWithFormat:@"'%@'",weakself.nickName],[NSString stringWithFormat:@"'%@'",weakself.portraitKey], nil];
             [[MTDatabaseHelper sharedInstance] insertToTable:@"UserInfo" withColumns:colums andValues:values];
         }
     } failure:^(NSURLSessionTask * _Nullable task, NSError * _Nullable error) {

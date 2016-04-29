@@ -26,6 +26,7 @@
             self.titleTopConstraint.constant=10;
             break;
         default:
+            self.titleTopConstraint.constant=4;
             break;
     }
 }
