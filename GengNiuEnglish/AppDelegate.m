@@ -16,12 +16,13 @@
 #import "CommonMethod.h"
 #import "MaterialViewController.h"
 #import "SettingViewController.h"
-
+#import "Reachability.h"
+static NSString* const appKey=@"1041a2bf48e78";
+static NSString* const appSecret=@"2c2ca1b896f428d3d258743bf50076d9";
 @interface AppDelegate ()
 
 @end
-static NSString* const appKey=@"1041a2bf48e78";
-static NSString* const appSecret=@"2c2ca1b896f428d3d258743bf50076d9";
+
 @implementation AppDelegate
 
 
@@ -45,7 +46,15 @@ static NSString* const appSecret=@"2c2ca1b896f428d3d258743bf50076d9";
         NSString *path=url.path;
         return path;
     };
-    [SMSSDK registerApp:appKey withSecret:appSecret];
+    
+    
+    //check network
+    
+    [CommonMethod checkNetwork:^(NSURLSessionTask *task, id responseObject) {
+        [SMSSDK registerApp:appKey withSecret:appSecret];
+    }];
+    
+
     
     // Override point for customization after application launch.
     

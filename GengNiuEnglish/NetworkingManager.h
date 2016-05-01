@@ -9,11 +9,11 @@
 #import <Foundation/Foundation.h>
 #import <SDWebImage/UIImageView+WebCache.h>
 
-//#define MONEWDOMAIN @"http://120.25.103.72:8002"
-//#define MONEWFOLDER @"monew_debug_folder"
+#define MONEWDOMAIN @"http://120.25.103.72:8002"
+#define MONEWFOLDER @"monew_debug_folder"
 
-#define MONEWDOMAIN @"http://english.mo-new.com"
-#define MONEWFOLDER @"monew_official_folder"
+//#define MONEWDOMAIN @"http://english.mo-new.com"
+//#define MONEWFOLDER @"monew_official_folder"
 
 
 typedef NS_ENUM(NSInteger,RequestType)
@@ -37,6 +37,8 @@ typedef NS_ENUM(NSInteger,RequestURL)
     RUBindPhone,
     RUUserInfo,
     RUSetUserInfo,
+    RUGetCloudURL,
+    RUCheckNetwork,
     RUCustom
 };
 enum Return_Code
@@ -68,6 +70,6 @@ enum Return_Code
 
 @interface NetworkingManager : NSObject
 
-+(nonnull NSURLSessionTask*)httpRequest:(RequestType)type url:(RequestURL)url parameters:(nullable NSDictionary*)parameters progress:(nullable void (^)(NSProgress * _Nullable downloadProgress))downloadProgressBlock success:(nullable void (^)( NSURLSessionTask * _Nullable task, id _Nullable responseObject))success failure:(nullable void (^)(NSURLSessionTask * _Nullable task, NSError * _Nullable error))failure completionHandler:(nullable void (^)(NSURLResponse * _Nullable response, NSURL * _Nullable filePath, NSError * _Nullable error))completionHandler;
++(nonnull NSURLSessionTask*)httpRequest:(RequestType)type url:(RequestURL)url parameters:(nullable NSDictionary*)parameters progress:(nullable void (^)(NSProgress * _Nullable progress))progressBlock success:(nullable void (^)( NSURLSessionTask * _Nullable task, id _Nullable responseObject))success failure:(nullable void (^)(NSURLSessionTask * _Nullable task, NSError * _Nullable error))failure completionHandler:(nullable void (^)(NSURLResponse * _Nullable response, NSURL * _Nullable filePath, NSError * _Nullable error))completionHandler;
 +(nonnull NSString*)requestURL:(RequestURL)url;
 @end

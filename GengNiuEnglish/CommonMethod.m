@@ -8,6 +8,7 @@
 
 #import "CommonMethod.h"
 #import "NSData+NSData_AES.h"
+#import "NetworkingManager.h"
 
 
 @implementation CommonMethod
@@ -216,14 +217,16 @@
     }
     return IphoneDefault;
 }
-+(BOOL)checkFileExistence:(NSString*)path
++ (void)checkNetwork:(void (^)( NSURLSessionTask *  task, id responseObject))success
 {
-    BOOL isDir;
-    if ([[NSFileManager defaultManager] fileExistsAtPath:path isDirectory:&isDir])
-    {
-        return YES;
-    }
-    else
-        return NO;
+    NSMutableString *sign=[CommonMethod MD5EncryptionWithString:@"15521223112"];
+    NSDictionary *dic=[NSDictionary dictionaryWithObjectsAndKeys:@"15521223112",@"phone",sign,@"sign", nil];
+    [NetworkingManager httpRequest:RTPost url:RUCheckAvail parameters:dic progress:nil success:^(NSURLSessionTask * _Nullable task, id  _Nullable responseObject) {
+        success(task,responseObject);
+    } failure:^(NSURLSessionTask * _Nullable task, NSError * _Nullable error) {
+        
+    } completionHandler:nil];
 }
+
+
 @end

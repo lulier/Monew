@@ -225,21 +225,22 @@ static NSString * const reuseIdentifierMaterial = @"MaterialCell";
     [self.navigationController pushViewController:bookViewController animated:YES];
 }
 - (IBAction)settingButtonClick:(id)sender {
+    AccountManager *account=[AccountManager singleInstance];
+    [account getUserInfo];
+    UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    SettingViewController *settingViewController=[storyboard instantiateViewControllerWithIdentifier:@"SettingViewController"];
+    [self.navigationController pushViewController:settingViewController animated:YES];
     
-//    UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
-//    SettingViewController *settingViewController=[storyboard instantiateViewControllerWithIdentifier:@"SettingViewController"];
-//    [self.navigationController pushViewController:settingViewController animated:YES];
     
-    
-    SCLAlertView *alert=[[SCLAlertView alloc]init];
-    [alert addButton:@"确定" target:self selector:@selector(logout)];
-    [alert showNotice:self title:@"提示" subTitle:@"您确定要退出当前账号？" closeButtonTitle:@"取消" duration:0.0f];
+//    SCLAlertView *alert=[[SCLAlertView alloc]init];
+//    [alert addButton:@"确定" target:self selector:@selector(logout)];
+//    [alert showNotice:self title:@"提示" subTitle:@"您确定要退出当前账号？" closeButtonTitle:@"取消" duration:0.0f];
 
 }
 -(void)logout
 {
     [[AccountManager singleInstance] deleteAccount];
-    [[NSUserDefaults standardUserDefaults] setValue:@"out" forKey:@"MeticStatus"];
+    [[NSUserDefaults standardUserDefaults] setValue:@"out" forKey:@"AccountStatus"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
        [self.navigationController popToRootViewControllerAnimated:YES];

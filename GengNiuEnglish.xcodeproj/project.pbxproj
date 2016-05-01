@@ -22,14 +22,16 @@
 		F42FA5FC1C8EB1560033C9C9 /* AccountManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F42FA5FB1C8EB1560033C9C9 /* AccountManager.m */; };
 		F436F6D01CCE5D3C008260F0 /* SettingCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F436F6CF1CCE5D3C008260F0 /* SettingCell.m */; };
 		F436F6D91CCF6288008260F0 /* BindPhoneViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F436F6D81CCF6288008260F0 /* BindPhoneViewController.m */; };
+		F448DD861CD4B768002D43B6 /* Reachability.m in Sources */ = {isa = PBXBuildFile; fileRef = F448DD851CD4B768002D43B6 /* Reachability.m */; };
+		F448DD881CD4B798002D43B6 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F448DD871CD4B798002D43B6 /* SystemConfiguration.framework */; };
+		F448DD8B1CD4BBC3002D43B6 /* MOBFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F448DD891CD4BBC3002D43B6 /* MOBFoundation.framework */; };
+		F448DD8C1CD4BBC3002D43B6 /* SMS_SDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F448DD8A1CD4BBC3002D43B6 /* SMS_SDK.framework */; };
 		F454F9331CC767B400326774 /* UITextView+ContentInset.m in Sources */ = {isa = PBXBuildFile; fileRef = F454F9321CC767B400326774 /* UITextView+ContentInset.m */; };
 		F46A44FA1C93CA37002BC9D4 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F46A44F91C93CA37002BC9D4 /* CoreTelephony.framework */; };
 		F46A45051C93CD50002BC9D4 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F46A44FB1C93CA5B002BC9D4 /* libz.tbd */; };
 		F46A45071C93CD5A002BC9D4 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F46A45061C93CD5A002BC9D4 /* libicucore.tbd */; };
 		F46A45081C93CD6D002BC9D4 /* libstdc++.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F46A44FD1C93CA65002BC9D4 /* libstdc++.tbd */; };
 		F46A450A1C93CD7D002BC9D4 /* JavaScriptCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F46A45091C93CD7D002BC9D4 /* JavaScriptCore.framework */; };
-		F478C87B1C9D955500746E2C /* MOBFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F478C8771C9D955500746E2C /* MOBFoundation.framework */; };
-		F478C87C1C9D955500746E2C /* SMS_SDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F478C8781C9D955500746E2C /* SMS_SDK.framework */; };
 		F478C87D1C9D955500746E2C /* AcousticModelEnglish.bundle in Resources */ = {isa = PBXBuildFile; fileRef = F478C8791C9D955500746E2C /* AcousticModelEnglish.bundle */; };
 		F478C87E1C9D955500746E2C /* OpenEars.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F478C87A1C9D955500746E2C /* OpenEars.framework */; };
 		F478C8811C9EDA9A00746E2C /* UIImageView+MTTag.m in Sources */ = {isa = PBXBuildFile; fileRef = F478C8801C9EDA9A00746E2C /* UIImageView+MTTag.m */; };
@@ -107,6 +109,11 @@
 		F436F6CF1CCE5D3C008260F0 /* SettingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingCell.m; sourceTree = "<group>"; };
 		F436F6D71CCF6288008260F0 /* BindPhoneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BindPhoneViewController.h; sourceTree = "<group>"; };
 		F436F6D81CCF6288008260F0 /* BindPhoneViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = BindPhoneViewController.m; sourceTree = "<group>"; };
+		F448DD841CD4B768002D43B6 /* Reachability.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = Reachability.h; sourceTree = "<group>"; };
+		F448DD851CD4B768002D43B6 /* Reachability.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = Reachability.m; sourceTree = "<group>"; };
+		F448DD871CD4B798002D43B6 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		F448DD891CD4BBC3002D43B6 /* MOBFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MOBFoundation.framework; path = framwork/MOBFoundation.framework; sourceTree = "<group>"; };
+		F448DD8A1CD4BBC3002D43B6 /* SMS_SDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SMS_SDK.framework; path = framwork/SMS_SDK.framework; sourceTree = "<group>"; };
 		F454F9311CC767B400326774 /* UITextView+ContentInset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextView+ContentInset.h"; sourceTree = "<group>"; };
 		F454F9321CC767B400326774 /* UITextView+ContentInset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextView+ContentInset.m"; sourceTree = "<group>"; };
 		F46A44F91C93CA37002BC9D4 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
@@ -116,8 +123,6 @@
 		F46A45011C93CBDC002BC9D4 /* MobileCoreServices.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MobileCoreServices.framework; path = System/Library/Frameworks/MobileCoreServices.framework; sourceTree = SDKROOT; };
 		F46A45061C93CD5A002BC9D4 /* libicucore.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libicucore.tbd; path = usr/lib/libicucore.tbd; sourceTree = SDKROOT; };
 		F46A45091C93CD7D002BC9D4 /* JavaScriptCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = JavaScriptCore.framework; path = System/Library/PrivateFrameworks/JavaScriptCore.framework; sourceTree = SDKROOT; };
-		F478C8771C9D955500746E2C /* MOBFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MOBFoundation.framework; path = framwork/MOBFoundation.framework; sourceTree = "<group>"; };
-		F478C8781C9D955500746E2C /* SMS_SDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SMS_SDK.framework; path = framwork/SMS_SDK.framework; sourceTree = "<group>"; };
 		F478C8791C9D955500746E2C /* AcousticModelEnglish.bundle */ = {isa = PBXFileReference; lastKnownFileType = "wrapper.plug-in"; name = AcousticModelEnglish.bundle; path = framwork/AcousticModelEnglish.bundle; sourceTree = "<group>"; };
 		F478C87A1C9D955500746E2C /* OpenEars.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OpenEars.framework; path = framwork/OpenEars.framework; sourceTree = "<group>"; };
 		F478C87F1C9EDA9A00746E2C /* UIImageView+MTTag.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UIImageView+MTTag.h"; sourceTree = "<group>"; };
@@ -170,18 +175,19 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F478C87B1C9D955500746E2C /* MOBFoundation.framework in Frameworks */,
+				F448DD881CD4B798002D43B6 /* SystemConfiguration.framework in Frameworks */,
 				F46A450A1C93CD7D002BC9D4 /* JavaScriptCore.framework in Frameworks */,
-				F478C87C1C9D955500746E2C /* SMS_SDK.framework in Frameworks */,
 				F46A45081C93CD6D002BC9D4 /* libstdc++.tbd in Frameworks */,
 				F4AD05691C2C1034006554FF /* MessageUI.framework in Frameworks */,
 				F46A45071C93CD5A002BC9D4 /* libicucore.tbd in Frameworks */,
 				F46A45051C93CD50002BC9D4 /* libz.tbd in Frameworks */,
+				F448DD8B1CD4BBC3002D43B6 /* MOBFoundation.framework in Frameworks */,
 				F478C87E1C9D955500746E2C /* OpenEars.framework in Frameworks */,
 				F46A44FA1C93CA37002BC9D4 /* CoreTelephony.framework in Frameworks */,
 				F4AFCF9A1C803DE30003B7F2 /* AudioToolbox.framework in Frameworks */,
 				F4AFCF921C8025C10003B7F2 /* AVFoundation.framework in Frameworks */,
 				F4AD05671C2C102C006554FF /* ImageIO.framework in Frameworks */,
+				F448DD8C1CD4BBC3002D43B6 /* SMS_SDK.framework in Frameworks */,
 				F4AD05651C2C1021006554FF /* QuartzCore.framework in Frameworks */,
 				4685CC87E9EF4168376FEC31 /* libPods.a in Frameworks */,
 			);
@@ -216,8 +222,9 @@
 		5F4697E4BCC7D6FEE1E67A97 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
-				F478C8771C9D955500746E2C /* MOBFoundation.framework */,
-				F478C8781C9D955500746E2C /* SMS_SDK.framework */,
+				F448DD891CD4BBC3002D43B6 /* MOBFoundation.framework */,
+				F448DD8A1CD4BBC3002D43B6 /* SMS_SDK.framework */,
+				F448DD871CD4B798002D43B6 /* SystemConfiguration.framework */,
 				F478C8791C9D955500746E2C /* AcousticModelEnglish.bundle */,
 				F478C87A1C9D955500746E2C /* OpenEars.framework */,
 				F46A45091C93CD7D002BC9D4 /* JavaScriptCore.framework */,
@@ -350,6 +357,8 @@
 		F49466FE1C27C95700806DEF /* Model */ = {
 			isa = PBXGroup;
 			children = (
+				F448DD841CD4B768002D43B6 /* Reachability.h */,
+				F448DD851CD4B768002D43B6 /* Reachability.m */,
 				F478C8821C9EDAF400746E2C /* MTImageGetter.h */,
 				F478C8831C9EDAF400746E2C /* MTImageGetter.m */,
 				F42FA5EE1C8D29600033C9C9 /* MTDatabaseHelper.h */,
@@ -455,7 +464,7 @@
 				TargetAttributes = {
 					F42799251C18514200240736 = {
 						CreatedOnToolsVersion = 7.1.1;
-						DevelopmentTeam = BQWKD37TRB;
+						DevelopmentTeam = 5Y787D7K6C;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -577,6 +586,7 @@
 				F486C77C1C3A492000CBFBD1 /* LyricItem.m in Sources */,
 				F4A9AF391C4D0D26004BC7BF /* CommonMethod.m in Sources */,
 				F454F9331CC767B400326774 /* UITextView+ContentInset.m in Sources */,
+				F448DD861CD4B768002D43B6 /* Reachability.m in Sources */,
 				F427992E1C18514200240736 /* AppDelegate.m in Sources */,
 				F4FABE1C1CCDF20800653A69 /* SettingViewController.m in Sources */,
 				F4A9AF4E1C4F7258004BC7BF /* PracticeViewController.m in Sources */,
@@ -758,7 +768,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULEMAP_FILE = "${PROJECT_DIR}/module.modulemap";
-				PRODUCT_BUNDLE_IDENTIFIER = com.monew.enterprise.english;
+				PRODUCT_BUNDLE_IDENTIFIER = com.monew.test.english;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -785,7 +795,7 @@
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				MODULEMAP_FILE = "${PROJECT_DIR}/module.modulemap";
-				PRODUCT_BUNDLE_IDENTIFIER = com.monew.enterprise.english;
+				PRODUCT_BUNDLE_IDENTIFIER = com.monew.test.english;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;

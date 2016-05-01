@@ -19,6 +19,9 @@ static NSString * const ACCOUNT_KEYCHAIN = @"GNAccount20160311";
 @synthesize isActive;
 @synthesize completeInfo;
 @synthesize openID;
+@synthesize gender;
+@synthesize nickName;
+@synthesize portraitKey;
 + (AccountManager *)singleInstance {
     static dispatch_once_t once;
     static id instance;
@@ -43,6 +46,10 @@ static NSString * const ACCOUNT_KEYCHAIN = @"GNAccount20160311";
         type = [[aDecoder decodeObjectForKey:@"type"] integerValue];
         completeInfo = [[aDecoder decodeObjectForKey:@"hadCompleteInfo"] boolValue];
         isActive = [[aDecoder decodeObjectForKey:@"isActive"] boolValue];
+        
+        gender=[[aDecoder decodeObjectForKey:@"gender"] integerValue];
+        nickName=[aDecoder decodeObjectForKey:@"nickName"];
+        portraitKey=[aDecoder decodeObjectForKey:@"portraitKey"];
     }
     
     return self;
@@ -57,6 +64,10 @@ static NSString * const ACCOUNT_KEYCHAIN = @"GNAccount20160311";
     [aCoder encodeObject:@(self.type) forKey:@"type"];
     [aCoder encodeObject:@(self.completeInfo) forKey:@"hadCompleteInfo"];
     [aCoder encodeObject:@(self.isActive) forKey:@"isActive"];
+    
+    [aCoder encodeObject:@(self.type) forKey:@"gender"];
+    [aCoder encodeObject:self.nickName forKey:@"nickName"];
+    [aCoder encodeObject:self.portraitKey forKey:@"portraitKey"];
 }
 
 
@@ -76,6 +87,10 @@ static NSString * const ACCOUNT_KEYCHAIN = @"GNAccount20160311";
     self.type = accountManager.type;
     self.completeInfo = accountManager.completeInfo;
     self.isActive = accountManager.isActive;
+    
+    self.gender=accountManager.gender;
+    self.nickName=accountManager.nickName;
+    self.portraitKey=accountManager.portraitKey;
 }
 +(void)login:(LoginType)type parameters:(nonnull NSDictionary *)parameters success:(nullable void (^)( NSURLSessionTask * _Nullable task, id _Nullable responseObject))success failure:(nullable void (^)(NSURLSessionTask * _Nullable task, NSError * _Nullable error))failure
 {
@@ -190,8 +205,10 @@ static NSString * const ACCOUNT_KEYCHAIN = @"GNAccount20160311";
     [[NSUserDefaults standardUserDefaults] synchronize];
     [FXKeychain defaultKeychain][ACCOUNT_KEYCHAIN] = self;
     
-    
-    //getUserInfo
+    [self getUserInfo];
+}
+-(void)getUserInfo
+{
     NSMutableString *sign=[CommonMethod MD5EncryptionWithString:[NSString stringWithFormat:@"%@",self.userID]];
     NSDictionary *dict=[NSDictionary dictionaryWithObjectsAndKeys:self.userID,@"user_id",sign,@"sign",nil];
     __weak __typeof(self)weakself=self;
@@ -210,12 +227,12 @@ static NSString * const ACCOUNT_KEYCHAIN = @"GNAccount20160311";
             NSArray *colums=[[NSArray alloc]initWithObjects:@"user_id",@"gender",@"nickname",@"portrait_key", nil];
             NSArray *values=[[NSArray alloc]initWithObjects:[NSString stringWithFormat:@"'%@'",weakself.userID],[NSString stringWithFormat:@"%ld",weakself.gender],[NSString stringWithFormat:@"'%@'",weakself.nickName],[NSString stringWithFormat:@"'%@'",weakself.portraitKey], nil];
             [[MTDatabaseHelper sharedInstance] insertToTable:@"UserInfo" withColumns:colums andValues:values];
+            [FXKeychain defaultKeychain][ACCOUNT_KEYCHAIN] = self;
         }
     } failure:^(NSURLSessionTask * _Nullable task, NSError * _Nullable error) {
         
     } completionHandler:nil];
 }
-
 - (void)deleteAccount {
     userID = nil;
     account = nil;
@@ -224,6 +241,10 @@ static NSString * const ACCOUNT_KEYCHAIN = @"GNAccount20160311";
     completeInfo = NO;
     isActive = NO;
     type = 0;
+    
+    gender=0;
+    nickName=nil;
+    portraitKey=nil;
     
     [[FXKeychain defaultKeychain] removeObjectForKey:ACCOUNT_KEYCHAIN];
     
@@ -247,7 +268,13 @@ static NSString * const ACCOUNT_KEYCHAIN = @"GNAccount20160311";
         long int status=[[responseObject objectForKey:@"status"]integerValue];
         if (status==0)
         {
-            success(NO);
+            long int available =[[responseObject objectForKey:@"available"] integerValue];
+            if (available==1)
+            {
+                success(NO);
+            }
+            else
+                success(YES);
         }
         else
             success(YES);
@@ -255,5 +282,21 @@ static NSString * const ACCOUNT_KEYCHAIN = @"GNAccount20160311";
         failure([NSString stringWithFormat:@"%@",error]);
     } completionHandler:nil];
 }
+
+-(void)uploadUserInfo
+{
+    NSMutableString* sign=[CommonMethod MD5EncryptionWithString:[NSString stringWithFormat:@"%@%@%ld%@",self.userID,self.nickName,self.gender,self.portraitKey]];
+    NSDictionary *dict=[NSDictionary dictionaryWithObjectsAndKeys:self.userID,@"user_id",self.nickName,@"nickname",[NSString stringWithFormat:@"%ld",self.gender],@"gender",self.portraitKey,@"avatar",sign,@"sign",nil];
+    [NetworkingManager httpRequest:RTPost url:RUSetUserInfo parameters:dict progress:nil success:^(NSURLSessionTask * _Nullable task, id  _Nullable responseObject) {
+        long int status=[[responseObject objectForKey:@"status"]integerValue];
+        if (status==0)
+        {
+            
+        }
+    } failure:^(NSURLSessionTask * _Nullable task, NSError * _Nullable error) {
+        
+    } completionHandler:nil];
+}
+
 
 @end

@@ -1292,7 +1292,7 @@
                                         </constraints>
                                     </imageView>
                                     <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="豆豆" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="qfj-Zj-ZJL">
-                                        <rect key="frame" x="70" y="6" width="45" height="45"/>
+                                        <rect key="frame" x="70" y="6" width="48" height="45"/>
                                         <fontDescription key="fontDescription" type="system" pointSize="24"/>
                                         <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                         <nil key="highlightedColor"/>
@@ -1308,7 +1308,7 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="408" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="7CEA1236-3C36-4673-A0CC-7B485A72EB71" translatesAutoresizingMaskIntoConstraints="NO" id="Axa-d7-Z9S">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="82D5199A-6D9A-49BD-8B31-E3F35E4F1309" translatesAutoresizingMaskIntoConstraints="NO" id="Axa-d7-Z9S">
                                                             <rect key="frame" x="15" y="12" width="21" height="21"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" secondItem="Axa-d7-Z9S" secondAttribute="height" multiplier="2:2" id="tJp-ce-Zz7"/>
@@ -1365,7 +1365,7 @@
                                         </connections>
                                     </tableView>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="girl" translatesAutoresizingMaskIntoConstraints="NO" id="wZ7-hq-JmR">
-                                        <rect key="frame" x="125" y="17" width="23" height="23"/>
+                                        <rect key="frame" x="128" y="17" width="23" height="23"/>
                                         <constraints>
                                             <constraint firstAttribute="width" secondItem="wZ7-hq-JmR" secondAttribute="height" multiplier="1:1" id="agu-gP-BcJ"/>
                                         </constraints>
@@ -1377,6 +1377,7 @@
                                     <constraint firstItem="qfj-Zj-ZJL" firstAttribute="top" secondItem="iXt-6g-Q9K" secondAttribute="bottom" multiplier="2:100" id="19d-Uy-aRc"/>
                                     <constraint firstAttribute="trailing" secondItem="PFT-6x-eep" secondAttribute="trailing" constant="12" id="1sw-bR-gn8"/>
                                     <constraint firstItem="xmI-0r-q0F" firstAttribute="leading" secondItem="iXt-6g-Q9K" secondAttribute="trailing" multiplier="3.5:100" id="2AX-Lv-pkd"/>
+                                    <constraint firstItem="wZ7-hq-JmR" firstAttribute="width" secondItem="xmI-0r-q0F" secondAttribute="width" multiplier="0.5" id="Gwn-Ii-1Yr"/>
                                     <constraint firstItem="wZ7-hq-JmR" firstAttribute="leading" secondItem="qfj-Zj-ZJL" secondAttribute="trailing" constant="10" id="IAG-Ed-SfM"/>
                                     <constraint firstItem="wZ7-hq-JmR" firstAttribute="width" secondItem="qfj-Zj-ZJL" secondAttribute="width" multiplier="0.5" id="OYf-9Q-dA8"/>
                                     <constraint firstItem="xmI-0r-q0F" firstAttribute="width" secondItem="iXt-6g-Q9K" secondAttribute="width" multiplier="0.103" id="RS4-NN-1BV"/>
@@ -1394,6 +1395,8 @@
                                     <mask key="constraints">
                                         <exclude reference="1sw-bR-gn8"/>
                                         <exclude reference="xEQ-QI-WYU"/>
+                                        <exclude reference="vIv-qY-JbN"/>
+                                        <exclude reference="OYf-9Q-dA8"/>
                                     </mask>
                                 </variation>
                             </view>
@@ -1420,6 +1423,7 @@
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
+                        <outlet property="genderImage" destination="wZ7-hq-JmR" id="OIW-nD-CnE"/>
                         <outlet property="portraitImage" destination="xmI-0r-q0F" id="YZW-ko-H9j"/>
                         <outlet property="settingTableView" destination="PFT-6x-eep" id="XKm-fF-BIg"/>
                         <outlet property="settingView" destination="iXt-6g-Q9K" id="ZSt-On-U5b"/>
@@ -1539,7 +1543,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="7CEA1236-3C36-4673-A0CC-7B485A72EB71" width="36" height="36">
+        <image name="82D5199A-6D9A-49BD-8B31-E3F35E4F1309" width="36" height="36">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGOjtYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK0HCBEW
 GxwgISgrLjQ3VSRudWxs1AkKCwwNDg8QViRjbGFzc1xOU0ltYWdlRmxhZ3NWTlNSZXBzV05TQ29sb3KA

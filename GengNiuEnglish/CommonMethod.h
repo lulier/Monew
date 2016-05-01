@@ -9,6 +9,7 @@
 #import <Foundation/Foundation.h>
 #import <UIKit/UIKit.h>
 #import <CommonCrypto/CommonCrypto.h>
+#import "Reachability.h"
 #define CIPHER_KEY @"24BF8C08A00AFA00"
 #define IPHONE6TOIPHONE5S 0.85
 #define IPHONE6TOIPHONE6S 1.104
@@ -35,7 +36,7 @@ typedef NS_ENUM(NSInteger,IphoneType)
 +(BOOL)isEmailValid:(NSString *)email;
 + (BOOL)isPhoneNumberVaild:(NSString *)phoneNumber;
 +(float)calculateTextHeight:(NSString*)text width:(float)width fontSize:(float)fsize;
-
++ (void)checkNetwork:(void (^)( NSURLSessionTask *  task, id responseObject))success;
 
 
 #pragma mark - AES加密

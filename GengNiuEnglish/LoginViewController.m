@@ -80,7 +80,7 @@
     }
     else
     {
-        [[NSUserDefaults standardUserDefaults] setValue:@"out" forKey:@"MeticStatus"];
+        [[NSUserDefaults standardUserDefaults] setValue:@"out" forKey:@"AccountStatus"];
         [[NSUserDefaults standardUserDefaults] synchronize];
     }
 }

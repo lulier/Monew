@@ -269,13 +269,13 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
     [book.progressView displayOperationWillTriggerAnimation];
     __block NSURLSessionTask *task=
     [NetworkingManager httpRequest:RTDownload url:RUCustom parameters:parameters
-                          progress:^(NSProgress *downloadProgress)
+                          progress:^(NSProgress *progress)
      {
-         if (downloadProgress)
+         if (progress)
          {
              dispatch_async(dispatch_get_main_queue(), ^{
-                 [book.progressView setProgress:downloadProgress.fractionCompleted];
-                 if (downloadProgress.fractionCompleted == 1.0000)
+                 [book.progressView setProgress:progress.fractionCompleted];
+                 if (progress.fractionCompleted == 1.0000)
                  {
                      book.task=nil;
                      [book.progressView displayOperationDidFinishAnimation];

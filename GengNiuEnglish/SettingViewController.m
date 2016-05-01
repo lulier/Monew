@@ -7,6 +7,7 @@
 //
 
 #import "SettingViewController.h"
+#import "NetworkingManager.h"
 
 @implementation SettingViewController
 
@@ -51,6 +52,35 @@
     
     self.portraitImage.layer.cornerRadius=self.portraitImage.frame.size.width/2;
     self.portraitImage.clipsToBounds=YES;
+    
+    AccountManager *account=[AccountManager singleInstance];
+    if (account.gender==0)
+    {
+        [self.genderImage setImage:[UIImage imageNamed:@"boy"]];
+    }
+    else
+        [self.genderImage setImage:[UIImage imageNamed:@"girl"]];
+    
+    self.userName.text=account.nickName;
+    
+    // 设置头像
+    
+    if (account.portraitKey!=nil)
+    {
+        NSMutableString *sign=[CommonMethod MD5EncryptionWithString:[NSString stringWithFormat:@"GET%@",account.portraitKey]];
+        NSDictionary *dict=[NSDictionary dictionaryWithObjectsAndKeys:@"GET",@"method",account.portraitKey,@"object",sign,@"sign",nil];
+        [NetworkingManager httpRequest:RTPost url:RUGetCloudURL parameters:dict progress:nil success:^(NSURLSessionTask * _Nullable task, id  _Nullable responseObject) {
+            long int status=[[responseObject objectForKey:@"status"]integerValue];
+            if (status==0)
+            {
+                NSURL *url=[NSURL URLWithString:[responseObject objectForKey:@"url"]];
+                [self.portraitImage sd_setImageWithURL:url];
+            }
+            
+        } failure:^(NSURLSessionTask * _Nullable task, NSError * _Nullable error) {
+            
+        } completionHandler:nil];
+    }
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -69,7 +99,33 @@
     {
         [self setAndUploadUserName];
     }
+    if (CGRectContainsPoint(self.genderImage.frame, pos))
+    {
+        [self setAndUploadGender];
+    }
 }
+
+-(void)setAndUploadGender
+{
+    SCLAlertView *alert = [[SCLAlertView alloc] init];
+    
+    [alert addButton:@"男生" actionBlock:^(void) {
+        [self.genderImage setImage:[UIImage imageNamed:@"boy"]];
+        AccountManager *account=[AccountManager singleInstance];
+        account.gender=UGBoy;
+        [account uploadUserInfo];
+    }];
+    
+    [alert addButton:@"女生" actionBlock:^(void) {
+        [self.genderImage setImage:[UIImage imageNamed:@"girl"]];
+        AccountManager *account=[AccountManager singleInstance];
+        account.gender=UGGirl;
+        [account uploadUserInfo];
+    }];
+    alert.customViewColor=[UIColor grayColor];
+    [alert showEdit:self title:@"性别" subTitle:@"请选择性别" closeButtonTitle:nil duration:0.0f];
+}
+
 
 -(void)setAndUploadPortrait
 {
@@ -117,9 +173,69 @@
 
 -(void)imagePickerController:(UIImagePickerController *)picker didFinishPickingMediaWithInfo:(NSDictionary<NSString *,id> *)info
 {
+    AppDelegate *appDelegate=[[UIApplication sharedApplication] delegate];
+    appDelegate.isPickerView=false;
     [picker dismissViewControllerAnimated:YES completion:nil];
     UIImage *image=[info objectForKey:UIImagePickerControllerEditedImage];
     [self.portraitImage setImage:image];
+    
+    [self saveImageAndCreateKey:image];
+    
+    
+    
+    
+}
+
+-(void)saveImageAndCreateKey:(UIImage*)image
+{
+    AccountManager *account=[AccountManager singleInstance];
+    NSDate *date=[NSDate date];
+    double currentTime=[date timeIntervalSince1970];
+    NSUInteger timeStap=(int)currentTime;
+    NSString *key=[NSString stringWithFormat:@"%@_%ld.png",account.userID,timeStap];
+    
+    
+    NSString *imageDoc=[CommonMethod getPath:@"portrait"];
+    BOOL isDir;
+    if (![[NSFileManager defaultManager] fileExistsAtPath:imageDoc isDirectory:&isDir])
+    {
+        [[NSFileManager defaultManager] createDirectoryAtPath:imageDoc withIntermediateDirectories:YES attributes:nil error:nil];
+    }
+    NSString *filePath=[imageDoc stringByAppendingPathComponent:key];
+    [UIImagePNGRepresentation(image) writeToFile:filePath atomically:YES];
+    
+    [self uploadPortraitImage:key filePath:filePath];
+}
+
+-(void)uploadPortraitImage:(NSString*)key filePath:(NSString*)filePath
+{
+    NSString *method=@"PUT";
+    NSMutableString* sign=[CommonMethod MD5EncryptionWithString:[NSString stringWithFormat:@"%@%@",method,key]];
+    NSDictionary *dict=[NSDictionary dictionaryWithObjectsAndKeys:method,@"method",key,@"object",sign,@"sign",nil];
+    
+    [NetworkingManager httpRequest:RTPost url:RUGetCloudURL parameters:dict progress:nil
+    success:^(NSURLSessionTask * _Nullable task, id  _Nullable responseObject)
+    {
+        long int status=[[responseObject objectForKey:@"status"]integerValue];
+        if (status==0)
+        {
+            NSString *url=[responseObject objectForKey:@"url"];
+            //upload image
+            
+            NSDictionary *parameters=[NSDictionary dictionaryWithObjectsAndKeys:url,@"uploadURL",filePath,@"filePath", nil];
+            [NetworkingManager httpRequest:RTUpload url:RUGetCloudURL parameters:parameters progress:^(NSProgress * _Nullable progress) {
+                
+            } success:nil failure:nil
+            completionHandler:^(NSURLResponse * _Nullable response, NSURL * _Nullable filePath, NSError * _Nullable error) {
+            
+            }];
+        }
+    }
+    failure:^(NSURLSessionTask * _Nullable task, NSError * _Nullable error)
+    {
+        
+    }
+    completionHandler:nil];
 }
 
 
@@ -130,9 +246,15 @@
     UITextField *textField = [alert addTextField:@"请输入您的用户名"];
     
     [alert addButton:@"确认" actionBlock:^(void) {
-        self.userName.text=textField.text;
+        if (![textField.text isEqualToString:@""])
+        {
+            self.userName.text=textField.text;
+            AccountManager *account=[AccountManager singleInstance];
+            account.nickName=textField.text;
+            [account uploadUserInfo];
+        }
     }];
-    
+    alert.customViewColor=[UIColor grayColor];
     [alert showEdit:self title:@"修改用户名" subTitle:nil closeButtonTitle:@"取消" duration:0.0f];
 }
 
@@ -198,15 +320,28 @@
 {
     if (indexPath.row==0)
     {
-        UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        BindPhoneViewController *bindViewController=[storyboard instantiateViewControllerWithIdentifier:@"BindPhoneViewController"];
-        [self.navigationController pushViewController:bindViewController animated:YES];
+        [self goToBindView];
     }
     
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
 }
-
+-(void)goToBindView
+{
+    AccountManager *account=[AccountManager singleInstance];
+    if (account.type==LTPhone)
+    {
+        //alert
+        SCLAlertView *alert=[[SCLAlertView alloc]init];
+        [alert showNotice:self title:@"提示" subTitle:@"您的帐号为手机号码，无需绑定手机" closeButtonTitle:@"确定" duration:0.0f];
+    }
+    else
+    {
+        UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        BindPhoneViewController *bindViewController=[storyboard instantiateViewControllerWithIdentifier:@"BindPhoneViewController"];
+        [self.navigationController pushViewController:bindViewController animated:YES];
+    }
+}
 
 - (IBAction)goBackButtonClick:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
@@ -223,7 +358,7 @@
 -(void)logout
 {
     [[AccountManager singleInstance] deleteAccount];
-    [[NSUserDefaults standardUserDefaults] setValue:@"out" forKey:@"MeticStatus"];
+    [[NSUserDefaults standardUserDefaults] setValue:@"out" forKey:@"AccountStatus"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self.navigationController popToRootViewControllerAnimated:YES];

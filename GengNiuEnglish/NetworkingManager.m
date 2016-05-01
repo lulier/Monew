@@ -26,10 +26,12 @@ static const NSString *URLForActionCode=@"/courseware/get_app_status/";
 static const NSString *URLForBindPhone=@"/student/phone/bind/";
 static const NSString *URLForUserInfo=@"/student/get_userinfo/";
 static const NSString *URLForSetUserInfo=@"/student/set_userinfo/";
+static const NSString *URLForCloudURL=@"/student/get_file_url/";
+static const NSString *URLForCheckNetwork=@"http://www.baidu.com";
 
 @implementation NetworkingManager
 
-+(NSURLSessionTask*)httpRequest:(RequestType)type url:(RequestURL)url parameters:(NSDictionary*)parameters progress:(nullable void (^)(NSProgress *downloadProgress))downloadProgressBlock success:(nullable void (^)( NSURLSessionTask * _Nullable task, id _Nullable responseObject))success failure:(nullable void (^)(NSURLSessionTask * _Nullable task, NSError * _Nullable error))failure completionHandler:(nullable void (^)(NSURLResponse * _Nullable response, NSURL * _Nullable filePath, NSError * _Nullable error))completionHandler
++(NSURLSessionTask*)httpRequest:(RequestType)type url:(RequestURL)url parameters:(NSDictionary*)parameters progress:(nullable void (^)(NSProgress *progress))progressBlock success:(nullable void (^)( NSURLSessionTask * _Nullable task, id _Nullable responseObject))success failure:(nullable void (^)(NSURLSessionTask * _Nullable task, NSError * _Nullable error))failure completionHandler:(nullable void (^)(NSURLResponse * _Nullable response, NSURL * _Nullable filePath, NSError * _Nullable error))completionHandler
 {
     NSString *link=[NetworkingManager requestURL:url];
     if (!link) {
@@ -42,9 +44,9 @@ static const NSString *URLForSetUserInfo=@"/student/set_userinfo/";
         case RTPost:
             return [NetworkingManager httpPost:link parameters:parameters success:success failure:failure];
         case RTDownload:
-            return [NetworkingManager httpDownload:link parameters:parameters progress:downloadProgressBlock completionHandler:completionHandler];
+            return [NetworkingManager httpDownload:link parameters:parameters progress:progressBlock completionHandler:completionHandler];
         case RTUpload:
-            return nil;
+            return [NetworkingManager httpUpload:[parameters objectForKey:@"uploadURL"] parameters:parameters progress:progressBlock completionHandler:completionHandler];
         default:
             return nil;
     }
@@ -75,6 +77,10 @@ static const NSString *URLForSetUserInfo=@"/student/set_userinfo/";
             return [NSString stringWithFormat:@"%@%@",MONEWDOMAIN,URLForUserInfo];
         case RUSetUserInfo:
             return [NSString stringWithFormat:@"%@%@",MONEWDOMAIN,URLForSetUserInfo];
+        case RUGetCloudURL:
+            return [NSString stringWithFormat:@"%@%@",MONEWDOMAIN,URLForCloudURL];
+        case RUCheckNetwork:
+            return URLForCheckNetwork;
         case RUCustom:
             return nil;
         default:
@@ -85,6 +91,7 @@ static const NSString *URLForSetUserInfo=@"/student/set_userinfo/";
 {
     AFHTTPSessionManager *manager=[AFHTTPSessionManager manager];
     manager.responseSerializer=[AFJSONResponseSerializer serializer];
+    manager.requestSerializer.timeoutInterval =30;
     NSURLSessionDataTask *task=[manager GET:url parameters:parameters progress:nil success:^(NSURLSessionDataTask *task, id responseObject){
         //        NSLog(@"log for the response data%@",responseObject);
         
@@ -100,6 +107,7 @@ static const NSString *URLForSetUserInfo=@"/student/set_userinfo/";
 {
     AFHTTPSessionManager *manager=[AFHTTPSessionManager manager];
     manager.responseSerializer=[AFJSONResponseSerializer serializer];
+    manager.requestSerializer.timeoutInterval =30;
     NSURLSessionDataTask *task=[manager POST:url parameters:parameters progress:nil success:^(NSURLSessionDataTask *task, id responseObject){
         //        NSLog(@"log for the response data%@",responseObject);
         
@@ -139,5 +147,27 @@ static const NSString *URLForSetUserInfo=@"/student/set_userinfo/";
     } completionHandler:completionHandler];
     [downloadTask resume];
     return downloadTask;
+}
++(NSURLSessionDataTask *)httpUpload:(NSString *)url parameters:(NSDictionary *)parameters progress:(nullable void (^)(NSProgress *uploadProgress))uploadProgressBlock completionHandler:(nullable void (^)(NSURLResponse * _Nullable response, id responseObject, NSError * _Nullable error))completionHandler
+{
+    
+    NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
+    AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
+    
+    NSURL *URL = [NSURL URLWithString:url];
+    NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL];
+    [request setValue:@"application/octet-stream" forHTTPHeaderField:@"Content-Type"];
+    
+    NSURL *filePath = [NSURL fileURLWithPath:[parameters objectForKey:@"filePath"]];
+    NSURLSessionUploadTask *uploadTask = [manager uploadTaskWithRequest:request fromFile:filePath progress:nil completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
+        if (error) {
+            NSLog(@"Error: %@", error);
+        } else {
+            completionHandler(response,responseObject,error);
+            NSLog(@"Success: %@ %@", response, responseObject);
+        }
+    }];
+    [uploadTask resume];
+    return uploadTask;
 }
 @end

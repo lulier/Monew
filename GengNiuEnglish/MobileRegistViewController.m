@@ -8,7 +8,8 @@
 
 #import "MobileRegistViewController.h"
 
-
+static NSString* const appKey=@"1041a2bf48e78";
+static NSString* const appSecret=@"2c2ca1b896f428d3d258743bf50076d9";
 
 @implementation MobileRegistViewController
 -(void)updateViewConstraints
@@ -53,6 +54,10 @@
     self.phoneNumInput.enabled=YES;
     self.codeVerified=NO;
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(onKeyboardHide) name:UIKeyboardWillHideNotification object:nil];
+    
+    [CommonMethod checkNetwork:^(NSURLSessionTask *task, id responseObject) {
+        [SMSSDK registerApp:appKey withSecret:appSecret];
+    }];
 }
 -(void)onKeyboardHide
 {
