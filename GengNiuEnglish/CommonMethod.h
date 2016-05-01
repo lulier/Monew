@@ -10,9 +10,14 @@
 #import <UIKit/UIKit.h>
 #import <CommonCrypto/CommonCrypto.h>
 #import "Reachability.h"
+#import <SMS_SDK/SMSSDK.h>
+
 #define CIPHER_KEY @"24BF8C08A00AFA00"
 #define IPHONE6TOIPHONE5S 0.85
 #define IPHONE6TOIPHONE6S 1.104
+
+static NSString* const appKey=@"1041a2bf48e78";
+static NSString* const appSecret=@"2c2ca1b896f428d3d258743bf50076d9";
 @protocol dismissDelegate <NSObject>
 
 -(void)dismissView;

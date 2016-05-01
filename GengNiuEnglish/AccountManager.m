@@ -265,6 +265,7 @@ static NSString * const ACCOUNT_KEYCHAIN = @"GNAccount20160311";
     [dictionary setValue:phoneNumber forKey:@"phone"];
     [dictionary setValue:sign forKey:@"sign"];
     [NetworkingManager httpRequest:RTPost url:RUCheckAvail parameters:dictionary progress:nil success:^(NSURLSessionTask * _Nullable task, id  _Nullable responseObject) {
+        [SMSSDK registerApp:appKey withSecret:appSecret];
         long int status=[[responseObject objectForKey:@"status"]integerValue];
         if (status==0)
         {
@@ -285,8 +286,8 @@ static NSString * const ACCOUNT_KEYCHAIN = @"GNAccount20160311";
 
 -(void)uploadUserInfo
 {
-    NSMutableString* sign=[CommonMethod MD5EncryptionWithString:[NSString stringWithFormat:@"%@%@%ld%@",self.userID,self.nickName,self.gender,self.portraitKey]];
-    NSDictionary *dict=[NSDictionary dictionaryWithObjectsAndKeys:self.userID,@"user_id",self.nickName,@"nickname",[NSString stringWithFormat:@"%ld",self.gender],@"gender",self.portraitKey,@"avatar",sign,@"sign",nil];
+    NSMutableString* sign=[CommonMethod MD5EncryptionWithString:[NSString stringWithFormat:@"%@%@%ld%@",self.userID,self.nickName,(long)self.gender,self.portraitKey]];
+    NSDictionary *dict=[NSDictionary dictionaryWithObjectsAndKeys:self.userID,@"user_id",self.nickName,@"nickname",[NSString stringWithFormat:@"%ld",(long)self.gender],@"gender",self.portraitKey,@"avatar",sign,@"sign",nil];
     [NetworkingManager httpRequest:RTPost url:RUSetUserInfo parameters:dict progress:nil success:^(NSURLSessionTask * _Nullable task, id  _Nullable responseObject) {
         long int status=[[responseObject objectForKey:@"status"]integerValue];
         if (status==0)
