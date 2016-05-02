@@ -61,11 +61,16 @@
     else
         [self.genderImage setImage:[UIImage imageNamed:@"girl"]];
     
-    self.userName.text=account.nickName;
+    if (![account.nickName isEqualToString:@""])
+    {
+        self.userName.text=account.nickName;
+    }
+    else
+        self.userName.text=@"dd";
     
     // 设置头像
     
-    if (account.portraitKey!=nil)
+    if (account.portraitKey!=nil&&![account.portraitKey isEqualToString:@""])
     {
         NSMutableString *sign=[CommonMethod MD5EncryptionWithString:[NSString stringWithFormat:@"GET%@",account.portraitKey]];
         NSDictionary *dict=[NSDictionary dictionaryWithObjectsAndKeys:@"GET",@"method",account.portraitKey,@"object",sign,@"sign",nil];
@@ -142,18 +147,34 @@
 -(void)actionSheet:(UIActionSheet *)actionSheet clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     UIImagePickerControllerSourceType sourceType;
-    switch (buttonIndex)
+    if ([UIImagePickerController isSourceTypeAvailable:UIImagePickerControllerSourceTypeCamera])
     {
-        case 0:
-            sourceType=UIImagePickerControllerSourceTypeCamera;
-            break;
-        case 1:
-            sourceType=UIImagePickerControllerSourceTypePhotoLibrary;
-            break;
-        case 2:
-            return;
-        default:
-            break;
+        switch (buttonIndex)
+        {
+            case 0:
+                sourceType=UIImagePickerControllerSourceTypeCamera;
+                break;
+            case 1:
+                sourceType=UIImagePickerControllerSourceTypePhotoLibrary;
+                break;
+            case 2:
+                return;
+            default:
+                return;
+        }
+    }
+    else
+    {
+        switch (buttonIndex)
+        {
+            case 0:
+                sourceType=UIImagePickerControllerSourceTypePhotoLibrary;
+                break;
+            case 1:
+                return;
+            default:
+                return;
+        }
     }
     UIImagePickerController *picker=[[UIImagePickerController alloc]init];
     picker.delegate=self;
@@ -192,10 +213,10 @@
     NSDate *date=[NSDate date];
     double currentTime=[date timeIntervalSince1970];
     NSUInteger timeStap=(int)currentTime;
-    NSString *key=[NSString stringWithFormat:@"%@_%ld.png",account.userID,timeStap];
+    NSString *key=[NSString stringWithFormat:@"%@_%ld.png",account.userID,(unsigned long)timeStap];
     
     
-    NSString *imageDoc=[CommonMethod getPath:@"portrait"];
+    NSString *imageDoc=[CommonMethod getPath:@"avatar"];
     BOOL isDir;
     if (![[NSFileManager defaultManager] fileExistsAtPath:imageDoc isDirectory:&isDir])
     {
@@ -211,7 +232,10 @@
 {
     NSString *method=@"PUT";
     NSMutableString* sign=[CommonMethod MD5EncryptionWithString:[NSString stringWithFormat:@"%@%@",method,key]];
+    key=[NSString stringWithFormat:@"avatar/%@",key];
     NSDictionary *dict=[NSDictionary dictionaryWithObjectsAndKeys:method,@"method",key,@"object",sign,@"sign",nil];
+
+    
     
     [NetworkingManager httpRequest:RTPost url:RUGetCloudURL parameters:dict progress:nil
     success:^(NSURLSessionTask * _Nullable task, id  _Nullable responseObject)
@@ -219,15 +243,16 @@
         long int status=[[responseObject objectForKey:@"status"]integerValue];
         if (status==0)
         {
-            NSString *url=[responseObject objectForKey:@"url"];
-            //upload image
             
+            NSString *url=[responseObject objectForKey:@"url"];
             NSDictionary *parameters=[NSDictionary dictionaryWithObjectsAndKeys:url,@"uploadURL",filePath,@"filePath", nil];
+            
+            //upload image
             [NetworkingManager httpRequest:RTUpload url:RUGetCloudURL parameters:parameters progress:^(NSProgress * _Nullable progress) {
                 
             } success:nil failure:nil
             completionHandler:^(NSURLResponse * _Nullable response, NSURL * _Nullable filePath, NSError * _Nullable error) {
-            
+                //set new userinfo
             }];
         }
     }

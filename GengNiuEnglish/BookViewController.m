@@ -342,7 +342,8 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
 
 -(void)dismissReaderViewController:(ReaderViewController *)viewController
 {
-    
+    AppDelegate *appDelegate=[[UIApplication sharedApplication] delegate];
+    appDelegate.isReaderView=false;
     [self dismissViewControllerAnimated:NO completion:NULL];
     readerViewController=nil;
 }

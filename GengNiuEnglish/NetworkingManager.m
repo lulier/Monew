@@ -29,7 +29,10 @@ static const NSString *URLForSetUserInfo=@"/student/set_userinfo/";
 static const NSString *URLForCloudURL=@"/student/get_file_url/";
 static const NSString *URLForCheckNetwork=@"http://www.baidu.com";
 
+
+
 @implementation NetworkingManager
+
 
 +(NSURLSessionTask*)httpRequest:(RequestType)type url:(RequestURL)url parameters:(NSDictionary*)parameters progress:(nullable void (^)(NSProgress *progress))progressBlock success:(nullable void (^)( NSURLSessionTask * _Nullable task, id _Nullable responseObject))success failure:(nullable void (^)(NSURLSessionTask * _Nullable task, NSError * _Nullable error))failure completionHandler:(nullable void (^)(NSURLResponse * _Nullable response, NSURL * _Nullable filePath, NSError * _Nullable error))completionHandler
 {
@@ -154,19 +157,56 @@ static const NSString *URLForCheckNetwork=@"http://www.baidu.com";
     NSURLSessionConfiguration *configuration = [NSURLSessionConfiguration defaultSessionConfiguration];
     AFURLSessionManager *manager = [[AFURLSessionManager alloc] initWithSessionConfiguration:configuration];
     
+    
+    NSData *fileData = [NSData dataWithContentsOfFile:[parameters objectForKey:@"filePath"]];
+    
+    
     NSURL *URL = [NSURL URLWithString:url];
     NSMutableURLRequest *request = [NSMutableURLRequest requestWithURL:URL];
+    [request setHTTPMethod:@"PUT"];
     [request setValue:@"application/octet-stream" forHTTPHeaderField:@"Content-Type"];
+    [request setHTTPBody:fileData];
     
-    NSURL *filePath = [NSURL fileURLWithPath:[parameters objectForKey:@"filePath"]];
-    NSURLSessionUploadTask *uploadTask = [manager uploadTaskWithRequest:request fromFile:filePath progress:nil completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
+    
+//    NSURLSessionUploadTask *uploadTask = [manager uploadTaskWithRequest:request fromFile:filePath progress:nil completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
+//        if (error) {
+//            NSLog(@"Error: %@", error);
+//        } else {
+//            completionHandler(response,responseObject,error);
+//            NSLog(@"Success: %@ %@", response, responseObject);
+//        }
+//    }];
+    
+//    NSURLSessionUploadTask *uploadTask=[manager uploadTaskWithStreamedRequest:request progress:nil completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+//        if (error) {
+//            NSLog(@"Error: %@", error);
+//        } else {
+//            completionHandler(response,responseObject,error);
+//            NSLog(@"Success: %@ %@", response, responseObject);
+//        }
+//    }];
+    
+    NSURLSessionDataTask *uploadTask=[manager dataTaskWithRequest:request completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
         if (error) {
             NSLog(@"Error: %@", error);
+            NSLog(@"log for response:%@",response);
         } else {
             completionHandler(response,responseObject,error);
             NSLog(@"Success: %@ %@", response, responseObject);
         }
     }];
+    
+//    NSURLSessionUploadTask *uploadTask=[manager uploadTaskWithRequest:request fromData:fileData progress:nil completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
+//        if (error) {
+//            NSLog(@"Error: %@", error);
+//            NSLog(@"log for response:%@",response);
+//        } else {
+//            completionHandler(response,responseObject,error);
+//            NSLog(@"Success: %@ %@", response, responseObject);
+//        }
+//    }];
+    
+    
     [uploadTask resume];
     return uploadTask;
 }

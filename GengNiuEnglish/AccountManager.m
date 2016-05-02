@@ -165,8 +165,8 @@ static NSString * const ACCOUNT_KEYCHAIN = @"GNAccount20160311";
     {
         bindSign=1;
     }
-    NSMutableString* sign=[CommonMethod MD5EncryptionWithString:[NSString stringWithFormat:@"%@%@%d",self.userID,phone,bindSign]];
-    NSDictionary *dict=[NSDictionary dictionaryWithObjectsAndKeys:self.userID,@"user_id",phone,@"phone",[NSString stringWithFormat:@"%d",bindSign],@"bind",sign,@"sign",nil];
+    NSMutableString* sign=[CommonMethod MD5EncryptionWithString:[NSString stringWithFormat:@"%@%@%ld",self.userID,phone,(long)bindSign]];
+    NSDictionary *dict=[NSDictionary dictionaryWithObjectsAndKeys:self.userID,@"user_id",phone,@"phone",[NSString stringWithFormat:@"%ld",(long)bindSign],@"bind",sign,@"sign",nil];
     [NetworkingManager httpRequest:RTPost url:RUCheckAvail parameters:dict progress:nil success:^(NSURLSessionTask * _Nullable task, id  _Nullable responseObject) {
         long int status=[[responseObject objectForKey:@"status"]integerValue];
         if (status==0)

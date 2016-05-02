@@ -26,6 +26,8 @@
 		F448DD881CD4B798002D43B6 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F448DD871CD4B798002D43B6 /* SystemConfiguration.framework */; };
 		F448DD8B1CD4BBC3002D43B6 /* MOBFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F448DD891CD4BBC3002D43B6 /* MOBFoundation.framework */; };
 		F448DD8C1CD4BBC3002D43B6 /* SMS_SDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F448DD8A1CD4BBC3002D43B6 /* SMS_SDK.framework */; };
+		F448DD8F1CD72EEE002D43B6 /* DictionaryDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = F448DD8E1CD72EEE002D43B6 /* DictionaryDatabase.m */; };
+		F448DD911CD73098002D43B6 /* dictionary.db in Resources */ = {isa = PBXBuildFile; fileRef = F448DD901CD73098002D43B6 /* dictionary.db */; };
 		F454F9331CC767B400326774 /* UITextView+ContentInset.m in Sources */ = {isa = PBXBuildFile; fileRef = F454F9321CC767B400326774 /* UITextView+ContentInset.m */; };
 		F46A44FA1C93CA37002BC9D4 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F46A44F91C93CA37002BC9D4 /* CoreTelephony.framework */; };
 		F46A45051C93CD50002BC9D4 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F46A44FB1C93CA5B002BC9D4 /* libz.tbd */; };
@@ -114,6 +116,9 @@
 		F448DD871CD4B798002D43B6 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		F448DD891CD4BBC3002D43B6 /* MOBFoundation.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = MOBFoundation.framework; path = framwork/MOBFoundation.framework; sourceTree = "<group>"; };
 		F448DD8A1CD4BBC3002D43B6 /* SMS_SDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SMS_SDK.framework; path = framwork/SMS_SDK.framework; sourceTree = "<group>"; };
+		F448DD8D1CD72EEE002D43B6 /* DictionaryDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DictionaryDatabase.h; sourceTree = "<group>"; };
+		F448DD8E1CD72EEE002D43B6 /* DictionaryDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DictionaryDatabase.m; sourceTree = "<group>"; };
+		F448DD901CD73098002D43B6 /* dictionary.db */ = {isa = PBXFileReference; lastKnownFileType = file; name = dictionary.db; path = ../dictionary.db; sourceTree = "<group>"; };
 		F454F9311CC767B400326774 /* UITextView+ContentInset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextView+ContentInset.h"; sourceTree = "<group>"; };
 		F454F9321CC767B400326774 /* UITextView+ContentInset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextView+ContentInset.m"; sourceTree = "<group>"; };
 		F46A44F91C93CA37002BC9D4 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
@@ -287,6 +292,7 @@
 		F42799291C18514200240736 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				F448DD901CD73098002D43B6 /* dictionary.db */,
 				F427992A1C18514200240736 /* main.m */,
 			);
 			name = "Supporting Files";
@@ -363,6 +369,8 @@
 				F478C8831C9EDAF400746E2C /* MTImageGetter.m */,
 				F42FA5EE1C8D29600033C9C9 /* MTDatabaseHelper.h */,
 				F42FA5EF1C8D29600033C9C9 /* MTDatabaseHelper.m */,
+				F448DD8D1CD72EEE002D43B6 /* DictionaryDatabase.h */,
+				F448DD8E1CD72EEE002D43B6 /* DictionaryDatabase.m */,
 				F4A9AF371C4D0D26004BC7BF /* CommonMethod.h */,
 				F4A9AF381C4D0D26004BC7BF /* CommonMethod.m */,
 				F49467021C27CE0900806DEF /* DataForCell.h */,
@@ -506,6 +514,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F448DD911CD73098002D43B6 /* dictionary.db in Resources */,
 				F42799391C18514200240736 /* LaunchScreen.storyboard in Resources */,
 				F478C87D1C9D955500746E2C /* AcousticModelEnglish.bundle in Resources */,
 				F42799361C18514200240736 /* Assets.xcassets in Resources */,
@@ -585,6 +594,7 @@
 				F4A9AF4B1C4E30E1004BC7BF /* BookViewController.m in Sources */,
 				F486C77C1C3A492000CBFBD1 /* LyricItem.m in Sources */,
 				F4A9AF391C4D0D26004BC7BF /* CommonMethod.m in Sources */,
+				F448DD8F1CD72EEE002D43B6 /* DictionaryDatabase.m in Sources */,
 				F454F9331CC767B400326774 /* UITextView+ContentInset.m in Sources */,
 				F448DD861CD4B768002D43B6 /* Reachability.m in Sources */,
 				F427992E1C18514200240736 /* AppDelegate.m in Sources */,

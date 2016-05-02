@@ -21,6 +21,7 @@
 
 -(void)clickCellButton:(NSInteger)index;
 
+
 @end
 
 
@@ -32,6 +33,6 @@
 @property (weak, nonatomic) IBOutlet UIButton *moErDuo;
 @property (weak, nonatomic) IBOutlet UIButton *chuangGuan;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *labelTopConstraint;
-@property(weak,nonatomic)id<textBookCellDelegate>delegate;
+@property(weak,nonatomic)id<textBookCellDelegate,ReaderViewControllerDelegate>delegate;
 - (IBAction)xiulianClick:(id)sender;
 @end

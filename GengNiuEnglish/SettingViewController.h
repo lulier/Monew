@@ -16,7 +16,7 @@
 #import <SDWebImage/UIImageView+WebCache.h>
 
 
-@interface SettingViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,settingCellDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate>
+@interface SettingViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,settingCellDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
 @property (weak, nonatomic) IBOutlet UIView *settingView;
 @property (weak, nonatomic) IBOutlet UITableView *settingTableView;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *settingViewTop;

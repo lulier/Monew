@@ -136,7 +136,7 @@
         readerViewController=[[ReaderViewController alloc]initWithReaderDocument:document];
         readerViewController.modalTransitionStyle=UIModalTransitionStyleCrossDissolve;
         readerViewController.modalPresentationStyle=UIModalPresentationFullScreen;
-        readerViewController.delegate=self;
+        readerViewController.delegate=self.delegate;
         [currentVC presentViewController:readerViewController animated:YES completion:nil];
     }
 }

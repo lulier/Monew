@@ -1308,7 +1308,7 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="408" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="82D5199A-6D9A-49BD-8B31-E3F35E4F1309" translatesAutoresizingMaskIntoConstraints="NO" id="Axa-d7-Z9S">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="BD75E484-516A-4465-9ED2-6713A6573E73" translatesAutoresizingMaskIntoConstraints="NO" id="Axa-d7-Z9S">
                                                             <rect key="frame" x="15" y="12" width="21" height="21"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" secondItem="Axa-d7-Z9S" secondAttribute="height" multiplier="2:2" id="tJp-ce-Zz7"/>
@@ -1543,7 +1543,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="82D5199A-6D9A-49BD-8B31-E3F35E4F1309" width="36" height="36">
+        <image name="BD75E484-516A-4465-9ED2-6713A6573E73" width="36" height="36">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGOjtYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK0HCBEW
 GxwgISgrLjQ3VSRudWxs1AkKCwwNDg8QViRjbGFzc1xOU0ltYWdlRmxhZ3NWTlNSZXBzV05TQ29sb3KA

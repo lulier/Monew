@@ -551,7 +551,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
         //设置输出音频数据
 //        [[OEPocketsphinxController sharedInstance] setVerbosePocketSphinx:YES];
         [[OEPocketsphinxController sharedInstance] setSecondsOfSilenceToDetect:0.3];
-        [[OEPocketsphinxController sharedInstance] setVadThreshold:3.5];
+        [[OEPocketsphinxController sharedInstance] setVadThreshold:2.0];
         [[OEPocketsphinxController sharedInstance] setOutputAudio:YES];
         [[OEPocketsphinxController sharedInstance] setReturnNullHypotheses:YES];//返回空数据
         [[OEPocketsphinxController sharedInstance] setActive:TRUE error:nil];

@@ -13,7 +13,6 @@
 @property (strong, nonatomic) UIWindow *window;
 @property(nonatomic)BOOL isReaderView;
 @property(nonatomic)BOOL isPickerView;
-@property(strong,nonatomic) UINavigationController *navigationController;
 
 @end
 
