@@ -32,7 +32,7 @@ typedef NS_ENUM(NSInteger,StarNum)
     NSArray *currentWords;
     UITapGestureRecognizer *gestureRecognizer;
     NSString *currentCheckWord;
-    MRProgressOverlayView *progressView;
+//    MRProgressOverlayView *progressView;
 //    NSTimer *timer;
 }
 @end
@@ -95,8 +95,7 @@ static NSString* cellIdentifierLyric=@"LyricViewCell";
     dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.5f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
         [self tableView:self.tableview didSelectRowAtIndexPath:[NSIndexPath indexPathForRow:0 inSection:0]];
     });
-    
-    
+    [DictionaryDatabase sharedInstance];
     playTextID=-1;
 }
 - (void)didReceiveMemoryWarning {
@@ -195,7 +194,7 @@ static NSString* cellIdentifierLyric=@"LyricViewCell";
     // Configure the cell...
     
     //hide dictionary
-    [cell.cellContent setHidden:YES];
+//    [cell.cellContent setHidden:YES];
     
     [cell.playText setImage:[UIImage imageNamed:@"playTextWW"] forState:UIControlStateNormal];
     cell.lyricItem=self.lyricItems[indexPath.row];
@@ -348,7 +347,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
         return;
     }
     
-    currentCheckWord=[_tv textInRange:wr];
+    currentCheckWord=[[_tv textInRange:wr] lowercaseString];
     
     UIMenuItem *MenuitemA=[[UIMenuItem alloc] initWithTitle:@"查字典" action:@selector(define)];
     
@@ -373,28 +372,53 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
 }
 -(void)viewWillDisappear:(BOOL)animated
 {
-    if (progressView!=nil)
-    {
-        [progressView dismiss:NO];
-        progressView=nil;
-    }
+//    if (progressView!=nil)
+//    {
+//        [progressView dismiss:NO];
+//        progressView=nil;
+//    }
 }
 -(void)define
 {
-   progressView=[MRProgressOverlayView showOverlayAddedTo:self.view title:@"正在查询单词" mode:MRProgressOverlayViewModeIndeterminate animated:YES];
-    dispatch_async(dispatch_get_global_queue(0, 0), ^{
-        UIReferenceLibraryViewController* ref =
-        [[UIReferenceLibraryViewController alloc] initWithTerm:currentCheckWord];
-        dispatch_async(dispatch_get_main_queue(), ^{
-            [self presentViewController:ref animated:YES completion:nil];
-        });
-    });
+    DictionaryDatabase *dictionary=[DictionaryDatabase sharedInstance];
+    NSDictionary *where=[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"'%@'",currentCheckWord],@"WORD",nil];
+    [dictionary queryTable:@"DICTIONARY" withSelect:@[@"*"] andWhere:where completion:^(NSMutableArray *resultsArray) {
+        if (resultsArray!=nil&&[resultsArray count]!=0)
+        {
+            NSDictionary *dic=[resultsArray firstObject];
+            NSMutableString *content=[NSMutableString stringWithString:[dic objectForKey:@"WORD"]];
+            [content appendString:[dic objectForKey:@"CHINESEEXPLAIN"]];
+            [content appendString:[dic objectForKey:@"ENGLISHEXPLAIN"]];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                ShowTextViewController *showView=[storyboard instantiateViewControllerWithIdentifier:@"ShowTextViewController"];
+                showView.word=[dic objectForKey:@"WORD"];
+                showView.chineseExplanation=[dic objectForKey:@"CHINESEEXPLAIN"];
+                showView.englishExplanation=[dic objectForKey:@"ENGLISHEXPLAIN"];
+                [self.navigationController pushViewController:showView animated:YES];
+            });
+           
+        }
+    }];
+    
+//    dispatch_async(dispatch_get_global_queue(0, 0), ^{
+//        UIReferenceLibraryViewController* ref =
+//        [[UIReferenceLibraryViewController alloc] initWithTerm:currentCheckWord];
+//        dispatch_async(dispatch_get_main_queue(), ^{
+//            [self presentViewController:ref animated:YES completion:nil];
+//        });
+//    });
     
     
 }
 -(void)addToUnknow
 {
-    
+    NSString *word=currentCheckWord;
+    NSArray *colums=[[NSArray alloc]initWithObjects:@"word",nil];
+    NSArray *values=[[NSArray alloc]initWithObjects:[NSString stringWithFormat:@"'%@'",word], nil];
+    [[MTDatabaseHelper sharedInstance] insertToTable:@"Vocabulary" withColumns:colums andValues:values];
+    SCLAlertView *alert=[[SCLAlertView alloc]init];
+    [alert showSuccess:self title:@"成功" subTitle:@"添加生词成功" closeButtonTitle:nil duration:1.0f];
 }
 
 

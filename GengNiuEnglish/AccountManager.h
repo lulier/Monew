@@ -52,4 +52,5 @@ typedef NS_ENUM(NSInteger,UserGender)
 - (void)bindPhone:(NSString*)phone bind:(BOOL)bind password:(NSString*)password success:(void (^)(BOOL bindSuccess))success failure:(void (^)(NSString * message))failure;
 - (void)getUserInfo;
 - (void)uploadUserInfo;
+- (void)resetPassword:(NSDictionary *)parameters success:(void (^)(BOOL resetSuccess))success failure:(void (^)(NSString * message))failure;
 @end

@@ -21,6 +21,10 @@
 #import <OpenEars/OELogging.h>
 #import "MenuControllerSupportingView.h"
 #import "MRProgress.h"
+#import "DictionaryDatabase.h"
+#import "MTDatabaseHelper.h"
+#import "ShowTextViewController.h"
+#import "SCLAlertView.h"
 
 
 

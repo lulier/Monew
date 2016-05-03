@@ -28,6 +28,7 @@ static const NSString *URLForUserInfo=@"/student/get_userinfo/";
 static const NSString *URLForSetUserInfo=@"/student/set_userinfo/";
 static const NSString *URLForCloudURL=@"/student/get_file_url/";
 static const NSString *URLForCheckNetwork=@"http://www.baidu.com";
+static const NSString *URLForResetPassword=@"/student/change_passwd/";
 
 
 
@@ -84,6 +85,8 @@ static const NSString *URLForCheckNetwork=@"http://www.baidu.com";
             return [NSString stringWithFormat:@"%@%@",MONEWDOMAIN,URLForCloudURL];
         case RUCheckNetwork:
             return URLForCheckNetwork;
+        case RUResetPassword:
+            return [NSString stringWithFormat:@"%@%@",MONEWDOMAIN,URLForResetPassword];
         case RUCustom:
             return nil;
         default:
@@ -167,25 +170,6 @@ static const NSString *URLForCheckNetwork=@"http://www.baidu.com";
     [request setValue:@"application/octet-stream" forHTTPHeaderField:@"Content-Type"];
     [request setHTTPBody:fileData];
     
-    
-//    NSURLSessionUploadTask *uploadTask = [manager uploadTaskWithRequest:request fromFile:filePath progress:nil completionHandler:^(NSURLResponse *response, id responseObject, NSError *error) {
-//        if (error) {
-//            NSLog(@"Error: %@", error);
-//        } else {
-//            completionHandler(response,responseObject,error);
-//            NSLog(@"Success: %@ %@", response, responseObject);
-//        }
-//    }];
-    
-//    NSURLSessionUploadTask *uploadTask=[manager uploadTaskWithStreamedRequest:request progress:nil completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
-//        if (error) {
-//            NSLog(@"Error: %@", error);
-//        } else {
-//            completionHandler(response,responseObject,error);
-//            NSLog(@"Success: %@ %@", response, responseObject);
-//        }
-//    }];
-    
     NSURLSessionDataTask *uploadTask=[manager dataTaskWithRequest:request completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
         if (error) {
             NSLog(@"Error: %@", error);
@@ -195,18 +179,7 @@ static const NSString *URLForCheckNetwork=@"http://www.baidu.com";
             NSLog(@"Success: %@ %@", response, responseObject);
         }
     }];
-    
-//    NSURLSessionUploadTask *uploadTask=[manager uploadTaskWithRequest:request fromData:fileData progress:nil completionHandler:^(NSURLResponse * _Nonnull response, id  _Nullable responseObject, NSError * _Nullable error) {
-//        if (error) {
-//            NSLog(@"Error: %@", error);
-//            NSLog(@"log for response:%@",response);
-//        } else {
-//            completionHandler(response,responseObject,error);
-//            NSLog(@"Success: %@ %@", response, responseObject);
-//        }
-//    }];
-    
-    
+
     [uploadTask resume];
     return uploadTask;
 }

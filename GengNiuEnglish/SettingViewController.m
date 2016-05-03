@@ -79,7 +79,7 @@
             if (status==0)
             {
                 NSURL *url=[NSURL URLWithString:[responseObject objectForKey:@"url"]];
-                [self.portraitImage sd_setImageWithURL:url];
+                [self.portraitImage sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"Icon"]];
             }
             
         } failure:^(NSURLSessionTask * _Nullable task, NSError * _Nullable error) {
@@ -198,12 +198,7 @@
     appDelegate.isPickerView=false;
     [picker dismissViewControllerAnimated:YES completion:nil];
     UIImage *image=[info objectForKey:UIImagePickerControllerEditedImage];
-    [self.portraitImage setImage:image];
-    
     [self saveImageAndCreateKey:image];
-    
-    
-    
     
 }
 
@@ -213,7 +208,7 @@
     NSDate *date=[NSDate date];
     double currentTime=[date timeIntervalSince1970];
     NSUInteger timeStap=(int)currentTime;
-    NSString *key=[NSString stringWithFormat:@"%@_%ld.png",account.userID,(unsigned long)timeStap];
+    NSString *key=[NSString stringWithFormat:@"%@_%ld.jpg",account.userID,(unsigned long)timeStap];
     
     
     NSString *imageDoc=[CommonMethod getPath:@"avatar"];
@@ -223,12 +218,13 @@
         [[NSFileManager defaultManager] createDirectoryAtPath:imageDoc withIntermediateDirectories:YES attributes:nil error:nil];
     }
     NSString *filePath=[imageDoc stringByAppendingPathComponent:key];
-    [UIImagePNGRepresentation(image) writeToFile:filePath atomically:YES];
+    [UIImageJPEGRepresentation(image, 1.0) writeToFile:filePath atomically:YES];
+//    [UIImagePNGRepresentation(image) writeToFile:filePath atomically:YES];
     
-    [self uploadPortraitImage:key filePath:filePath];
+    [self uploadPortraitImage:key filePath:filePath image:image];
 }
 
--(void)uploadPortraitImage:(NSString*)key filePath:(NSString*)filePath
+-(void)uploadPortraitImage:(NSString*)key filePath:(NSString*)filePath image:(UIImage*)image
 {
     NSString *method=@"PUT";
     NSMutableString* sign=[CommonMethod MD5EncryptionWithString:[NSString stringWithFormat:@"%@%@",method,key]];
@@ -253,6 +249,10 @@
             } success:nil failure:nil
             completionHandler:^(NSURLResponse * _Nullable response, NSURL * _Nullable filePath, NSError * _Nullable error) {
                 //set new userinfo
+                [self.portraitImage setImage:image];
+                AccountManager *account=[AccountManager singleInstance];
+                account.portraitKey=key;
+                [account uploadUserInfo];
             }];
         }
     }
@@ -347,7 +347,14 @@
     {
         [self goToBindView];
     }
-    
+    if (indexPath.row==1)
+    {
+        [self goToUnknow];
+    }
+    if (indexPath.row==2)
+    {
+        [self setPassword];
+    }
     [tableView deselectRowAtIndexPath:indexPath animated:YES];
     
 }
@@ -367,7 +374,18 @@
         [self.navigationController pushViewController:bindViewController animated:YES];
     }
 }
-
+-(void)goToUnknow
+{
+    UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    VocabularyViewController *vocabulary=[storyboard instantiateViewControllerWithIdentifier:@"VocabularyViewController"];
+    [self.navigationController pushViewController:vocabulary animated:YES];
+}
+-(void)setPassword
+{
+    UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+    ModifyPassword *modifyPasswordView=[storyboard instantiateViewControllerWithIdentifier:@"ModifyPassword"];
+    [self.navigationController pushViewController:modifyPasswordView animated:YES];
+}
 - (IBAction)goBackButtonClick:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
 }

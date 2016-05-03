@@ -194,6 +194,7 @@ static NSString * const ACCOUNT_KEYCHAIN = @"GNAccount20160311";
     [[MTDatabaseHelper sharedInstance] createTableWithTableName:@"UserInfo" indexesWithProperties:@[@"user_id  INTEGER PRIMARY KEY UNIQUE",@"gender INTEGER",@"nickname varchar(64)",@"portrait_key varchar(255)",@"extra varchar(255)"]];
     [[MTDatabaseHelper sharedInstance] createTableWithTableName:@"GradeList" indexesWithProperties:@[@"grade_id  INTEGER PRIMARY KEY UNIQUE",@"grade_name varchar(255)",@"cover_url varchar(512)",@"text_count integer"]];
     [[MTDatabaseHelper sharedInstance] createTableWithTableName:@"TextList" indexesWithProperties:@[@"text_id  INTEGER PRIMARY KEY UNIQUE",@"grade_id  INTEGER",@"text_name varchar(255)",@"cover_url varchar(512)",@"courseware_url varchar(512)",@"desc varchar(255)",@"challenge_goal integer",@"challenge_score integer",@"listen_count integer",@"practise_goal integer",@"star_count integer",@"listen_goal integer",@"practise_count integer",@"version integer"]];
+    [[MTDatabaseHelper sharedInstance] createTableWithTableName:@"Vocabulary" indexesWithProperties:@[@"word varchar(64) PRIMARY KEY UNIQUE",@"extra varchar(64)"]];
 }
 -(void)saveAccount
 {
@@ -298,6 +299,45 @@ static NSString * const ACCOUNT_KEYCHAIN = @"GNAccount20160311";
         
     } completionHandler:nil];
 }
-
+- (void)resetPassword:(NSDictionary*)parameters success:(void (^)(BOOL resetSuccess))success failure:(void (^)(NSString * message))failure
+{
+    NSString *oldPassword=[parameters objectForKey:@"oldPassword"];
+    NSString *newPassword=[parameters objectForKey:@"newPassword"];
+    NSMutableString* sign=[CommonMethod MD5EncryptionWithString:self.account];
+    NSDictionary *dict=[NSDictionary dictionaryWithObjectsAndKeys:self.account,@"account",sign,@"sign", nil];
+    
+    [NetworkingManager httpRequest:RTPost url:RUGetSalt parameters:dict progress:nil success:^(NSURLSessionTask * _Nullable task, id  _Nullable responseObject) {
+        
+        long int status=[[responseObject objectForKey:@"status"]integerValue];
+        NSString* salt;
+        if (status==0)
+        {
+            salt=[responseObject objectForKey:@"salt"];
+            NSMutableString* oldP = [CommonMethod MD5EncryptionWithString:[NSString stringWithFormat:@"%@%@",oldPassword,salt]];
+            NSMutableString* newP = [CommonMethod MD5EncryptionWithString:[NSString stringWithFormat:@"%@%@",newPassword,salt]];
+            NSMutableString* sign=[CommonMethod MD5EncryptionWithString:[NSString stringWithFormat:@"%@%@%@",newP,oldP,self.userID]];
+            NSDictionary *dic=[NSDictionary dictionaryWithObjectsAndKeys:self.userID,@"user_id",oldP,@"old_passwd",newP,@"new_passwd",sign,@"sign",nil];
+            [NetworkingManager httpRequest:RTPost url:RUResetPassword parameters:dic progress:nil success:^(NSURLSessionTask * _Nullable task, id  _Nullable responseObject) {
+                long int status=[[responseObject objectForKey:@"status"]integerValue];
+                if (status==0)
+                {
+                    self.password=newP;
+                    [self saveAccount];
+                    success(YES);
+                }
+                else
+                    success(NO);
+            } failure:^(NSURLSessionTask * _Nullable task, NSError * _Nullable error) {
+                failure([NSString stringWithFormat:@"%@",error]);
+            } completionHandler:nil];
+            
+        }
+        else
+            success(NO);
+        
+    } failure:^(NSURLSessionTask * _Nullable task, NSError * _Nullable error) {
+        failure([NSString stringWithFormat:@"%@",error]);
+    } completionHandler:nil];
+}
 
 @end

@@ -14,6 +14,8 @@
 #import "BindPhoneViewController.h"
 #import "AppDelegate.h"
 #import <SDWebImage/UIImageView+WebCache.h>
+#import "ModifyPassword.h"
+#import "VocabularyViewController.h"
 
 
 @interface SettingViewController : UIViewController<UITableViewDataSource,UITableViewDelegate,settingCellDelegate,UIActionSheetDelegate,UIImagePickerControllerDelegate,UINavigationControllerDelegate>
