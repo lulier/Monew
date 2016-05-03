@@ -30,8 +30,14 @@
     UITapGestureRecognizer *gestureRecognizer = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(textViewTapped:)];
     gestureRecognizer.numberOfTapsRequired=1;
     [self.view addGestureRecognizer:gestureRecognizer];
+    
+    
     //check whether the word is in database
     [self checkDatabase];
+}
+-(void)viewDidAppear:(BOOL)animated
+{
+    self.scrollView.contentSize=CGSizeMake(self.view.frame.size.width, self.explanationHeight.constant+50);
 }
 -(void)viewDidLayoutSubviews
 {
@@ -39,7 +45,8 @@
 }
 -(void)textViewTapped:(id)sender
 {
-    [self.navigationController popViewControllerAnimated:NO];
+//    [self.navigationController popViewControllerAnimated:NO];
+    [self dismissViewControllerAnimated:YES completion:nil];
 }
 -(void)checkDatabase
 {

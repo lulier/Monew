@@ -15,6 +15,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *wordLabel;
 @property (weak, nonatomic) IBOutlet UILabel *explanationLabel;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *explanationHeight;
+@property (weak, nonatomic) IBOutlet UIScrollView *scrollView;
 @property(strong,nonatomic)NSString *word;
 @property(strong,nonatomic)NSString *chineseExplanation;
 @property(strong,nonatomic)NSString *englishExplanation;

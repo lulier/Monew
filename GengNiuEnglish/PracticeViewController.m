@@ -395,7 +395,8 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
                 showView.word=[dic objectForKey:@"WORD"];
                 showView.chineseExplanation=[dic objectForKey:@"CHINESEEXPLAIN"];
                 showView.englishExplanation=[dic objectForKey:@"ENGLISHEXPLAIN"];
-                [self.navigationController pushViewController:showView animated:YES];
+//                [self.navigationController pushViewController:showView animated:YES];
+                [self.navigationController presentViewController:showView animated:YES completion:nil];
             });
            
         }
