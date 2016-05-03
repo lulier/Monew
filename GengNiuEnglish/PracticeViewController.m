@@ -32,6 +32,7 @@ typedef NS_ENUM(NSInteger,StarNum)
     NSArray *currentWords;
     UITapGestureRecognizer *gestureRecognizer;
     NSString *currentCheckWord;
+    NSString *currentRecordPath;
 //    MRProgressOverlayView *progressView;
 //    NSTimer *timer;
 }
@@ -395,7 +396,6 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
                 showView.word=[dic objectForKey:@"WORD"];
                 showView.chineseExplanation=[dic objectForKey:@"CHINESEEXPLAIN"];
                 showView.englishExplanation=[dic objectForKey:@"ENGLISHEXPLAIN"];
-//                [self.navigationController pushViewController:showView animated:YES];
                 [self.navigationController presentViewController:showView animated:YES completion:nil];
             });
            
@@ -494,7 +494,10 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     }
     recognitionResult=[[NSMutableSet alloc]init];
     NSError *error;
-    NSURL *soundFileURL=[NSURL URLWithString:[CommonMethod getPath:[NSString stringWithFormat:@"sound%ld.wav",index]]];
+    NSString *doctPath=[CommonMethod getPath:[self.book getFileName:FTDocument]];
+    currentRecordPath=[doctPath stringByAppendingPathComponent:[NSString stringWithFormat:@"sound%ld.wav",index]];
+    NSURL *soundFileURL=[NSURL URLWithString:currentRecordPath];
+    
     NSLog(@"log for path:%@",soundFileURL.absoluteString);
     audioRecorder = [[AVAudioRecorder alloc]
                      initWithURL:soundFileURL
@@ -503,7 +506,8 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     if (error)
     {
         
-    } else
+    }
+    else
     {
         [audioRecorder prepareToRecord];
         [audioRecorder record];
@@ -532,7 +536,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     {
         recordAudioPlayer=nil;
     }
-    NSURL *path=[NSURL URLWithString:[CommonMethod getPath:[NSString stringWithFormat:@"sound%ld.wav",index]]];
+    NSURL *path=[NSURL URLWithString:currentRecordPath];
     NSFileManager *fileMagager=[NSFileManager defaultManager];
     if ([fileMagager fileExistsAtPath:path.absoluteString])
     {
@@ -580,7 +584,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
         [[OEPocketsphinxController sharedInstance] setOutputAudio:YES];
         [[OEPocketsphinxController sharedInstance] setReturnNullHypotheses:YES];//返回空数据
         [[OEPocketsphinxController sharedInstance] setActive:TRUE error:nil];
-        [[OEPocketsphinxController sharedInstance] runRecognitionOnWavFileAtPath:[CommonMethod getPath:[NSString stringWithFormat:@"sound%ld.wav",index]] usingLanguageModelAtPath:lmPath dictionaryAtPath:dicPath acousticModelAtPath:[OEAcousticModel pathToModel:@"AcousticModelEnglish"] languageModelIsJSGF:YES];
+        [[OEPocketsphinxController sharedInstance] runRecognitionOnWavFileAtPath:currentRecordPath usingLanguageModelAtPath:lmPath dictionaryAtPath:dicPath acousticModelAtPath:[OEAcousticModel pathToModel:@"AcousticModelEnglish"] languageModelIsJSGF:YES];
     }
     else
     {

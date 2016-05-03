@@ -51,6 +51,7 @@
     self.settingTableView.layer.masksToBounds=YES;
     
     self.portraitImage.layer.cornerRadius=self.portraitImage.frame.size.width/2;
+    self.portraitImage.backgroundColor=[UIColor clearColor];
     self.portraitImage.clipsToBounds=YES;
     
     AccountManager *account=[AccountManager singleInstance];
@@ -391,7 +392,6 @@
 }
 
 - (void)logoutButtonClick {
-    
         SCLAlertView *alert=[[SCLAlertView alloc]init];
         [alert addButton:@"确定" target:self selector:@selector(logout)];
         [alert showNotice:self title:@"提示" subTitle:@"您确定要退出当前账号？" closeButtonTitle:@"取消" duration:0.0f];
