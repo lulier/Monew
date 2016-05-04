@@ -25,6 +25,7 @@
 #import "MTDatabaseHelper.h"
 #import "ShowTextViewController.h"
 #import "SCLAlertView.h"
+#import "StudyDataManager.h"
 
 
 

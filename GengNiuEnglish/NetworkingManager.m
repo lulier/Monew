@@ -29,7 +29,7 @@ static const NSString *URLForSetUserInfo=@"/student/set_userinfo/";
 static const NSString *URLForCloudURL=@"/student/get_file_url/";
 static const NSString *URLForCheckNetwork=@"http://www.baidu.com";
 static const NSString *URLForResetPassword=@"/student/change_passwd/";
-
+static const NSString *URLForUpdateState=@"/studystatus/text_state_update/";
 
 
 @implementation NetworkingManager
@@ -87,6 +87,8 @@ static const NSString *URLForResetPassword=@"/student/change_passwd/";
             return URLForCheckNetwork;
         case RUResetPassword:
             return [NSString stringWithFormat:@"%@%@",MONEWDOMAIN,URLForResetPassword];
+        case RUUpdateState:
+            return [NSString stringWithFormat:@"%@%@",MONEWDOMAIN,URLForUpdateState];
         case RUCustom:
             return nil;
         default:

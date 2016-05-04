@@ -208,8 +208,8 @@
     AccountManager *account=[AccountManager singleInstance];
     NSDate *date=[NSDate date];
     double currentTime=[date timeIntervalSince1970];
-    NSUInteger timeStap=(int)currentTime;
-    NSString *key=[NSString stringWithFormat:@"%@_%ld.jpg",account.userID,(unsigned long)timeStap];
+    NSUInteger timeStamp=(int)currentTime;
+    NSString *key=[NSString stringWithFormat:@"%@_%ld.jpg",account.userID,(unsigned long)timeStamp];
     
     
     NSString *imageDoc=[CommonMethod getPath:@"avatar"];

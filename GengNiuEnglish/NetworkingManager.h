@@ -40,6 +40,7 @@ typedef NS_ENUM(NSInteger,RequestURL)
     RUGetCloudURL,
     RUCheckNetwork,
     RUResetPassword,
+    RUUpdateState,
     RUCustom
 };
 enum Return_Code

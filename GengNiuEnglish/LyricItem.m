@@ -34,7 +34,7 @@
     NSArray *timeData=[[[time stringByReplacingOccurrencesOfString:@"[" withString:@""] stringByReplacingOccurrencesOfString:@"." withString:@":"] componentsSeparatedByString:@":"];
     if ([timeData count]!=3)
     {
-        NSLog(@"the script miss timestap");
+        NSLog(@"the script miss timestamp");
         return nil;
     }
     NSInteger minute=[timeData[0] integerValue];

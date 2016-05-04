@@ -19,6 +19,7 @@ typedef NS_ENUM(NSInteger,StarNum)
 
 @interface PracticeViewController ()
 {
+    NSMutableData *_audioBuffer;
     STKAudioPlayer *audioPlayer;
     NSInteger endTime;
     AVAudioRecorder *audioRecorder;
@@ -98,6 +99,11 @@ static NSString* cellIdentifierLyric=@"LyricViewCell";
     });
     [DictionaryDatabase sharedInstance];
     playTextID=-1;
+    
+    
+    [[StudyDataManager sharedInstance] loadSentenceScores:self.book.text_id];
+    
+    [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(availableBuffer:) name:@"AvailableBuffer" object:nil];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -209,6 +215,19 @@ static NSString* cellIdentifierLyric=@"LyricViewCell";
     [cell.star1 setImage:[UIImage imageNamed:@"star_unlight"]];
     [cell.star2 setImage:[UIImage imageNamed:@"star_unlight"]];
     [cell.star3 setImage:[UIImage imageNamed:@"star_unlight"]];
+    
+    NSString* sentenceID=[NSString stringWithFormat:@"%@_%ld",self.book.text_id,(long)indexPath.row];
+    NSDictionary *sentenceScore=[[StudyDataManager sharedInstance] getSentenceScore:sentenceID];
+    if (sentenceScore!=nil)
+    {
+        cell.lyricItem.stars=[[sentenceScore objectForKey:@"score"] integerValue];
+        cell.lyricItem.recordPath=[sentenceScore objectForKey:@"record_path"];
+        if (cell.lyricItem.recordPath!=nil)
+        {
+            cell.playVoice.hidden=NO;
+        }
+    }
+    
     switch (cell.lyricItem.stars) {
         case oneStar:
             [cell.star1 setImage:[UIImage imageNamed:@"star_light"]];
@@ -227,6 +246,12 @@ static NSString* cellIdentifierLyric=@"LyricViewCell";
     }
     if (self.selectedIndex.row==cell.index)
     {
+        NSString *doctPath=[CommonMethod getPath:[self.book getFileName:FTDocument]];
+        NSString* RecordPath=[doctPath stringByAppendingPathComponent:[NSString stringWithFormat:@"sound%ld.wav",cell.index]];
+        if ([[NSFileManager defaultManager] fileExistsAtPath:RecordPath])
+        {
+            cell.playVoice.hidden=NO;
+        }
         cell.playText.hidden=NO;
         if (self.isPlayingText&&cell.index==playTextIndex)
         {
@@ -425,13 +450,13 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
 
 -(void)stopCellWorking
 {
-    for (LyricViewCell *cell in [self.tableview visibleCells])
-    {
-        if (cell.index!=self.selectedIndex.row)
-        {
-            cell.playVoice.hidden=YES;
-        }
-    }
+//    for (LyricViewCell *cell in [self.tableview visibleCells])
+//    {
+//        if (cell.index!=self.selectedIndex.row)
+//        {
+//            cell.playVoice.hidden=YES;
+//        }
+//    }
     LyricViewCell *cell=[self.tableview cellForRowAtIndexPath:self.selectedIndex];
     if (cell!=nil)
     {
@@ -509,23 +534,38 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     }
     else
     {
-        [audioRecorder prepareToRecord];
-        [audioRecorder record];
+//        [audioRecorder prepareToRecord];
+//        [audioRecorder record];
+    }
+    
+    if (_audioBuffer!=nil)
+    {
+        _audioBuffer=nil;
     }
     currentWords=words;
     [self generateLM:words index:index];
-//    [self runRecognition:index];
+    [self runRecognition:index];
 }
 -(void)stopRecorder:(NSArray*)words index:(NSInteger)index
 {
-    [audioRecorder stop];
-    [self runRecognition:index];
+    
     LyricViewCell *cell=[self.tableview cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
     cell.lyricItem.stars=0;
     cell.playVoice.hidden=NO;
     [cell.star1 setImage:[UIImage imageNamed:@"star_unlight"]];
     [cell.star2 setImage:[UIImage imageNamed:@"star_unlight"]];
     [cell.star3 setImage:[UIImage imageNamed:@"star_unlight"]];
+    
+//    [audioRecorder stop];
+//    [self runRecognition:index];
+//    [[OEPocketsphinxController sharedInstance] suspendRecognition];
+    [[OEPocketsphinxController sharedInstance] stopListening];
+    [self mergeWavHeaderData:_audioBuffer index:index];
+    [self setTheStar];
+    
+    
+    NSLog(@"log for result: %@",recognitionResult);
+    
 }
 -(void)playRecord:(NSInteger)index
 {
@@ -536,7 +576,8 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     {
         recordAudioPlayer=nil;
     }
-    NSURL *path=[NSURL URLWithString:currentRecordPath];
+    LyricItem *item=self.lyricItems[index];
+    NSURL *path=[NSURL URLWithString:item.recordPath];
     NSFileManager *fileMagager=[NSFileManager defaultManager];
     if ([fileMagager fileExistsAtPath:path.absoluteString])
     {
@@ -580,16 +621,17 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
         //设置输出音频数据
 //        [[OEPocketsphinxController sharedInstance] setVerbosePocketSphinx:YES];
         [[OEPocketsphinxController sharedInstance] setSecondsOfSilenceToDetect:0.3];
-        [[OEPocketsphinxController sharedInstance] setVadThreshold:2.0];
+        [[OEPocketsphinxController sharedInstance] setVadThreshold:2.5];
         [[OEPocketsphinxController sharedInstance] setOutputAudio:YES];
         [[OEPocketsphinxController sharedInstance] setReturnNullHypotheses:YES];//返回空数据
         [[OEPocketsphinxController sharedInstance] setActive:TRUE error:nil];
-        [[OEPocketsphinxController sharedInstance] runRecognitionOnWavFileAtPath:currentRecordPath usingLanguageModelAtPath:lmPath dictionaryAtPath:dicPath acousticModelAtPath:[OEAcousticModel pathToModel:@"AcousticModelEnglish"] languageModelIsJSGF:YES];
+//        [[OEPocketsphinxController sharedInstance] runRecognitionOnWavFileAtPath:currentRecordPath usingLanguageModelAtPath:lmPath dictionaryAtPath:dicPath acousticModelAtPath:[OEAcousticModel pathToModel:@"AcousticModelEnglish"] languageModelIsJSGF:YES];
+        [[OEPocketsphinxController sharedInstance] startListeningWithLanguageModelAtPath:lmPath dictionaryAtPath:dicPath acousticModelAtPath:[OEAcousticModel pathToModel:@"AcousticModelEnglish"] languageModelIsJSGF:TRUE];
     }
     else
     {
-//        [[OEPocketsphinxController sharedInstance] changeLanguageModelToFile:lmPath withDictionary:dicPath];
-//        [[OEPocketsphinxController sharedInstance] resumeRecognition];
+        [[OEPocketsphinxController sharedInstance] changeLanguageModelToFile:lmPath withDictionary:dicPath];
+        [[OEPocketsphinxController sharedInstance] resumeRecognition];
     }
 }
 -(void)playText:(NSInteger)index
@@ -655,6 +697,9 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     {
         return;
     }
+}
+-(void)setTheStar
+{
     NSMutableAttributedString *resultString=[[NSMutableAttributedString alloc]init];
     NSInteger correct=0;
     NSInteger wrong=0;
@@ -693,7 +738,8 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     {
         if (cell.index==self.selectedIndex.row)
         {
-            switch (number) {
+            switch (number)
+            {
                 case oneStar:
                     [cell.star1 setImage:[UIImage imageNamed:@"star_light"]];
                     cell.lyricItem.stars=1;
@@ -712,13 +758,104 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
                 default:
                     break;
             }
+            
+            //update database
+            [[StudyDataManager sharedInstance] updateSentenceScore:[NSString stringWithFormat:@"%@_%ld",self.book.text_id,cell.index] recordPath:currentRecordPath score:[NSString stringWithFormat:@"%ld",cell.lyricItem.stars] textID:self.book.text_id];
+            LyricItem *item=self.lyricItems[cell.index];
+            item.recordPath=currentRecordPath;
+            
+            //upload study status
+            AccountManager *account=[AccountManager singleInstance];
+//            [[StudyDataManager sharedInstance] prepareUploadStudyState:account.userID textID:self.book.text_id starCount:@"0" listenCount:@"0" practiceCount:@"1" challengeScore:@"0"];
         }
         
     }
-    
 }
 
+- (void) availableBuffer:(id)sender {
+    NSDictionary *userInfo = (NSDictionary *)[sender userInfo];
+    NSData *buffer = userInfo[@"Buffer"];
+    if(_audioBuffer==nil){
+        _audioBuffer=[[NSMutableData alloc]init];
+    }
+    [_audioBuffer appendData:buffer];
+}
 
+//添加wav头
+-(NSMutableData *)mergeWavHeaderData:(NSMutableData *)data index:(NSInteger)index
+{
+    
+    long totalAudioLen = 0;
+    long totalDataLen = 0;
+    long longSampleRate = 16000;//11025.0
+    int channels = 1;
+    long byteRate = 16 * 16000 * channels/8;
+    
+    totalAudioLen=[data length];
+    totalDataLen=totalAudioLen+44;
+    
+    
+    Byte *header=(Byte *)malloc(44);
+    header[0] = 'R'; // RIFF/WAVE header
+    header[1] = 'I';
+    header[2] = 'F';
+    header[3] = 'F';
+    header[4] = (Byte) (totalDataLen & 0xff);
+    header[5] = (Byte) ((totalDataLen >> 8) & 0xff);
+    header[6] = (Byte) ((totalDataLen >> 16) & 0xff);
+    header[7] = (Byte) ((totalDataLen >> 24) & 0xff);
+    header[8] = 'W';
+    header[9] = 'A';
+    header[10] = 'V';
+    header[11] = 'E';
+    header[12] = 'f'; // 'fmt ' chunk
+    header[13] = 'm';
+    header[14] = 't';
+    header[15] = ' ';
+    header[16] = 16; // 4 bytes: size of 'fmt ' chunk
+    header[17] = 0;
+    header[18] = 0;
+    header[19] = 0;
+    header[20] = 1; // format = 1
+    header[21] = 0;
+    header[22] = (Byte) channels;
+    header[23] = 0;
+    header[24] = (Byte) (longSampleRate & 0xff);
+    header[25] = (Byte) ((longSampleRate >> 8) & 0xff);
+    header[26] = (Byte) ((longSampleRate >> 16) & 0xff);
+    header[27] = (Byte) ((longSampleRate >> 24) & 0xff);
+    header[28] = (Byte) (byteRate & 0xff);
+    header[29] = (Byte) ((byteRate >> 8) & 0xff);
+    header[30] = (Byte) ((byteRate >> 16) & 0xff);
+    header[31] = (Byte) ((byteRate >> 24) & 0xff);
+    header[32] = (Byte) (2 * 8 / 8); // block align
+    header[33] = 0;
+    header[34] = 16; // bits per sample
+    header[35] = 0;
+    header[36] = 'd';
+    header[37] = 'a';
+    header[38] = 't';
+    header[39] = 'a';
+    header[40] = (Byte) (totalAudioLen & 0xff);
+    header[41] = (Byte) ((totalAudioLen >> 8) & 0xff);
+    header[42] = (Byte) ((totalAudioLen >> 16) & 0xff);
+    header[43] = (Byte) ((totalAudioLen >> 24) & 0xff);
+    
+    NSData *headerData=[NSData dataWithBytes:header length:44];
+    
+    NSMutableData *soundData=[[NSMutableData alloc]init];
+    [soundData appendData:[headerData subdataWithRange:NSMakeRange(0, 44)]];
+    [soundData appendData:data];
+    //检查是否存在
+    if ([[NSFileManager defaultManager] fileExistsAtPath:currentRecordPath])
+    {
+        [[NSFileManager defaultManager] removeItemAtPath:currentRecordPath error:nil];
+    }
+    [soundData writeToFile:currentRecordPath atomically:YES];
+//    NSLog(@"log for path:%@",[CommonMethod getPath:[NSString stringWithFormat:@"sound%ld.wav",index]]);
+    return soundData;
+    
+}
 
 // An optional delegate method of OEEventsObserver which informs that Pocketsphinx is now listening for speech.
 - (void) pocketsphinxDidStartListening {

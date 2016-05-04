@@ -32,6 +32,8 @@
 		F448DD971CD8709F002D43B6 /* ModifyPassword.m in Sources */ = {isa = PBXBuildFile; fileRef = F448DD961CD8709F002D43B6 /* ModifyPassword.m */; };
 		F448DD9A1CD885B9002D43B6 /* VocabularyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F448DD991CD885B9002D43B6 /* VocabularyViewController.m */; };
 		F448DD9D1CD8C6D6002D43B6 /* VocabularyViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F448DD9C1CD8C6D6002D43B6 /* VocabularyViewCell.m */; };
+		F448DDA41CD9AEA0002D43B6 /* OEContinuousModel+SaveWave.m in Sources */ = {isa = PBXBuildFile; fileRef = F448DDA31CD9AEA0002D43B6 /* OEContinuousModel+SaveWave.m */; };
+		F448DDA71CD9CC4F002D43B6 /* StudyDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F448DDA61CD9CC4F002D43B6 /* StudyDataManager.m */; };
 		F454F9331CC767B400326774 /* UITextView+ContentInset.m in Sources */ = {isa = PBXBuildFile; fileRef = F454F9321CC767B400326774 /* UITextView+ContentInset.m */; };
 		F46A44FA1C93CA37002BC9D4 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F46A44F91C93CA37002BC9D4 /* CoreTelephony.framework */; };
 		F46A45051C93CD50002BC9D4 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F46A44FB1C93CA5B002BC9D4 /* libz.tbd */; };
@@ -131,6 +133,10 @@
 		F448DD991CD885B9002D43B6 /* VocabularyViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VocabularyViewController.m; sourceTree = "<group>"; };
 		F448DD9B1CD8C6D6002D43B6 /* VocabularyViewCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = VocabularyViewCell.h; sourceTree = "<group>"; };
 		F448DD9C1CD8C6D6002D43B6 /* VocabularyViewCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = VocabularyViewCell.m; sourceTree = "<group>"; };
+		F448DDA21CD9AEA0002D43B6 /* OEContinuousModel+SaveWave.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "OEContinuousModel+SaveWave.h"; sourceTree = "<group>"; };
+		F448DDA31CD9AEA0002D43B6 /* OEContinuousModel+SaveWave.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OEContinuousModel+SaveWave.m"; sourceTree = "<group>"; };
+		F448DDA51CD9CC4F002D43B6 /* StudyDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StudyDataManager.h; sourceTree = "<group>"; };
+		F448DDA61CD9CC4F002D43B6 /* StudyDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StudyDataManager.m; sourceTree = "<group>"; };
 		F454F9311CC767B400326774 /* UITextView+ContentInset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextView+ContentInset.h"; sourceTree = "<group>"; };
 		F454F9321CC767B400326774 /* UITextView+ContentInset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextView+ContentInset.m"; sourceTree = "<group>"; };
 		F46A44F91C93CA37002BC9D4 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
@@ -405,6 +411,8 @@
 				F4F0E6DE1C97BBEF00818C89 /* CustomCollectionViewLayout.m */,
 				F49467081C28ECE900806DEF /* NetworkingManager.h */,
 				F49467091C28ECE900806DEF /* NetworkingManager.m */,
+				F448DDA51CD9CC4F002D43B6 /* StudyDataManager.h */,
+				F448DDA61CD9CC4F002D43B6 /* StudyDataManager.m */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -412,6 +420,8 @@
 		F4AFCFAF1C84394D0003B7F2 /* Category */ = {
 			isa = PBXGroup;
 			children = (
+				F448DDA21CD9AEA0002D43B6 /* OEContinuousModel+SaveWave.h */,
+				F448DDA31CD9AEA0002D43B6 /* OEContinuousModel+SaveWave.m */,
 				F478C87F1C9EDA9A00746E2C /* UIImageView+MTTag.h */,
 				F478C8801C9EDA9A00746E2C /* UIImageView+MTTag.m */,
 				F4F0E6CC1C94167600818C89 /* NSData+NSData_AES.h */,
@@ -627,12 +637,14 @@
 				F486C7801C3B8B7C00CBFBD1 /* SampleQueueId.m in Sources */,
 				F436F6D01CCE5D3C008260F0 /* SettingCell.m in Sources */,
 				F448DD9D1CD8C6D6002D43B6 /* VocabularyViewCell.m in Sources */,
+				F448DDA41CD9AEA0002D43B6 /* OEContinuousModel+SaveWave.m in Sources */,
 				F436F6D91CCF6288008260F0 /* BindPhoneViewController.m in Sources */,
 				F4A9AF3F1C4D2435004BC7BF /* TextBookCell.m in Sources */,
 				F494670A1C28ECE900806DEF /* NetworkingManager.m in Sources */,
 				F4A9AF3C1C4D2418004BC7BF /* MaterialCell.m in Sources */,
 				F4F0E6DF1C97BBEF00818C89 /* CustomCollectionViewLayout.m in Sources */,
 				F42FA5FC1C8EB1560033C9C9 /* AccountManager.m in Sources */,
+				F448DDA71CD9CC4F002D43B6 /* StudyDataManager.m in Sources */,
 				F483DB6E1CCB785E00DEF910 /* MenuControllerSupportingView.m in Sources */,
 				F49467041C27CE0900806DEF /* DataForCell.m in Sources */,
 				F4B271B01C33B429009313CA /* LyricViewController.m in Sources */,
