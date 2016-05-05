@@ -27,7 +27,6 @@
 		F448DD8B1CD4BBC3002D43B6 /* MOBFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F448DD891CD4BBC3002D43B6 /* MOBFoundation.framework */; };
 		F448DD8C1CD4BBC3002D43B6 /* SMS_SDK.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F448DD8A1CD4BBC3002D43B6 /* SMS_SDK.framework */; };
 		F448DD8F1CD72EEE002D43B6 /* DictionaryDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = F448DD8E1CD72EEE002D43B6 /* DictionaryDatabase.m */; };
-		F448DD911CD73098002D43B6 /* dictionary.db in Resources */ = {isa = PBXBuildFile; fileRef = F448DD901CD73098002D43B6 /* dictionary.db */; };
 		F448DD941CD792F5002D43B6 /* ShowTextViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F448DD931CD792F5002D43B6 /* ShowTextViewController.m */; };
 		F448DD971CD8709F002D43B6 /* ModifyPassword.m in Sources */ = {isa = PBXBuildFile; fileRef = F448DD961CD8709F002D43B6 /* ModifyPassword.m */; };
 		F448DD9A1CD885B9002D43B6 /* VocabularyViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F448DD991CD885B9002D43B6 /* VocabularyViewController.m */; };
@@ -35,6 +34,7 @@
 		F448DDA41CD9AEA0002D43B6 /* OEContinuousModel+SaveWave.m in Sources */ = {isa = PBXBuildFile; fileRef = F448DDA31CD9AEA0002D43B6 /* OEContinuousModel+SaveWave.m */; };
 		F448DDA71CD9CC4F002D43B6 /* StudyDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F448DDA61CD9CC4F002D43B6 /* StudyDataManager.m */; };
 		F448DDAA1CDA114E002D43B6 /* AdvanceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F448DDA91CDA114E002D43B6 /* AdvanceViewController.m */; };
+		F448DDAD1CDB3C09002D43B6 /* dictionary.db in Resources */ = {isa = PBXBuildFile; fileRef = F448DDAC1CDB3C09002D43B6 /* dictionary.db */; };
 		F454F9331CC767B400326774 /* UITextView+ContentInset.m in Sources */ = {isa = PBXBuildFile; fileRef = F454F9321CC767B400326774 /* UITextView+ContentInset.m */; };
 		F46A44FA1C93CA37002BC9D4 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F46A44F91C93CA37002BC9D4 /* CoreTelephony.framework */; };
 		F46A45051C93CD50002BC9D4 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F46A44FB1C93CA5B002BC9D4 /* libz.tbd */; };
@@ -125,7 +125,6 @@
 		F448DD8A1CD4BBC3002D43B6 /* SMS_SDK.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SMS_SDK.framework; path = framwork/SMS_SDK.framework; sourceTree = "<group>"; };
 		F448DD8D1CD72EEE002D43B6 /* DictionaryDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = DictionaryDatabase.h; sourceTree = "<group>"; };
 		F448DD8E1CD72EEE002D43B6 /* DictionaryDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = DictionaryDatabase.m; sourceTree = "<group>"; };
-		F448DD901CD73098002D43B6 /* dictionary.db */ = {isa = PBXFileReference; lastKnownFileType = file; name = dictionary.db; path = ../dictionary.db; sourceTree = "<group>"; };
 		F448DD921CD792F5002D43B6 /* ShowTextViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ShowTextViewController.h; sourceTree = "<group>"; };
 		F448DD931CD792F5002D43B6 /* ShowTextViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ShowTextViewController.m; sourceTree = "<group>"; };
 		F448DD951CD8709F002D43B6 /* ModifyPassword.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ModifyPassword.h; sourceTree = "<group>"; };
@@ -140,6 +139,7 @@
 		F448DDA61CD9CC4F002D43B6 /* StudyDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StudyDataManager.m; sourceTree = "<group>"; };
 		F448DDA81CDA114E002D43B6 /* AdvanceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdvanceViewController.h; sourceTree = "<group>"; };
 		F448DDA91CDA114E002D43B6 /* AdvanceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdvanceViewController.m; sourceTree = "<group>"; };
+		F448DDAC1CDB3C09002D43B6 /* dictionary.db */ = {isa = PBXFileReference; lastKnownFileType = file; name = dictionary.db; path = ../dictionary.db; sourceTree = "<group>"; };
 		F454F9311CC767B400326774 /* UITextView+ContentInset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextView+ContentInset.h"; sourceTree = "<group>"; };
 		F454F9321CC767B400326774 /* UITextView+ContentInset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextView+ContentInset.m"; sourceTree = "<group>"; };
 		F46A44F91C93CA37002BC9D4 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
@@ -313,7 +313,7 @@
 		F42799291C18514200240736 /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
-				F448DD901CD73098002D43B6 /* dictionary.db */,
+				F448DDAC1CDB3C09002D43B6 /* dictionary.db */,
 				F427992A1C18514200240736 /* main.m */,
 			);
 			name = "Supporting Files";
@@ -549,7 +549,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F448DD911CD73098002D43B6 /* dictionary.db in Resources */,
+				F448DDAD1CDB3C09002D43B6 /* dictionary.db in Resources */,
 				F42799391C18514200240736 /* LaunchScreen.storyboard in Resources */,
 				F478C87D1C9D955500746E2C /* AcousticModelEnglish.bundle in Resources */,
 				F42799361C18514200240736 /* Assets.xcassets in Resources */,

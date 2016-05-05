@@ -292,9 +292,9 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     CGFloat height=[CommonMethod calculateTextHeight:content width:width fontSize:16.0f];
     if ([indexPath compare:self.selectedIndex]==NSOrderedSame)
     {
-        return height+50.0f;
+        return ceil(height+50.0f);
     }
-    return height;
+    return ceil(height);
 }
 
 -(void)tableView:(UITableView *)tableView didSelectRowAtIndexPath:(NSIndexPath *)indexPath
@@ -885,9 +885,58 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
         [[NSFileManager defaultManager] removeItemAtPath:currentRecordPath error:nil];
     }
     [soundData writeToFile:currentRecordPath atomically:YES];
+    
+    
+    
+    
 //    NSLog(@"log for path:%@",[CommonMethod getPath:[NSString stringWithFormat:@"sound%ld.wav",index]]);
     return soundData;
     
+}
+-(void)uploadRecord:(NSInteger)index score:(NSInteger)score sentence:(NSString*)sentence
+{
+    //create a key for upload
+    
+    AccountManager *account=[AccountManager singleInstance];
+    NSDate *date=[NSDate date];
+    double currentTime=[date timeIntervalSince1970];
+    NSUInteger timeStamp=(int)currentTime;
+    NSString *key=[NSString stringWithFormat:@"%@_%ld.wav",account.userID,(unsigned long)timeStamp];
+    
+    NSString *method=@"PUT";
+    
+    NSMutableString* sign=[CommonMethod MD5EncryptionWithString:[NSString stringWithFormat:@"%@%@",method,key]];
+    key=[NSString stringWithFormat:@"voice/%@",key];
+    NSDictionary *dict=[NSDictionary dictionaryWithObjectsAndKeys:method,@"method",key,@"object",sign,@"sign",nil];
+    
+    NSString *doctPath=[CommonMethod getPath:[self.book getFileName:FTDocument]];
+    NSString *filePath=[doctPath stringByAppendingPathComponent:[NSString stringWithFormat:@"sound%ld.wav",index]];
+    
+    [NetworkingManager httpRequest:RTPost url:RUGetCloudURL parameters:dict progress:nil
+    success:^(NSURLSessionTask * _Nullable task, id  _Nullable responseObject)
+     {
+         long int status=[[responseObject objectForKey:@"status"]integerValue];
+         if (status==0)
+         {
+             
+             NSString *url=[responseObject objectForKey:@"url"];
+             NSDictionary *parameters=[NSDictionary dictionaryWithObjectsAndKeys:url,@"uploadURL",filePath,@"filePath", nil];
+             
+             //upload wav
+             [NetworkingManager httpRequest:RTUpload url:RUGetCloudURL parameters:parameters progress:^(NSProgress * _Nullable progress) {
+                 
+             } success:nil failure:nil
+               completionHandler:^(NSURLResponse * _Nullable response, NSURL * _Nullable filePath, NSError * _Nullable error) {
+               //upload success
+                   [account uploadVoice:self.book.text_id voiceKey:key score:score  sentence:sentence];
+             }];
+         }
+     }
+    failure:^(NSURLSessionTask * _Nullable task, NSError * _Nullable error)
+    {
+         
+    }
+    completionHandler:nil];
 }
 
 // An optional delegate method of OEEventsObserver which informs that Pocketsphinx is now listening for speech.

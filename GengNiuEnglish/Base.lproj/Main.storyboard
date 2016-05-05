@@ -311,6 +311,13 @@
                                                         <action selector="playTextClick:" destination="nrk-Bx-EJL" eventType="touchUpInside" id="Y0C-kv-ndH"/>
                                                     </connections>
                                                 </button>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I7M-dv-Qgv">
+                                                    <rect key="frame" x="457" y="28" width="47" height="30"/>
+                                                    <state key="normal" title="upload"/>
+                                                    <connections>
+                                                        <action selector="uploadButtonClick:" destination="nrk-Bx-EJL" eventType="touchUpInside" id="cnm-zV-Xwv"/>
+                                                    </connections>
+                                                </button>
                                             </subviews>
                                             <constraints>
                                                 <constraint firstItem="djR-7G-fr4" firstAttribute="top" secondItem="4G9-2G-cvS" secondAttribute="top" id="47z-aI-D5r"/>
@@ -327,6 +334,7 @@
                                                 <constraint firstItem="BVQ-mL-JXw" firstAttribute="leading" secondItem="F4G-Dc-kgP" secondAttribute="trailing" constant="2" id="Xaa-kM-kLd"/>
                                                 <constraint firstItem="D4M-0M-d7T" firstAttribute="top" secondItem="4G9-2G-cvS" secondAttribute="topMargin" constant="-8" id="YNn-FT-h3v"/>
                                                 <constraint firstAttribute="bottom" secondItem="v7a-pc-uDa" secondAttribute="bottom" id="aIL-4b-uTz"/>
+                                                <constraint firstItem="I7M-dv-Qgv" firstAttribute="centerY" secondItem="djR-7G-fr4" secondAttribute="centerY" id="dEm-iF-akv"/>
                                                 <constraint firstItem="djR-7G-fr4" firstAttribute="leading" secondItem="0Ct-Zp-lOS" secondAttribute="trailing" constant="74" id="foj-AT-j2d"/>
                                                 <constraint firstItem="djR-7G-fr4" firstAttribute="leading" secondItem="0Ct-Zp-lOS" secondAttribute="leading" constant="120" id="g3X-MQ-Pn3"/>
                                                 <constraint firstItem="0Ct-Zp-lOS" firstAttribute="top" secondItem="v7a-pc-uDa" secondAttribute="bottom" constant="-10" id="gih-PO-7pu"/>
@@ -339,6 +347,7 @@
                                                 <constraint firstItem="D4M-0M-d7T" firstAttribute="leading" secondItem="4G9-2G-cvS" secondAttribute="leadingMargin" constant="-4" id="qlK-uz-7yi"/>
                                                 <constraint firstItem="4vz-PU-mv9" firstAttribute="leading" secondItem="D4M-0M-d7T" secondAttribute="trailing" id="vxU-IB-zDd"/>
                                                 <constraint firstAttribute="bottomMargin" secondItem="4vz-PU-mv9" secondAttribute="bottom" constant="-0.5" id="xar-Tw-Lxd"/>
+                                                <constraint firstItem="w9l-ui-PO5" firstAttribute="leading" secondItem="I7M-dv-Qgv" secondAttribute="trailing" constant="20" id="z61-fx-MDB"/>
                                             </constraints>
                                             <variation key="default">
                                                 <mask key="constraints">
@@ -367,6 +376,7 @@
                                             <outlet property="star1" destination="w9l-ui-PO5" id="rFW-Si-isW"/>
                                             <outlet property="star2" destination="F4G-Dc-kgP" id="a9y-1j-c7o"/>
                                             <outlet property="star3" destination="BVQ-mL-JXw" id="1sw-Sv-s1J"/>
+                                            <outlet property="uploadButton" destination="I7M-dv-Qgv" id="1NS-Np-MHV"/>
                                         </connections>
                                     </tableViewCell>
                                 </prototypes>
@@ -1433,7 +1443,7 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="408" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="07513B01-2492-4D4A-A2FA-E413FE6955E1" translatesAutoresizingMaskIntoConstraints="NO" id="Axa-d7-Z9S">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="1DBFC3FD-A02F-4B20-B58A-DE7154B1B0CA" translatesAutoresizingMaskIntoConstraints="NO" id="Axa-d7-Z9S">
                                                             <rect key="frame" x="15" y="12" width="21" height="21"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" secondItem="Axa-d7-Z9S" secondAttribute="height" multiplier="2:2" id="tJp-ce-Zz7"/>
@@ -1833,7 +1843,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="07513B01-2492-4D4A-A2FA-E413FE6955E1" width="36" height="36">
+        <image name="1DBFC3FD-A02F-4B20-B58A-DE7154B1B0CA" width="36" height="36">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGOjtYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK0HCBEW
 GxwgISgrLjQ3VSRudWxs1AkKCwwNDg8QViRjbGFzc1xOU0ltYWdlRmxhZ3NWTlNSZXBzV05TQ29sb3KA

@@ -20,6 +20,7 @@
 -(void)runRecognition:(NSInteger)index;
 -(void)playText:(NSInteger)index;
 -(BOOL)isPlayingText;
+-(void)uploadRecord:(NSInteger)index score:(NSInteger)score sentence:(NSString*)sentence;
 @end
 
 @interface LyricViewCell : UITableViewCell
@@ -40,6 +41,7 @@
 @property (weak, nonatomic) IBOutlet UITextView *cellContent;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *cellContentHeight;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *cellContentWidth;
+@property (weak, nonatomic) IBOutlet UIButton *uploadButton;
 @property(weak,nonatomic)id<lyricViewCellDelegate>delegate;
 - (instancetype)initWithStyle:(UITableViewCellStyle)style
               reuseIdentifier:(NSString *)reuseIdentifier;

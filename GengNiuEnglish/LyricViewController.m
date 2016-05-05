@@ -95,10 +95,10 @@
     NSInteger currentTime=[self getPlayTimes];
     if (currentTime!=0)
     {
-        if (currentTime==INT_MAX)
-        {
-            currentTime=10;
-        }
+//        if (currentTime==INT_MAX)
+//        {
+//            currentTime=10;
+//        }
         if (currentTime!=1)
         {
             currentTime--;
@@ -122,11 +122,11 @@
             currentTime++;
             self.timeLabel.text=[NSString stringWithFormat:@"%ld次",currentTime];
         }
-        else
-        {
-            currentTime=INT_MAX;
-            self.timeLabel.text=@"∞ 次";
-        }
+//        else
+//        {
+//            currentTime=INT_MAX;
+//            self.timeLabel.text=@"∞ 次";
+//        }
     }
 }
 -(NSInteger)getPlayTimes
@@ -156,6 +156,7 @@
 }
 -(void)stopPlayingMP3
 {
+//    NSLog(@"log for stop");
     //首先是判断当前的循环次数是否到了，如果已经循环结束，就不需要再开始播放，如果还需要继续播放则调用startplaymp3
     [timer invalidate];
     if (playTimes>0)
@@ -274,7 +275,7 @@
 {
     SampleQueueId* queueId = (SampleQueueId*)queueItemId;
     
-    NSLog(@"Started: %@", [queueId.url description]);
+//    NSLog(@"Started: %@", [queueId.url description]);
     
     
 }

@@ -90,4 +90,18 @@
     }
     [self.delegate playText:self.index];
 }
+- (IBAction)uploadButtonClick:(id)sender {
+    [self.delegate uploadRecord:self.index score:self.lyricItem.stars sentence:self.lyricItem.lyricBody];
+}
+
+- (void)layoutSubviews {
+    [super layoutSubviews];
+    
+    for (UIView *subview in self.contentView.superview.subviews) {
+        if ([NSStringFromClass(subview.class) hasSuffix:@"SeparatorView"]) {
+            subview.hidden = NO;
+        }
+    }
+}
+
 @end

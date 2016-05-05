@@ -301,6 +301,22 @@ static NSString * const ACCOUNT_KEYCHAIN = @"GNAccount20160311";
         
     } completionHandler:nil];
 }
+
+-(void)uploadVoice:(NSString*)textID voiceKey:(NSString*)voiceKey score:(NSInteger)score sentence:(NSString*)sentence
+{
+    NSMutableString *sign=[CommonMethod MD5EncryptionWithString:[NSString stringWithFormat:@"%@%ld%@%@%@",sentence,score,textID,self.userID,voiceKey]];
+    NSDictionary *dic=[NSDictionary dictionaryWithObjectsAndKeys:sentence,@"sentence",[NSString stringWithFormat:@"%ld",score],@"score",textID,@"text_id",self.userID,@"user_id",voiceKey,@"voice",sign,@"sign",nil];
+    [NetworkingManager httpRequest:RTPost url:RUUploadVoice parameters:dic progress:nil success:^(NSURLSessionTask * _Nullable task, id  _Nullable responseObject) {
+        long int status=[[responseObject objectForKey:@"status"]integerValue];
+        if (status==0)
+        {
+            
+        }
+    } failure:^(NSURLSessionTask * _Nullable task, NSError * _Nullable error) {
+        
+    } completionHandler:nil];
+}
+
 - (void)resetPassword:(NSDictionary*)parameters success:(void (^)(BOOL resetSuccess))success failure:(void (^)(NSString * message))failure
 {
     NSString *oldPassword=[parameters objectForKey:@"oldPassword"];

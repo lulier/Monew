@@ -54,4 +54,5 @@ typedef NS_ENUM(NSInteger,UserGender)
 - (void)uploadUserInfo;
 - (void)resetPassword:(NSDictionary *)parameters success:(void (^)(BOOL resetSuccess))success failure:(void (^)(NSString * message))failure;
 - (void)checkWeixinBind:(void (^)(BOOL bind))success failure:(void (^)(NSString * message))failure;
+-(void)uploadVoice:(NSString*)textID voiceKey:(NSString*)voiceKey score:(NSInteger)score sentence:(NSString*)sentence;
 @end

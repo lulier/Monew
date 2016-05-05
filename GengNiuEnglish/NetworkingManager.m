@@ -31,6 +31,7 @@ static const NSString *URLForCheckNetwork=@"http://www.baidu.com";
 static const NSString *URLForResetPassword=@"/student/change_passwd/";
 static const NSString *URLForUpdateState=@"/studystatus/text_state_update/";
 static const NSString *URLForWeixinBind=@"/weixin/check_avail/";
+static const NSString *URLForUploadVoice=@"/studystatus/upload_repeat/";
 
 
 @implementation NetworkingManager
@@ -92,6 +93,8 @@ static const NSString *URLForWeixinBind=@"/weixin/check_avail/";
             return [NSString stringWithFormat:@"%@%@",MONEWDOMAIN,URLForUpdateState];
         case RUWeixinBind:
             return [NSString stringWithFormat:@"%@%@",MONEWDOMAIN,URLForWeixinBind];
+        case RUUploadVoice:
+            return [NSString stringWithFormat:@"%@%@",MONEWDOMAIN,URLForUploadVoice];
         case RUCustom:
             return nil;
         default:
@@ -179,6 +182,7 @@ static const NSString *URLForWeixinBind=@"/weixin/check_avail/";
         if (error) {
             NSLog(@"Error: %@", error);
             NSLog(@"log for response:%@",response);
+            //alert upload fail
         } else {
             completionHandler(response,responseObject,error);
             NSLog(@"Success: %@ %@", response, responseObject);
