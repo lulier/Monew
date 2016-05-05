@@ -34,6 +34,7 @@
 		F448DD9D1CD8C6D6002D43B6 /* VocabularyViewCell.m in Sources */ = {isa = PBXBuildFile; fileRef = F448DD9C1CD8C6D6002D43B6 /* VocabularyViewCell.m */; };
 		F448DDA41CD9AEA0002D43B6 /* OEContinuousModel+SaveWave.m in Sources */ = {isa = PBXBuildFile; fileRef = F448DDA31CD9AEA0002D43B6 /* OEContinuousModel+SaveWave.m */; };
 		F448DDA71CD9CC4F002D43B6 /* StudyDataManager.m in Sources */ = {isa = PBXBuildFile; fileRef = F448DDA61CD9CC4F002D43B6 /* StudyDataManager.m */; };
+		F448DDAA1CDA114E002D43B6 /* AdvanceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F448DDA91CDA114E002D43B6 /* AdvanceViewController.m */; };
 		F454F9331CC767B400326774 /* UITextView+ContentInset.m in Sources */ = {isa = PBXBuildFile; fileRef = F454F9321CC767B400326774 /* UITextView+ContentInset.m */; };
 		F46A44FA1C93CA37002BC9D4 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F46A44F91C93CA37002BC9D4 /* CoreTelephony.framework */; };
 		F46A45051C93CD50002BC9D4 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F46A44FB1C93CA5B002BC9D4 /* libz.tbd */; };
@@ -137,6 +138,8 @@
 		F448DDA31CD9AEA0002D43B6 /* OEContinuousModel+SaveWave.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "OEContinuousModel+SaveWave.m"; sourceTree = "<group>"; };
 		F448DDA51CD9CC4F002D43B6 /* StudyDataManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StudyDataManager.h; sourceTree = "<group>"; };
 		F448DDA61CD9CC4F002D43B6 /* StudyDataManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StudyDataManager.m; sourceTree = "<group>"; };
+		F448DDA81CDA114E002D43B6 /* AdvanceViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AdvanceViewController.h; sourceTree = "<group>"; };
+		F448DDA91CDA114E002D43B6 /* AdvanceViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AdvanceViewController.m; sourceTree = "<group>"; };
 		F454F9311CC767B400326774 /* UITextView+ContentInset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextView+ContentInset.h"; sourceTree = "<group>"; };
 		F454F9321CC767B400326774 /* UITextView+ContentInset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextView+ContentInset.m"; sourceTree = "<group>"; };
 		F46A44F91C93CA37002BC9D4 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
@@ -361,6 +364,8 @@
 				F448DD961CD8709F002D43B6 /* ModifyPassword.m */,
 				F448DD981CD885B9002D43B6 /* VocabularyViewController.h */,
 				F448DD991CD885B9002D43B6 /* VocabularyViewController.m */,
+				F448DDA81CDA114E002D43B6 /* AdvanceViewController.h */,
+				F448DDA91CDA114E002D43B6 /* AdvanceViewController.m */,
 			);
 			name = Controller;
 			sourceTree = "<group>";
@@ -626,6 +631,7 @@
 				F486C77C1C3A492000CBFBD1 /* LyricItem.m in Sources */,
 				F4A9AF391C4D0D26004BC7BF /* CommonMethod.m in Sources */,
 				F448DD8F1CD72EEE002D43B6 /* DictionaryDatabase.m in Sources */,
+				F448DDAA1CDA114E002D43B6 /* AdvanceViewController.m in Sources */,
 				F454F9331CC767B400326774 /* UITextView+ContentInset.m in Sources */,
 				F448DD971CD8709F002D43B6 /* ModifyPassword.m in Sources */,
 				F448DD861CD4B768002D43B6 /* Reachability.m in Sources */,

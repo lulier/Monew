@@ -399,6 +399,9 @@
 }
 - (void)zipArchiveDidUnzipArchiveAtPath:(NSString *)path zipInfo:(unz_global_info)zipInfo unzippedPath:(NSString *)unzippedPath
 {
+    //when you can get the lrc file move all the file from the current doc to the first doc
+    
+    
     [self updateDatabase];
     //delete zip file after extracting
     [self deleteZipFile];

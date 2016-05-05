@@ -30,15 +30,19 @@
     switch (type) {
         case Iphone5s:
             self.lyricContent.font=[self.lyricContent.font fontWithSize:24.0f];
+            self.titleTopConstraint.constant=4;
             break;
         case Iphone6:
             self.lyricContent.font=[self.lyricContent.font fontWithSize:25.0f];
+            self.titleTopConstraint.constant=7;
             break;
         case Iphone6p:
             self.lyricContent.font=[self.lyricContent.font fontWithSize:26.0f];
+            self.titleTopConstraint.constant=10;
             break;
         default:
             self.lyricContent.font=[self.lyricContent.font fontWithSize:23.0f];
+            self.titleTopConstraint.constant=4;
             break;
     }
 }

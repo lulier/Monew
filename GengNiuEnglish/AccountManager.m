@@ -341,5 +341,27 @@ static NSString * const ACCOUNT_KEYCHAIN = @"GNAccount20160311";
         failure([NSString stringWithFormat:@"%@",error]);
     } completionHandler:nil];
 }
-
+-(void)checkWeixinBind:(void (^)(BOOL bind))success failure:(void (^)(NSString * message))failure
+{
+    
+    NSMutableString *sign=[CommonMethod MD5EncryptionWithString:[NSString stringWithFormat:@"%@",self.userID]];
+    NSDictionary *dic=[NSDictionary dictionaryWithObjectsAndKeys:self.userID,@"user_id",sign,@"sign",nil];
+    [NetworkingManager httpRequest:RTPost url:RUWeixinBind parameters:dic progress:nil success:^(NSURLSessionTask * _Nullable task, id  _Nullable responseObject) {
+        long int status=[[responseObject objectForKey:@"status"]integerValue];
+        if (status==0)
+        {
+            long int available=[[responseObject objectForKey:@"available"] integerValue];
+            if (available==1)
+            {
+                success(YES);
+            }
+            else
+                success(NO);
+        }
+        else
+            success(NO);
+    } failure:^(NSURLSessionTask * _Nullable task, NSError * _Nullable error) {
+        success(NO);
+    } completionHandler:nil];
+}
 @end

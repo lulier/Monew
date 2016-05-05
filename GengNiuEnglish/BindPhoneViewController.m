@@ -19,7 +19,6 @@
     switch (type) {
         case Iphone5s:
             self.titleTopConstraint.constant=4;
-
             break;
         case Iphone6:
             self.titleTopConstraint.constant=7;
@@ -28,6 +27,7 @@
             self.titleTopConstraint.constant=10;
             break;
         default:
+            self.titleTopConstraint.constant=4;
             break;
     }
 }

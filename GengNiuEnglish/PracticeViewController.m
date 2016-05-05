@@ -49,6 +49,23 @@ static NSString* cellIdentifierLyric=@"LyricViewCell";
 -(void)updateViewConstraints
 {
     [super updateViewConstraints];
+    IphoneType type=[CommonMethod checkIphoneType];
+    switch (type) {
+        case Iphone5s:
+            self.titleTopConstraint.constant=4;
+            break;
+        case Iphone6:
+            self.titleTopConstraint.constant=7;
+            self.tableviewTopConstraint.constant=90;
+            break;
+        case Iphone6p:
+            self.titleTopConstraint.constant=10;
+            self.tableviewTopConstraint.constant=100;
+            break;
+        default:
+            self.titleTopConstraint.constant=4;
+            break;
+    }
 }
 -(void)initWithBook:(DataForCell *)book
 {
@@ -576,10 +593,14 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     {
         recordAudioPlayer=nil;
     }
-    LyricItem *item=self.lyricItems[index];
-    NSURL *path=[NSURL URLWithString:item.recordPath];
+    
+    
+    NSString *doctPath=[CommonMethod getPath:[self.book getFileName:FTDocument]];
+    NSString *filePath=[doctPath stringByAppendingPathComponent:[NSString stringWithFormat:@"sound%ld.wav",index]];
+    NSURL *path=[NSURL URLWithString:filePath];
     NSFileManager *fileMagager=[NSFileManager defaultManager];
-    if ([fileMagager fileExistsAtPath:path.absoluteString])
+    
+    if ([fileMagager fileExistsAtPath:filePath])
     {
         recordAudioPlayer=[[AVAudioPlayer alloc]initWithContentsOfURL:path error:nil];
         recordAudioPlayer.delegate=self;
@@ -761,12 +782,24 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
             
             //update database
             [[StudyDataManager sharedInstance] updateSentenceScore:[NSString stringWithFormat:@"%@_%ld",self.book.text_id,cell.index] recordPath:currentRecordPath score:[NSString stringWithFormat:@"%ld",cell.lyricItem.stars] textID:self.book.text_id];
-            LyricItem *item=self.lyricItems[cell.index];
-            item.recordPath=currentRecordPath;
             
             //upload study status
             AccountManager *account=[AccountManager singleInstance];
 //            [[StudyDataManager sharedInstance] prepareUploadStudyState:account.userID textID:self.book.text_id starCount:@"0" listenCount:@"0" practiceCount:@"1" challengeScore:@"0"];
+            
+            //show share button
+            [account checkWeixinBind:^(BOOL bind) {
+                if (bind)
+                {
+                    //show share button
+                }
+                else
+                {
+                    //dont show share button
+                }
+            } failure:^(NSString *message) {
+                //dont show share button
+            }];
         }
         
     }

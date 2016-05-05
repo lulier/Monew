@@ -179,6 +179,7 @@
                         <outlet property="lyricScrollView" destination="iSO-Bj-JSI" id="kCQ-5k-ySU"/>
                         <outlet property="playButton" destination="Zw0-kx-DM0" id="Q7g-XE-QKc"/>
                         <outlet property="timeLabel" destination="2GL-fG-VVM" id="Hyh-ol-a0y"/>
+                        <outlet property="titleTopConstraint" destination="jgR-El-iy4" id="hcR-XY-Xee"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="q0f-mn-Y1r" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -233,7 +234,7 @@
                                                     <nil key="highlightedColor"/>
                                                 </label>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0Ct-Zp-lOS">
-                                                    <rect key="frame" x="48" y="20" width="81" height="45"/>
+                                                    <rect key="frame" x="10" y="20" width="81" height="45"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="81" id="6Ne-wf-WEf"/>
                                                         <constraint firstAttribute="height" constant="45" id="Z44-bc-uZy"/>
@@ -251,7 +252,7 @@
                                                     </connections>
                                                 </button>
                                                 <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="djR-7G-fr4">
-                                                    <rect key="frame" x="216" y="20" width="81" height="45"/>
+                                                    <rect key="frame" x="130" y="20" width="81" height="45"/>
                                                     <constraints>
                                                         <constraint firstAttribute="width" constant="81" id="C27-kj-mu1"/>
                                                         <constraint firstAttribute="height" constant="45" id="e2V-pw-rvP"/>
@@ -327,12 +328,12 @@
                                                 <constraint firstItem="D4M-0M-d7T" firstAttribute="top" secondItem="4G9-2G-cvS" secondAttribute="topMargin" constant="-8" id="YNn-FT-h3v"/>
                                                 <constraint firstAttribute="bottom" secondItem="v7a-pc-uDa" secondAttribute="bottom" id="aIL-4b-uTz"/>
                                                 <constraint firstItem="djR-7G-fr4" firstAttribute="leading" secondItem="0Ct-Zp-lOS" secondAttribute="trailing" constant="74" id="foj-AT-j2d"/>
+                                                <constraint firstItem="djR-7G-fr4" firstAttribute="leading" secondItem="0Ct-Zp-lOS" secondAttribute="leading" constant="120" id="g3X-MQ-Pn3"/>
                                                 <constraint firstItem="0Ct-Zp-lOS" firstAttribute="top" secondItem="v7a-pc-uDa" secondAttribute="bottom" constant="-10" id="gih-PO-7pu"/>
                                                 <constraint firstItem="djR-7G-fr4" firstAttribute="leading" secondItem="4vz-PU-mv9" secondAttribute="trailing" constant="126" id="iBP-GP-MaH"/>
                                                 <constraint firstItem="F4G-Dc-kgP" firstAttribute="top" secondItem="v7a-pc-uDa" secondAttribute="bottom" id="jwY-PE-APh"/>
-                                                <constraint firstItem="0Ct-Zp-lOS" firstAttribute="leading" secondItem="4G9-2G-cvS" secondAttribute="leading" constant="48" id="keP-Pq-n8h"/>
+                                                <constraint firstItem="0Ct-Zp-lOS" firstAttribute="leading" secondItem="4G9-2G-cvS" secondAttribute="leading" constant="10" id="keP-Pq-n8h"/>
                                                 <constraint firstItem="v7a-pc-uDa" firstAttribute="leading" secondItem="4G9-2G-cvS" secondAttribute="leading" constant="10" id="l9b-Va-V4b"/>
-                                                <constraint firstItem="djR-7G-fr4" firstAttribute="leading" secondItem="4G9-2G-cvS" secondAttribute="leadingMargin" constant="208" id="lr6-Oa-l3O"/>
                                                 <constraint firstItem="4vz-PU-mv9" firstAttribute="top" secondItem="v7a-pc-uDa" secondAttribute="top" id="p7H-qc-8cd"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="BVQ-mL-JXw" secondAttribute="trailing" constant="10" id="paD-ny-wzi"/>
                                                 <constraint firstItem="D4M-0M-d7T" firstAttribute="leading" secondItem="4G9-2G-cvS" secondAttribute="leadingMargin" constant="-4" id="qlK-uz-7yi"/>
@@ -407,9 +408,7 @@
                             <constraint firstItem="Irh-qU-660" firstAttribute="top" secondItem="42J-dr-Wag" secondAttribute="top" constant="5" id="D0F-bR-CPt"/>
                             <constraint firstItem="c0T-oW-Vj2" firstAttribute="top" secondItem="fFu-zf-cTh" secondAttribute="bottom" id="Ed4-ZA-oqH"/>
                             <constraint firstItem="c0T-oW-Vj2" firstAttribute="top" secondItem="Dps-S7-wZ5" secondAttribute="bottom" id="JZo-sk-KoR"/>
-                            <constraint firstItem="Dps-S7-wZ5" firstAttribute="leading" secondItem="42J-dr-Wag" secondAttribute="leadingMargin" id="L5R-Ny-ts5"/>
                             <constraint firstAttribute="trailing" secondItem="Dps-S7-wZ5" secondAttribute="trailing" constant="20" id="On8-W4-dQ1"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="Dps-S7-wZ5" secondAttribute="trailing" id="Svx-lB-shF"/>
                             <constraint firstItem="Dps-S7-wZ5" firstAttribute="top" secondItem="bnO-Qc-zCb" secondAttribute="bottom" constant="80" id="VAa-tq-CXb"/>
                             <constraint firstItem="fFu-zf-cTh" firstAttribute="top" secondItem="42J-dr-Wag" secondAttribute="topMargin" id="gbr-FZ-4cW"/>
                             <constraint firstAttribute="trailingMargin" secondItem="fFu-zf-cTh" secondAttribute="trailing" constant="-20" id="gc6-5f-vND"/>
@@ -418,12 +417,6 @@
                             <constraint firstItem="Dps-S7-wZ5" firstAttribute="leading" secondItem="42J-dr-Wag" secondAttribute="leading" constant="20" id="wIA-oQ-Mmj"/>
                             <constraint firstItem="Irh-qU-660" firstAttribute="centerX" secondItem="42J-dr-Wag" secondAttribute="centerX" id="wjm-bI-ZB2"/>
                         </constraints>
-                        <variation key="default">
-                            <mask key="constraints">
-                                <exclude reference="L5R-Ny-ts5"/>
-                                <exclude reference="Svx-lB-shF"/>
-                            </mask>
-                        </variation>
                     </view>
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
@@ -431,7 +424,9 @@
                         <outlet property="MCSupportingView" destination="fFu-zf-cTh" id="l2j-cr-e2s"/>
                         <outlet property="goBack" destination="cQx-ht-Um7" id="bb6-Q7-P2N"/>
                         <outlet property="tableview" destination="Dps-S7-wZ5" id="p1x-gO-H4l"/>
+                        <outlet property="tableviewTopConstraint" destination="VAa-tq-CXb" id="fx3-bd-QHH"/>
                         <outlet property="testReconition" destination="2Ep-bL-3Nm" id="v3g-Wv-ayd"/>
+                        <outlet property="titleTopConstraint" destination="D0F-bR-CPt" id="sCv-ja-21l"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="b5U-mT-L3R" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -1186,10 +1181,10 @@
             </objects>
             <point key="canvasLocation" x="410.5" y="935.5"/>
         </scene>
-        <!--View Controller-->
+        <!--Advance View Controller-->
         <scene sceneID="pQz-0O-U8j">
             <objects>
-                <viewController storyboardIdentifier="AdvanceViewController" id="Y0L-X2-9Vo" sceneMemberID="viewController">
+                <viewController storyboardIdentifier="AdvanceViewController" id="Y0L-X2-9Vo" customClass="AdvanceViewController" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="o8a-Xd-N0E"/>
                         <viewControllerLayoutGuide type="bottom" id="R7v-Hr-z2i"/>
@@ -1438,7 +1433,7 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="408" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="99658949-5EAB-4834-996C-63BAC2D28878" translatesAutoresizingMaskIntoConstraints="NO" id="Axa-d7-Z9S">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="07513B01-2492-4D4A-A2FA-E413FE6955E1" translatesAutoresizingMaskIntoConstraints="NO" id="Axa-d7-Z9S">
                                                             <rect key="frame" x="15" y="12" width="21" height="21"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" secondItem="Axa-d7-Z9S" secondAttribute="height" multiplier="2:2" id="tJp-ce-Zz7"/>
@@ -1838,7 +1833,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="99658949-5EAB-4834-996C-63BAC2D28878" width="36" height="36">
+        <image name="07513B01-2492-4D4A-A2FA-E413FE6955E1" width="36" height="36">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGOjtYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK0HCBEW
 GxwgISgrLjQ3VSRudWxs1AkKCwwNDg8QViRjbGFzc1xOU0ltYWdlRmxhZ3NWTlNSZXBzV05TQ29sb3KA

@@ -19,6 +19,7 @@
 @property(nonatomic,strong)NSArray *lyricItems;
 
 
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *titleTopConstraint;
 @property (weak, nonatomic) IBOutlet UIImageView *coverImageView;
 @property (weak, nonatomic) IBOutlet UIScrollView *lyricScrollView;
 @property (weak, nonatomic) IBOutlet UILabel *lyricContent;

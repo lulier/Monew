@@ -36,6 +36,8 @@
 @property(nonatomic,weak)DataForCell *book;
 @property(nonatomic,strong)NSIndexPath *selectedIndex;
 @property (nonatomic, strong) OEEventsObserver *openEarsEventsObserver;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *titleTopConstraint;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *tableviewTopConstraint;
 @property (weak, nonatomic) IBOutlet UITableView *tableview;
 @property (weak, nonatomic) IBOutlet UIButton *goBack;
 @property (weak, nonatomic) IBOutlet UILabel *testReconition;
