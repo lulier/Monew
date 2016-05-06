@@ -288,7 +288,13 @@
 
 -(void) audioPlayer:(STKAudioPlayer*)audioPlayer didFinishPlayingQueueItemId:(NSObject*)queueItemId withReason:(STKAudioPlayerStopReason)stopReason andProgress:(double)progress andDuration:(double)duration
 {
-    
+    if(isPlaying)
+    {
+        AccountManager *account=[AccountManager singleInstance];
+        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+            [[StudyDataManager sharedInstance] prepareUploadStudyState:account.userID textID:self.book.text_id starCount:@"0" readCount:@"0" sentenceCount:@"0" listenCount:@"1" challengeScore:@"0"];
+        });
+    }
     SampleQueueId* queueId = (SampleQueueId*)queueItemId;
     [self stopPlayingMP3];
     NSLog(@"Finished: %@", [queueId.url description]);

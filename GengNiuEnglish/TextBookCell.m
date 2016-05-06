@@ -15,8 +15,9 @@
 {
     LyricViewController *lyricViewController;
     PracticeViewController *practiceViewController;
-    ReaderViewController *readerViewController;
+    
 }
+@synthesize readerViewController;
 -(id)init
 {
     if ((self = [super init])) {

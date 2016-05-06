@@ -33,6 +33,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *moErDuo;
 @property (weak, nonatomic) IBOutlet UIButton *chuangGuan;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *labelTopConstraint;
+@property(nonatomic,strong) ReaderViewController *readerViewController;
 @property(weak,nonatomic)id<textBookCellDelegate,ReaderViewControllerDelegate>delegate;
 - (IBAction)xiulianClick:(id)sender;
 @end

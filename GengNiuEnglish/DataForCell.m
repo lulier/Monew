@@ -149,6 +149,7 @@
     {
         NSString *textID=[arg objectForKey:@"text_id"];
         NSString *textName=[arg objectForKey:@"text_name"];
+        textName=[textName stringByReplacingOccurrencesOfString:@"'" withString:@"*"];
         NSString *coverURL=[arg objectForKey:@"cover_url"];
         NSString *coursewareURL=[arg objectForKey:@"courseware_url"];
         NSString *desc=[arg objectForKey:@"desc"];
@@ -158,7 +159,7 @@
         NSString *practiseGoal=[arg objectForKey:@"practise_goal"];
         NSString *starCount=[arg objectForKey:@"star_count"];
         NSString *listenGoal=[arg objectForKey:@"listen_goal"];
-        NSString *practiseCount=[arg objectForKey:@"practise_count"];
+        NSString *practiseCount=[arg objectForKey:@"repeat_sentence_count"];
         NSString *version=[arg objectForKey:@"version"];
         NSArray *colums=[[NSArray alloc]initWithObjects:@"text_id",@"grade_id",@"text_name",@"cover_url",@"courseware_url",@"desc",@"challenge_goal",@"challenge_score",@"listen_count",@"practise_goal",@"star_count",@"listen_goal",@"practise_count",@"version",nil];
         NSArray *values=[[NSArray alloc]initWithObjects:

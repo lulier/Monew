@@ -14,6 +14,8 @@
 #import "SampleQueueId.h"
 #import "NetworkingManager.h"
 #import <AVFoundation/AVFoundation.h>
+#import "StudyDataManager.h"
+#import "AccountManager.h"
 
 @interface LyricViewController : UIViewController<STKAudioPlayerDelegate>
 @property(nonatomic,strong)NSArray *lyricItems;

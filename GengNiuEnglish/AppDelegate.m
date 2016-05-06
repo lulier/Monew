@@ -17,6 +17,7 @@
 #import "MaterialViewController.h"
 #import "SettingViewController.h"
 #import "Reachability.h"
+#import "StudyDataManager.h"
 
 @interface AppDelegate ()
 
