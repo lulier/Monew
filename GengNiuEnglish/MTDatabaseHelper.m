@@ -69,7 +69,7 @@ static MTDatabaseHelper *singleInstance = nil;
     }
     
     [sql appendString:@")"];
-    NSLog(@"create table sql: %@",sql);
+//    NSLog(@"create table sql: %@",sql);
     
 
     [queue inDatabase:^(FMDatabase *db) {
@@ -109,7 +109,7 @@ static MTDatabaseHelper *singleInstance = nil;
         }
     }
     [sql appendString:@")"];
-    NSLog(@"insert into table sql: %@",sql);
+//    NSLog(@"insert into table sql: %@",sql);
     [queue inDatabase:^(FMDatabase *db) {
         [db executeUpdate:sql];
     }];
@@ -146,7 +146,7 @@ static MTDatabaseHelper *singleInstance = nil;
             [sql appendString:@", "];
         }
     }
-    NSLog(@"update sql: %@",sql);
+//    NSLog(@"update sql: %@",sql);
     [queue inDatabase:^(FMDatabase *db) {
         [db executeUpdate:sql];
     }];
@@ -182,7 +182,7 @@ static MTDatabaseHelper *singleInstance = nil;
             [sql appendString:@", "];
         }
     }
-    NSLog(@"query sql: %@",sql);
+//    NSLog(@"query sql: %@",sql);
     
     [queue inDatabase:^(FMDatabase *db) {
         FMResultSet *s = [db executeQuery:sql];
@@ -222,7 +222,7 @@ static MTDatabaseHelper *singleInstance = nil;
     else{
         sql = [[NSMutableString alloc] initWithFormat:@"DELETE FROM %@",tableName];
     }
-    NSLog(@"delete sql: %@",sql);
+//    NSLog(@"delete sql: %@",sql);
     [queue inDatabase:^(FMDatabase *db) {
         [db executeUpdate:sql];
     }];
@@ -244,7 +244,7 @@ static MTDatabaseHelper *singleInstance = nil;
 -(void)queryTable:(NSString *)tableName withSelect:(NSArray *)selects column:(NSString *)column andIDs:(NSArray *)wheres completion:(void (^)(NSMutableArray *))block
 {
     if (!tableName || [tableName isEqualToString:@""]) {
-        NSLog(@"input data error");
+//        NSLog(@"input data error");
         return ;
     }
     NSMutableString* sql;

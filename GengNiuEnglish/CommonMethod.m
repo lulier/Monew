@@ -259,8 +259,8 @@
 +(NSInteger)getTimeStamp
 {
     NSDate *date=[NSDate date];
-    NSTimeZone *zone=[NSTimeZone systemTimeZone];
-    date=[date dateByAddingTimeInterval:[zone secondsFromGMTForDate:date]];
+//    NSTimeZone *zone=[NSTimeZone systemTimeZone];
+//    date=[date dateByAddingTimeInterval:[zone secondsFromGMTForDate:date]];
     double currentTime=[date timeIntervalSince1970];
     NSUInteger timeStamp=(int)currentTime;
     return timeStamp;
