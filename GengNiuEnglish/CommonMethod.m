@@ -238,4 +238,33 @@
         return NO;
 }
 
++(BOOL)isTheSameDay:(NSString *)firstTimeStamp secondTimeStamp:(NSString *)secondTimeStamp
+{
+    NSDate *time1=[NSDate dateWithTimeIntervalSince1970:[firstTimeStamp integerValue]];
+    NSDate *time2=[NSDate dateWithTimeIntervalSince1970:[secondTimeStamp integerValue]];
+    
+    NSDateFormatter *dateFormatter = [[NSDateFormatter alloc] init];
+    //设置格式：zzz表示时区
+    [dateFormatter setDateFormat:@"yyyy-MM-dd"];
+    //NSDate转NSString
+    NSString *timeString1 = [dateFormatter stringFromDate:time1];
+    NSString *timeString2=[dateFormatter stringFromDate:time2];
+    if ([timeString1 isEqualToString:timeString2])
+    {
+        return true;
+    }
+    else
+        return false;
+}
++(NSInteger)getTimeStamp
+{
+    NSDate *date=[NSDate date];
+    NSTimeZone *zone=[NSTimeZone systemTimeZone];
+    date=[date dateByAddingTimeInterval:[zone secondsFromGMTForDate:date]];
+    double currentTime=[date timeIntervalSince1970];
+    NSUInteger timeStamp=(int)currentTime;
+    return timeStamp;
+}
+
+
 @end

@@ -54,4 +54,6 @@ typedef NS_ENUM(NSInteger,IphoneType)
 +(NSString*)getPath:(NSString*)fileName;
 +(IphoneType)checkIphoneType;
 +(BOOL)checkFileExistence:(NSString*)path;
++(BOOL)isTheSameDay:(NSString*)firstTimeStamp secondTimeStamp:(NSString*)secondTimeStamp;
++(NSInteger)getTimeStamp;
 @end

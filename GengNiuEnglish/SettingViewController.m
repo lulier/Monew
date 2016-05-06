@@ -206,9 +206,7 @@
 -(void)saveImageAndCreateKey:(UIImage*)image
 {
     AccountManager *account=[AccountManager singleInstance];
-    NSDate *date=[NSDate date];
-    double currentTime=[date timeIntervalSince1970];
-    NSUInteger timeStamp=(int)currentTime;
+    NSUInteger timeStamp=[CommonMethod getTimeStamp];
     NSString *key=[NSString stringWithFormat:@"%@_%ld.jpg",account.userID,(unsigned long)timeStamp];
     
     

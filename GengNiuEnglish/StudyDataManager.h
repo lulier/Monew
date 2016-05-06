@@ -15,5 +15,5 @@
 -(NSDictionary*)getSentenceScore:(NSString*)sentenceID;
 -(void)loadSentenceScores:(NSString *)textID;
 -(void)updateSentenceScore:(NSString *)sentenceID recordPath:(NSString*)recordPath score:(NSString*)score textID:(NSString*)textID;
--(void)prepareUploadStudyState:(NSString*)userID textID:(NSString*)textID starCount:(NSString*)starCount listenCount:(NSString*)listenCount practiceCount:(NSString *)practiceCount challengeScore:(NSString*)challengeScore;
+-(void)prepareUploadStudyState:(NSString*)userID textID:(NSString*)textID starCount:(NSString*)starCount readCount:(NSString*)readCount sentenceCount:(NSString*)sentenceCount listenCount:(NSString*)listenCount  challengeScore:(NSString*)challengeScore;
 @end

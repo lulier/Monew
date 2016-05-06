@@ -93,6 +93,7 @@ static NSString * const reuseIdentifierMaterial = @"MaterialCell";
     //每次进入materialview的时候检查一下当前的action code状态
     [self getActionCode];
     [self reload:nil];
+    [CommonMethod isTheSameDay:@"1462482462" secondTimeStamp:@"1462482470"];
 }
 -(void)getActionCode
 {

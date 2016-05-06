@@ -781,11 +781,14 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
             }
             
             //update database
-            [[StudyDataManager sharedInstance] updateSentenceScore:[NSString stringWithFormat:@"%@_%ld",self.book.text_id,cell.index] recordPath:currentRecordPath score:[NSString stringWithFormat:@"%ld",cell.lyricItem.stars] textID:self.book.text_id];
+            [[StudyDataManager sharedInstance] updateSentenceScore:[NSString stringWithFormat:@"%@_%ld",self.book.text_id,(long)cell.index] recordPath:currentRecordPath score:[NSString stringWithFormat:@"%ld",(long)cell.lyricItem.stars] textID:self.book.text_id];
             
-            //upload study status
+            //asyn upload study status
             AccountManager *account=[AccountManager singleInstance];
-//            [[StudyDataManager sharedInstance] prepareUploadStudyState:account.userID textID:self.book.text_id starCount:@"0" listenCount:@"0" practiceCount:@"1" challengeScore:@"0"];
+            dispatch_async(dispatch_get_global_queue(0, 0), ^{
+                [[StudyDataManager sharedInstance] prepareUploadStudyState:account.userID textID:self.book.text_id starCount:@"0" readCount:@"0" sentenceCount:@"1" listenCount:@"0" challengeScore:@"0"];
+            });
+            
             
             //show share button
             [account checkWeixinBind:^(BOOL bind) {
@@ -898,9 +901,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     //create a key for upload
     
     AccountManager *account=[AccountManager singleInstance];
-    NSDate *date=[NSDate date];
-    double currentTime=[date timeIntervalSince1970];
-    NSUInteger timeStamp=(int)currentTime;
+    NSUInteger timeStamp=[CommonMethod getTimeStamp];
     NSString *key=[NSString stringWithFormat:@"%@_%ld.wav",account.userID,(unsigned long)timeStamp];
     
     NSString *method=@"PUT";
