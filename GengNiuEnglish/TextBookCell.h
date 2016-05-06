@@ -16,6 +16,8 @@
 #import "AppDelegate.h"
 #import <SDWebImage/UIImageView+WebCache.h>
 #import "NetworkingManager.h"
+#import "AccountManager.h"
+#import "StudyDataManager.h"
 
 @protocol textBookCellDelegate <NSObject>
 

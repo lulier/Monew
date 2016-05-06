@@ -148,7 +148,7 @@ static NSString* cellIdentifierLyric=@"LyricViewCell";
     NSInteger currentID=playTextID;
     __block BOOL fistTime=true;
     dispatch_source_t timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_main_queue());
-    dispatch_source_set_timer(timer, DISPATCH_TIME_NOW, duration * NSEC_PER_MSEC, 0 * NSEC_PER_SEC);
+    dispatch_source_set_timer(timer, DISPATCH_TIME_NOW, (duration+200) * NSEC_PER_MSEC, 0 * NSEC_PER_SEC);
     dispatch_source_set_event_handler(timer, ^{
         if (fistTime) {
             fistTime=false;
@@ -674,7 +674,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     self.PlayingText=true;
     LyricItem *item=self.lyricItems[index];
     endTime=item.endTime;
-    if (endTime==-1)
+    if (endTime==-1||(index==[self.lyricItems count]-1))
     {
         endTime=audioPlayer.duration*1000;
     }

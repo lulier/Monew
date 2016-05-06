@@ -139,6 +139,10 @@
         readerViewController.modalPresentationStyle=UIModalPresentationFullScreen;
         readerViewController.delegate=self.delegate;
         [currentVC presentViewController:readerViewController animated:YES completion:nil];
+        AccountManager *account=[AccountManager singleInstance];
+        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+            [[StudyDataManager sharedInstance] prepareUploadStudyState:account.userID textID:self.book.text_id starCount:@"0" readCount:@"1" sentenceCount:@"0" listenCount:@"0" challengeScore:@"0"];
+        });
     }
 }
 -(void)dismissReaderViewController:(ReaderViewController *)viewController

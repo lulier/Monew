@@ -22,9 +22,6 @@
     return self;
 }
 
-
-
-
 -(void)setLyricItem:(LyricItem *)lyricItem
 {
     CGFloat labelWidth=[UIScreen mainScreen].bounds.size.width-95;
