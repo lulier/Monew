@@ -9,8 +9,11 @@
 #import <Foundation/Foundation.h>
 #import <SDWebImage/UIImageView+WebCache.h>
 
-#define MONEWDOMAIN @"http://120.25.103.72:8002"
-#define MONEWFOLDER @"monew_debug_folder"
+//#define MONEWDOMAIN @"http://120.25.103.72:8002"
+//#define MONEWFOLDER @"monew_debug_folder"
+
+#define MONEWDOMAIN @"http://120.25.103.72:8004"
+#define MONEWFOLDER @"monew_debug_separate_folder"
 
 //#define MONEWDOMAIN @"http://english.mo-new.com"
 //#define MONEWFOLDER @"monew_official_folder"

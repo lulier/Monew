@@ -57,7 +57,7 @@
             NSDictionary *tmp=[resultsArray firstObject];
             if ([self.word isEqualToString:[tmp objectForKey:@"word"]])
             {
-                [self.addToUnknow setImage:[UIImage imageNamed:@"star_light"] forState:UIControlStateNormal];
+                [self.addToUnknow setImage:[UIImage imageNamed:@"collect"] forState:UIControlStateNormal];
                 self.inVocabulary=true;
             }
         }
@@ -74,7 +74,7 @@
     {
         //delete from database
         [[MTDatabaseHelper sharedInstance] deleteTurpleFromTable:@"Vocabulary" withWhere:[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"'%@'",self.word],@"word", nil]];
-        [self.addToUnknow setImage:[UIImage imageNamed:@"star_unlight"] forState:UIControlStateNormal];
+        [self.addToUnknow setImage:[UIImage imageNamed:@"uncollect"] forState:UIControlStateNormal];
         self.inVocabulary=false;
     }
     else
@@ -82,7 +82,7 @@
         NSArray *colums=[[NSArray alloc]initWithObjects:@"word",nil];
         NSArray *values=[[NSArray alloc]initWithObjects:[NSString stringWithFormat:@"'%@'",self.word], nil];
         [[MTDatabaseHelper sharedInstance] insertToTable:@"Vocabulary" withColumns:colums andValues:values];
-        [self.addToUnknow setImage:[UIImage imageNamed:@"star_light"] forState:UIControlStateNormal];
+        [self.addToUnknow setImage:[UIImage imageNamed:@"collect"] forState:UIControlStateNormal];
         self.inVocabulary=true;
     }
     

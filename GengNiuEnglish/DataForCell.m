@@ -28,17 +28,25 @@
     if (!self) {
         return nil;
     }
+    self.shouldDownloadFirst=YES;
+    self.shouldDownloadSecond=YES;
     if ([attributes objectForKey:@"text_id"]!=nil)
     {
         self.text_id=[attributes objectForKey:@"text_id"];
         self.text_name=[attributes objectForKey:@"text_name"];
         self.cover_url=[attributes objectForKey:@"cover_url"];
         self.category=[attributes objectForKey:@"category"];
-        self.downloadURL=[attributes objectForKey:@"courseware_url"];
+        self.downloadURL=[attributes objectForKey:@"courseware_multimedia_url"];
         self.zipFileName=[[[[[self.downloadURL componentsSeparatedByString:@"/"] lastObject] componentsSeparatedByString:@"?"] objectAtIndex:0]stringByReplacingOccurrencesOfString:@"\%2F" withString:@"_"];
         self.fileNames=[[NSMutableArray alloc]init];
         self.text_gradeID=[attributes objectForKey:@"grade_id"];
         self.progressView=nil;
+        
+        
+        self.downloadURLSecond=[attributes objectForKey:@"courseware_text_url"];
+        self.mediaVersion=[attributes objectForKey:@"courseware_multimedia_version"];
+        self.textVersion=[attributes objectForKey:@"courseware_text_version"];
+        
         [self checkDatabase];
     }
     else
@@ -139,6 +147,7 @@
         completionHandler:nil];
     
 }
+//使用courseware_url字段存储version信息
 +(void)recordTextList:(NSArray*)textList gradeID:(NSString*)gradeID
 {
     if (textList==nil)
@@ -151,7 +160,7 @@
         NSString *textName=[arg objectForKey:@"text_name"];
         textName=[textName stringByReplacingOccurrencesOfString:@"'" withString:@"*"];
         NSString *coverURL=[arg objectForKey:@"cover_url"];
-        NSString *coursewareURL=[arg objectForKey:@"courseware_url"];
+        NSString *versionMerge=[NSString stringWithFormat:@"%@-%@",[arg objectForKey:@"courseware_multimedia_version"],[arg objectForKey:@"courseware_text_version"]];
         NSString *desc=[arg objectForKey:@"desc"];
         NSString *challengeGoal=[arg objectForKey:@"challenge_goal"];
         NSString *challengeScore=[arg objectForKey:@"challenge_score"];
@@ -167,7 +176,7 @@
             [NSString stringWithFormat:@"'%@'",gradeID],
             [NSString stringWithFormat:@"'%@'",textName],
             [NSString stringWithFormat:@"'%@'",coverURL],
-            [NSString stringWithFormat:@"'%@'",coursewareURL],
+            [NSString stringWithFormat:@"'%@'",versionMerge],
             [NSString stringWithFormat:@"'%@'",desc],
             [NSString stringWithFormat:@"'%@'",challengeGoal],
             [NSString stringWithFormat:@"'%@'",challengeScore],
@@ -225,6 +234,7 @@
 
 
 //首先是检查数据库中对应text_id的书是否存在，如果不存在就加入一条记录，然后是检查数据库对应text_id的zipfileName与当前的zipfileName是否相同，如果不一样返回no，表示需要重新下载，如果一样则返回yes，表示不用下载
+//use zipfileName to record version info
 -(BOOL)checkDatabase
 {
     NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -239,7 +249,8 @@
     FMResultSet *result=[database executeQuery:[NSString stringWithFormat:@"SELECT * FROM Books WHERE BookID=%@",self.text_id]];
     if(![result next])
     {
-        BOOL success=[database executeUpdate:@"INSERT INTO Books (BookID,GradeID,BookName,CoverURL,Category,DownloadURL,ZipName,DocumentName,LMName,LRCName,PDFName,MP3Name) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)",self.text_id,self.text_gradeID,self.text_name,self.cover_url,self.category,self.downloadURL,self.zipFileName,[NSNull null],[NSNull null],[NSNull null],[NSNull null],[NSNull null]];
+        NSString *ver=[NSString stringWithFormat:@"%@-%@",self.mediaVersion,self.textVersion];
+        BOOL success=[database executeUpdate:@"INSERT INTO Books (BookID,GradeID,BookName,CoverURL,Category,DownloadURL,ZipName,DocumentName,LMName,LRCName,PDFName,MP3Name) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)",self.text_id,self.text_gradeID,self.text_name,self.cover_url,self.category,self.downloadURL,ver,[NSNull null],[NSNull null],[NSNull null],[NSNull null],[NSNull null]];
         if (!success)
         {
             NSLog(@"error: %@",[database lastError]);
@@ -249,22 +260,26 @@
     {
         
         NSString *documentName=[result stringForColumn:@"DocumentName"];
-        NSString *zipfileName=[result stringForColumn:@"ZipName"];
+        NSString *lrcName=[result stringForColumn:@"LRCName"];
+        NSString *version=[result stringForColumn:@"ZipName"];
         NSString *BookID=[result stringForColumn:@"BookID"];
+        NSString *mp3Name=[result stringForColumn:@"MP3Name"];
 //        if (![zipfileName isEqualToString:self.zipFileName]||documentName==nil)
 //        {
 //            [database close];
 //            return NO;
 //        }
-        if (documentName==nil)
+        if (documentName==nil||lrcName==nil||mp3Name==nil)
         {
             [database close];
             return NO;
         }
-        if (documentName!=nil)
+        else
         {
             NSString *path=[CommonMethod getPath:documentName];
-            BOOL existence=[CommonMethod checkFileExistence:path];
+            NSString *path1=[path stringByAppendingPathComponent:lrcName];
+            NSString *path2=[path stringByAppendingPathComponent:mp3Name];
+            BOOL existence=[CommonMethod checkFileExistence:path]&&[CommonMethod checkFileExistence:path1]&&[CommonMethod checkFileExistence:path2];
             if (!existence)
             {
                 BOOL success=[database executeUpdate:[NSString stringWithFormat:@"DELETE FROM Books WHERE BookID=%@",BookID]];
@@ -285,10 +300,34 @@
                 }
             }
         }
+        if (version!=nil)
+        {
+            NSArray *versions=[version componentsSeparatedByString:@"-"];
+            NSString *ver1=[versions firstObject];
+            NSString *ver2=[versions lastObject];
+            if ([ver1 integerValue]!=[self.mediaVersion integerValue])
+            {
+                self.shouldDownloadFirst=YES;
+            }
+            else
+                self.shouldDownloadFirst=NO;
+            if ([ver2 integerValue]!=[self.textVersion integerValue])
+            {
+                self.shouldDownloadSecond=YES;
+            }
+            else
+                self.shouldDownloadSecond=NO;
+            if (self.shouldDownloadFirst||self.shouldDownloadSecond)
+            {
+                return NO;
+            }
+            
+        }
     }
     [database close];
     return YES;
 }
+
 -(void)updateDatabase
 {
     NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
@@ -302,7 +341,8 @@
     }
 
     //在这里需要更新gradelist表里面的已下载课本数量
-    NSString *update=[NSString stringWithFormat:@"UPDATE Books SET DocumentName='%@',LMName='%@',LRCName='%@',PDFName='%@',MP3Name='%@' WHERE BookID=%@",[self getFileName:FTDocument],[self getFileName:FTLM],[self getFileName:FTLRC],[self getFileName:FTPDF],[self getFileName:FTMP3],self.text_id];
+    NSString *version=[NSString stringWithFormat:@"%@-%@",self.mediaVersion,self.textVersion];
+    NSString *update=[NSString stringWithFormat:@"UPDATE Books SET ZipName='%@',DocumentName='%@',LMName='%@',LRCName='%@',PDFName='%@',MP3Name='%@' WHERE BookID=%@",version,[self getFileName:FTDocument],[self getFileName:FTLM],[self getFileName:FTLRC],[self getFileName:FTPDF],[self getFileName:FTMP3],self.text_id];
     
     BOOL success=[database executeUpdate:update];
     if (!success)
@@ -410,10 +450,19 @@
 }
 - (void)decodeLyric:(NSString *)fileName
 {
+    if (fileName==nil)
+    {
+        return;
+    }
+    
     NSString *filePath=[self getDocumentPath];
     filePath=[filePath stringByAppendingPathComponent:fileName];
     NSString *newFilePath=[self getDocumentPath];
     newFilePath=[newFilePath stringByAppendingPathComponent:[NSString stringWithFormat:@"original_%@",fileName]];
+    if ([CommonMethod checkFileExistence:newFilePath])
+    {
+        return;
+    }
     NSData *secretText=[NSData dataWithContentsOfFile:filePath];
     NSString *result=[CommonMethod decryptAESData:secretText app_key:CIPHER_KEY];
     NSFileManager *fileManager=[NSFileManager defaultManager];

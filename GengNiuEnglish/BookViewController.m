@@ -91,6 +91,7 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
     }];
 }
 - (IBAction)goBackClick:(id)sender {
+    self.list=nil;
     [self.navigationController popViewControllerAnimated:YES];
 }
 
@@ -252,14 +253,54 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
 }
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    TextBookCell *cell=(TextBookCell*)[collectionView cellForItemAtIndexPath:indexPath];
+    
     DataForCell *book=self.list[indexPath.row];
     if (book.task!=nil||[book checkDatabase])//检查是否下载过
     {
         return;
     }
-    //这里还没有处理下载出错的情况
-    NSDictionary *parameters=[NSDictionary dictionaryWithObjectsAndKeys:book.downloadURL,@"url",nil];
+    //分成两次下载
+    
+    BOOL firstProgress=false;
+    BOOL secondProgress=false;
+    if (book.shouldDownloadFirst)
+    {
+        firstProgress=true;
+    }
+    else
+        secondProgress=true;
+    
+    if (book.shouldDownloadFirst)
+    {
+        [self downloadFile:book downloadURL:book.downloadURL showProgress:firstProgress index:indexPath.row ];
+    }
+    
+    if (book.shouldDownloadSecond)
+    {
+        [self downloadFile:book downloadURL:book.downloadURLSecond showProgress:secondProgress index:indexPath.row];
+    }
+    
+    
+    
+}
+//加多一层，如果是需要更新进度则使用上面的方式，如果不需要则使用简单下载
+-(void)downloadFile:(DataForCell*)book downloadURL:(NSString *)downloadURL showProgress:(BOOL)showProgress index:(NSInteger)index
+{
+    if (showProgress)
+    {
+        [self downloadWithProgress:book downloadURL:downloadURL index:index];
+    }
+    else
+    {
+        dispatch_async(dispatch_get_global_queue(0, 0), ^{
+            [self downloadWithoutProgress:downloadURL index:index];
+        });
+    }
+}
+-(void)downloadWithProgress:(DataForCell*)book downloadURL:(NSString *)downloadURL index:(NSInteger)index
+{
+    TextBookCell *cell=(TextBookCell*)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
+    NSDictionary *parameters=[NSDictionary dictionaryWithObjectsAndKeys:downloadURL,@"url",nil];
     __weak __typeof__(self) weakSelf = self;
     book.progressView=[[DAProgressOverlayView alloc]initWithFrame:cell.bounds];
     [book.progressView setHidden:NO];
@@ -290,12 +331,12 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
              });
          }
      }
-    success:^(NSURLSessionTask * _Nullable task, id  _Nullable responseObject) {
-        
-    } failure:^(NSURLSessionTask * _Nullable task, NSError * _Nullable error) {
-
-    }
-    completionHandler:^(NSURLResponse * _Nullable response, NSURL * _Nullable filePath, NSError * _Nullable error)
+                           success:^(NSURLSessionTask * _Nullable task, id  _Nullable responseObject) {
+                               
+                           } failure:^(NSURLSessionTask * _Nullable task, NSError * _Nullable error) {
+                               
+                           }
+                 completionHandler:^(NSURLResponse * _Nullable response, NSURL * _Nullable filePath, NSError * _Nullable error)
      {
          NSLog(@"log for download response:%@",response);
          NSLog(@"File downloaded to: %@", filePath.absoluteString);
@@ -307,7 +348,8 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
          }
          if ([[NSFileManager defaultManager] fileExistsAtPath:[filePath.absoluteString substringFromIndex:7]]&&error==nil)
          {
-             [weakSelf unzipDownloadFile:[filePath.absoluteString substringFromIndex:7] index:indexPath.row];
+             [weakSelf unzipDownloadFile:[filePath.absoluteString substringFromIndex:7] index:index];
+             
          }
          else
          {
@@ -323,6 +365,22 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
          }
      }];
     book.task=task;
+}
+-(void)downloadWithoutProgress:(NSString*)url index:(NSInteger)index
+{
+    NSDictionary *parameters=[NSDictionary dictionaryWithObjectsAndKeys:url,@"url", nil];
+    [NetworkingManager httpRequest:RTDownload url:RUCustom parameters:parameters progress:^(NSProgress * _Nullable progress) {
+        
+    } success:nil failure:nil
+    completionHandler:^(NSURLResponse * _Nullable response, NSURL * _Nullable filePath, NSError * _Nullable error)
+     {
+         NSLog(@"log for download response:%@",response);
+         NSLog(@"File downloaded to: %@", filePath.absoluteString);
+         if ([[NSFileManager defaultManager] fileExistsAtPath:[filePath.absoluteString substringFromIndex:7]]&&error==nil)
+         {
+             [self unzipDownloadFile:[filePath.absoluteString substringFromIndex:7] index:index];
+         }
+    }];
 }
 
 

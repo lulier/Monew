@@ -211,7 +211,7 @@
                                         <rect key="frame" x="0.0" y="28" width="627" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="nrk-Bx-EJL" id="4G9-2G-cvS">
-                                            <rect key="frame" x="0.0" y="0.0" width="627" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="627" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="The monkeys can." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="D4M-0M-d7T" customClass="GNTextView">
@@ -311,9 +311,13 @@
                                                         <action selector="playTextClick:" destination="nrk-Bx-EJL" eventType="touchUpInside" id="Y0C-kv-ndH"/>
                                                     </connections>
                                                 </button>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I7M-dv-Qgv">
-                                                    <rect key="frame" x="457" y="28" width="47" height="30"/>
-                                                    <state key="normal" title="upload"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="I7M-dv-Qgv">
+                                                    <rect key="frame" x="250" y="20" width="45" height="45"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" secondItem="I7M-dv-Qgv" secondAttribute="height" multiplier="1:1" id="1HZ-iR-b8J"/>
+                                                        <constraint firstAttribute="height" constant="45" id="1lj-AC-wDh"/>
+                                                    </constraints>
+                                                    <state key="normal" image="share"/>
                                                     <connections>
                                                         <action selector="uploadButtonClick:" destination="nrk-Bx-EJL" eventType="touchUpInside" id="cnm-zV-Xwv"/>
                                                     </connections>
@@ -343,6 +347,7 @@
                                                 <constraint firstItem="0Ct-Zp-lOS" firstAttribute="leading" secondItem="4G9-2G-cvS" secondAttribute="leading" constant="10" id="keP-Pq-n8h"/>
                                                 <constraint firstItem="v7a-pc-uDa" firstAttribute="leading" secondItem="4G9-2G-cvS" secondAttribute="leading" constant="10" id="l9b-Va-V4b"/>
                                                 <constraint firstItem="4vz-PU-mv9" firstAttribute="top" secondItem="v7a-pc-uDa" secondAttribute="top" id="p7H-qc-8cd"/>
+                                                <constraint firstItem="I7M-dv-Qgv" firstAttribute="leading" secondItem="djR-7G-fr4" secondAttribute="leading" constant="120" id="pFV-65-RRb"/>
                                                 <constraint firstAttribute="trailingMargin" secondItem="BVQ-mL-JXw" secondAttribute="trailing" constant="10" id="paD-ny-wzi"/>
                                                 <constraint firstItem="D4M-0M-d7T" firstAttribute="leading" secondItem="4G9-2G-cvS" secondAttribute="leadingMargin" constant="-4" id="qlK-uz-7yi"/>
                                                 <constraint firstItem="4vz-PU-mv9" firstAttribute="leading" secondItem="D4M-0M-d7T" secondAttribute="trailing" id="vxU-IB-zDd"/>
@@ -361,6 +366,7 @@
                                                     <exclude reference="47z-aI-D5r"/>
                                                     <exclude reference="foj-AT-j2d"/>
                                                     <exclude reference="iBP-GP-MaH"/>
+                                                    <exclude reference="z61-fx-MDB"/>
                                                 </mask>
                                             </variation>
                                         </tableViewCellContentView>
@@ -1274,12 +1280,12 @@
                                         <rect key="frame" x="0.0" y="0.0" width="667" height="375"/>
                                         <subviews>
                                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gIn-Cc-HKb">
-                                                <rect key="frame" x="627" y="10" width="30" height="30"/>
+                                                <rect key="frame" x="617" y="10" width="30" height="30"/>
                                                 <constraints>
                                                     <constraint firstAttribute="height" constant="30" id="Dje-qT-imG"/>
                                                     <constraint firstAttribute="width" constant="30" id="yBR-gr-Kld"/>
                                                 </constraints>
-                                                <state key="normal" image="star_unlight"/>
+                                                <state key="normal" image="uncollect"/>
                                                 <connections>
                                                     <action selector="addToUnknowClick:" destination="Ozl-pf-blu" eventType="touchUpInside" id="99B-xE-4an"/>
                                                 </connections>
@@ -1302,7 +1308,7 @@
                                         </subviews>
                                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                         <constraints>
-                                            <constraint firstAttribute="trailing" secondItem="gIn-Cc-HKb" secondAttribute="trailing" constant="10" id="HVw-qT-mtJ"/>
+                                            <constraint firstAttribute="trailing" secondItem="gIn-Cc-HKb" secondAttribute="trailing" constant="20" id="HVw-qT-mtJ"/>
                                             <constraint firstItem="ej0-tW-HO0" firstAttribute="top" secondItem="tZj-WR-xkx" secondAttribute="top" constant="10" id="ReN-vJ-8au"/>
                                             <constraint firstItem="Mn5-Rk-ycu" firstAttribute="top" secondItem="ej0-tW-HO0" secondAttribute="bottom" constant="10" id="Tnk-9k-Vl4"/>
                                             <constraint firstAttribute="trailing" secondItem="Mn5-Rk-ycu" secondAttribute="trailing" constant="5" id="Z60-0B-8wR"/>
@@ -1443,7 +1449,7 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="408" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="1DBFC3FD-A02F-4B20-B58A-DE7154B1B0CA" translatesAutoresizingMaskIntoConstraints="NO" id="Axa-d7-Z9S">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="C85AE322-8A3A-46A7-9BD1-74B4C0BDC0CD" translatesAutoresizingMaskIntoConstraints="NO" id="Axa-d7-Z9S">
                                                             <rect key="frame" x="15" y="12" width="21" height="21"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" secondItem="Axa-d7-Z9S" secondAttribute="height" multiplier="2:2" id="tJp-ce-Zz7"/>
@@ -1843,7 +1849,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="1DBFC3FD-A02F-4B20-B58A-DE7154B1B0CA" width="36" height="36">
+        <image name="C85AE322-8A3A-46A7-9BD1-74B4C0BDC0CD" width="36" height="36">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGOjtYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK0HCBEW
 GxwgISgrLjQ3VSRudWxs1AkKCwwNDg8QViRjbGFzc1xOU0ltYWdlRmxhZ3NWTlNSZXBzV05TQ29sb3KA
@@ -2016,8 +2022,10 @@ AAAAAAACAQAAAAAAAAA+AAAAAAAAAAAAAAAAAAAi5w
         <image name="qq" width="62" height="62"/>
         <image name="recording" width="45" height="45"/>
         <image name="setting" width="88" height="86"/>
+        <image name="share" width="58" height="58"/>
         <image name="star_unlight" width="38" height="38"/>
         <image name="title" width="404" height="94"/>
+        <image name="uncollect" width="66" height="66"/>
         <image name="veriBG" width="200" height="80"/>
         <image name="weibo" width="62" height="62"/>
         <image name="weixin" width="62" height="62"/>

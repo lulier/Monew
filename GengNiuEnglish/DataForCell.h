@@ -36,6 +36,13 @@ typedef NS_ENUM(NSInteger,FileType)
 @property(nonatomic,strong)DAProgressOverlayView *progressView;
 @property(nonatomic,strong)NSString *currentDoc;
 
+
+@property(nonatomic,strong)NSString *downloadURLSecond;
+@property(nonatomic,strong)NSString *mediaVersion;
+@property(nonatomic,strong)NSString *textVersion;
+@property(nonatomic)BOOL shouldDownloadFirst;
+@property(nonatomic)BOOL shouldDownloadSecond;
+
 -(instancetype)initWithAttributes:(NSDictionary *)attributes;
 +(NSURLSessionTask*)getGradeList:(void(^)(NSArray *data,NSError *error))block;
 +(void)getTextList:(void (^)(NSArray *, NSError *))block grade_id:(NSString*)grade_id text_id:(NSString*)text_id;

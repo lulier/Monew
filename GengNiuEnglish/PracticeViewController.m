@@ -34,6 +34,7 @@ typedef NS_ENUM(NSInteger,StarNum)
     UITapGestureRecognizer *gestureRecognizer;
     NSString *currentCheckWord;
     NSString *currentRecordPath;
+    BOOL bindWeiXin;
 //    MRProgressOverlayView *progressView;
 //    NSTimer *timer;
 }
@@ -94,6 +95,9 @@ static NSString* cellIdentifierLyric=@"LyricViewCell";
 }
 - (void)viewDidLoad {
     [super viewDidLoad];
+    
+    bindWeiXin=false;
+    
     UIImage *background=[CommonMethod imageWithImage:[UIImage imageNamed:@"naked_background"] scaledToSize:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height)];
     self.view.backgroundColor=[UIColor colorWithPatternImage:background];
     self.selectedIndex=[NSIndexPath indexPathForRow:0 inSection:0];
@@ -117,10 +121,29 @@ static NSString* cellIdentifierLyric=@"LyricViewCell";
     [DictionaryDatabase sharedInstance];
     playTextID=-1;
     
-    
+    [self checkWeiXinBind];
     [[StudyDataManager sharedInstance] loadSentenceScores:self.book.text_id];
     
     [[NSNotificationCenter defaultCenter] addObserver:self selector:@selector(availableBuffer:) name:@"AvailableBuffer" object:nil];
+}
+-(void)checkWeiXinBind
+{
+    AccountManager *account=[AccountManager singleInstance];
+    [account checkWeixinBind:^(BOOL bind) {
+        if (bind)
+        {
+            //show share button
+            bindWeiXin=true;
+        }
+        else
+        {
+            bindWeiXin=false;
+            //dont show share button
+        }
+    } failure:^(NSString *message) {
+        //dont show share button
+        bindWeiXin=false;
+    }];
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
@@ -141,35 +164,7 @@ static NSString* cellIdentifierLyric=@"LyricViewCell";
             if(error)NSLog(@"Error stopping listening in stopButtonAction: %@", error);
     }
 }
--(void)setPlayerTime:(NSInteger)value duration:(NSInteger)duration index:(NSInteger)index
-{
-    double time=(double)value;
-    [audioPlayer seekToTime:time/1000];
-    NSInteger currentID=playTextID;
-    __block BOOL fistTime=true;
-    dispatch_source_t timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_main_queue());
-    dispatch_source_set_timer(timer, DISPATCH_TIME_NOW, (duration+200) * NSEC_PER_MSEC, 0 * NSEC_PER_SEC);
-    dispatch_source_set_event_handler(timer, ^{
-        if (fistTime) {
-            fistTime=false;
-        }
-        else
-        {
-            if (audioPlayer!=nil&&playTextID==currentID)
-            {
-                LyricViewCell *cell=[self.tableview cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
-                if(cell!=nil)
-                {
-                    [cell.playText setImage:[UIImage imageNamed:@"playTextWW"] forState:UIControlStateNormal];
-                }
-                [audioPlayer pause];
-                self.PlayingText=false;
-            }
-            dispatch_source_cancel(timer);
-        }
-    });
-    dispatch_resume(timer);
-}
+
 
 -(void)checkEndOfSentence
 {
@@ -226,6 +221,7 @@ static NSString* cellIdentifierLyric=@"LyricViewCell";
     cell.delegate=self;
     cell.playText.hidden=YES;
     cell.playVoice.hidden=YES;
+    cell.uploadButton.hidden=YES;
     [cell.cellContent setUserInteractionEnabled:NO];
     cell.cellText.textColor=[UIColor blackColor];
     cell.cellContent.textColor=[UIColor blackColor];
@@ -242,6 +238,11 @@ static NSString* cellIdentifierLyric=@"LyricViewCell";
         if (cell.lyricItem.recordPath!=nil)
         {
             cell.playVoice.hidden=NO;
+            if (bindWeiXin)
+            {
+                cell.uploadButton.hidden=NO;
+            }
+            
         }
     }
     
@@ -264,10 +265,14 @@ static NSString* cellIdentifierLyric=@"LyricViewCell";
     if (self.selectedIndex.row==cell.index)
     {
         NSString *doctPath=[CommonMethod getPath:[self.book getFileName:FTDocument]];
-        NSString* RecordPath=[doctPath stringByAppendingPathComponent:[NSString stringWithFormat:@"sound%ld.wav",cell.index]];
+        NSString* RecordPath=[doctPath stringByAppendingPathComponent:[NSString stringWithFormat:@"sound%ld.wav",(long)cell.index]];
         if ([[NSFileManager defaultManager] fileExistsAtPath:RecordPath])
         {
             cell.playVoice.hidden=NO;
+            if (bindWeiXin)
+            {
+                cell.uploadButton.hidden=NO;
+            }
         }
         cell.playText.hidden=NO;
         if (self.isPlayingText&&cell.index==playTextIndex)
@@ -569,6 +574,10 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     LyricViewCell *cell=[self.tableview cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
     cell.lyricItem.stars=0;
     cell.playVoice.hidden=NO;
+    if (bindWeiXin)
+    {
+        cell.uploadButton.hidden=NO;
+    }
     [cell.star1 setImage:[UIImage imageNamed:@"star_unlight"]];
     [cell.star2 setImage:[UIImage imageNamed:@"star_unlight"]];
     [cell.star3 setImage:[UIImage imageNamed:@"star_unlight"]];
@@ -661,6 +670,13 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
 //    {
 //        return;
 //    }
+    if (audioPlayer.state==STKAudioPlayerStateStopped)
+    {
+        NSString *path=[[self.book getDocumentPath] stringByAppendingPathComponent:[self.book getFileName:FTMP3]];
+        NSURL *url=[NSURL fileURLWithPath:path];
+        STKDataSource* dataSource = [STKAudioPlayer dataSourceFromURL:url];
+        [audioPlayer setDataSource:dataSource withQueueItemId:[[SampleQueueId alloc] initWithUrl:url andCount:0]];
+    }
     playTextIndex=index;
     LyricViewCell *cell=[self.tableview cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
     if(cell!=nil)
@@ -674,10 +690,16 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     self.PlayingText=true;
     LyricItem *item=self.lyricItems[index];
     endTime=item.endTime;
-    if (endTime==-1||(index==[self.lyricItems count]-1))
+    if (endTime==-1)
     {
         endTime=audioPlayer.duration*1000;
     }
+    
+    if (audioPlayer.state!=STKAudioPlayerStatePlaying)
+    {
+        [audioPlayer resume];
+    }
+    
     [self setPlayerTime:item.beginTime duration:endTime-item.beginTime index:index];
     
     //set the timer
@@ -690,11 +712,38 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     
     
     
-    if (audioPlayer.state!=STKAudioPlayerStatePlaying)
-    {
-        [audioPlayer resume];
-    }
+    
 }
+-(void)setPlayerTime:(NSInteger)value duration:(NSInteger)duration index:(NSInteger)index
+{
+    double time=(double)value;
+    [audioPlayer seekToTime:time/1000];
+    NSInteger currentID=playTextID;
+    __block BOOL fistTime=true;
+    dispatch_source_t timer = dispatch_source_create(DISPATCH_SOURCE_TYPE_TIMER, 0, 0, dispatch_get_main_queue());
+    dispatch_source_set_timer(timer, DISPATCH_TIME_NOW, duration * NSEC_PER_MSEC, 0 * NSEC_PER_SEC);
+    dispatch_source_set_event_handler(timer, ^{
+        if (fistTime) {
+            fistTime=false;
+        }
+        else
+        {
+            if (audioPlayer!=nil&&playTextID==currentID)
+            {
+                LyricViewCell *cell=[self.tableview cellForRowAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
+                if(cell!=nil)
+                {
+                    [cell.playText setImage:[UIImage imageNamed:@"playTextWW"] forState:UIControlStateNormal];
+                }
+                [audioPlayer pause];
+                self.PlayingText=false;
+            }
+            dispatch_source_cancel(timer);
+        }
+    });
+    dispatch_resume(timer);
+}
+
 -(BOOL)isPlayingText
 {
     return self.PlayingText?YES:NO;
@@ -789,20 +838,6 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
                 [[StudyDataManager sharedInstance] prepareUploadStudyState:account.userID textID:self.book.text_id starCount:@"0" readCount:@"0" sentenceCount:@"1" listenCount:@"0" challengeScore:@"0"];
             });
             
-            
-            //show share button
-            [account checkWeixinBind:^(BOOL bind) {
-                if (bind)
-                {
-                    //show share button
-                }
-                else
-                {
-                    //dont show share button
-                }
-            } failure:^(NSString *message) {
-                //dont show share button
-            }];
         }
         
     }
