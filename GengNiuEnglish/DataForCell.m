@@ -14,6 +14,7 @@
 #import "MTDatabaseHelper.h"
 #import "CommonMethod.h"
 #import "MRProgress.h"
+#import "GNDownloadDatabase.h"
 
 
 @implementation DataForCell
@@ -43,11 +44,13 @@
         self.progressView=nil;
         
         
+        
         self.downloadURLSecond=[attributes objectForKey:@"courseware_text_url"];
         self.mediaVersion=[attributes objectForKey:@"courseware_multimedia_version"];
         self.textVersion=[attributes objectForKey:@"courseware_text_version"];
         
-        [self checkDatabase];
+        [self loadDatabase];
+//        [self checkDatabase];
     }
     else
     {
@@ -235,145 +238,165 @@
 
 //首先是检查数据库中对应text_id的书是否存在，如果不存在就加入一条记录，然后是检查数据库对应text_id的zipfileName与当前的zipfileName是否相同，如果不一样返回no，表示需要重新下载，如果一样则返回yes，表示不用下载
 //use zipfileName to record version info
--(BOOL)checkDatabase
+-(void)checkDatabase:(void (^)(BOOL existence))block;
 {
-    NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *doctPath=[paths lastObject];
-    NSString *databasePath=[doctPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_user.sqlite",MONEWFOLDER]];
-    FMDatabase *database=[FMDatabase databaseWithPath:databasePath];
-    if (![database open])
-    {
-        NSLog(@"database open failed");
-        return NO;
-    }
-    FMResultSet *result=[database executeQuery:[NSString stringWithFormat:@"SELECT * FROM Books WHERE BookID=%@",self.text_id]];
-    if(![result next])
-    {
-        NSString *ver=[NSString stringWithFormat:@"%@-%@",self.mediaVersion,self.textVersion];
-        BOOL success=[database executeUpdate:@"INSERT INTO Books (BookID,GradeID,BookName,CoverURL,Category,DownloadURL,ZipName,DocumentName,LMName,LRCName,PDFName,MP3Name) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)",self.text_id,self.text_gradeID,self.text_name,self.cover_url,self.category,self.downloadURL,ver,[NSNull null],[NSNull null],[NSNull null],[NSNull null],[NSNull null]];
-        if (!success)
+//    NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//    NSString *doctPath=[paths lastObject];
+//    NSString *databasePath=[doctPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_user.sqlite",MONEWFOLDER]];
+//    FMDatabase *database=[FMDatabase databaseWithPath:databasePath];
+    [[GNDownloadDatabase sharedInstance] queryTable:@"Books" withSelect:@[@"*"]  andWhere:[NSDictionary dictionaryWithObjectsAndKeys:self.text_id,@"BookID", nil] completion:^(NSMutableArray *resultsArray) {
+        if (resultsArray!=nil&&[resultsArray count]!=0)
         {
-            NSLog(@"error: %@",[database lastError]);
-        }
-    }
-    else
-    {
-        
-        NSString *documentName=[result stringForColumn:@"DocumentName"];
-        NSString *lrcName=[result stringForColumn:@"LRCName"];
-        NSString *version=[result stringForColumn:@"ZipName"];
-        NSString *BookID=[result stringForColumn:@"BookID"];
-        NSString *mp3Name=[result stringForColumn:@"MP3Name"];
-//        if (![zipfileName isEqualToString:self.zipFileName]||documentName==nil)
-//        {
-//            [database close];
-//            return NO;
-//        }
-        if (documentName==nil||lrcName==nil||mp3Name==nil)
-        {
-            [database close];
-            return NO;
+            NSDictionary *result=[resultsArray firstObject];
+            NSString *documentName=[result objectForKey:@"DocumentName"];
+            NSString *lrcName=[result objectForKey:@"LRCName"];
+            NSString *version=[result objectForKey:@"ZipName"];
+            NSString *mp3Name=[result objectForKey:@"MP3Name"];
+            
+            if ([documentName isEqualToString:@"(null)"]||[lrcName isEqualToString:@"(null)"]||[mp3Name isEqualToString:@"(null)"])
+            {
+                block(NO);
+            }
+            else
+            {
+                NSString *path=[CommonMethod getPath:documentName];
+                NSString *path1=[path stringByAppendingPathComponent:lrcName];
+                NSString *path2=[path stringByAppendingPathComponent:mp3Name];
+                BOOL existence=[CommonMethod checkFileExistence:path]&&[CommonMethod checkFileExistence:path1]&&[CommonMethod checkFileExistence:path2];
+                if (!existence)
+                {
+                    block(NO);
+                }
+                //兼容旧版没有在下载完成进行解密
+                else
+                {
+                    NSString *fileName=[NSString stringWithFormat:@"original_%@",[self getFileName:FTLRC]];
+                    path=[path stringByAppendingPathComponent:fileName];
+                    if (![CommonMethod checkFileExistence:path])
+                    {
+                        [self decodeLyric:[self getFileName:FTLRC]];
+                    }
+                }
+                if (version!=nil&&self.mediaVersion!=nil&&self.textVersion!=nil)
+                {
+                    NSArray *versions=[version componentsSeparatedByString:@"-"];
+                    NSString *ver1=[versions firstObject];
+                    NSString *ver2=[versions lastObject];
+                    if ([ver1 integerValue]!=[self.mediaVersion integerValue])
+                    {
+                        self.shouldDownloadFirst=YES;
+                    }
+                    else
+                        self.shouldDownloadFirst=NO;
+                    if ([ver2 integerValue]!=[self.textVersion integerValue])
+                    {
+                        self.shouldDownloadSecond=YES;
+                    }
+                    else
+                        self.shouldDownloadSecond=NO;
+                    if (self.shouldDownloadFirst||self.shouldDownloadSecond)
+                    {
+                        block(NO);
+                    }
+                    
+                }
+            }
+            block(YES);
         }
         else
-        {
-            NSString *path=[CommonMethod getPath:documentName];
-            NSString *path1=[path stringByAppendingPathComponent:lrcName];
-            NSString *path2=[path stringByAppendingPathComponent:mp3Name];
-            BOOL existence=[CommonMethod checkFileExistence:path]&&[CommonMethod checkFileExistence:path1]&&[CommonMethod checkFileExistence:path2];
-            if (!existence)
-            {
-                BOOL success=[database executeUpdate:[NSString stringWithFormat:@"DELETE FROM Books WHERE BookID=%@",BookID]];
-                if (!success)
-                {
-                    NSLog(@"delete from books failed with bookID:%@",BookID);
-                }
-                return NO;
-            }
-            //兼容旧版没有在下载完成进行解密
-            else
-            {
-                NSString *fileName=[NSString stringWithFormat:@"original_%@",[self getFileName:FTLRC]];
-                path=[path stringByAppendingPathComponent:fileName];
-                if (![CommonMethod checkFileExistence:path])
-                {
-                    [self decodeLyric:[self getFileName:FTLRC]];
-                }
-            }
-        }
-        if (version!=nil)
-        {
-            NSArray *versions=[version componentsSeparatedByString:@"-"];
-            NSString *ver1=[versions firstObject];
-            NSString *ver2=[versions lastObject];
-            if ([ver1 integerValue]!=[self.mediaVersion integerValue])
-            {
-                self.shouldDownloadFirst=YES;
-            }
-            else
-                self.shouldDownloadFirst=NO;
-            if ([ver2 integerValue]!=[self.textVersion integerValue])
-            {
-                self.shouldDownloadSecond=YES;
-            }
-            else
-                self.shouldDownloadSecond=NO;
-            if (self.shouldDownloadFirst||self.shouldDownloadSecond)
-            {
-                return NO;
-            }
-            
-        }
-    }
-    [database close];
-    return YES;
+             block(NO);
+    }];
+    
+//    if (![database open])
+//    {
+//        NSLog(@"database open failed");
+//        return NO;
+//    }
+//    FMResultSet *result=[database executeQuery:[NSString stringWithFormat:@"SELECT * FROM Books WHERE BookID=%@",self.text_id]];
+//    if(![result next])
+//    {
+//        NSString *ver=[NSString stringWithFormat:@"%@-%@",self.mediaVersion,self.textVersion];
+//        BOOL success=[database executeUpdate:@"INSERT INTO Books (BookID,GradeID,BookName,CoverURL,Category,DownloadURL,ZipName,DocumentName,LMName,LRCName,PDFName,MP3Name) VALUES (?,?,?,?,?,?,?,?,?,?,?,?)",self.text_id,self.text_gradeID,self.text_name,self.cover_url,self.category,self.downloadURL,ver,[NSNull null],[NSNull null],[NSNull null],[NSNull null],[NSNull null]];
+//        if (!success)
+//        {
+//            NSLog(@"error: %@",[database lastError]);
+//        }
+//    }
+//    else
+//    {
+//        
+//
+//    }
+//    [database close];
+//    return YES;
 }
 
 -(void)updateDatabase
 {
-    NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *doctPath=[paths lastObject];
-    NSString *databasePath=[doctPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_user.sqlite",MONEWFOLDER]];
-    FMDatabase *database=[FMDatabase databaseWithPath:databasePath];
-    if (![database open])
-    {
-        NSLog(@"database open failed");
-        return;
-    }
-
-    //在这里需要更新gradelist表里面的已下载课本数量
-    NSString *version=[NSString stringWithFormat:@"%@-%@",self.mediaVersion,self.textVersion];
-    NSString *update=[NSString stringWithFormat:@"UPDATE Books SET ZipName='%@',DocumentName='%@',LMName='%@',LRCName='%@',PDFName='%@',MP3Name='%@' WHERE BookID=%@",version,[self getFileName:FTDocument],[self getFileName:FTLM],[self getFileName:FTLRC],[self getFileName:FTPDF],[self getFileName:FTMP3],self.text_id];
+    NSArray *colums=[[NSArray alloc]initWithObjects:@"BookID",@"GradeID",@"BookName",@"CoverURL",@"Category",@"DownloadURL",@"ZipName",@"DocumentName",@"LMName",@"LRCName",@"PDFName",@"MP3Name", nil];
+    NSString *ver=[NSString stringWithFormat:@"%@-%@",self.mediaVersion,self.textVersion];
+    NSArray *values=[[NSArray alloc]initWithObjects:[NSString stringWithFormat:@"'%@'",self.text_id],[NSString stringWithFormat:@"'%@'",self.text_gradeID],[NSString stringWithFormat:@"'%@'",self.text_name],[NSString stringWithFormat:@"'%@'",self.cover_url],[NSString stringWithFormat:@"'%@'",self.category],[NSString stringWithFormat:@"'%@'",self.downloadURL],[NSString stringWithFormat:@"'%@'",ver],[NSString stringWithFormat:@"'%@'",[self getFileName:FTDocument]],[NSString stringWithFormat:@"'%@'",[self getFileName:FTLM]], [NSString stringWithFormat:@"'%@'",[self getFileName:FTLRC]],[NSString stringWithFormat:@"'%@'",[self getFileName:FTPDF]],[NSString stringWithFormat:@"'%@'",[self getFileName:FTMP3]],nil];
+    [[GNDownloadDatabase sharedInstance] insertToTable:@"Books" withColumns:colums andValues:values];
     
-    BOOL success=[database executeUpdate:update];
-    if (!success)
-    {
-        NSLog(@"error:%@",[database lastError]);
-    }
-    [database close];
+    
+//    NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//    NSString *doctPath=[paths lastObject];
+//    NSString *databasePath=[doctPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_user.sqlite",MONEWFOLDER]];
+//    FMDatabase *database=[FMDatabase databaseWithPath:databasePath];
+//    if (![database open])
+//    {
+//        NSLog(@"database open failed");
+//        return;
+//    }
+//
+//    //在这里需要更新gradelist表里面的已下载课本数量
+//    NSString *version=[NSString stringWithFormat:@"%@-%@",self.mediaVersion,self.textVersion];
+//    NSString *update=[NSString stringWithFormat:@"UPDATE Books SET ZipName='%@',DocumentName='%@',LMName='%@',LRCName='%@',PDFName='%@',MP3Name='%@' WHERE BookID=%@",version,[self getFileName:FTDocument],[self getFileName:FTLM],[self getFileName:FTLRC],[self getFileName:FTPDF],[self getFileName:FTMP3],self.text_id];
+//    
+//    BOOL success=[database executeUpdate:update];
+//    if (!success)
+//    {
+//        NSLog(@"error:%@",[database lastError]);
+//    }
+//    [database close];
 }
 -(void)loadDatabase
 {
-    NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *doctPath=[paths lastObject];
-    NSString *databasePath=[doctPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_user.sqlite",MONEWFOLDER]];
-    FMDatabase *database=[FMDatabase databaseWithPath:databasePath];
-    if (![database open])
-    {
-        NSLog(@"database open failed");
-        return;
-    }
     
     
-    FMResultSet* result=[database executeQuery:[NSString stringWithFormat:@"SELECT * FROM Books WHERE BookID=%@",self.text_id]];
-    if ([result next])
-    {
-        [self.fileNames addObject:[result stringForColumn:@"DocumentName"]];
-        [self.fileNames addObject:[result stringForColumn:@"LMName"]];
-        [self.fileNames addObject:[result stringForColumn:@"LRCName"]];
-        [self.fileNames addObject:[result stringForColumn:@"PDFName"]];
-        [self.fileNames addObject:[result stringForColumn:@"MP3Name"]];
-    }
-    [database close];
+    [[GNDownloadDatabase sharedInstance] queryTable:@"Books" withSelect:@[@"*"] andWhere:[NSDictionary dictionaryWithObjectsAndKeys:self.text_id,@"BookID", nil] completion:^(NSMutableArray *resultsArray) {
+        if (resultsArray!=nil&&[resultsArray count]!=0)
+        {
+            NSDictionary *result=[resultsArray firstObject];
+            [self.fileNames addObject:[result objectForKey:@"DocumentName"]];
+            [self.fileNames addObject:[result objectForKey:@"LMName"]];
+            [self.fileNames addObject:[result objectForKey:@"LRCName"]];
+            [self.fileNames addObject:[result objectForKey:@"PDFName"]];
+            [self.fileNames addObject:[result objectForKey:@"MP3Name"]];
+        }
+    }];
+    
+    
+    
+//    NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//    NSString *doctPath=[paths lastObject];
+//    NSString *databasePath=[doctPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_user.sqlite",MONEWFOLDER]];
+//    FMDatabase *database=[FMDatabase databaseWithPath:databasePath];
+//    if (![database open])
+//    {
+//        NSLog(@"database open failed");
+//        return;
+//    }
+//    FMResultSet* result=[database executeQuery:[NSString stringWithFormat:@"SELECT * FROM Books WHERE BookID=%@",self.text_id]];
+//    if ([result next])
+//    {
+//        [self.fileNames addObject:[result stringForColumn:@"DocumentName"]];
+//        [self.fileNames addObject:[result stringForColumn:@"LMName"]];
+//        [self.fileNames addObject:[result stringForColumn:@"LRCName"]];
+//        [self.fileNames addObject:[result stringForColumn:@"PDFName"]];
+//        [self.fileNames addObject:[result stringForColumn:@"MP3Name"]];
+//    }
+//    [database close];
 }
 - (void)zipArchiveDidUnzipFileAtIndex:(NSInteger)fileIndex totalFiles:(NSInteger)totalFiles archivePath:(NSString *)archivePath unzippedFilePath:(NSString *)unzippedFilePath
 {
@@ -382,10 +405,6 @@
 }
 -(NSString *)getFileName:(FileType)fileType
 {
-    if ([self.fileNames count]==0)
-    {
-        [self loadDatabase];
-    }
     NSString *str=@"";
     switch (fileType)
     {
@@ -546,143 +565,261 @@
 }
 +(void)deleteBooks:(NSString*)gradeID
 {
-    NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *doctPath=[paths lastObject];
-    NSString *databasePath=[doctPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_user.sqlite",MONEWFOLDER]];
-    FMDatabase *database=[FMDatabase databaseWithPath:databasePath];
-    if (![database open])
-    {
-        NSLog(@"database open failed");
-        return;
-    }
-    FMResultSet* result=[database executeQuery:[NSString stringWithFormat:@"SELECT * FROM Books WHERE GradeID=%@",gradeID]];
-    while([result next])
-    {
-        NSString *documentName=[result stringForColumn:@"DocumentName"];
-        NSString *BookID=[result stringForColumn:@"BookID"];
-        if (documentName!=nil)
+    
+    [[GNDownloadDatabase sharedInstance] queryTable:@"Books" withSelect:@[@"*"] andWhere:[NSDictionary dictionaryWithObjectsAndKeys:gradeID,@"GradeID", nil] completion:^(NSMutableArray *resultsArray) {
+        if (resultsArray!=nil&&[resultsArray count]!=0)
         {
-            //delete files
-            NSString *Path=[CommonMethod getPath:[NSString stringWithFormat:@"%@",documentName]];
-            BOOL isDir;
-            if ([[NSFileManager defaultManager] fileExistsAtPath:Path isDirectory:&isDir])
+            for (NSDictionary *result in resultsArray)
             {
-                [[NSFileManager defaultManager] removeItemAtPath:Path error:nil];
+                NSString *documentName=[result objectForKey:@"DocumentName"];
+                NSString *BookID=[result objectForKey:@"BookID"];
+                if (documentName!=nil)
+                {
+                    //delete files
+                    NSString *Path=[CommonMethod getPath:[NSString stringWithFormat:@"%@",documentName]];
+                    BOOL isDir;
+                    if ([[NSFileManager defaultManager] fileExistsAtPath:Path isDirectory:&isDir])
+                    {
+                        [[NSFileManager defaultManager] removeItemAtPath:Path error:nil];
+                    }
+                }
+                NSDictionary *where=[NSDictionary dictionaryWithObjectsAndKeys:BookID,@"BookID",nil];
+                [[GNDownloadDatabase sharedInstance] deleteTurpleFromTable:@"Books" withWhere:where];
             }
         }
-        BOOL success=[database executeUpdate:[NSString stringWithFormat:@"DELETE FROM Books WHERE BookID=%@",BookID]];
-        if (!success)
-        {
-            NSLog(@"delete from books failed with bookID:%@",BookID);
-        }
-    }
-    [database close];
+    }];
+    
+    
+//    NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//    NSString *doctPath=[paths lastObject];
+//    NSString *databasePath=[doctPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_user.sqlite",MONEWFOLDER]];
+//    FMDatabase *database=[FMDatabase databaseWithPath:databasePath];
+//    if (![database open])
+//    {
+//        NSLog(@"database open failed");
+//        return;
+//    }
+//    FMResultSet* result=[database executeQuery:[NSString stringWithFormat:@"SELECT * FROM Books WHERE GradeID=%@",gradeID]];
+//    while([result next])
+//    {
+//        NSString *documentName=[result stringForColumn:@"DocumentName"];
+//        NSString *BookID=[result stringForColumn:@"BookID"];
+//        if (documentName!=nil)
+//        {
+//            //delete files
+//            NSString *Path=[CommonMethod getPath:[NSString stringWithFormat:@"%@",documentName]];
+//            BOOL isDir;
+//            if ([[NSFileManager defaultManager] fileExistsAtPath:Path isDirectory:&isDir])
+//            {
+//                [[NSFileManager defaultManager] removeItemAtPath:Path error:nil];
+//            }
+//        }
+//        BOOL success=[database executeUpdate:[NSString stringWithFormat:@"DELETE FROM Books WHERE BookID=%@",BookID]];
+//        if (!success)
+//        {
+//            NSLog(@"delete from books failed with bookID:%@",BookID);
+//        }
+//    }
+//    [database close];
 }
 +(void)showCache:(void (^)(NSArray *cacheData))block currentData:(NSArray *)currentData
 {
-    NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *doctPath=[paths lastObject];
-    NSString *databasePath=[doctPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_user.sqlite",MONEWFOLDER]];
-    FMDatabase *database=[FMDatabase databaseWithPath:databasePath];
-    if (![database open])
-    {
-        NSLog(@"database open failed");
-        return;
-    }
-    FMResultSet* result=[database executeQuery:[NSString stringWithFormat:@"SELECT * FROM Books"]];
-    NSMutableSet *cacheGradeList=[[NSMutableSet alloc]init];
-    while([result next])
-    {
-        NSString *documentName=[result stringForColumn:@"DocumentName"];
-        NSString *GradeID=[result stringForColumn:@"GradeID"];
-        BOOL isCache=true;
-        for (DataForCell* tmp in currentData)
+    [[GNDownloadDatabase sharedInstance] queryTable:@"Books" withSelect:@[@"*"] andWhere:nil completion:^(NSMutableArray *resultsArray) {
+        if (resultsArray!=nil&&[resultsArray count]!=0)
         {
-            if ([GradeID integerValue]==[tmp.text_id integerValue])
+            NSMutableSet *cacheGradeList=[[NSMutableSet alloc]init];
+            for (NSDictionary *result in resultsArray)
             {
-                isCache=false;
-            }
-        }
-        if (isCache)
-        {
-            if (documentName!=nil)
-            {
-                NSString *Path=[CommonMethod getPath:[NSString stringWithFormat:@"%@",documentName]];
-                BOOL isDir;
-                if ([[NSFileManager defaultManager] fileExistsAtPath:Path isDirectory:&isDir])
+                NSString *documentName=[result objectForKey:@"DocumentName"];
+                NSString *GradeID=[result objectForKey:@"GradeID"];
+                BOOL isCache=true;
+                for (DataForCell* tmp in currentData)
                 {
-                    [cacheGradeList addObject:GradeID];
+                    if ([GradeID integerValue]==[tmp.text_id integerValue])
+                    {
+                        isCache=false;
+                    }
+                }
+                if (isCache)
+                {
+                    if (documentName!=nil)
+                    {
+                        NSString *Path=[CommonMethod getPath:[NSString stringWithFormat:@"%@",documentName]];
+                        BOOL isDir;
+                        if ([[NSFileManager defaultManager] fileExistsAtPath:Path isDirectory:&isDir])
+                        {
+                            [cacheGradeList addObject:GradeID];
+                        }
+                    }
                 }
             }
+            NSMutableArray *where=[[NSMutableArray alloc]init];
+            for (NSString* item in cacheGradeList)
+            {
+                [where addObject:item];
+            }
+            if ([where count]>0)
+            {
+                [[MTDatabaseHelper sharedInstance] queryTable:@"GradeList" withSelect:@[@"*"] column:@"grade_id" andIDs:where completion:
+                 ^(NSMutableArray *resultsArray) {
+                     NSMutableArray *mutableBooks=[[NSMutableArray alloc]init];
+                     if (resultsArray!=nil)
+                     {
+                         for (NSDictionary*tmp in resultsArray)
+                         {
+                             DataForCell *data=[[DataForCell alloc]initWithAttributes:tmp];
+                             [mutableBooks addObject:data];
+                         }
+                     }
+                     if (block)
+                     {
+                         block([NSArray arrayWithArray:mutableBooks]);
+                     }
+                 }];
+            }
+            else
+                block(nil);
         }
-    }
-    [database close];
-    NSMutableArray *where=[[NSMutableArray alloc]init];
-    for (NSString* item in cacheGradeList)
-    {
-        [where addObject:item];
-    }
-    if ([where count]>0)
-    {
-        [[MTDatabaseHelper sharedInstance] queryTable:@"GradeList" withSelect:@[@"*"] column:@"grade_id" andIDs:where completion:
-         ^(NSMutableArray *resultsArray) {
-             NSMutableArray *mutableBooks=[[NSMutableArray alloc]init];
-             if (resultsArray!=nil)
-             {
-                 for (NSDictionary*tmp in resultsArray)
-                 {
-                     DataForCell *data=[[DataForCell alloc]initWithAttributes:tmp];
-                     [mutableBooks addObject:data];
-                 }
-             }
-             if (block)
-             {
-                 block([NSArray arrayWithArray:mutableBooks]);
-             }
-         }];
-    }
-    else
-        block(nil);
+    }];
+    
+    
+//    NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//    NSString *doctPath=[paths lastObject];
+//    NSString *databasePath=[doctPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_user.sqlite",MONEWFOLDER]];
+//    FMDatabase *database=[FMDatabase databaseWithPath:databasePath];
+//    if (![database open])
+//    {
+//        NSLog(@"database open failed");
+//        return;
+//    }
+//    FMResultSet* result=[database executeQuery:[NSString stringWithFormat:@"SELECT * FROM Books"]];
+//    NSMutableSet *cacheGradeList=[[NSMutableSet alloc]init];
+//    while([result next])
+//    {
+//        NSString *documentName=[result stringForColumn:@"DocumentName"];
+//        NSString *GradeID=[result stringForColumn:@"GradeID"];
+//        BOOL isCache=true;
+//        for (DataForCell* tmp in currentData)
+//        {
+//            if ([GradeID integerValue]==[tmp.text_id integerValue])
+//            {
+//                isCache=false;
+//            }
+//        }
+//        if (isCache)
+//        {
+//            if (documentName!=nil)
+//            {
+//                NSString *Path=[CommonMethod getPath:[NSString stringWithFormat:@"%@",documentName]];
+//                BOOL isDir;
+//                if ([[NSFileManager defaultManager] fileExistsAtPath:Path isDirectory:&isDir])
+//                {
+//                    [cacheGradeList addObject:GradeID];
+//                }
+//            }
+//        }
+//    }
+//    [database close];
+//    NSMutableArray *where=[[NSMutableArray alloc]init];
+//    for (NSString* item in cacheGradeList)
+//    {
+//        [where addObject:item];
+//    }
+//    if ([where count]>0)
+//    {
+//        [[MTDatabaseHelper sharedInstance] queryTable:@"GradeList" withSelect:@[@"*"] column:@"grade_id" andIDs:where completion:
+//         ^(NSMutableArray *resultsArray) {
+//             NSMutableArray *mutableBooks=[[NSMutableArray alloc]init];
+//             if (resultsArray!=nil)
+//             {
+//                 for (NSDictionary*tmp in resultsArray)
+//                 {
+//                     DataForCell *data=[[DataForCell alloc]initWithAttributes:tmp];
+//                     [mutableBooks addObject:data];
+//                 }
+//             }
+//             if (block)
+//             {
+//                 block([NSArray arrayWithArray:mutableBooks]);
+//             }
+//         }];
+//    }
+//    else
+//        block(nil);
 }
 +(void)getCacheBooks:(NSString*)gradeID block:(void (^)(NSArray*data))block
 {
-    NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
-    NSString *doctPath=[paths lastObject];
-    NSString *databasePath=[doctPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_user.sqlite",MONEWFOLDER]];
-    FMDatabase *database=[FMDatabase databaseWithPath:databasePath];
-    if (![database open])
-    {
-        NSLog(@"database open failed");
-        return;
-    }
-    FMResultSet* result=[database executeQuery:[NSString stringWithFormat:@"SELECT * FROM Books WHERE GradeID=%@",gradeID]];
-    NSMutableArray *where=[[NSMutableArray alloc]init];
-    while([result next])
-    {
-        NSString *documentName=[result stringForColumn:@"DocumentName"];
-        NSString *BookID=[result stringForColumn:@"BookID"];
-        if (documentName!=nil)
+    
+    [[GNDownloadDatabase sharedInstance] queryTable:@"Books" withSelect:@[@"*"] andWhere:[NSDictionary dictionaryWithObjectsAndKeys:gradeID,@"GradeID",nil] completion:^(NSMutableArray *resultsArray) {
+        if (resultsArray!=nil&&[resultsArray count]!=0)
         {
-            //query textlist
-            [where addObject:BookID];
+            NSMutableArray *where=[[NSMutableArray alloc]init];
+            for (NSDictionary *result in resultsArray)
+            {
+                NSString *documentName=[result objectForKey:@"DocumentName"];
+                NSString *BookID=[result objectForKey:@"BookID"];
+                if (documentName!=nil)
+                {
+                    //query textlist
+                    [where addObject:BookID];
+                }
+            }
+            [[MTDatabaseHelper sharedInstance] queryTable:@"TextList" withSelect:@[@"*"] column:@"text_id" andIDs:where completion:
+             ^(NSMutableArray *resultsArray) {
+                 NSMutableArray *mutableBooks=[[NSMutableArray alloc]init];
+                 if (resultsArray!=nil)
+                 {
+                     for (NSDictionary*tmp in resultsArray)
+                     {
+                         DataForCell *data=[[DataForCell alloc]initWithAttributes:tmp];
+                         [mutableBooks addObject:data];
+                     }
+                 }
+                 if (block)
+                 {
+                     block([NSArray arrayWithArray:mutableBooks]);
+                 }
+             }];
         }
-    }
-    [[MTDatabaseHelper sharedInstance] queryTable:@"TextList" withSelect:@[@"*"] column:@"text_id" andIDs:where completion:
-     ^(NSMutableArray *resultsArray) {
-         NSMutableArray *mutableBooks=[[NSMutableArray alloc]init];
-         if (resultsArray!=nil)
-         {
-             for (NSDictionary*tmp in resultsArray)
-             {
-                 DataForCell *data=[[DataForCell alloc]initWithAttributes:tmp];
-                 [mutableBooks addObject:data];
-             }
-         }
-         if (block)
-         {
-             block([NSArray arrayWithArray:mutableBooks]);
-         }
-     }];
-    [database close];
+    }];
+    
+//    NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
+//    NSString *doctPath=[paths lastObject];
+//    NSString *databasePath=[doctPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_user.sqlite",MONEWFOLDER]];
+//    FMDatabase *database=[FMDatabase databaseWithPath:databasePath];
+//    if (![database open])
+//    {
+//        NSLog(@"database open failed");
+//        return;
+//    }
+//    FMResultSet* result=[database executeQuery:[NSString stringWithFormat:@"SELECT * FROM Books WHERE GradeID=%@",gradeID]];
+//    NSMutableArray *where=[[NSMutableArray alloc]init];
+//    while([result next])
+//    {
+//        NSString *documentName=[result stringForColumn:@"DocumentName"];
+//        NSString *BookID=[result stringForColumn:@"BookID"];
+//        if (documentName!=nil)
+//        {
+//            //query textlist
+//            [where addObject:BookID];
+//        }
+//    }
+//    [[MTDatabaseHelper sharedInstance] queryTable:@"TextList" withSelect:@[@"*"] column:@"text_id" andIDs:where completion:
+//     ^(NSMutableArray *resultsArray) {
+//         NSMutableArray *mutableBooks=[[NSMutableArray alloc]init];
+//         if (resultsArray!=nil)
+//         {
+//             for (NSDictionary*tmp in resultsArray)
+//             {
+//                 DataForCell *data=[[DataForCell alloc]initWithAttributes:tmp];
+//                 [mutableBooks addObject:data];
+//             }
+//         }
+//         if (block)
+//         {
+//             block([NSArray arrayWithArray:mutableBooks]);
+//         }
+//     }];
+//    [database close];
 }
 @end

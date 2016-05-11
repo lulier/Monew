@@ -651,7 +651,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
         //设置输出音频数据
 //        [[OEPocketsphinxController sharedInstance] setVerbosePocketSphinx:YES];
         [[OEPocketsphinxController sharedInstance] setSecondsOfSilenceToDetect:0.3];
-        [[OEPocketsphinxController sharedInstance] setVadThreshold:2.5];
+        [[OEPocketsphinxController sharedInstance] setVadThreshold:3.0];
         [[OEPocketsphinxController sharedInstance] setOutputAudio:YES];
         [[OEPocketsphinxController sharedInstance] setReturnNullHypotheses:YES];//返回空数据
         [[OEPocketsphinxController sharedInstance] setActive:TRUE error:nil];
@@ -948,9 +948,16 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
     NSString *doctPath=[CommonMethod getPath:[self.book getFileName:FTDocument]];
     NSString *filePath=[doctPath stringByAppendingPathComponent:[NSString stringWithFormat:@"sound%ld.wav",index]];
     
+    //uploading
+    __block MRProgressOverlayView *progressView=[MRProgressOverlayView showOverlayAddedTo:self.view title:@"语音上传中" mode:MRProgressOverlayViewModeIndeterminate animated:YES];
     [NetworkingManager httpRequest:RTPost url:RUGetCloudURL parameters:dict progress:nil
     success:^(NSURLSessionTask * _Nullable task, id  _Nullable responseObject)
      {
+         if(progressView!=nil)
+         {
+             [progressView dismiss:YES];
+             progressView=nil;
+         }
          long int status=[[responseObject objectForKey:@"status"]integerValue];
          if (status==0)
          {
@@ -965,12 +972,20 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
                completionHandler:^(NSURLResponse * _Nullable response, NSURL * _Nullable filePath, NSError * _Nullable error) {
                //upload success
                    [account uploadVoice:self.book.text_id voiceKey:key score:score  sentence:sentence];
+                   SCLAlertView *alert=[[SCLAlertView alloc]init];
+                   [alert showSuccess:self title:@"成功" subTitle:@"上传语音成功" closeButtonTitle:nil duration:1.0f];
              }];
          }
      }
     failure:^(NSURLSessionTask * _Nullable task, NSError * _Nullable error)
     {
-         
+        if(progressView!=nil)
+        {
+            [progressView dismiss:YES];
+            progressView=nil;
+        }
+        SCLAlertView *alert=[[SCLAlertView alloc]init];
+        [alert showError:self title:@"错误" subTitle:@"上传语音失败，请重新尝试" closeButtonTitle:nil duration:1.0f];
     }
     completionHandler:nil];
 }

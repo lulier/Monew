@@ -50,7 +50,7 @@ typedef NS_ENUM(NSInteger,FileType)
 - (void)zipArchiveDidUnzipArchiveAtPath:(NSString *)path zipInfo:(unz_global_info)zipInfo unzippedPath:(NSString *)unzippedPath;
 -(NSString*)getFileName:(FileType)fileType;
 - (void)dismissReaderViewController:(ReaderViewController *)viewController;
--(BOOL)checkDatabase;
+-(void)checkDatabase:(void (^)(BOOL existence))block;
 -(NSString*)getDocumentPath;
 +(void)queryGradeList:(void (^)(NSArray*data))block;
 +(void)queryTextList:(NSString*)gradeID block:(void (^)(NSArray*data))block;

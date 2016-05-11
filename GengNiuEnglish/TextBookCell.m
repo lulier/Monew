@@ -41,7 +41,7 @@
         [weakSelf.cellImage setImage:image];
     }];
     
-    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(openBook)];
+    UITapGestureRecognizer *singleTap = [[UITapGestureRecognizer alloc] initWithTarget:self action:@selector(ClickCover)];
     singleTap.numberOfTapsRequired = 1;
     singleTap.numberOfTouchesRequired = 1;
     singleTap.cancelsTouchesInView=NO;
@@ -80,71 +80,100 @@
     practiceViewController=nil;
 }
 - (IBAction)xiulianClick:(id)sender {
-    if (![self.book checkDatabase])
-    {
-        NSLog(@"the book is nil");
-        [self.delegate clickCellButton:self.index];
-        return;
-    }
-    [self openBook];
+    [self.book checkDatabase:^(BOOL existence) {
+        if (!existence)
+        {
+            NSLog(@"the book is nil");
+            [self.delegate clickCellButton:self.index];
+        }
+        else
+            [self openBook];
+    }];
+    
 }
 - (IBAction)moErDuoClick:(id)sender {
-    if (![self.book checkDatabase])
-    {
-        NSLog(@"the book is nil");
-        [self.delegate clickCellButton:self.index];
-        return;
-    }
-    UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    lyricViewController=[storyboard instantiateViewControllerWithIdentifier:@"LyricViewController"];
-    [lyricViewController initWithBook:self.book];
-    lyricViewController.delegate=self;
-    lyricViewController.imageURL=self.book.cover_url;
-    UINavigationController *navigationController=(UINavigationController*)self.window.rootViewController;
-    [navigationController pushViewController:lyricViewController animated:YES];
+    [self.book checkDatabase:^(BOOL existence) {
+        if (!existence)
+        {
+            NSLog(@"the book is nil");
+            [self.delegate clickCellButton:self.index];
+        }
+        else
+        {
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                lyricViewController=[storyboard instantiateViewControllerWithIdentifier:@"LyricViewController"];
+                [lyricViewController initWithBook:self.book];
+                lyricViewController.delegate=self;
+                lyricViewController.imageURL=self.book.cover_url;
+                UINavigationController *navigationController=(UINavigationController*)self.window.rootViewController;
+                [navigationController pushViewController:lyricViewController animated:YES];
+            });
+        }
+    }];
+    
 }
 - (IBAction)chuangGuanClick:(id)sender {
-    if (![self.book checkDatabase])
-    {
-        NSLog(@"the book is nil");
-        [self.delegate clickCellButton:self.index];
-        return;
-    }
-    UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
-    practiceViewController=[storyboard instantiateViewControllerWithIdentifier:@"PracticeViewController"];
-    [practiceViewController initWithBook:self.book];
-    practiceViewController.delegate=self;
-    UINavigationController *navigationController=(UINavigationController*)self.window.rootViewController;
-    [navigationController pushViewController:practiceViewController animated:YES];
+    [self.book checkDatabase:^(BOOL existence) {
+        if (!existence)
+        {
+            NSLog(@"the book is nil");
+            [self.delegate clickCellButton:self.index];
+        }
+        else
+        {
+            
+            dispatch_async(dispatch_get_main_queue(), ^{
+                UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                practiceViewController=[storyboard instantiateViewControllerWithIdentifier:@"PracticeViewController"];
+                [practiceViewController initWithBook:self.book];
+                practiceViewController.delegate=self;
+                UINavigationController *navigationController=(UINavigationController*)self.window.rootViewController;
+                [navigationController pushViewController:practiceViewController animated:YES];
+            });
+        }
+    }];
+    
+}
+-(void)ClickCover
+{
+    [self.book checkDatabase:^(BOOL existence) {
+        if (!existence)
+        {
+            NSLog(@"the book is nil");
+            //            [self.delegate clickCellButton:self.index];
+        }
+        else
+        {
+            [self openBook];
+        }
+    }];
 }
 -(void)openBook
 {
-    if (![self.book checkDatabase])
-    {
-        NSLog(@"the book is nil");
-        [self.delegate clickCellButton:self.index];
-        return;
-    }
-    AppDelegate *appDelegate=[[UIApplication sharedApplication] delegate];
-    appDelegate.isReaderView=true;
-    UIViewController *currentVC=[CommonMethod getCurrentVC];
-    NSString *doctName=[self.book getFileName:FTDocument];
-    NSString *pdfName=[self.book getFileName:FTPDF];
-    NSString *pdfPath=[[self.book getDocumentPath] stringByAppendingPathComponent:pdfName];
-    ReaderDocument *document=[ReaderDocument withDocumentFilePath:pdfPath password:nil];
-    if (doctName!=nil)
-    {
-        readerViewController=[[ReaderViewController alloc]initWithReaderDocument:document];
-        readerViewController.modalTransitionStyle=UIModalTransitionStyleCrossDissolve;
-        readerViewController.modalPresentationStyle=UIModalPresentationFullScreen;
-        readerViewController.delegate=self.delegate;
-        [currentVC presentViewController:readerViewController animated:YES completion:nil];
-        AccountManager *account=[AccountManager singleInstance];
-        dispatch_async(dispatch_get_global_queue(0, 0), ^{
-            [[StudyDataManager sharedInstance] prepareUploadStudyState:account.userID textID:self.book.text_id starCount:@"0" readCount:@"1" sentenceCount:@"0" listenCount:@"0" challengeScore:@"0"];
-        });
-    }
+    dispatch_async(dispatch_get_main_queue(), ^{
+        AppDelegate *appDelegate=[[UIApplication sharedApplication] delegate];
+        appDelegate.isReaderView=true;
+        UIViewController *currentVC=[CommonMethod getCurrentVC];
+        NSString *pdfName=[self.book getFileName:FTPDF];
+        NSString *pdfPath=[[self.book getDocumentPath] stringByAppendingPathComponent:pdfName];
+        if ([[NSFileManager defaultManager]fileExistsAtPath:pdfPath])
+        {
+            ReaderDocument *document=[ReaderDocument withDocumentFilePath:pdfPath password:nil];
+            readerViewController=[[ReaderViewController alloc]initWithReaderDocument:document];
+            readerViewController.modalTransitionStyle=UIModalTransitionStyleCrossDissolve;
+            readerViewController.modalPresentationStyle=UIModalPresentationFullScreen;
+            readerViewController.delegate=self.delegate;
+            [currentVC presentViewController:readerViewController animated:YES completion:nil];
+            AccountManager *account=[AccountManager singleInstance];
+            dispatch_async(dispatch_get_global_queue(0, 0), ^{
+                [[StudyDataManager sharedInstance] prepareUploadStudyState:account.userID textID:self.book.text_id starCount:@"0" readCount:@"1" sentenceCount:@"0" listenCount:@"0" challengeScore:@"0"];
+            });
+        }
+    });
 }
+
 -(void)dismissReaderViewController:(ReaderViewController *)viewController
 {
     AppDelegate *appDelegate=[[UIApplication sharedApplication] delegate];

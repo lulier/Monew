@@ -16,6 +16,7 @@
 #import "SCLAlertView.h"
 #import "MRProgress.h"
 #import "SettingViewController.h"
+#import "GNDownloadDatabase.h"
 
 @interface MaterialViewController ()
 {
@@ -128,6 +129,11 @@ static NSString * const reuseIdentifierMaterial = @"MaterialCell";
     [self.navigationController.navigationBar setHidden:YES];
     UIImage *background=[CommonMethod imageWithImage:[UIImage imageNamed:@"background"] scaledToSize:CGSizeMake(self.collectionView.frame.size.width, self.collectionView.frame.size.height)];
     self.collectionView.backgroundView=[[UIImageView alloc]initWithImage:background];
+    [self initDatabase];
+}
+-(void)initDatabase
+{
+    [[GNDownloadDatabase sharedInstance] createTableWithTableName:@"Books" indexesWithProperties:@[@"BookID  INTEGER PRIMARY KEY UNIQUE",@"GradeID integer",@"BookName varchar(255)",@"CoverURL varchar(512)",@"Category integer",@"DownloadURL varchar(512)",@"ZipName varchar(255)",@"DocumentName varchar(255)",@"LMName varchar(255)",@"LRCName varchar(255)",@"PDFName varchar(255)",@"MP3Name varchar(255)"]];
 }
 -(void)updateViewConstraints
 {

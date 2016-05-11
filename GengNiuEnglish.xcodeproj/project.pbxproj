@@ -36,6 +36,7 @@
 		F448DDAA1CDA114E002D43B6 /* AdvanceViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F448DDA91CDA114E002D43B6 /* AdvanceViewController.m */; };
 		F448DDAD1CDB3C09002D43B6 /* dictionary.db in Resources */ = {isa = PBXBuildFile; fileRef = F448DDAC1CDB3C09002D43B6 /* dictionary.db */; };
 		F454F9331CC767B400326774 /* UITextView+ContentInset.m in Sources */ = {isa = PBXBuildFile; fileRef = F454F9321CC767B400326774 /* UITextView+ContentInset.m */; };
+		F46123491CE0EEAA00D55B83 /* GNDownloadDatabase.m in Sources */ = {isa = PBXBuildFile; fileRef = F46123481CE0EEAA00D55B83 /* GNDownloadDatabase.m */; };
 		F46A44FA1C93CA37002BC9D4 /* CoreTelephony.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F46A44F91C93CA37002BC9D4 /* CoreTelephony.framework */; };
 		F46A45051C93CD50002BC9D4 /* libz.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F46A44FB1C93CA5B002BC9D4 /* libz.tbd */; };
 		F46A45071C93CD5A002BC9D4 /* libicucore.tbd in Frameworks */ = {isa = PBXBuildFile; fileRef = F46A45061C93CD5A002BC9D4 /* libicucore.tbd */; };
@@ -142,6 +143,8 @@
 		F448DDAC1CDB3C09002D43B6 /* dictionary.db */ = {isa = PBXFileReference; lastKnownFileType = file; name = dictionary.db; path = ../dictionary.db; sourceTree = "<group>"; };
 		F454F9311CC767B400326774 /* UITextView+ContentInset.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "UITextView+ContentInset.h"; sourceTree = "<group>"; };
 		F454F9321CC767B400326774 /* UITextView+ContentInset.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "UITextView+ContentInset.m"; sourceTree = "<group>"; };
+		F46123471CE0EEAA00D55B83 /* GNDownloadDatabase.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = GNDownloadDatabase.h; sourceTree = "<group>"; };
+		F46123481CE0EEAA00D55B83 /* GNDownloadDatabase.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = GNDownloadDatabase.m; sourceTree = "<group>"; };
 		F46A44F91C93CA37002BC9D4 /* CoreTelephony.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = CoreTelephony.framework; path = System/Library/Frameworks/CoreTelephony.framework; sourceTree = SDKROOT; };
 		F46A44FB1C93CA5B002BC9D4 /* libz.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = libz.tbd; path = usr/lib/libz.tbd; sourceTree = SDKROOT; };
 		F46A44FD1C93CA65002BC9D4 /* libstdc++.tbd */ = {isa = PBXFileReference; lastKnownFileType = "sourcecode.text-based-dylib-definition"; name = "libstdc++.tbd"; path = "usr/lib/libstdc++.tbd"; sourceTree = SDKROOT; };
@@ -402,6 +405,8 @@
 				F42FA5EF1C8D29600033C9C9 /* MTDatabaseHelper.m */,
 				F448DD8D1CD72EEE002D43B6 /* DictionaryDatabase.h */,
 				F448DD8E1CD72EEE002D43B6 /* DictionaryDatabase.m */,
+				F46123471CE0EEAA00D55B83 /* GNDownloadDatabase.h */,
+				F46123481CE0EEAA00D55B83 /* GNDownloadDatabase.m */,
 				F4A9AF371C4D0D26004BC7BF /* CommonMethod.h */,
 				F4A9AF381C4D0D26004BC7BF /* CommonMethod.m */,
 				F49467021C27CE0900806DEF /* DataForCell.h */,
@@ -645,6 +650,7 @@
 				F448DD9D1CD8C6D6002D43B6 /* VocabularyViewCell.m in Sources */,
 				F448DDA41CD9AEA0002D43B6 /* OEContinuousModel+SaveWave.m in Sources */,
 				F436F6D91CCF6288008260F0 /* BindPhoneViewController.m in Sources */,
+				F46123491CE0EEAA00D55B83 /* GNDownloadDatabase.m in Sources */,
 				F4A9AF3F1C4D2435004BC7BF /* TextBookCell.m in Sources */,
 				F494670A1C28ECE900806DEF /* NetworkingManager.m in Sources */,
 				F4A9AF3C1C4D2418004BC7BF /* MaterialCell.m in Sources */,

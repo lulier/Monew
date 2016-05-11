@@ -23,6 +23,7 @@
     ReaderViewController *readerViewController;
     LyricViewController *lyricViewController;
     SCLAlertView *alert;
+    NSInteger currentSelectIndex;
 }
 @end
 
@@ -41,21 +42,12 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
         return;
     }
     
-    FMResultSet *result=[database executeQuery:@"select * from Books"];
-    if (![result next])
+    NSString *createTable=@"CREATE TABLE IF NOT EXISTS Books(BookID  integer,GradeID integer,BookName varchar(255),CoverURL varchar(512),Category integer,DownloadURL varchar(512),ZipName varchar(255),DocumentName varchar(255),LMName varchar(255),LRCName varchar(255),PDFName varchar(255),MP3Name varchar(255));";
+    BOOL success=[database executeUpdate:createTable];
+    if (!success)
     {
-        NSString *createTable=@"create table Books(BookID  integer,GradeID integer,BookName varchar(255),CoverURL varchar(512),Category integer,DownloadURL varchar(512),ZipName varchar(255),DocumentName varchar(255),LMName varchar(255),LRCName varchar(255),PDFName varchar(255),MP3Name varchar(255));";
-        BOOL success=[database executeUpdate:createTable];
-        if (!success)
-        {
-            NSLog(@"create table failed");
-            return;
-        }
-        NSLog(@"create table success");
-    }
-    else
-    {
-        NSLog(@"table books exist");
+        NSLog(@"create table books failed");
+        return;
     }
     [database close];
 }
@@ -105,7 +97,7 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
     [self.navigationController.navigationBar setHidden:YES];
     UIImage *background=[CommonMethod imageWithImage:[UIImage imageNamed:@"background"] scaledToSize:CGSizeMake(self.collectionView.frame.size.width, self.collectionView.frame.size.height)];
     self.collectionView.backgroundView=[[UIImageView alloc]initWithImage:background];
-    [self initDatabase];
+//    [self initDatabase];
     if (!self.showCache) {
         [self reload:nil];
     }
@@ -114,6 +106,7 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
         //read cache files
         [self loadCacheBooks];
     }
+    currentSelectIndex=1;
 }
 
 - (void)didReceiveMemoryWarning {
@@ -207,6 +200,7 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
 }
 -(void)collectionView:(UICollectionView *)collectionView willDisplayCell:(UICollectionViewCell *)cell forItemAtIndexPath:(NSIndexPath *)indexPath
 {
+    
     if ([self.list count]>=[self.textCount integerValue]||self.isLoading)
     {
         return;
@@ -248,37 +242,44 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
                     [weakSelf.collectionView reloadData];
                 });
             }
-        } grade_id:self.grade_id text_id:[NSString stringWithFormat:@"%ld",maxID]];
+        } grade_id:self.grade_id text_id:[NSString stringWithFormat:@"%ld",(long)maxID]];
     }
 }
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    
+    currentSelectIndex=indexPath.row;
     DataForCell *book=self.list[indexPath.row];
-    if (book.task!=nil||[book checkDatabase])//检查是否下载过
+    if (book.task!=nil)//检查是否下载过
     {
         return;
     }
-    //分成两次下载
+    [book checkDatabase:^(BOOL existence) {
+        
+        if (!existence)
+        {
+                //分成两次下载
+            BOOL firstProgress=false;
+            BOOL secondProgress=false;
+            if (book.shouldDownloadFirst)
+            {
+                firstProgress=true;
+            }
+            else
+                secondProgress=true;
+            
+            if (book.shouldDownloadFirst)
+            {
+                [self downloadFile:book downloadURL:book.downloadURL showProgress:firstProgress index:indexPath.row ];
+            }
+                
+            if (book.shouldDownloadSecond)
+            {
+                [self downloadFile:book downloadURL:book.downloadURLSecond showProgress:secondProgress index:indexPath.row];
+            }
+            
+        }
+    }];
     
-    BOOL firstProgress=false;
-    BOOL secondProgress=false;
-    if (book.shouldDownloadFirst)
-    {
-        firstProgress=true;
-    }
-    else
-        secondProgress=true;
-    
-    if (book.shouldDownloadFirst)
-    {
-        [self downloadFile:book downloadURL:book.downloadURL showProgress:firstProgress index:indexPath.row ];
-    }
-    
-    if (book.shouldDownloadSecond)
-    {
-        [self downloadFile:book downloadURL:book.downloadURLSecond showProgress:secondProgress index:indexPath.row];
-    }
     
     
     
@@ -302,12 +303,14 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
     TextBookCell *cell=(TextBookCell*)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
     NSDictionary *parameters=[NSDictionary dictionaryWithObjectsAndKeys:downloadURL,@"url",nil];
     __weak __typeof__(self) weakSelf = self;
-    book.progressView=[[DAProgressOverlayView alloc]initWithFrame:cell.bounds];
-    [book.progressView setHidden:NO];
-    book.progressView.progress = 0;
-    book.progressView.tag=PROGRESSVIEW_TAG;
-    [cell.contentView addSubview:book.progressView];
-    [book.progressView displayOperationWillTriggerAnimation];
+    dispatch_async(dispatch_get_main_queue(), ^{
+        book.progressView=[[DAProgressOverlayView alloc]initWithFrame:cell.bounds];
+        [book.progressView setHidden:NO];
+        book.progressView.progress = 0;
+        book.progressView.tag=PROGRESSVIEW_TAG;
+        [cell.contentView addSubview:book.progressView];
+        [book.progressView displayOperationWillTriggerAnimation];
+    });
     __block NSURLSessionTask *task=
     [NetworkingManager httpRequest:RTDownload url:RUCustom parameters:parameters
                           progress:^(NSProgress *progress)
@@ -403,7 +406,11 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
     AppDelegate *appDelegate=[[UIApplication sharedApplication] delegate];
     appDelegate.isReaderView=false;
     [self dismissViewControllerAnimated:NO completion:NULL];
-    
+    TextBookCell *cell=(TextBookCell*)[self.collectionView cellForItemAtIndexPath:[NSIndexPath indexPathForRow:currentSelectIndex inSection:0]];
+    if (cell!=nil)
+    {
+        cell.readerViewController=nil;
+    }
     readerViewController=nil;
 }
 

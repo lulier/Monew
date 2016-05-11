@@ -184,7 +184,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="q0f-mn-Y1r" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="410.5" y="1402.5"/>
+            <point key="canvasLocation" x="1918.5" y="940.5"/>
         </scene>
         <!--Practice View Controller-->
         <scene sceneID="rYt-4m-sFE">
@@ -211,7 +211,7 @@
                                         <rect key="frame" x="0.0" y="28" width="627" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="nrk-Bx-EJL" id="4G9-2G-cvS">
-                                            <rect key="frame" x="0.0" y="0.0" width="627" height="43.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="627" height="44"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="The monkeys can." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="D4M-0M-d7T" customClass="GNTextView">
@@ -447,7 +447,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="b5U-mT-L3R" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1178.5" y="1402.5"/>
+            <point key="canvasLocation" x="1184.5" y="1396.5"/>
         </scene>
         <!--Navigation Controller-->
         <scene sceneID="uiy-vy-9g0">
@@ -603,7 +603,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="LNE-5t-o8v" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1178.5" y="935.5"/>
+            <point key="canvasLocation" x="415.5" y="925.5"/>
         </scene>
         <!--Book View Controller-->
         <scene sceneID="DlA-dn-wFF">
@@ -765,7 +765,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="IDc-dy-VOr" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1918.5" y="935.5"/>
+            <point key="canvasLocation" x="1178.5" y="935.5"/>
         </scene>
         <!--Login View Controller-->
         <scene sceneID="ONj-SU-Bn3">
@@ -1195,7 +1195,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="siz-bD-5EF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="410.5" y="935.5"/>
+            <point key="canvasLocation" x="415.5" y="1402.5"/>
         </scene>
         <!--Advance View Controller-->
         <scene sceneID="pQz-0O-U8j">
@@ -1449,7 +1449,7 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="408" height="44"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="C85AE322-8A3A-46A7-9BD1-74B4C0BDC0CD" translatesAutoresizingMaskIntoConstraints="NO" id="Axa-d7-Z9S">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="6C9D0FD1-6169-4C16-B42B-9861A008CCC3" translatesAutoresizingMaskIntoConstraints="NO" id="Axa-d7-Z9S">
                                                             <rect key="frame" x="15" y="12" width="21" height="21"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" secondItem="Axa-d7-Z9S" secondAttribute="height" multiplier="2:2" id="tJp-ce-Zz7"/>
@@ -1770,7 +1770,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="AKj-h3-hFF" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="410.5" y="2379.5"/>
+            <point key="canvasLocation" x="2636.5" y="473.5"/>
         </scene>
         <!--Vocabulary View Controller-->
         <scene sceneID="ucb-Qx-Jcn">
@@ -1845,11 +1845,11 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="McM-0g-olZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1191.5" y="2379.5"/>
+            <point key="canvasLocation" x="2636.5" y="954.5"/>
         </scene>
     </scenes>
     <resources>
-        <image name="C85AE322-8A3A-46A7-9BD1-74B4C0BDC0CD" width="36" height="36">
+        <image name="6C9D0FD1-6169-4C16-B42B-9861A008CCC3" width="36" height="36">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGOjtYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK0HCBEW
 GxwgISgrLjQ3VSRudWxs1AkKCwwNDg8QViRjbGFzc1xOU0ltYWdlRmxhZ3NWTlNSZXBzV05TQ29sb3KA

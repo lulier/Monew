@@ -197,6 +197,7 @@ static NSString * const ACCOUNT_KEYCHAIN = @"GNAccount20160311";
     [[MTDatabaseHelper sharedInstance] createTableWithTableName:@"Vocabulary" indexesWithProperties:@[@"word varchar(64) PRIMARY KEY UNIQUE",@"extra varchar(64)"]];
     [[MTDatabaseHelper sharedInstance] createTableWithTableName:@"SentenceScore" indexesWithProperties:@[@"sentence_id  varchar(64) PRIMARY KEY UNIQUE",@"text_id INTEGER",@"record_path varchar(255)",@"score INTEGER",@"extra varchar(64)"]];
     [[MTDatabaseHelper sharedInstance] createTableWithTableName:@"StudyData" indexesWithProperties:@[@"time_stamp  varchar(64) PRIMARY KEY UNIQUE",@"text_id INTEGER",@"user_id INTEGER",@"star_count INTEGER",@"read_count INTEGER",@"listen_count INTEGER",@"sentence_count INTEGER",@"challenge_score INTEGER",@"push_to_server INTEGER",@"extra varchar(64)"]];
+    
 }
 -(void)saveAccount
 {
