@@ -10,7 +10,7 @@
 #import "TextBookCell.h"
 #import "SCLAlertView.h"
 
-@interface BookViewController : UIViewController<UICollectionViewDelegateFlowLayout,UIScrollViewDelegate,UICollectionViewDelegate,UICollectionViewDataSource,textBookCellDelegate>
+@interface BookViewController : UIViewController<UICollectionViewDelegateFlowLayout,UIScrollViewDelegate,UICollectionViewDelegate,UICollectionViewDataSource,textBookCellDelegate,ReaderViewControllerDelegate>
 @property(strong,nonatomic)NSArray *list;
 @property(strong,nonatomic)NSString *grade_id;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;

@@ -195,7 +195,7 @@
     //使用密码对data进行解密
     NSData *decryData = [data AES128DecryptWithKey:key];
     //将解了密码的nsdata转化为nsstring
-    NSString *str = [[NSString alloc] initWithData:decryData encoding:NSASCIIStringEncoding];
+    NSString *str = [[NSString alloc] initWithData:decryData encoding:NSUTF8StringEncoding];
     NSLog(@"解密后的字符串 :%@",str);
     return str;
 }

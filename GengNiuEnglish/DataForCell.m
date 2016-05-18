@@ -34,7 +34,7 @@
     if ([attributes objectForKey:@"text_id"]!=nil)
     {
         self.text_id=[attributes objectForKey:@"text_id"];
-        self.text_name=[attributes objectForKey:@"text_name"];
+        self.text_name=[[attributes objectForKey:@"text_name"] stringByReplacingOccurrencesOfString:@"'" withString:@"*"];
         self.cover_url=[attributes objectForKey:@"cover_url"];
         self.category=[attributes objectForKey:@"category"];
         self.downloadURL=[attributes objectForKey:@"courseware_multimedia_url"];
@@ -48,6 +48,9 @@
         self.downloadURLSecond=[attributes objectForKey:@"courseware_text_url"];
         self.mediaVersion=[attributes objectForKey:@"courseware_multimedia_version"];
         self.textVersion=[attributes objectForKey:@"courseware_text_version"];
+        
+//        self.mediaVersion=@"1";
+//        self.textVersion=@"1";
         
         [self loadDatabase];
 //        [self checkDatabase];
@@ -245,6 +248,7 @@
 //    NSString *databasePath=[doctPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_user.sqlite",MONEWFOLDER]];
 //    FMDatabase *database=[FMDatabase databaseWithPath:databasePath];
     [[GNDownloadDatabase sharedInstance] queryTable:@"Books" withSelect:@[@"*"]  andWhere:[NSDictionary dictionaryWithObjectsAndKeys:self.text_id,@"BookID", nil] completion:^(NSMutableArray *resultsArray) {
+        
         if (resultsArray!=nil&&[resultsArray count]!=0)
         {
             NSDictionary *result=[resultsArray firstObject];
@@ -252,53 +256,62 @@
             NSString *lrcName=[result objectForKey:@"LRCName"];
             NSString *version=[result objectForKey:@"ZipName"];
             NSString *mp3Name=[result objectForKey:@"MP3Name"];
-            
+            if (documentName==nil||lrcName==nil||mp3Name==nil)
+            {
+                block(NO);
+                return;
+            }
+            if ([documentName isEqual:[NSNull null]]||[lrcName isEqual:[NSNull null]]||[mp3Name isEqual:[NSNull null]])
+            {
+                block(NO);
+                return;
+            }
             if ([documentName isEqualToString:@"(null)"]||[lrcName isEqualToString:@"(null)"]||[mp3Name isEqualToString:@"(null)"])
             {
                 block(NO);
+                return;
             }
-            else
+            
+            NSString *path=[CommonMethod getPath:documentName];
+            NSString *path1=[path stringByAppendingPathComponent:lrcName];
+            NSString *path2=[path stringByAppendingPathComponent:mp3Name];
+            BOOL existence=[CommonMethod checkFileExistence:path]&&[CommonMethod checkFileExistence:path1]&&[CommonMethod checkFileExistence:path2];
+            if (!existence)
             {
-                NSString *path=[CommonMethod getPath:documentName];
-                NSString *path1=[path stringByAppendingPathComponent:lrcName];
-                NSString *path2=[path stringByAppendingPathComponent:mp3Name];
-                BOOL existence=[CommonMethod checkFileExistence:path]&&[CommonMethod checkFileExistence:path1]&&[CommonMethod checkFileExistence:path2];
-                if (!existence)
+                block(NO);
+                return;
+            }
+            //兼容旧版没有在下载完成进行解密
+//            else
+//            {
+//                NSString *fileName=[NSString stringWithFormat:@"original_%@",[self getFileName:FTLRC]];
+//                path=[path stringByAppendingPathComponent:fileName];
+//                if (![CommonMethod checkFileExistence:path])
+//                {
+//                    [self decodeLyric:[self getFileName:FTLRC]];
+//                }
+//            }
+            if (version!=nil&&self.mediaVersion!=nil&&self.textVersion!=nil)
+            {
+                NSArray *versions=[version componentsSeparatedByString:@"-"];
+                NSString *ver1=[versions firstObject];
+                NSString *ver2=[versions lastObject];
+                if ([ver1 integerValue]!=[self.mediaVersion integerValue])
+                {
+                    self.shouldDownloadFirst=YES;
+                }
+                else
+                    self.shouldDownloadFirst=NO;
+                if ([ver2 integerValue]!=[self.textVersion integerValue])
+                {
+                    self.shouldDownloadSecond=YES;
+                }
+                else
+                    self.shouldDownloadSecond=NO;
+                if (self.shouldDownloadFirst||self.shouldDownloadSecond)
                 {
                     block(NO);
-                }
-                //兼容旧版没有在下载完成进行解密
-                else
-                {
-                    NSString *fileName=[NSString stringWithFormat:@"original_%@",[self getFileName:FTLRC]];
-                    path=[path stringByAppendingPathComponent:fileName];
-                    if (![CommonMethod checkFileExistence:path])
-                    {
-                        [self decodeLyric:[self getFileName:FTLRC]];
-                    }
-                }
-                if (version!=nil&&self.mediaVersion!=nil&&self.textVersion!=nil)
-                {
-                    NSArray *versions=[version componentsSeparatedByString:@"-"];
-                    NSString *ver1=[versions firstObject];
-                    NSString *ver2=[versions lastObject];
-                    if ([ver1 integerValue]!=[self.mediaVersion integerValue])
-                    {
-                        self.shouldDownloadFirst=YES;
-                    }
-                    else
-                        self.shouldDownloadFirst=NO;
-                    if ([ver2 integerValue]!=[self.textVersion integerValue])
-                    {
-                        self.shouldDownloadSecond=YES;
-                    }
-                    else
-                        self.shouldDownloadSecond=NO;
-                    if (self.shouldDownloadFirst||self.shouldDownloadSecond)
-                    {
-                        block(NO);
-                    }
-                    
+                    return;
                 }
             }
             block(YES);
@@ -333,6 +346,7 @@
 
 -(void)updateDatabase
 {
+    
     NSArray *colums=[[NSArray alloc]initWithObjects:@"BookID",@"GradeID",@"BookName",@"CoverURL",@"Category",@"DownloadURL",@"ZipName",@"DocumentName",@"LMName",@"LRCName",@"PDFName",@"MP3Name", nil];
     NSString *ver=[NSString stringWithFormat:@"%@-%@",self.mediaVersion,self.textVersion];
     NSArray *values=[[NSArray alloc]initWithObjects:[NSString stringWithFormat:@"'%@'",self.text_id],[NSString stringWithFormat:@"'%@'",self.text_gradeID],[NSString stringWithFormat:@"'%@'",self.text_name],[NSString stringWithFormat:@"'%@'",self.cover_url],[NSString stringWithFormat:@"'%@'",self.category],[NSString stringWithFormat:@"'%@'",self.downloadURL],[NSString stringWithFormat:@"'%@'",ver],[NSString stringWithFormat:@"'%@'",[self getFileName:FTDocument]],[NSString stringWithFormat:@"'%@'",[self getFileName:FTLM]], [NSString stringWithFormat:@"'%@'",[self getFileName:FTLRC]],[NSString stringWithFormat:@"'%@'",[self getFileName:FTPDF]],[NSString stringWithFormat:@"'%@'",[self getFileName:FTMP3]],nil];
@@ -457,15 +471,16 @@
     }
     return desName;
 }
+
 - (void)zipArchiveDidUnzipArchiveAtPath:(NSString *)path zipInfo:(unz_global_info)zipInfo unzippedPath:(NSString *)unzippedPath
 {
     //when you can get the lrc file move all the file from the current doc to the first doc
     
     
     [self updateDatabase];
-    //delete zip file after extracting
+//    //delete zip file after extracting
     [self deleteZipFile];
-    [self decodeLyric:[self getFileName:FTLRC]];
+//    [self decodeLyric:[self getFileName:FTLRC]];
 }
 - (void)decodeLyric:(NSString *)fileName
 {

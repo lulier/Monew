@@ -145,7 +145,32 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
 }
 -(void)clickCellButton:(NSInteger)index
 {
-    [self collectionView:self.collectionView didSelectItemAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
+//    [self collectionView:self.collectionView didSelectItemAtIndexPath:[NSIndexPath indexPathForRow:index inSection:0]];
+    currentSelectIndex=index;
+    DataForCell *book=self.list[index];
+    if (book.task!=nil)
+    {
+        return;
+    }
+    //分成两次下载
+    BOOL firstProgress=false;
+    BOOL secondProgress=false;
+    if (book.shouldDownloadFirst)
+    {
+        firstProgress=true;
+    }
+    else
+        secondProgress=true;
+    
+    if (book.shouldDownloadFirst)
+    {
+        [self downloadFile:book downloadURL:book.downloadURL showProgress:firstProgress index:index];
+    }
+    
+    if (book.shouldDownloadSecond)
+    {
+        [self downloadFile:book downloadURL:book.downloadURLSecond showProgress:secondProgress index:index];
+    }
 }
 
 
@@ -247,43 +272,40 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
 }
 - (void)collectionView:(UICollectionView *)collectionView didSelectItemAtIndexPath:(NSIndexPath *)indexPath
 {
-    currentSelectIndex=indexPath.row;
-    DataForCell *book=self.list[indexPath.row];
-    if (book.task!=nil)//检查是否下载过
-    {
-        return;
-    }
-    [book checkDatabase:^(BOOL existence) {
-        
-        if (!existence)
-        {
-                //分成两次下载
-            BOOL firstProgress=false;
-            BOOL secondProgress=false;
-            if (book.shouldDownloadFirst)
-            {
-                firstProgress=true;
-            }
-            else
-                secondProgress=true;
-            
-            if (book.shouldDownloadFirst)
-            {
-                [self downloadFile:book downloadURL:book.downloadURL showProgress:firstProgress index:indexPath.row ];
-            }
-                
-            if (book.shouldDownloadSecond)
-            {
-                [self downloadFile:book downloadURL:book.downloadURLSecond showProgress:secondProgress index:indexPath.row];
-            }
-            
-        }
-    }];
-    
-    
-    
-    
+//    currentSelectIndex=indexPath.row;
+//    DataForCell *book=self.list[indexPath.row];
+//    if (book.task!=nil)//检查是否下载过
+//    {
+//        return;
+//    }
+//    [book checkDatabase:^(BOOL existence) {
+//        
+//        if (!existence)
+//        {
+//            //分成两次下载
+//            BOOL firstProgress=false;
+//            BOOL secondProgress=false;
+//            if (book.shouldDownloadFirst)
+//            {
+//                firstProgress=true;
+//            }
+//            else
+//                secondProgress=true;
+//            
+//            if (book.shouldDownloadFirst)
+//            {
+//                [self downloadFile:book downloadURL:book.downloadURL showProgress:firstProgress index:indexPath.row ];
+//            }
+//                
+//            if (book.shouldDownloadSecond)
+//            {
+//                [self downloadFile:book downloadURL:book.downloadURLSecond showProgress:secondProgress index:indexPath.row];
+//            }
+//            
+//        }
+//    }];
 }
+
 //加多一层，如果是需要更新进度则使用上面的方式，如果不需要则使用简单下载
 -(void)downloadFile:(DataForCell*)book downloadURL:(NSString *)downloadURL showProgress:(BOOL)showProgress index:(NSInteger)index
 {
@@ -334,12 +356,13 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
              });
          }
      }
-                           success:^(NSURLSessionTask * _Nullable task, id  _Nullable responseObject) {
+    success:^(NSURLSessionTask * _Nullable task, id  _Nullable responseObject) {
                                
-                           } failure:^(NSURLSessionTask * _Nullable task, NSError * _Nullable error) {
+    }
+    failure:^(NSURLSessionTask * _Nullable task, NSError * _Nullable error) {
                                
-                           }
-                 completionHandler:^(NSURLResponse * _Nullable response, NSURL * _Nullable filePath, NSError * _Nullable error)
+    }
+    completionHandler:^(NSURLResponse * _Nullable response, NSURL * _Nullable filePath, NSError * _Nullable error)
      {
          NSLog(@"log for download response:%@",response);
          NSLog(@"File downloaded to: %@", filePath.absoluteString);
@@ -351,8 +374,7 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
          }
          if ([[NSFileManager defaultManager] fileExistsAtPath:[filePath.absoluteString substringFromIndex:7]]&&error==nil)
          {
-             [weakSelf unzipDownloadFile:[filePath.absoluteString substringFromIndex:7] index:index];
-             
+            [weakSelf unzipDownloadFile:[filePath.absoluteString substringFromIndex:7] index:index];
          }
          else
          {
@@ -397,7 +419,7 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
         NSString *zipFileName=[[filePath componentsSeparatedByString:@"/"] lastObject];
         DataForCell *book=self.list[index];
         book.download_zipFileName=zipFileName;
-        [SSZipArchive unzipFileAtPath:filePath toDestination:doctPath delegate:book];
+       [SSZipArchive unzipFileAtPath:filePath toDestination:doctPath delegate:book];
     }
 }
 

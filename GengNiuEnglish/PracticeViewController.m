@@ -429,6 +429,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
 -(void)define
 {
     DictionaryDatabase *dictionary=[DictionaryDatabase sharedInstance];
+    currentCheckWord=[[currentCheckWord componentsSeparatedByString:@"'"] firstObject];
     NSDictionary *where=[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"'%@'",currentCheckWord],@"WORD",nil];
     [dictionary queryTable:@"DICTIONARY" withSelect:@[@"*"] andWhere:where completion:^(NSMutableArray *resultsArray) {
         if (resultsArray!=nil&&[resultsArray count]!=0)

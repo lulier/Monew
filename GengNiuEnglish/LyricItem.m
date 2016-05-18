@@ -47,26 +47,25 @@
 +(NSArray *)parseLyric:(NSString *)filePath
 {
     NSMutableArray *lyrics=[[NSMutableArray alloc]init];
-    NSString *result=[NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:nil];
-    if (result==nil)
-    {
-        NSString *fileName=[[filePath componentsSeparatedByString:@"/"] lastObject];
-        NSString *path=[filePath stringByReplacingOccurrencesOfString:fileName withString:@""];
-        NSArray *tmpList=[[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:nil];
-        for (NSString *name in tmpList)
-        {
-            NSRange range=[name rangeOfString:@"original"];
-            if (range.length!=0)
-            {
-                NSData *secretText=[NSData dataWithContentsOfFile:[path stringByAppendingPathComponent:name]];
-                result=[CommonMethod decryptAESData:secretText app_key:CIPHER_KEY];
-                break;
-//                SCLAlertView *alert=[[SCLAlertView alloc]init];
-//                [alert showNotice:[CommonMethod getCurrentVC] title:path subTitle:name closeButtonTitle:@"确定" duration:0.0f];
-                
-            }
-        }
-    }
+    NSData *secretText=[NSData dataWithContentsOfFile:filePath];
+    NSString* result=[CommonMethod decryptAESData:secretText app_key:CIPHER_KEY];
+//    NSString *result=[NSString stringWithContentsOfFile:filePath encoding:NSUTF8StringEncoding error:nil];
+//    if (result==nil)
+//    {
+//        NSString *fileName=[[filePath componentsSeparatedByString:@"/"] lastObject];
+//        NSString *path=[filePath stringByReplacingOccurrencesOfString:fileName withString:@""];
+//        NSArray *tmpList=[[NSFileManager defaultManager] contentsOfDirectoryAtPath:path error:nil];
+//        for (NSString *name in tmpList)
+//        {
+//            NSRange range=[name rangeOfString:@"original"];
+//            if (range.length!=0)
+//            {
+//                NSData *secretText=[NSData dataWithContentsOfFile:[path stringByAppendingPathComponent:name]];
+//                result=[CommonMethod decryptAESData:secretText app_key:CIPHER_KEY];
+//                break;
+//            }
+//        }
+//    }
     if (result==nil)
     {
         return nil;
@@ -78,6 +77,10 @@
     {
         NSArray *current=[contents[i] componentsSeparatedByString:@"]"];
         NSArray *next=[contents[i+1] componentsSeparatedByString:@"]"];
+        if (current==nil||next==nil||[current count]!=2)
+        {
+            continue;
+        }
         NSString* beginTime=[LyricItem parseToMillisecond:current[0]];
         NSString* endTime=[LyricItem parseToMillisecond:next[0]];
         NSDictionary *attribute=[NSDictionary dictionaryWithObjectsAndKeys:beginTime,@"beginTime",current[1],@"lyricBody",endTime,@"endTime",nil];

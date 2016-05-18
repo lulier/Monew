@@ -10,6 +10,7 @@
 #import "SSZipArchive.h"
 #import "ReaderViewController.h"
 #import "DAProgressOverlayView.h"
+#import "SCLAlertView.h"
 @import UIKit;
 
 typedef NS_ENUM(NSInteger,FileType)

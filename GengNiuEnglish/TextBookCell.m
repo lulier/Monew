@@ -142,7 +142,7 @@
         if (!existence)
         {
             NSLog(@"the book is nil");
-            //            [self.delegate clickCellButton:self.index];
+            [self.delegate clickCellButton:self.index];
         }
         else
         {

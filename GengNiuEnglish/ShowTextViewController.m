@@ -23,6 +23,14 @@
     self.wordLabel.text=self.word;
     unichar chr[1] = {'\n'};
     NSString *singleCR = [NSString stringWithCharacters:(const unichar *)chr length:1];
+    if (self.chineseExplanation==nil||[self.chineseExplanation isEqualToString:@"not found"])
+    {
+        self.chineseExplanation=@"";
+    }
+    if (self.englishExplanation==nil||[self.englishExplanation isEqualToString:@"not found"])
+    {
+        self.englishExplanation=@"";
+    }
     NSString *explanation=[NSString stringWithFormat:@"%@%@%@",self.chineseExplanation,singleCR,self.englishExplanation];
     self.explanationLabel.text=explanation;
     CGFloat height=[CommonMethod calculateTextHeight:explanation width:self.explanationLabel.frame.size.width fontSize:16.f];
