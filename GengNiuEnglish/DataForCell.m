@@ -389,9 +389,6 @@
             [self.fileNames addObject:[result objectForKey:@"MP3Name"]];
         }
     }];
-    
-    
-    
 //    NSArray *paths=NSSearchPathForDirectoriesInDomains(NSDocumentDirectory, NSUserDomainMask, YES);
 //    NSString *doctPath=[paths lastObject];
 //    NSString *databasePath=[doctPath stringByAppendingPathComponent:[NSString stringWithFormat:@"%@_user.sqlite",MONEWFOLDER]];
@@ -412,10 +409,44 @@
 //    }
 //    [database close];
 }
+
+
+//- (void)zipArchiveDidUnzipArchiveAtPath:(NSString *)path zipInfo:(unz_global_info)zipInfo unzippedPath:(NSString *)unzippedPath
+//{
+//    //when you can get the lrc file move all the file from the current doc to the first doc
+//
+//
+//    [self updateDatabase];
+////    //delete zip file after extracting
+//    [self deleteZipFile];
+////    [self decodeLyric:[self getFileName:FTLRC]];
+//}
 - (void)zipArchiveDidUnzipFileAtIndex:(NSInteger)fileIndex totalFiles:(NSInteger)totalFiles archivePath:(NSString *)archivePath unzippedFilePath:(NSString *)unzippedFilePath
 {
     NSArray *paths=[unzippedFilePath componentsSeparatedByString:@"/"];
     [self.fileNames addObject:[paths lastObject]];
+}
+- (void)decompressOperation:(NOZDecompressOperation *)op didCompleteWithResult:(NOZDecompressResult *)result
+{
+    NSString *tmp=[result.destinationFiles firstObject];
+    [self.fileNames addObject:[[tmp componentsSeparatedByString:@"/"] firstObject]];
+    for (NSString *name in result.destinationFiles)
+    {
+        [self.fileNames addObject:[[name componentsSeparatedByString:@"/"] lastObject]];
+    }
+    
+    [self updateDatabase];
+    [self deleteZipFile];
+}
+-(BOOL)shouldDecompressOperation:(NOZDecompressOperation *)op overwriteFileAtPath:(NSString *)path
+{
+    return YES;
+}
+- (void)decompressOperation:(NOZDecompressOperation *)op didUpdateProgress:(float)progress
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        
+    });
 }
 -(NSString *)getFileName:(FileType)fileType
 {
@@ -425,7 +456,8 @@
         case FTDocument:
             if ([self.fileNames count]!=0)
             {
-                return self.fileNames[0];
+                NSString *tmp=self.fileNames[0];
+                return [[tmp componentsSeparatedByString:@"/"] firstObject];
             }
             break;
         case FTLM:
@@ -472,16 +504,7 @@
     return desName;
 }
 
-- (void)zipArchiveDidUnzipArchiveAtPath:(NSString *)path zipInfo:(unz_global_info)zipInfo unzippedPath:(NSString *)unzippedPath
-{
-    //when you can get the lrc file move all the file from the current doc to the first doc
-    
-    
-    [self updateDatabase];
-//    //delete zip file after extracting
-    [self deleteZipFile];
-//    [self decodeLyric:[self getFileName:FTLRC]];
-}
+
 - (void)decodeLyric:(NSString *)fileName
 {
     if (fileName==nil)

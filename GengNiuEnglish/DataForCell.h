@@ -7,10 +7,10 @@
 //
 
 #import <Foundation/Foundation.h>
-#import "SSZipArchive.h"
 #import "ReaderViewController.h"
 #import "DAProgressOverlayView.h"
 #import "SCLAlertView.h"
+#import "NOZDecompress.h"
 @import UIKit;
 
 typedef NS_ENUM(NSInteger,FileType)
@@ -22,7 +22,7 @@ typedef NS_ENUM(NSInteger,FileType)
     FTMP3
 };
 
-@interface DataForCell : NSObject<ReaderViewControllerDelegate,SSZipArchiveDelegate>
+@interface DataForCell : NSObject<ReaderViewControllerDelegate,NOZDecompressDelegate>
 @property(strong,nonatomic)NSString *text_name;
 @property(nonatomic,strong)NSString *text_id;
 @property(nonatomic,strong)NSString *text_gradeID;
@@ -47,8 +47,8 @@ typedef NS_ENUM(NSInteger,FileType)
 -(instancetype)initWithAttributes:(NSDictionary *)attributes;
 +(NSURLSessionTask*)getGradeList:(void(^)(NSArray *data,NSError *error))block;
 +(void)getTextList:(void (^)(NSArray *, NSError *))block grade_id:(NSString*)grade_id text_id:(NSString*)text_id;
-- (void)zipArchiveDidUnzipFileAtIndex:(NSInteger)fileIndex totalFiles:(NSInteger)totalFiles archivePath:(NSString *)archivePath unzippedFilePath:(NSString *)unzippedFilePath;
-- (void)zipArchiveDidUnzipArchiveAtPath:(NSString *)path zipInfo:(unz_global_info)zipInfo unzippedPath:(NSString *)unzippedPath;
+//- (void)zipArchiveDidUnzipFileAtIndex:(NSInteger)fileIndex totalFiles:(NSInteger)totalFiles archivePath:(NSString *)archivePath unzippedFilePath:(NSString *)unzippedFilePath;
+//- (void)zipArchiveDidUnzipArchiveAtPath:(NSString *)path zipInfo:(unz_global_info)zipInfo unzippedPath:(NSString *)unzippedPath;
 -(NSString*)getFileName:(FileType)fileType;
 - (void)dismissReaderViewController:(ReaderViewController *)viewController;
 -(void)checkDatabase:(void (^)(BOOL existence))block;

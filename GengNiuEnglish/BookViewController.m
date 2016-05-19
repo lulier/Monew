@@ -16,6 +16,7 @@
 #import "FMDB.h"
 #import "DAProgressOverlayView.h"
 #import "MRProgress.h"
+#import "NOZDecompress.h"
 #define PROGRESSVIEW_TAG 1234
 
 @interface BookViewController ()
@@ -24,6 +25,7 @@
     LyricViewController *lyricViewController;
     SCLAlertView *alert;
     NSInteger currentSelectIndex;
+    NSOperationQueue *operationQueue;
 }
 @end
 
@@ -107,6 +109,7 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
         [self loadCacheBooks];
     }
     currentSelectIndex=1;
+    operationQueue=[[NSOperationQueue alloc]init];
 }
 
 - (void)didReceiveMemoryWarning {
@@ -419,7 +422,16 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
         NSString *zipFileName=[[filePath componentsSeparatedByString:@"/"] lastObject];
         DataForCell *book=self.list[index];
         book.download_zipFileName=zipFileName;
-       [SSZipArchive unzipFileAtPath:filePath toDestination:doctPath delegate:book];
+        
+        NOZDecompressRequest *request = [[NOZDecompressRequest alloc] initWithSourceFilePath:filePath destinationDirectoryPath:doctPath];
+        
+        NOZDecompressOperation *op = [[NOZDecompressOperation alloc] initWithRequest:request delegate:book];
+        [operationQueue addOperation:op];
+        
+        
+        
+        
+//       [SSZipArchive unzipFileAtPath:filePath toDestination:doctPath delegate:book];
     }
 }
 

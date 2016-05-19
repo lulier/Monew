@@ -115,6 +115,7 @@
 		F42FA5EF1C8D29600033C9C9 /* MTDatabaseHelper.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MTDatabaseHelper.m; sourceTree = "<group>"; };
 		F42FA5FA1C8EB1560033C9C9 /* AccountManager.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = AccountManager.h; sourceTree = "<group>"; };
 		F42FA5FB1C8EB1560033C9C9 /* AccountManager.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = AccountManager.m; sourceTree = "<group>"; };
+		F43184CA1CEC981C005F6C49 /* libMuPDF.a */ = {isa = PBXFileReference; lastKnownFileType = archive.ar; name = libMuPDF.a; path = framwork/libMuPDF.a; sourceTree = "<group>"; };
 		F436F6CE1CCE5D3C008260F0 /* SettingCell.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SettingCell.h; sourceTree = "<group>"; };
 		F436F6CF1CCE5D3C008260F0 /* SettingCell.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SettingCell.m; sourceTree = "<group>"; };
 		F436F6D71CCF6288008260F0 /* BindPhoneViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = BindPhoneViewController.h; sourceTree = "<group>"; };
@@ -251,6 +252,7 @@
 		5F4697E4BCC7D6FEE1E67A97 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				F43184CA1CEC981C005F6C49 /* libMuPDF.a */,
 				F448DD891CD4BBC3002D43B6 /* MOBFoundation.framework */,
 				F448DD8A1CD4BBC3002D43B6 /* SMS_SDK.framework */,
 				F448DD871CD4B798002D43B6 /* SystemConfiguration.framework */,
@@ -822,9 +824,28 @@
 					"$(PROJECT_DIR)/SMS_SDK",
 					"$(PROJECT_DIR)/framwork",
 				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/AFNetworking\"",
+					"\"${PODS_ROOT}/Headers/Public/DAProgressOverlayView\"",
+					"\"${PODS_ROOT}/Headers/Public/FMDB\"",
+					"\"${PODS_ROOT}/Headers/Public/FXKeychain\"",
+					"\"${PODS_ROOT}/Headers/Public/MRProgress\"",
+					"\"${PODS_ROOT}/Headers/Public/SCLAlertView-Objective-C\"",
+					"\"${PODS_ROOT}/Headers/Public/SDWebImage\"",
+					"\"${PODS_ROOT}/Headers/Public/SSZipArchive\"",
+					"\"${PODS_ROOT}/Headers/Public/StreamingKit\"",
+					"\"${PODS_ROOT}/Headers/Public/vfrReader\"",
+				);
 				INFOPLIST_FILE = GengNiuEnglish/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/framwork",
+					"$(PROJECT_DIR)/MuPDF/build",
+				);
 				MODULEMAP_FILE = "${PROJECT_DIR}/module.modulemap";
 				PRODUCT_BUNDLE_IDENTIFIER = com.monew.enterprise.english;
 				PRODUCT_NAME = "$(TARGET_NAME)";
@@ -849,9 +870,28 @@
 					"$(PROJECT_DIR)/SMS_SDK",
 					"$(PROJECT_DIR)/framwork",
 				);
+				HEADER_SEARCH_PATHS = (
+					"$(inherited)",
+					"\"${PODS_ROOT}/Headers/Public\"",
+					"\"${PODS_ROOT}/Headers/Public/AFNetworking\"",
+					"\"${PODS_ROOT}/Headers/Public/DAProgressOverlayView\"",
+					"\"${PODS_ROOT}/Headers/Public/FMDB\"",
+					"\"${PODS_ROOT}/Headers/Public/FXKeychain\"",
+					"\"${PODS_ROOT}/Headers/Public/MRProgress\"",
+					"\"${PODS_ROOT}/Headers/Public/SCLAlertView-Objective-C\"",
+					"\"${PODS_ROOT}/Headers/Public/SDWebImage\"",
+					"\"${PODS_ROOT}/Headers/Public/SSZipArchive\"",
+					"\"${PODS_ROOT}/Headers/Public/StreamingKit\"",
+					"\"${PODS_ROOT}/Headers/Public/vfrReader\"",
+				);
 				INFOPLIST_FILE = GengNiuEnglish/Info.plist;
 				IPHONEOS_DEPLOYMENT_TARGET = 8.1;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				LIBRARY_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)/framwork",
+					"$(PROJECT_DIR)/MuPDF/build",
+				);
 				MODULEMAP_FILE = "${PROJECT_DIR}/module.modulemap";
 				PRODUCT_BUNDLE_IDENTIFIER = com.monew.enterprise.english;
 				PRODUCT_NAME = "$(TARGET_NAME)";
