@@ -114,7 +114,7 @@
         {
             end++;
         }
-        if (end<len) {
+        if (end<=len) {
             [words addObject:[sentence substringWithRange:NSMakeRange(start, end-start)]];
             start=end+1;
         }

@@ -124,13 +124,42 @@
                [self checkWord:w.string];
            } onEndLine:^{
                if (!CGRectIsNull(r))
+                   NSLog(@"hdkfhd");
                    UIRectFill(r);
            }];
 }
+-(BOOL)isCharacter:(char)letter
+{
+    if ((letter-'a'>=0&&letter-'a'<26)||(letter-'A'>=0&&letter-'A'<26)||letter=='\'')
+    {
+        return YES;
+    }
+    return NO;
+}
 -(void)checkWord:(NSString*)word
 {
+    NSInteger first=0;
+    NSInteger last=0;
+    NSInteger len=[word length];
+    NSString *extractWord = nil;
+    while (first<len&&last<len)
+    {
+        while (first<len&&(![self isCharacter:[word characterAtIndex:first]]))
+        {
+            first++;
+        }
+        last=first+1;
+        while (last<len&&[self isCharacter:[word characterAtIndex:last]])
+        {
+            last++;
+        }
+        if (last<=len) {
+            extractWord=[word substringWithRange:NSMakeRange(first, last-first)];
+            break;
+        }
+    }
     DictionaryDatabase *dictionary=[DictionaryDatabase sharedInstance];
-    NSDictionary *where=[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"'%@'",word],@"WORD",nil];
+    NSDictionary *where=[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"'%@'",extractWord],@"WORD",nil];
     [dictionary queryTable:@"DICTIONARY" withSelect:@[@"*"] andWhere:where completion:^(NSMutableArray *resultsArray) {
         if (resultsArray!=nil&&[resultsArray count]!=0)
         {
@@ -138,6 +167,10 @@
             NSMutableString *content=[NSMutableString stringWithString:[dic objectForKey:@"WORD"]];
             [content appendString:[dic objectForKey:@"CHINESEEXPLAIN"]];
             [content appendString:[dic objectForKey:@"ENGLISHEXPLAIN"]];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                [self cancelSelect];
+            });
+            [self cancelSelect];
             dispatch_async(dispatch_get_main_queue(), ^{
                 UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
                 ShowTextViewController *showView=[storyboard instantiateViewControllerWithIdentifier:@"ShowTextViewController"];
@@ -150,5 +183,11 @@
             
         }
     }];
+}
+-(void)cancelSelect
+{
+    start=CGPointMake(0, 0);
+    end=start;
+    [self setNeedsDisplay];
 }
 @end

@@ -97,13 +97,17 @@
 }
 - (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
 {
-    UINavigationController *navi=(UINavigationController*)self.window.rootViewController;
-    if ([navi.visibleViewController isKindOfClass: [MuDocumentController class]])
+//    UINavigationController *navi=(UINavigationController*)self.window.rootViewController;
+//    if ([navi.visibleViewController isKindOfClass: [MuDocumentController class]])
+//    {
+//        if (!self.isReaderView)
+//        {
+//            return UIInterfaceOrientationMaskLandscape;
+//        }
+//        return UIInterfaceOrientationMaskAll;
+//    }
+    if (self.isReaderView)
     {
-        if (!self.isReaderView)
-        {
-            return UIInterfaceOrientationMaskLandscape;
-        }
         return UIInterfaceOrientationMaskAll;
     }
     if (self.isPickerView)

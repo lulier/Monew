@@ -14,5 +14,6 @@
 @property(nonatomic)BOOL isReaderView;
 @property(nonatomic)BOOL isPickerView;
 
+
 @end
 
