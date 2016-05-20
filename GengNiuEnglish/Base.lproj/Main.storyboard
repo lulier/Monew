@@ -211,7 +211,7 @@
                                         <rect key="frame" x="0.0" y="28" width="627" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="nrk-Bx-EJL" id="4G9-2G-cvS">
-                                            <rect key="frame" x="0.0" y="0.0" width="627" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="627" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="The monkeys can." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="D4M-0M-d7T" customClass="GNTextView">
@@ -1385,10 +1385,10 @@
                                                 <rect key="frame" x="0.0" y="28" width="408" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZsY-uw-fbA" id="Mtf-sv-wzc">
-                                                    <rect key="frame" x="0.0" y="0.0" width="408" height="44"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="408" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="1D614605-1F6D-4AE2-B66C-0A76417A3476" translatesAutoresizingMaskIntoConstraints="NO" id="Axa-d7-Z9S">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="22AE4B3E-FA0A-4741-9F11-9B6281746630" translatesAutoresizingMaskIntoConstraints="NO" id="Axa-d7-Z9S">
                                                             <rect key="frame" x="15" y="12" width="21" height="21"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" secondItem="Axa-d7-Z9S" secondAttribute="height" multiplier="2:2" id="tJp-ce-Zz7"/>
@@ -1751,7 +1751,7 @@
                                         <rect key="frame" x="0.0" y="28" width="534" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="MXj-W9-cle" id="0do-PP-lZo">
-                                            <rect key="frame" x="0.0" y="0.0" width="534" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="534" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -1788,7 +1788,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="1D614605-1F6D-4AE2-B66C-0A76417A3476" width="36" height="36">
+        <image name="22AE4B3E-FA0A-4741-9F11-9B6281746630" width="36" height="36">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGOjtYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK0HCBEW
 GxwgISgrLjQ3VSRudWxs1AkKCwwNDg8QViRjbGFzc1xOU0ltYWdlRmxhZ3NWTlNSZXBzV05TQ29sb3KA

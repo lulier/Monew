@@ -18,11 +18,14 @@
 #import "NetworkingManager.h"
 #import "AccountManager.h"
 #import "StudyDataManager.h"
-
+enum
+{
+    ResourceCacheMaxSize = 128<<20	/**< use at most 128M for resource cache */
+};
 @protocol textBookCellDelegate <NSObject>
 
 -(void)clickCellButton:(NSInteger)index;
-
+-(void)openBook:(NSString*)pdfPath;
 
 @end
 

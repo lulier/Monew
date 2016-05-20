@@ -64,6 +64,7 @@
 		F4AFCF921C8025C10003B7F2 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4AFCF911C8025C10003B7F2 /* AVFoundation.framework */; };
 		F4AFCF9A1C803DE30003B7F2 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4AFCF991C803DE30003B7F2 /* AudioToolbox.framework */; };
 		F4B271B01C33B429009313CA /* LyricViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B271AF1C33B429009313CA /* LyricViewController.m */; };
+		F4C640CC1CEDE8AA00AAE1CB /* hello-world.pdf in Resources */ = {isa = PBXBuildFile; fileRef = F4C640CB1CEDE8AA00AAE1CB /* hello-world.pdf */; };
 		F4F0E6CE1C94167600818C89 /* NSData+NSData_AES.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F0E6CD1C94167600818C89 /* NSData+NSData_AES.m */; };
 		F4F0E6DF1C97BBEF00818C89 /* CustomCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F0E6DE1C97BBEF00818C89 /* CustomCollectionViewLayout.m */; };
 		F4F930CD1CCA68E5000425E2 /* GNTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F930CC1CCA68E5000425E2 /* GNTextView.m */; };
@@ -190,6 +191,7 @@
 		F4AFCF991C803DE30003B7F2 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		F4B271AE1C33B429009313CA /* LyricViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LyricViewController.h; sourceTree = "<group>"; };
 		F4B271AF1C33B429009313CA /* LyricViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LyricViewController.m; sourceTree = "<group>"; };
+		F4C640CB1CEDE8AA00AAE1CB /* hello-world.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "hello-world.pdf"; sourceTree = "<group>"; };
 		F4F0E6CC1C94167600818C89 /* NSData+NSData_AES.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+NSData_AES.h"; sourceTree = "<group>"; };
 		F4F0E6CD1C94167600818C89 /* NSData+NSData_AES.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+NSData_AES.m"; sourceTree = "<group>"; };
 		F4F0E6DD1C97BBEF00818C89 /* CustomCollectionViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomCollectionViewLayout.h; sourceTree = "<group>"; };
@@ -425,6 +427,7 @@
 				F49467091C28ECE900806DEF /* NetworkingManager.m */,
 				F448DDA51CD9CC4F002D43B6 /* StudyDataManager.h */,
 				F448DDA61CD9CC4F002D43B6 /* StudyDataManager.m */,
+				F4C640CB1CEDE8AA00AAE1CB /* hello-world.pdf */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -514,7 +517,7 @@
 				TargetAttributes = {
 					F42799251C18514200240736 = {
 						CreatedOnToolsVersion = 7.1.1;
-						DevelopmentTeam = BQWKD37TRB;
+						DevelopmentTeam = 5Y787D7K6C;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -556,6 +559,7 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				F4C640CC1CEDE8AA00AAE1CB /* hello-world.pdf in Resources */,
 				F448DDAD1CDB3C09002D43B6 /* dictionary.db in Resources */,
 				F42799391C18514200240736 /* LaunchScreen.storyboard in Resources */,
 				F478C87D1C9D955500746E2C /* AcousticModelEnglish.bundle in Resources */,
@@ -847,7 +851,7 @@
 					"$(PROJECT_DIR)/MuPDF/build",
 				);
 				MODULEMAP_FILE = "${PROJECT_DIR}/module.modulemap";
-				PRODUCT_BUNDLE_IDENTIFIER = com.monew.enterprise.english;
+				PRODUCT_BUNDLE_IDENTIFIER = com.monew.test.english;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -893,7 +897,7 @@
 					"$(PROJECT_DIR)/MuPDF/build",
 				);
 				MODULEMAP_FILE = "${PROJECT_DIR}/module.modulemap";
-				PRODUCT_BUNDLE_IDENTIFIER = com.monew.enterprise.english;
+				PRODUCT_BUNDLE_IDENTIFIER = com.monew.test.english;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;

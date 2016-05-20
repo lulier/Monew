@@ -18,6 +18,7 @@
 #import "SettingViewController.h"
 #import "Reachability.h"
 #import "StudyDataManager.h"
+#import "MuDocumentController.h"
 
 @interface AppDelegate ()
 
@@ -96,7 +97,8 @@
 }
 - (UIInterfaceOrientationMask)application:(UIApplication *)application supportedInterfaceOrientationsForWindow:(UIWindow *)window
 {
-    if ([self.window.rootViewController.presentedViewController isKindOfClass: [ReaderViewController class]])
+    UINavigationController *navi=(UINavigationController*)self.window.rootViewController;
+    if ([navi.visibleViewController isKindOfClass: [MuDocumentController class]])
     {
         if (!self.isReaderView)
         {

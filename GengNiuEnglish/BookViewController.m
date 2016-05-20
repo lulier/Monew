@@ -17,6 +17,10 @@
 #import "DAProgressOverlayView.h"
 #import "MRProgress.h"
 #import "NOZDecompress.h"
+#import "MuDocRef.h"
+#import "MuDocumentController.h"
+#include "mupdf/fitz.h"
+#include "common.h"
 #define PROGRESSVIEW_TAG 1234
 
 @interface BookViewController ()
@@ -457,7 +461,64 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
     [lyricViewController initWithBook:book];
     [self.navigationController pushViewController:lyricViewController animated:YES];
 }
-
+-(void)openBook:(NSString*)pdfPath
+{
+    dispatch_async(dispatch_get_main_queue(), ^{
+        AppDelegate *appDelegate=[[UIApplication sharedApplication] delegate];
+        appDelegate.isReaderView=true;
+        UIViewController *currentVC=[CommonMethod getCurrentVC];
+        if ([[NSFileManager defaultManager]fileExistsAtPath:pdfPath])
+        {
+            queue = dispatch_queue_create("com.artifex.mupdf.queue", NULL);
+            
+            screenScale = [[UIScreen mainScreen] scale];
+            
+            ctx = fz_new_context(NULL, NULL, ResourceCacheMaxSize);
+            fz_register_document_handlers(ctx);
+            
+            NSString *file = [[NSBundle mainBundle] pathForResource:@"hello-world" ofType:@"pdf"];
+            MuDocRef *doc;
+            
+            doc = [[MuDocRef alloc] initWithFilename:(char *)file.UTF8String];
+            
+            
+            MuDocumentController *document = [[MuDocumentController alloc] initWithFilename:file path:(char *)file.UTF8String document: doc];
+            
+            [self.navigationController pushViewController:document animated:YES];
+            //            MuDocRef *doc;
+            //
+            //            doc = [[MuDocRef alloc] initWithFilename:(char *)pdfPath.UTF8String];
+            //
+            //
+            //            MuDocumentController *document = [[MuDocumentController alloc] initWithFilename:pdfPath path:(char *)pdfPath.UTF8String document: doc];
+            
+//            [currentVC presentViewController:document animated:YES completion:nil];
+            
+            
+            
+            
+            
+            
+            
+            //            ReaderDocument *document=[ReaderDocument withDocumentFilePath:pdfPath password:nil];
+            //            readerViewController=[[ReaderViewController alloc]initWithReaderDocument:document];
+            //            readerViewController.modalTransitionStyle=UIModalTransitionStyleCrossDissolve;
+            //            readerViewController.modalPresentationStyle=UIModalPresentationFullScreen;
+            //            readerViewController.delegate=self.delegate;
+            //            [currentVC presentViewController:readerViewController animated:YES completion:nil];
+            
+            
+            
+            
+            
+            
+//            AccountManager *account=[AccountManager singleInstance];
+//            dispatch_async(dispatch_get_global_queue(0, 0), ^{
+//                [[StudyDataManager sharedInstance] prepareUploadStudyState:account.userID textID:self.book.text_id starCount:@"0" readCount:@"1" sentenceCount:@"0" listenCount:@"0" challengeScore:@"0"];
+//            });
+        }
+    });
+}
 
 
 

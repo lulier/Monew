@@ -8,6 +8,10 @@
 
 #import "TextBookCell.h"
 #import "MTImageGetter.h"
+#import "MuDocRef.h"
+#import "MuDocumentController.h"
+#include "mupdf/fitz.h"
+#include "common.h"
 
 
 
@@ -152,20 +156,57 @@
 }
 -(void)openBook
 {
+    NSString *pdfName=[self.book getFileName:FTPDF];
+    NSString *pdfPath=[[self.book getDocumentPath] stringByAppendingPathComponent:pdfName];
+    [self.delegate openBook:pdfPath];
+    return;
     dispatch_async(dispatch_get_main_queue(), ^{
         AppDelegate *appDelegate=[[UIApplication sharedApplication] delegate];
         appDelegate.isReaderView=true;
         UIViewController *currentVC=[CommonMethod getCurrentVC];
-        NSString *pdfName=[self.book getFileName:FTPDF];
-        NSString *pdfPath=[[self.book getDocumentPath] stringByAppendingPathComponent:pdfName];
         if ([[NSFileManager defaultManager]fileExistsAtPath:pdfPath])
         {
-            ReaderDocument *document=[ReaderDocument withDocumentFilePath:pdfPath password:nil];
-            readerViewController=[[ReaderViewController alloc]initWithReaderDocument:document];
-            readerViewController.modalTransitionStyle=UIModalTransitionStyleCrossDissolve;
-            readerViewController.modalPresentationStyle=UIModalPresentationFullScreen;
-            readerViewController.delegate=self.delegate;
-            [currentVC presentViewController:readerViewController animated:YES completion:nil];
+            queue = dispatch_queue_create("com.artifex.mupdf.queue", NULL);
+            
+            screenScale = [[UIScreen mainScreen] scale];
+            
+            ctx = fz_new_context(NULL, NULL, ResourceCacheMaxSize);
+            fz_register_document_handlers(ctx);
+            
+            NSString *file = [[NSBundle mainBundle] pathForResource:@"hello-world" ofType:@"pdf"];
+            MuDocRef *doc;
+            
+            doc = [[MuDocRef alloc] initWithFilename:(char *)file.UTF8String];
+            
+            
+            MuDocumentController *document = [[MuDocumentController alloc] initWithFilename:file path:(char *)file.UTF8String document: doc];
+//            MuDocRef *doc;
+//            
+//            doc = [[MuDocRef alloc] initWithFilename:(char *)pdfPath.UTF8String];
+//            
+//            
+//            MuDocumentController *document = [[MuDocumentController alloc] initWithFilename:pdfPath path:(char *)pdfPath.UTF8String document: doc];
+            
+            [currentVC presentViewController:document animated:YES completion:nil];
+            
+            
+            
+            
+            
+            
+            
+//            ReaderDocument *document=[ReaderDocument withDocumentFilePath:pdfPath password:nil];
+//            readerViewController=[[ReaderViewController alloc]initWithReaderDocument:document];
+//            readerViewController.modalTransitionStyle=UIModalTransitionStyleCrossDissolve;
+//            readerViewController.modalPresentationStyle=UIModalPresentationFullScreen;
+//            readerViewController.delegate=self.delegate;
+//            [currentVC presentViewController:readerViewController animated:YES completion:nil];
+            
+            
+            
+            
+            
+            
             AccountManager *account=[AccountManager singleInstance];
             dispatch_async(dispatch_get_global_queue(0, 0), ^{
                 [[StudyDataManager sharedInstance] prepareUploadStudyState:account.userID textID:self.book.text_id starCount:@"0" readCount:@"1" sentenceCount:@"0" listenCount:@"0" challengeScore:@"0"];
