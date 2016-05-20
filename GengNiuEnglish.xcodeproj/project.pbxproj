@@ -65,6 +65,23 @@
 		F4AFCF9A1C803DE30003B7F2 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4AFCF991C803DE30003B7F2 /* AudioToolbox.framework */; };
 		F4B271B01C33B429009313CA /* LyricViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B271AF1C33B429009313CA /* LyricViewController.m */; };
 		F4C640CC1CEDE8AA00AAE1CB /* hello-world.pdf in Resources */ = {isa = PBXBuildFile; fileRef = F4C640CB1CEDE8AA00AAE1CB /* hello-world.pdf */; };
+		F4C640D01CEF337E00AAE1CB /* MuDocumentController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C640CF1CEF337E00AAE1CB /* MuDocumentController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		F4C640D31CEF343A00AAE1CB /* MuTextSelectView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C640D21CEF343A00AAE1CB /* MuTextSelectView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		F4C640D61CEF345100AAE1CB /* MuPageViewNormal.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C640D51CEF345100AAE1CB /* MuPageViewNormal.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		F4C640F41CEF3F7200AAE1CB /* MuAnnotation.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C640D81CEF3F7200AAE1CB /* MuAnnotation.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		F4C640F51CEF3F7200AAE1CB /* MuAnnotSelectView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C640DA1CEF3F7200AAE1CB /* MuAnnotSelectView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		F4C640F61CEF3F7200AAE1CB /* MuAppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C640DC1CEF3F7200AAE1CB /* MuAppDelegate.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		F4C640F71CEF3F7200AAE1CB /* MuChoiceFieldController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C640DE1CEF3F7200AAE1CB /* MuChoiceFieldController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		F4C640F81CEF3F7200AAE1CB /* MuDocRef.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C640E01CEF3F7200AAE1CB /* MuDocRef.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		F4C640F91CEF3F7200AAE1CB /* MuHitView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C640E21CEF3F7200AAE1CB /* MuHitView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		F4C640FA1CEF3F7200AAE1CB /* MuInkView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C640E41CEF3F7200AAE1CB /* MuInkView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		F4C640FB1CEF3F7200AAE1CB /* MuLibraryController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C640E61CEF3F7200AAE1CB /* MuLibraryController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		F4C640FC1CEF3F7200AAE1CB /* MuOutlineController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C640E81CEF3F7200AAE1CB /* MuOutlineController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		F4C640FD1CEF3F7200AAE1CB /* MuPageViewReflow.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C640EB1CEF3F7200AAE1CB /* MuPageViewReflow.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		F4C640FE1CEF3F7200AAE1CB /* MuPrintPageRenderer.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C640ED1CEF3F7200AAE1CB /* MuPrintPageRenderer.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		F4C640FF1CEF3F7200AAE1CB /* MuTapResult.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C640EF1CEF3F7200AAE1CB /* MuTapResult.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		F4C641001CEF3F7200AAE1CB /* MuTextFieldController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C640F11CEF3F7200AAE1CB /* MuTextFieldController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
+		F4C641011CEF3F7200AAE1CB /* MuWord.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C640F31CEF3F7200AAE1CB /* MuWord.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		F4F0E6CE1C94167600818C89 /* NSData+NSData_AES.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F0E6CD1C94167600818C89 /* NSData+NSData_AES.m */; };
 		F4F0E6DF1C97BBEF00818C89 /* CustomCollectionViewLayout.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F0E6DE1C97BBEF00818C89 /* CustomCollectionViewLayout.m */; };
 		F4F930CD1CCA68E5000425E2 /* GNTextView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4F930CC1CCA68E5000425E2 /* GNTextView.m */; };
@@ -192,6 +209,41 @@
 		F4B271AE1C33B429009313CA /* LyricViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LyricViewController.h; sourceTree = "<group>"; };
 		F4B271AF1C33B429009313CA /* LyricViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LyricViewController.m; sourceTree = "<group>"; };
 		F4C640CB1CEDE8AA00AAE1CB /* hello-world.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "hello-world.pdf"; sourceTree = "<group>"; };
+		F4C640CE1CEF337E00AAE1CB /* MuDocumentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MuDocumentController.h; sourceTree = "<group>"; };
+		F4C640CF1CEF337E00AAE1CB /* MuDocumentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MuDocumentController.m; sourceTree = "<group>"; };
+		F4C640D11CEF343A00AAE1CB /* MuTextSelectView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MuTextSelectView.h; sourceTree = "<group>"; };
+		F4C640D21CEF343A00AAE1CB /* MuTextSelectView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MuTextSelectView.m; sourceTree = "<group>"; };
+		F4C640D41CEF345100AAE1CB /* MuPageViewNormal.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MuPageViewNormal.h; sourceTree = "<group>"; };
+		F4C640D51CEF345100AAE1CB /* MuPageViewNormal.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MuPageViewNormal.m; sourceTree = "<group>"; };
+		F4C640D71CEF3F7200AAE1CB /* MuAnnotation.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MuAnnotation.h; sourceTree = "<group>"; };
+		F4C640D81CEF3F7200AAE1CB /* MuAnnotation.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MuAnnotation.m; sourceTree = "<group>"; };
+		F4C640D91CEF3F7200AAE1CB /* MuAnnotSelectView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MuAnnotSelectView.h; sourceTree = "<group>"; };
+		F4C640DA1CEF3F7200AAE1CB /* MuAnnotSelectView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MuAnnotSelectView.m; sourceTree = "<group>"; };
+		F4C640DB1CEF3F7200AAE1CB /* MuAppDelegate.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MuAppDelegate.h; sourceTree = "<group>"; };
+		F4C640DC1CEF3F7200AAE1CB /* MuAppDelegate.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MuAppDelegate.m; sourceTree = "<group>"; };
+		F4C640DD1CEF3F7200AAE1CB /* MuChoiceFieldController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MuChoiceFieldController.h; sourceTree = "<group>"; };
+		F4C640DE1CEF3F7200AAE1CB /* MuChoiceFieldController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MuChoiceFieldController.m; sourceTree = "<group>"; };
+		F4C640DF1CEF3F7200AAE1CB /* MuDocRef.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MuDocRef.h; sourceTree = "<group>"; };
+		F4C640E01CEF3F7200AAE1CB /* MuDocRef.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MuDocRef.m; sourceTree = "<group>"; };
+		F4C640E11CEF3F7200AAE1CB /* MuHitView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MuHitView.h; sourceTree = "<group>"; };
+		F4C640E21CEF3F7200AAE1CB /* MuHitView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MuHitView.m; sourceTree = "<group>"; };
+		F4C640E31CEF3F7200AAE1CB /* MuInkView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MuInkView.h; sourceTree = "<group>"; };
+		F4C640E41CEF3F7200AAE1CB /* MuInkView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MuInkView.m; sourceTree = "<group>"; };
+		F4C640E51CEF3F7200AAE1CB /* MuLibraryController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MuLibraryController.h; sourceTree = "<group>"; };
+		F4C640E61CEF3F7200AAE1CB /* MuLibraryController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MuLibraryController.m; sourceTree = "<group>"; };
+		F4C640E71CEF3F7200AAE1CB /* MuOutlineController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MuOutlineController.h; sourceTree = "<group>"; };
+		F4C640E81CEF3F7200AAE1CB /* MuOutlineController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MuOutlineController.m; sourceTree = "<group>"; };
+		F4C640E91CEF3F7200AAE1CB /* MuPageView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MuPageView.h; sourceTree = "<group>"; };
+		F4C640EA1CEF3F7200AAE1CB /* MuPageViewReflow.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MuPageViewReflow.h; sourceTree = "<group>"; };
+		F4C640EB1CEF3F7200AAE1CB /* MuPageViewReflow.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MuPageViewReflow.m; sourceTree = "<group>"; };
+		F4C640EC1CEF3F7200AAE1CB /* MuPrintPageRenderer.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MuPrintPageRenderer.h; sourceTree = "<group>"; };
+		F4C640ED1CEF3F7200AAE1CB /* MuPrintPageRenderer.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MuPrintPageRenderer.m; sourceTree = "<group>"; };
+		F4C640EE1CEF3F7200AAE1CB /* MuTapResult.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MuTapResult.h; sourceTree = "<group>"; };
+		F4C640EF1CEF3F7200AAE1CB /* MuTapResult.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MuTapResult.m; sourceTree = "<group>"; };
+		F4C640F01CEF3F7200AAE1CB /* MuTextFieldController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MuTextFieldController.h; sourceTree = "<group>"; };
+		F4C640F11CEF3F7200AAE1CB /* MuTextFieldController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MuTextFieldController.m; sourceTree = "<group>"; };
+		F4C640F21CEF3F7200AAE1CB /* MuWord.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MuWord.h; sourceTree = "<group>"; };
+		F4C640F31CEF3F7200AAE1CB /* MuWord.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MuWord.m; sourceTree = "<group>"; };
 		F4F0E6CC1C94167600818C89 /* NSData+NSData_AES.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "NSData+NSData_AES.h"; sourceTree = "<group>"; };
 		F4F0E6CD1C94167600818C89 /* NSData+NSData_AES.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = "NSData+NSData_AES.m"; sourceTree = "<group>"; };
 		F4F0E6DD1C97BBEF00818C89 /* CustomCollectionViewLayout.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = CustomCollectionViewLayout.h; sourceTree = "<group>"; };
@@ -347,6 +399,7 @@
 		F49466FC1C27C93E00806DEF /* Controller */ = {
 			isa = PBXGroup;
 			children = (
+				F4C640CD1CEF335600AAE1CB /* mupdf */,
 				F4A9AF461C4E2040004BC7BF /* MaterialViewController.h */,
 				F4A9AF471C4E2040004BC7BF /* MaterialViewController.m */,
 				F4A9AF491C4E30E1004BC7BF /* BookViewController.h */,
@@ -445,6 +498,48 @@
 				F454F9321CC767B400326774 /* UITextView+ContentInset.m */,
 			);
 			name = Category;
+			sourceTree = "<group>";
+		};
+		F4C640CD1CEF335600AAE1CB /* mupdf */ = {
+			isa = PBXGroup;
+			children = (
+				F4C640D41CEF345100AAE1CB /* MuPageViewNormal.h */,
+				F4C640D51CEF345100AAE1CB /* MuPageViewNormal.m */,
+				F4C640D11CEF343A00AAE1CB /* MuTextSelectView.h */,
+				F4C640D21CEF343A00AAE1CB /* MuTextSelectView.m */,
+				F4C640CE1CEF337E00AAE1CB /* MuDocumentController.h */,
+				F4C640CF1CEF337E00AAE1CB /* MuDocumentController.m */,
+				F4C640D71CEF3F7200AAE1CB /* MuAnnotation.h */,
+				F4C640D81CEF3F7200AAE1CB /* MuAnnotation.m */,
+				F4C640D91CEF3F7200AAE1CB /* MuAnnotSelectView.h */,
+				F4C640DA1CEF3F7200AAE1CB /* MuAnnotSelectView.m */,
+				F4C640DB1CEF3F7200AAE1CB /* MuAppDelegate.h */,
+				F4C640DC1CEF3F7200AAE1CB /* MuAppDelegate.m */,
+				F4C640DD1CEF3F7200AAE1CB /* MuChoiceFieldController.h */,
+				F4C640DE1CEF3F7200AAE1CB /* MuChoiceFieldController.m */,
+				F4C640DF1CEF3F7200AAE1CB /* MuDocRef.h */,
+				F4C640E01CEF3F7200AAE1CB /* MuDocRef.m */,
+				F4C640E11CEF3F7200AAE1CB /* MuHitView.h */,
+				F4C640E21CEF3F7200AAE1CB /* MuHitView.m */,
+				F4C640E31CEF3F7200AAE1CB /* MuInkView.h */,
+				F4C640E41CEF3F7200AAE1CB /* MuInkView.m */,
+				F4C640E51CEF3F7200AAE1CB /* MuLibraryController.h */,
+				F4C640E61CEF3F7200AAE1CB /* MuLibraryController.m */,
+				F4C640E71CEF3F7200AAE1CB /* MuOutlineController.h */,
+				F4C640E81CEF3F7200AAE1CB /* MuOutlineController.m */,
+				F4C640E91CEF3F7200AAE1CB /* MuPageView.h */,
+				F4C640EA1CEF3F7200AAE1CB /* MuPageViewReflow.h */,
+				F4C640EB1CEF3F7200AAE1CB /* MuPageViewReflow.m */,
+				F4C640EC1CEF3F7200AAE1CB /* MuPrintPageRenderer.h */,
+				F4C640ED1CEF3F7200AAE1CB /* MuPrintPageRenderer.m */,
+				F4C640EE1CEF3F7200AAE1CB /* MuTapResult.h */,
+				F4C640EF1CEF3F7200AAE1CB /* MuTapResult.m */,
+				F4C640F01CEF3F7200AAE1CB /* MuTextFieldController.h */,
+				F4C640F11CEF3F7200AAE1CB /* MuTextFieldController.m */,
+				F4C640F21CEF3F7200AAE1CB /* MuWord.h */,
+				F4C640F31CEF3F7200AAE1CB /* MuWord.m */,
+			);
+			name = mupdf;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -640,9 +735,12 @@
 				F448DD9A1CD885B9002D43B6 /* VocabularyViewController.m in Sources */,
 				F4A9AF4B1C4E30E1004BC7BF /* BookViewController.m in Sources */,
 				F486C77C1C3A492000CBFBD1 /* LyricItem.m in Sources */,
+				F4C640F71CEF3F7200AAE1CB /* MuChoiceFieldController.m in Sources */,
 				F4A9AF391C4D0D26004BC7BF /* CommonMethod.m in Sources */,
 				F448DD8F1CD72EEE002D43B6 /* DictionaryDatabase.m in Sources */,
 				F448DDAA1CDA114E002D43B6 /* AdvanceViewController.m in Sources */,
+				F4C640D01CEF337E00AAE1CB /* MuDocumentController.m in Sources */,
+				F4C640F61CEF3F7200AAE1CB /* MuAppDelegate.m in Sources */,
 				F454F9331CC767B400326774 /* UITextView+ContentInset.m in Sources */,
 				F448DD971CD8709F002D43B6 /* ModifyPassword.m in Sources */,
 				F448DD861CD4B768002D43B6 /* Reachability.m in Sources */,
@@ -651,31 +749,45 @@
 				F4A9AF4E1C4F7258004BC7BF /* PracticeViewController.m in Sources */,
 				F427992B1C18514200240736 /* main.m in Sources */,
 				F478C8811C9EDA9A00746E2C /* UIImageView+MTTag.m in Sources */,
+				F4C641011CEF3F7200AAE1CB /* MuWord.m in Sources */,
 				F486C7801C3B8B7C00CBFBD1 /* SampleQueueId.m in Sources */,
+				F4C640FD1CEF3F7200AAE1CB /* MuPageViewReflow.m in Sources */,
+				F4C640FC1CEF3F7200AAE1CB /* MuOutlineController.m in Sources */,
 				F436F6D01CCE5D3C008260F0 /* SettingCell.m in Sources */,
 				F448DD9D1CD8C6D6002D43B6 /* VocabularyViewCell.m in Sources */,
+				F4C640F41CEF3F7200AAE1CB /* MuAnnotation.m in Sources */,
+				F4C640FA1CEF3F7200AAE1CB /* MuInkView.m in Sources */,
 				F448DDA41CD9AEA0002D43B6 /* OEContinuousModel+SaveWave.m in Sources */,
 				F436F6D91CCF6288008260F0 /* BindPhoneViewController.m in Sources */,
 				F46123491CE0EEAA00D55B83 /* GNDownloadDatabase.m in Sources */,
 				F4A9AF3F1C4D2435004BC7BF /* TextBookCell.m in Sources */,
 				F494670A1C28ECE900806DEF /* NetworkingManager.m in Sources */,
 				F4A9AF3C1C4D2418004BC7BF /* MaterialCell.m in Sources */,
+				F4C640FE1CEF3F7200AAE1CB /* MuPrintPageRenderer.m in Sources */,
 				F4F0E6DF1C97BBEF00818C89 /* CustomCollectionViewLayout.m in Sources */,
 				F42FA5FC1C8EB1560033C9C9 /* AccountManager.m in Sources */,
 				F448DDA71CD9CC4F002D43B6 /* StudyDataManager.m in Sources */,
+				F4C640F81CEF3F7200AAE1CB /* MuDocRef.m in Sources */,
 				F483DB6E1CCB785E00DEF910 /* MenuControllerSupportingView.m in Sources */,
+				F4C640D61CEF345100AAE1CB /* MuPageViewNormal.m in Sources */,
 				F49467041C27CE0900806DEF /* DataForCell.m in Sources */,
 				F4B271B01C33B429009313CA /* LyricViewController.m in Sources */,
 				F4F930CD1CCA68E5000425E2 /* GNTextView.m in Sources */,
+				F4C641001CEF3F7200AAE1CB /* MuTextFieldController.m in Sources */,
 				F42FA5EA1C8C01570033C9C9 /* MobileRegistViewController.m in Sources */,
 				F448DD941CD792F5002D43B6 /* ShowTextViewController.m in Sources */,
+				F4C640D31CEF343A00AAE1CB /* MuTextSelectView.m in Sources */,
 				F478C8841C9EDAF400746E2C /* MTImageGetter.m in Sources */,
+				F4C640F91CEF3F7200AAE1CB /* MuHitView.m in Sources */,
 				F42FA5F01C8D29600033C9C9 /* MTDatabaseHelper.m in Sources */,
+				F4C640FB1CEF3F7200AAE1CB /* MuLibraryController.m in Sources */,
 				F4F0E6CE1C94167600818C89 /* NSData+NSData_AES.m in Sources */,
 				F4A9AF481C4E2040004BC7BF /* MaterialViewController.m in Sources */,
 				F42FA5ED1C8C017B0033C9C9 /* EmailRegistViewController.m in Sources */,
+				F4C640FF1CEF3F7200AAE1CB /* MuTapResult.m in Sources */,
 				F4A9AF511C4F7E04004BC7BF /* LyricViewCell.m in Sources */,
 				F42FA5E71C8C00E70033C9C9 /* LoginViewController.m in Sources */,
+				F4C640F51CEF3F7200AAE1CB /* MuAnnotSelectView.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

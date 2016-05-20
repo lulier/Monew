@@ -710,6 +710,7 @@ static void updatePixmap(fz_document *doc, fz_display_list *page_list, fz_displa
 		[tileView release];
 		[loadingView release];
 		[imageView release];
+        self.pageViewDelegate=nil;
 		[super dealloc];
 	}
 }
@@ -941,10 +942,20 @@ static void updatePixmap(fz_document *doc, fz_display_list *page_list, fz_displa
 
 - (void) displayImage: (UIImage*)image
 {
+    
+    if (self.pageViewDelegate!=nil)
+    {
+        if ([self.pageViewDelegate respondsToSelector:@selector(finishLoading)])
+        {
+            [self.pageViewDelegate finishLoading];
+        }
+    }
+    
 	if (loadingView) {
 		[loadingView removeFromSuperview];
 		[loadingView release];
 		loadingView = nil;
+
 	}
 
 	if (hitView)

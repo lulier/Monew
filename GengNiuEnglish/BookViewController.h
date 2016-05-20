@@ -9,8 +9,23 @@
 #import <UIKit/UIKit.h>
 #import "TextBookCell.h"
 #import "SCLAlertView.h"
+#import "DataForCell.h"
+#import "CommonMethod.h"
+#import "DataForCell.h"
+#import "NetworkingManager.h"
+#import <AVFoundation/AVFoundation.h>
+#import "LyricViewController.h"
+#import "FMDB.h"
+#import "DAProgressOverlayView.h"
+#import "MRProgress.h"
+#import "NOZDecompress.h"
+#import "MuDocRef.h"
+#import "MuDocumentController.h"
+#import "mupdf/fitz.h"
+#import "common.h"
+#import "MuTextSelectView.h"
 
-@interface BookViewController : UIViewController<UICollectionViewDelegateFlowLayout,UIScrollViewDelegate,UICollectionViewDelegate,UICollectionViewDataSource,textBookCellDelegate,ReaderViewControllerDelegate>
+@interface BookViewController : UIViewController<UICollectionViewDelegateFlowLayout,UIScrollViewDelegate,UICollectionViewDelegate,UICollectionViewDataSource,textBookCellDelegate,ReaderViewControllerDelegate,MuDocumentControllerDelegate,MuTextSelectViewDelegate>
 @property(strong,nonatomic)NSArray *list;
 @property(strong,nonatomic)NSString *grade_id;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;

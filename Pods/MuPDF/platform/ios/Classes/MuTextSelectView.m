@@ -118,6 +118,7 @@
                r = CGRectNull;
            } onWord:^(MuWord *w) {
                r = CGRectUnion(r, w.rect);
+               [self.delegate didSelectWord:w.string];
            } onEndLine:^{
                if (!CGRectIsNull(r))
                    UIRectFill(r);

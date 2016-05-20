@@ -25,8 +25,15 @@ enum
     BARMODE_INK,
     BARMODE_DELETE
 };
+@protocol MuDocumentControllerDelegate <NSObject>
+
+-(void)muPDFGoBack;
+
+@end
 
 @interface MuDocumentController : UIViewController <UIScrollViewDelegate, UIGestureRecognizerDelegate, UISearchBarDelegate, MuDialogCreator, MuUpdater,MuPageViewNormalDelegate>
+
+@property(nonatomic,unsafe_unretained)id<MuDocumentControllerDelegate>delegate;
 - (id) initWithFilename: (NSString*)nsfilename path:(char *)cstr document:(MuDocRef *)aDoc;
 - (void) createPageView: (int)number;
 - (void) gotoPage: (int)number animated: (BOOL)animated;
@@ -39,4 +46,5 @@ enum
 - (void) onTap: (UITapGestureRecognizer*)sender;
 - (void) showNavigationBar;
 - (void) hideNavigationBar;
+
 @end

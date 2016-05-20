@@ -27,5 +27,5 @@
 - (void) resizeImage;
 - (void) loadPage;
 - (void) loadTile;
-@property(nonatomic,weak)id<MuPageViewNormalDelegate>delegate;
+@property(nonatomic,unsafe_unretained)id<MuPageViewNormalDelegate>pageViewDelegate;
 @end

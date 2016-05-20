@@ -7,20 +7,7 @@
 //
 
 #import "BookViewController.h"
-#import "DataForCell.h"
-#import "CommonMethod.h"
-#import "DataForCell.h"
-#import "NetworkingManager.h"
-#import <AVFoundation/AVFoundation.h>
-#import "LyricViewController.h"
-#import "FMDB.h"
-#import "DAProgressOverlayView.h"
-#import "MRProgress.h"
-#import "NOZDecompress.h"
-#import "MuDocRef.h"
-#import "MuDocumentController.h"
-#include "mupdf/fitz.h"
-#include "common.h"
+
 #define PROGRESSVIEW_TAG 1234
 
 @interface BookViewController ()
@@ -30,6 +17,7 @@
     SCLAlertView *alert;
     NSInteger currentSelectIndex;
     NSOperationQueue *operationQueue;
+    UIInterfaceOrientation currentOrientation;
 }
 @end
 
@@ -114,6 +102,10 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
     }
     currentSelectIndex=1;
     operationQueue=[[NSOperationQueue alloc]init];
+}
+-(void)viewDidAppear:(BOOL)animated
+{
+    
 }
 
 - (void)didReceiveMemoryWarning {
@@ -463,10 +455,11 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
 }
 -(void)openBook:(NSString*)pdfPath
 {
+    currentOrientation=[[UIApplication sharedApplication] statusBarOrientation];
     dispatch_async(dispatch_get_main_queue(), ^{
         AppDelegate *appDelegate=[[UIApplication sharedApplication] delegate];
         appDelegate.isReaderView=true;
-        UIViewController *currentVC=[CommonMethod getCurrentVC];
+        
         if ([[NSFileManager defaultManager]fileExistsAtPath:pdfPath])
         {
             queue = dispatch_queue_create("com.artifex.mupdf.queue", NULL);
@@ -476,22 +469,15 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
             ctx = fz_new_context(NULL, NULL, ResourceCacheMaxSize);
             fz_register_document_handlers(ctx);
             
-            NSString *file = [[NSBundle mainBundle] pathForResource:@"hello-world" ofType:@"pdf"];
             MuDocRef *doc;
             
-            doc = [[MuDocRef alloc] initWithFilename:(char *)file.UTF8String];
+            doc = [[MuDocRef alloc] initWithFilename:(char *)pdfPath.UTF8String];
             
             
-            MuDocumentController *document = [[MuDocumentController alloc] initWithFilename:file path:(char *)file.UTF8String document: doc];
+            MuDocumentController *document = [[MuDocumentController alloc] initWithFilename:pdfPath path:(char *)pdfPath.UTF8String document: doc];
+            document.delegate=self;
             
             [self.navigationController pushViewController:document animated:YES];
-            //            MuDocRef *doc;
-            //
-            //            doc = [[MuDocRef alloc] initWithFilename:(char *)pdfPath.UTF8String];
-            //
-            //
-            //            MuDocumentController *document = [[MuDocumentController alloc] initWithFilename:pdfPath path:(char *)pdfPath.UTF8String document: doc];
-            
 //            [currentVC presentViewController:document animated:YES completion:nil];
             
             
@@ -519,8 +505,19 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
         }
     });
 }
-
-
+-(void)muPDFGoBack
+{
+    AppDelegate *appDelegate=[[UIApplication sharedApplication] delegate];
+    appDelegate.isReaderView=false;
+    NSNumber *value = [NSNumber numberWithInt:currentOrientation];
+    [[UIDevice currentDevice] setValue:value forKey:@"orientation"];
+    [[self.navigationController navigationBar] setHidden:YES];
+    [self.navigationController popViewControllerAnimated:YES];
+}
+-(void)didSelectWord:(NSString *)word
+{
+    NSLog(@"%@",word);
+}
 
 #pragma mark <UICollectionViewDelegate>
 
