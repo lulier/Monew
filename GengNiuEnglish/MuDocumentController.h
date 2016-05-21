@@ -35,6 +35,7 @@ enum
 @interface MuDocumentController : UIViewController <UIScrollViewDelegate, UIGestureRecognizerDelegate, UISearchBarDelegate, MuDialogCreator, MuUpdater,MuPageViewNormalDelegate>
 
 @property(nonatomic,unsafe_unretained)id<MuDocumentControllerDelegate>delegate;
+@property(nonatomic,retain)NSString* textName;
 - (id) initWithFilename: (NSString*)nsfilename path:(char *)cstr document:(MuDocRef *)aDoc;
 - (void) createPageView: (int)number;
 - (void) gotoPage: (int)number animated: (BOOL)animated;

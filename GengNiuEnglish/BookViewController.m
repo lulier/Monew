@@ -453,8 +453,10 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
     [lyricViewController initWithBook:book];
     [self.navigationController pushViewController:lyricViewController animated:YES];
 }
--(void)openBook:(NSString*)pdfPath
+-(void)openBook:(NSString*)pdfPath index:(NSInteger)index
 {
+    DataForCell *book=self.list[index];
+    NSString *textName=book.text_name;
     currentOrientation=[[UIApplication sharedApplication] statusBarOrientation];
     dispatch_async(dispatch_get_main_queue(), ^{
         AppDelegate *appDelegate=[[UIApplication sharedApplication] delegate];
@@ -476,7 +478,7 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
             
             MuDocumentController *document = [[MuDocumentController alloc] initWithFilename:pdfPath path:(char *)pdfPath.UTF8String document: doc];
             document.delegate=self;
-            
+            document.textName=textName;
             [self.navigationController pushViewController:document animated:YES];
 //            [currentVC presentViewController:document animated:YES completion:nil];
             

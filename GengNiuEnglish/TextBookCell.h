@@ -25,7 +25,7 @@ enum
 @protocol textBookCellDelegate <NSObject>
 
 -(void)clickCellButton:(NSInteger)index;
--(void)openBook:(NSString*)pdfPath;
+-(void)openBook:(NSString*)pdfPath index:(NSInteger)index;
 
 @end
 

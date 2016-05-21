@@ -158,6 +158,11 @@
             break;
         }
     }
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        [self cancelSelect];
+    });
+    
     DictionaryDatabase *dictionary=[DictionaryDatabase sharedInstance];
     NSDictionary *where=[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"'%@'",extractWord],@"WORD",nil];
     [dictionary queryTable:@"DICTIONARY" withSelect:@[@"*"] andWhere:where completion:^(NSMutableArray *resultsArray) {
@@ -167,9 +172,6 @@
             NSMutableString *content=[NSMutableString stringWithString:[dic objectForKey:@"WORD"]];
             [content appendString:[dic objectForKey:@"CHINESEEXPLAIN"]];
             [content appendString:[dic objectForKey:@"ENGLISHEXPLAIN"]];
-            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-                [self cancelSelect];
-            });
             [self cancelSelect];
             dispatch_async(dispatch_get_main_queue(), ^{
                 UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];

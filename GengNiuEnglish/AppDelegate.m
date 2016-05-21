@@ -48,7 +48,7 @@
         return path;
     };
     
-    
+    [[UIApplication sharedApplication] setStatusBarHidden:YES];
     //check network
     
     [CommonMethod checkNetwork:^(NSURLSessionTask *task, id responseObject) {
@@ -115,5 +115,9 @@
         return UIInterfaceOrientationMaskAll;
     }
     else return UIInterfaceOrientationMaskLandscape;
+}
+- (void)application:(UIApplication *)application didChangeStatusBarFrame:(CGRect)oldStatusBarFrame
+{
+    [application setStatusBarHidden:YES withAnimation:UIStatusBarAnimationNone];
 }
 @end

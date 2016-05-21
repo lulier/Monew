@@ -199,11 +199,11 @@ static void saveDoc(char *current_path, fz_document *doc)
     else
     {
         UIView *buttonView;
-        BOOL iOS7Style = ([[UIDevice currentDevice].systemVersion floatValue] >= 7.0f);
-        UIButton *button = [UIButton buttonWithType:iOS7Style ? UIButtonTypeSystem : UIButtonTypeCustom];
+        UIButton *button = [UIButton buttonWithType:UIButtonTypeCustom];
         [button setImage:[UIImage imageNamed:resource] forState:UIControlStateNormal];
         [button addTarget:self action:selector forControlEvents:UIControlEventTouchUpInside];
         [button sizeToFit];
+        button.frame=CGRectMake(0, 0, 20, 20);
         buttonView = button;
         
         return [[UIBarButtonItem alloc] initWithCustomView:buttonView];
@@ -213,12 +213,13 @@ static void saveDoc(char *current_path, fz_document *doc)
 - (void) addMainMenuButtons
 {
     NSMutableArray *array = [NSMutableArray arrayWithCapacity:3];
-    [array addObject:moreButton];
-    [array addObject:searchButton];
-    if (outlineButton)
-        [array addObject:outlineButton];
-    [array addObject:reflowButton];
-    [array addObject:linkButton];
+//    [array addObject:moreButton];
+//    [array addObject:searchButton];
+//    if (outlineButton)
+//        [array addObject:outlineButton];
+//    [array addObject:reflowButton];
+//    [array addObject:linkButton];
+//    [self navigationItem].hidesBackButton=YES;
     [[self navigationItem] setRightBarButtonItems: array ];
     [[self navigationItem] setLeftBarButtonItem:backButton];
 }
@@ -304,20 +305,26 @@ static void saveDoc(char *current_path, fz_document *doc)
     tickButton = [self newResourceBasedButton:@"ic_check" withAction:@selector(onTick:)];
     deleteButton = [self newResourceBasedButton:@"ic_trash" withAction:@selector(onDelete:)];
     searchBar = [[UISearchBar alloc] initWithFrame: CGRectMake(0,0,50,32)];
-    backButton = [self newResourceBasedButton:@"ic_arrow_left" withAction:@selector(onBack:)];
+    backButton = [self newResourceBasedButton:@"mu_goBack" withAction:@selector(onBack:)];
     [searchBar setPlaceholder: @"Search"];
     [searchBar setDelegate: self];
     
     [prevButton setEnabled: NO];
     [nextButton setEnabled: NO];
     
-    [self addMainMenuButtons];
+//    [self addMainMenuButtons];
     
     
     // TODO: add activityindicator to search bar
     
     [self setView: view];
     [view release];
+    
+}
+-(void)viewDidLoad
+{
+    [[self navigationController] navigationBar].tintColor = [UIColor clearColor];
+    self.navigationItem.leftBarButtonItem=backButton;
     
 }
 
@@ -356,7 +363,7 @@ static void saveDoc(char *current_path, fz_document *doc)
 - (void) viewWillAppear: (BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self setTitle: [key lastPathComponent]];
+    [self setTitle: self.textName];
     
     [slider setValue: current];
     
@@ -370,7 +377,9 @@ static void saveDoc(char *current_path, fz_document *doc)
     [[[self navigationController] navigationBar] setHidden:NO];
     [[[self navigationController] navigationBar] setTranslucent:YES];
     [[[self navigationController] toolbar] setTranslucent:YES];
+    
     [self showNavigationBar];
+    
 }
 
 - (void) viewWillLayoutSubviews
@@ -431,6 +440,10 @@ static void saveDoc(char *current_path, fz_document *doc)
     [[NSUserDefaults standardUserDefaults] removeObjectForKey: @"OpenDocumentKey"];
     [[[self navigationController] navigationBar] setHidden:YES];
     [[self navigationController] setToolbarHidden: YES animated: animated];
+}
+-(void)willMoveToParentViewController:(UIViewController *)parent
+{
+    
 }
 
 - (void) showNavigationBar
@@ -606,7 +619,7 @@ static void saveDoc(char *current_path, fz_document *doc)
 
 - (void) textSelectModeOn
 {
-    [[self navigationItem] setRightBarButtonItems:[NSArray arrayWithObject:tickButton]];
+//    [[self navigationItem] setRightBarButtonItems:[NSArray arrayWithObject:tickButton]];
     for (UIView<MuPageView> *view in [canvas subviews])
     {
         if ([view number] == current)
@@ -995,7 +1008,7 @@ static void saveDoc(char *current_path, fz_document *doc)
     } else {
         if ([[self navigationController] isNavigationBarHidden])
             [self showNavigationBar];
-        else if (barmode == BARMODE_MAIN)
+        else 
             [self hideNavigationBar];
     }
 }

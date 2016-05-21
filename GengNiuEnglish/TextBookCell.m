@@ -158,7 +158,7 @@
 {
     NSString *pdfName=[self.book getFileName:FTPDF];
     NSString *pdfPath=[[self.book getDocumentPath] stringByAppendingPathComponent:pdfName];
-    [self.delegate openBook:pdfPath];
+    [self.delegate openBook:pdfPath index:self.index];
     return;
     dispatch_async(dispatch_get_main_queue(), ^{
         AppDelegate *appDelegate=[[UIApplication sharedApplication] delegate];
