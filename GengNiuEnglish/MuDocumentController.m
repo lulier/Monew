@@ -363,7 +363,7 @@ static void saveDoc(char *current_path, fz_document *doc)
 - (void) viewWillAppear: (BOOL)animated
 {
     [super viewWillAppear:animated];
-    [self setTitle: self.textName];
+    [self setTitle: [self.textName stringByReplacingOccurrencesOfString:@"*" withString:@"'"]];
     
     [slider setValue: current];
     
@@ -436,7 +436,7 @@ static void saveDoc(char *current_path, fz_document *doc)
     if ([[[UIDevice currentDevice] systemVersion] floatValue] >= 7.0)
         [slider removeFromSuperview];
     
-    [self setTitle: @"Resume"];
+//    [self setTitle: @"Resume"];
     [[NSUserDefaults standardUserDefaults] removeObjectForKey: @"OpenDocumentKey"];
     [[[self navigationController] navigationBar] setHidden:YES];
     [[self navigationController] setToolbarHidden: YES animated: animated];
