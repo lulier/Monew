@@ -146,6 +146,10 @@ static void saveDoc(char *current_path, fz_document *doc)
     UIBarButtonItem *reflowButton;
     UIBarButtonItem *backButton;
     UIBarButtonItem *sliderWrapper;
+    UIBarButtonItem *playText;
+    NSMutableArray *currentPlayFiles;
+    STKAudioPlayer *audioPlayer;
+    BOOL isPlaying;
     int barmode;
     int searchPage;
     int cancelSearch;
@@ -306,6 +310,7 @@ static void saveDoc(char *current_path, fz_document *doc)
     deleteButton = [self newResourceBasedButton:@"ic_trash" withAction:@selector(onDelete:)];
     searchBar = [[UISearchBar alloc] initWithFrame: CGRectMake(0,0,50,32)];
     backButton = [self newResourceBasedButton:@"mu_goBack" withAction:@selector(onBack:)];
+    playText=[self newResourceBasedButton:@"playText" withAction:@selector(onPlayText:)];
     [searchBar setPlaceholder: @"Search"];
     [searchBar setDelegate: self];
     
@@ -325,9 +330,24 @@ static void saveDoc(char *current_path, fz_document *doc)
 {
     [[self navigationController] navigationBar].tintColor = [UIColor clearColor];
     self.navigationItem.leftBarButtonItem=backButton;
-    
+    NSError *categoryError = nil;
+    [[AVAudioSession sharedInstance]
+     setCategory:AVAudioSessionCategoryPlayback
+     error:&categoryError];
+    if (categoryError) {
+        NSLog(@"Error setting category!");
+    }
+    isPlaying=false;
 }
-
+-(void)viewDidDisappear:(BOOL)animated
+{
+    if (audioPlayer!=nil)
+    {
+        [audioPlayer stop];
+        audioPlayer.delegate=nil;
+        audioPlayer=nil;
+    }
+}
 - (void) dealloc
 {
     [docRef release]; docRef = nil; doc = NULL;
@@ -619,7 +639,7 @@ static void saveDoc(char *current_path, fz_document *doc)
 
 - (void) textSelectModeOn
 {
-//    [[self navigationItem] setRightBarButtonItems:[NSArray arrayWithObject:tickButton]];
+    [[self navigationItem] setRightBarButtonItems:[NSArray arrayWithObject:playText]];
     for (UIView<MuPageView> *view in [canvas subviews])
     {
         if ([view number] == current)
@@ -782,7 +802,53 @@ static void saveDoc(char *current_path, fz_document *doc)
 //        [[self navigationController] popViewControllerAnimated:YES];
     }
 }
-
+-(void)onPlayText:(id)sender
+{
+    if (isPlaying) {
+        return;
+    }
+    if (audioPlayer==nil)
+    {
+        audioPlayer = [[STKAudioPlayer alloc] initWithOptions:(STKAudioPlayerOptions){ .flushQueueOnSeek = YES, .enableVolumeMixer = NO, .equalizerBandFrequencies = {50, 100, 200, 400, 800, 1600, 2600, 16000} }];
+        audioPlayer.meteringEnabled = YES;
+        audioPlayer.volume = 1;
+        audioPlayer.delegate=self;
+    }
+    [[GNDownloadDatabase sharedInstance] queryTable:@"Books" withSelect:@[@"*"] andWhere:[NSDictionary dictionaryWithObjectsAndKeys:self.textID,@"BookID", nil] completion:^(NSMutableArray *resultsArray) {
+        if (resultsArray!=nil&&[resultsArray count]!=0)
+        {
+            NSDictionary *result=[resultsArray firstObject];
+            NSString *Document=[result objectForKey:@"DocumentName"];
+            NSString *mp3Doc=[[CommonMethod getPath:Document] stringByAppendingPathComponent:@"MP3"];
+            BOOL isDir;
+            if ([[NSFileManager defaultManager] fileExistsAtPath:mp3Doc isDirectory:&isDir])
+            {
+                NSArray *files=[[NSFileManager defaultManager] contentsOfDirectoryAtPath:mp3Doc error:nil];
+                currentPlayFiles=nil;
+                currentPlayFiles=[[NSMutableArray alloc]init];
+                for (NSString*tmp in files)
+                {
+                    NSArray *parts=[tmp componentsSeparatedByString:@"."];
+                    NSString *number=[parts[0] componentsSeparatedByString:@"_"][0];
+                    if ([number isEqualToString:[NSString stringWithFormat:@"%d",current+1]])
+                    {
+                        NSString *mp3Name=[mp3Doc stringByAppendingPathComponent:tmp];
+                        [currentPlayFiles addObject:mp3Name];
+                    }
+                }
+                if ([currentPlayFiles count]!=0)
+                {
+                    isPlaying=true;
+                    NSString *mp3Name=currentPlayFiles[0];
+                    NSURL *url=[NSURL fileURLWithPath:mp3Name];
+                    STKDataSource* dataSource = [STKAudioPlayer dataSourceFromURL:url];
+                    [audioPlayer setDataSource:dataSource withQueueItemId:[[SampleQueueId alloc] initWithUrl:url andCount:current]];
+                    [currentPlayFiles removeObject:mp3Name];
+                }
+            }
+        }
+    }];
+}
 - (void) alertView:(UIAlertView *)alertView clickedButtonAtIndex:(NSInteger)buttonIndex
 {
     if ([CloseAlertMessage isEqualToString:alertView.message])
@@ -1087,6 +1153,16 @@ static void saveDoc(char *current_path, fz_document *doc)
     // reset search results when page has flipped
     if (current != searchPage)
         [self resetSearch];
+    [self stopPlaying];
+    
+}
+-(void)stopPlaying
+{
+    if (audioPlayer!=nil)
+    {
+        [audioPlayer stop];
+        currentPlayFiles=nil;
+    }
 }
 -(void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
 {
@@ -1208,5 +1284,44 @@ static void saveDoc(char *current_path, fz_document *doc)
     [canvas setContentSize: CGSizeMake(fz_count_pages(ctx, doc) * width, height)];
     [canvas setContentOffset: CGPointMake(current * width, 0)];
 }
+-(void) audioPlayer:(STKAudioPlayer*)audioPlayer stateChanged:(STKAudioPlayerState)state previousState:(STKAudioPlayerState)previousState
+{
+    
+}
 
+-(void) audioPlayer:(STKAudioPlayer*)audioPlayer unexpectedError:(STKAudioPlayerErrorCode)errorCode
+{
+    
+}
+
+-(void) audioPlayer:(STKAudioPlayer*)audioPlayer didStartPlayingQueueItemId:(NSObject*)queueItemId
+{
+    SampleQueueId* queueId = (SampleQueueId*)queueItemId;
+    
+    //    NSLog(@"Started: %@", [queueId.url description]);
+    
+    
+}
+
+-(void) audioPlayer:(STKAudioPlayer*)audioPlayer didFinishBufferingSourceWithQueueItemId:(NSObject*)queueItemId
+{
+    
+    
+}
+
+-(void) audioPlayer:(STKAudioPlayer*)audioPlayer didFinishPlayingQueueItemId:(NSObject*)queueItemId withReason:(STKAudioPlayerStopReason)stopReason andProgress:(double)progress andDuration:(double)duration
+{
+    if ([currentPlayFiles count]!=0)
+    {
+        NSString *mp3Name=currentPlayFiles[0];
+        NSURL *url=[NSURL fileURLWithPath:mp3Name];
+        STKDataSource* dataSource = [STKAudioPlayer dataSourceFromURL:url];
+        [audioPlayer setDataSource:dataSource withQueueItemId:[[SampleQueueId alloc] initWithUrl:url andCount:current]];
+        [currentPlayFiles removeObject:mp3Name];
+    }
+    else
+        isPlaying=false;
+    SampleQueueId* queueId = (SampleQueueId*)queueItemId;
+    NSLog(@"Finished: %@", [queueId.url description]);
+}
 @end

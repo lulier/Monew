@@ -12,7 +12,11 @@
 #import "MuUpdater.h"
 #import "MuPageViewReflow.h"
 #import "MuPageViewNormal.h"
-
+#import "GNDownloadDatabase.h"
+#import "CommonMethod.h"
+#import "STKAudioPlayer.h"
+#import "SampleQueueId.h"
+#import <AVFoundation/AVFoundation.h>
 
 enum
 {
@@ -32,10 +36,11 @@ enum
 
 @end
 
-@interface MuDocumentController : UIViewController <UIScrollViewDelegate, UIGestureRecognizerDelegate, UISearchBarDelegate, MuDialogCreator, MuUpdater,MuPageViewNormalDelegate>
+@interface MuDocumentController : UIViewController <UIScrollViewDelegate, UIGestureRecognizerDelegate, UISearchBarDelegate, MuDialogCreator, MuUpdater,MuPageViewNormalDelegate,STKAudioPlayerDelegate>
 
 @property(nonatomic,unsafe_unretained)id<MuDocumentControllerDelegate>delegate;
 @property(nonatomic,retain)NSString* textName;
+@property(nonatomic,retain)NSString* textID;
 - (id) initWithFilename: (NSString*)nsfilename path:(char *)cstr document:(MuDocRef *)aDoc;
 - (void) createPageView: (int)number;
 - (void) gotoPage: (int)number animated: (BOOL)animated;

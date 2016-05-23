@@ -479,6 +479,7 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
             MuDocumentController *document = [[MuDocumentController alloc] initWithFilename:pdfPath path:(char *)pdfPath.UTF8String document: doc];
             document.delegate=self;
             document.textName=textName;
+            document.textID=book.text_id;
             [self.navigationController pushViewController:document animated:YES];
 //            [currentVC presentViewController:document animated:YES completion:nil];
             
@@ -500,10 +501,10 @@ static NSString * const reuseIdentifierBook = @"TextBookCell";
             
             
             
-//            AccountManager *account=[AccountManager singleInstance];
-//            dispatch_async(dispatch_get_global_queue(0, 0), ^{
-//                [[StudyDataManager sharedInstance] prepareUploadStudyState:account.userID textID:self.book.text_id starCount:@"0" readCount:@"1" sentenceCount:@"0" listenCount:@"0" challengeScore:@"0"];
-//            });
+            AccountManager *account=[AccountManager singleInstance];
+            dispatch_async(dispatch_get_global_queue(0, 0), ^{
+                [[StudyDataManager sharedInstance] prepareUploadStudyState:account.userID textID:book.text_id starCount:@"0" readCount:@"1" sentenceCount:@"0" listenCount:@"0" challengeScore:@"0"];
+            });
         }
     });
 }

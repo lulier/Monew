@@ -64,7 +64,6 @@
 		F4AFCF921C8025C10003B7F2 /* AVFoundation.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4AFCF911C8025C10003B7F2 /* AVFoundation.framework */; };
 		F4AFCF9A1C803DE30003B7F2 /* AudioToolbox.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = F4AFCF991C803DE30003B7F2 /* AudioToolbox.framework */; };
 		F4B271B01C33B429009313CA /* LyricViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4B271AF1C33B429009313CA /* LyricViewController.m */; };
-		F4C640CC1CEDE8AA00AAE1CB /* hello-world.pdf in Resources */ = {isa = PBXBuildFile; fileRef = F4C640CB1CEDE8AA00AAE1CB /* hello-world.pdf */; };
 		F4C640D01CEF337E00AAE1CB /* MuDocumentController.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C640CF1CEF337E00AAE1CB /* MuDocumentController.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		F4C640D31CEF343A00AAE1CB /* MuTextSelectView.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C640D21CEF343A00AAE1CB /* MuTextSelectView.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
 		F4C640D61CEF345100AAE1CB /* MuPageViewNormal.m in Sources */ = {isa = PBXBuildFile; fileRef = F4C640D51CEF345100AAE1CB /* MuPageViewNormal.m */; settings = {COMPILER_FLAGS = "-fno-objc-arc"; }; };
@@ -208,7 +207,6 @@
 		F4AFCF991C803DE30003B7F2 /* AudioToolbox.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = AudioToolbox.framework; path = System/Library/Frameworks/AudioToolbox.framework; sourceTree = SDKROOT; };
 		F4B271AE1C33B429009313CA /* LyricViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = LyricViewController.h; sourceTree = "<group>"; };
 		F4B271AF1C33B429009313CA /* LyricViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = LyricViewController.m; sourceTree = "<group>"; };
-		F4C640CB1CEDE8AA00AAE1CB /* hello-world.pdf */ = {isa = PBXFileReference; lastKnownFileType = image.pdf; path = "hello-world.pdf"; sourceTree = "<group>"; };
 		F4C640CE1CEF337E00AAE1CB /* MuDocumentController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MuDocumentController.h; sourceTree = "<group>"; };
 		F4C640CF1CEF337E00AAE1CB /* MuDocumentController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = MuDocumentController.m; sourceTree = "<group>"; };
 		F4C640D11CEF343A00AAE1CB /* MuTextSelectView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = MuTextSelectView.h; sourceTree = "<group>"; };
@@ -480,7 +478,6 @@
 				F49467091C28ECE900806DEF /* NetworkingManager.m */,
 				F448DDA51CD9CC4F002D43B6 /* StudyDataManager.h */,
 				F448DDA61CD9CC4F002D43B6 /* StudyDataManager.m */,
-				F4C640CB1CEDE8AA00AAE1CB /* hello-world.pdf */,
 			);
 			name = Model;
 			sourceTree = "<group>";
@@ -654,7 +651,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				F4C640CC1CEDE8AA00AAE1CB /* hello-world.pdf in Resources */,
 				F448DDAD1CDB3C09002D43B6 /* dictionary.db in Resources */,
 				F42799391C18514200240736 /* LaunchScreen.storyboard in Resources */,
 				F478C87D1C9D955500746E2C /* AcousticModelEnglish.bundle in Resources */,
