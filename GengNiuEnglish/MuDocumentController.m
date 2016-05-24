@@ -150,6 +150,7 @@ static void saveDoc(char *current_path, fz_document *doc)
     NSMutableArray *currentPlayFiles;
     STKAudioPlayer *audioPlayer;
     BOOL isPlaying;
+    BOOL isDictionary;
     int barmode;
     int searchPage;
     int cancelSearch;
@@ -338,15 +339,7 @@ static void saveDoc(char *current_path, fz_document *doc)
         NSLog(@"Error setting category!");
     }
     isPlaying=false;
-}
--(void)viewDidDisappear:(BOOL)animated
-{
-    if (audioPlayer!=nil)
-    {
-        [audioPlayer stop];
-        audioPlayer.delegate=nil;
-        audioPlayer=nil;
-    }
+    isDictionary=false;
 }
 - (void) dealloc
 {
@@ -448,6 +441,10 @@ static void saveDoc(char *current_path, fz_document *doc)
 {
     [super viewDidAppear:animated];
     [self scrollViewDidScroll: canvas];
+}
+-(void)viewDidDisappear:(BOOL)animated
+{
+    isDictionary=true;
 }
 
 - (void) viewWillDisappear: (BOOL)animated
@@ -786,7 +783,12 @@ static void saveDoc(char *current_path, fz_document *doc)
 
 - (void) onBack: (id)sender
 {
-    
+    if (audioPlayer!=nil)
+    {
+        [audioPlayer stop];
+        audioPlayer.delegate=nil;
+        audioPlayer=nil;
+    }
     pdf_document *idoc = pdf_specifics(ctx, doc);
     if (idoc && pdf_has_unsaved_changes(ctx, idoc))
     {
@@ -1153,7 +1155,12 @@ static void saveDoc(char *current_path, fz_document *doc)
     // reset search results when page has flipped
     if (current != searchPage)
         [self resetSearch];
-    [self stopPlaying];
+    if (isDictionary)
+    {
+        isDictionary=false;
+    }
+    else
+        [self stopPlaying];
     
 }
 -(void)stopPlaying

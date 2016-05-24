@@ -21,7 +21,7 @@
     [super viewWillAppear:animated];
     [self checkLogin];
     self.passwordInput.text=@"";
-    [self hideLoginButton];
+//    [self hideLoginButton];
 }
 -(void)hideLoginButton
 {

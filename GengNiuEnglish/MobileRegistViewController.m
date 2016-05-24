@@ -52,6 +52,8 @@
     self.veriButton.enabled=YES;
     self.phoneNumInput.enabled=YES;
     self.codeVerified=NO;
+    self.veriInput.hidden=NO;
+    self.veriButton.hidden=NO;
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(onKeyboardHide) name:UIKeyboardWillHideNotification object:nil];
 }
 -(void)onKeyboardHide
@@ -186,6 +188,9 @@
             self.veriButton.enabled=NO;
             self.codeVerified=YES;
             self.veriInput.enabled=NO;
+            
+            self.veriInput.hidden=YES;
+            self.veriButton.hidden=YES;
             [self updateViewConstraints];
         } else {
             NSLog(@"验证失败");
@@ -197,6 +202,12 @@
 - (IBAction)registButtonClick:(id)sender {
     NSString* phoneNum=self.phoneNumInput.text;
     NSString* password=self.passwordInput.text;
+    if ([password length] < 5)
+    {
+        SCLAlertView *alert = [[SCLAlertView alloc] init];
+        [alert showError:self title:@"错误" subTitle:@"密码长度请不要少于5位" closeButtonTitle:@"确定" duration:0.0f];
+        return;
+    }
     NSDictionary *dic=[NSDictionary dictionaryWithObjectsAndKeys:phoneNum,@"account",password,@"password", nil];
     __block MRProgressOverlayView *progressView=[MRProgressOverlayView showOverlayAddedTo:self.view title:@"正在注册" mode:MRProgressOverlayViewModeIndeterminate animated:YES];
     [AccountManager registAccount:REGPhone parameters:dic success:^(NSURLSessionTask * _Nullable task, id  _Nullable responseObject) {
