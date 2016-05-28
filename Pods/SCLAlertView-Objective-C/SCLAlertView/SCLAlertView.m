@@ -380,10 +380,17 @@ SCLTimerDisplay *buttonTimer;
     }
     
     // Buttons
+    CGFloat x = 12.0f;
     for (SCLButton *btn in _buttons)
     {
-        btn.frame = CGRectMake(12.0f, y, btn.frame.size.width, btn.frame.size.height);
-        y += btn.frame.size.height + 10.0f;
+        btn.frame = CGRectMake(x, y, btn.frame.size.width, btn.frame.size.height);
+        
+        // Add horizontal or vertical offset acording on _horizontalButtons parameter
+        if (_horizontalButtons) {
+            x += btn.frame.size.width + 10.0f;
+        } else {
+            y += btn.frame.size.height + 10.0f;
+        }
     }
     
     // Adapt window height according to icon size
@@ -684,11 +691,23 @@ SCLTimerDisplay *buttonTimer;
     [btn setTitle:title forState:UIControlStateNormal];
     btn.titleLabel.font = [UIFont fontWithName:_buttonsFontFamily size:_buttonsFontSize];
     
-    // Update view height
-    self.windowHeight += (btn.frame.size.height + ADD_BUTTON_PADDING);
-    
     [_contentView addSubview:btn];
     [_buttons addObject:btn];
+    
+    if (_horizontalButtons) {
+        // Update buttons width according to the number of buttons
+        for (SCLButton *bttn in _buttons) {
+            [bttn adjustWidthWithWindowWidth:self.windowWidth numberOfButtons:[_buttons count]];
+        }
+        
+        // Update view height
+        if (!([_buttons count] > 1)) {
+            self.windowHeight += (btn.frame.size.height + ADD_BUTTON_PADDING);
+        }
+    } else {
+        // Update view height
+        self.windowHeight += (btn.frame.size.height + ADD_BUTTON_PADDING);
+    }
     
     return btn;
 }
@@ -1245,6 +1264,10 @@ SCLTimerDisplay *buttonTimer;
         case SlideInToCenter:
             [self slideInToCenter];
             break;
+            
+        case SimplyAppear:
+            [self simplyAppear];
+            break;
     }
 }
 
@@ -1280,6 +1303,10 @@ SCLTimerDisplay *buttonTimer;
             
         case SlideOutFromCenter:
             [self slideOutFromCenter];
+            break;
+        
+        case SimplyDisappear:
+            [self simplyDisappear];
             break;
     }
     
@@ -1398,6 +1425,18 @@ SCLTimerDisplay *buttonTimer;
         [self fadeOut];
     }];
 }
+
+- (void)simplyDisappear
+{
+    self.backgroundView.alpha = _backgroundOpacity;
+    self.view.alpha = 1.0f;
+    
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        self.backgroundView.alpha = 0.0f;
+        self.view.alpha = 0.0f;
+    });
+}
+
 
 #pragma mark - Show Animations
 
@@ -1571,6 +1610,18 @@ SCLTimerDisplay *buttonTimer;
         }];
     }];
 }
+
+- (void)simplyAppear
+{
+    self.backgroundView.alpha = 0.0f;
+    self.view.alpha = 0.0f;
+
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(0.2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        self.backgroundView.alpha = _backgroundOpacity;
+        self.view.alpha = 1.0f;
+    });
+}
+
 
 @end
 

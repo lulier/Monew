@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '27E135F6330C4E1926F89C38'
+               BlueprintIdentifier = 'B66630BBDFF42629800064F3'
                BlueprintName = 'MuPDF'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'libMuPDF.a'>

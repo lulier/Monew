@@ -50,6 +50,7 @@ typedef NS_ENUM(NSInteger,RequestURL)
     RUUpdateState,
     RUWeixinBind,
     RUUploadVoice,
+    RUThirdPartyLogin,
     RUCustom
 };
 enum Return_Code

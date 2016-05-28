@@ -12,6 +12,9 @@
 #import "MRProgress.h"
 #import "MaterialViewController.h"
 #import "SCLAlertView.h"
+#import "SVProgressHUD.h"
+#import <ShareSDK/ShareSDK.h>
+#import <ShareSDKConnector/ShareSDKConnector.h>
 
 @interface LoginViewController : UIViewController<UITextFieldDelegate>
 @property (weak, nonatomic) IBOutlet UITextField *accountInput;

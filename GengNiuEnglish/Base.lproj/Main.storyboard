@@ -211,7 +211,7 @@
                                         <rect key="frame" x="0.0" y="28" width="627" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="nrk-Bx-EJL" id="4G9-2G-cvS">
-                                            <rect key="frame" x="0.0" y="0.0" width="627" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="627" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="The monkeys can." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="D4M-0M-d7T" customClass="GNTextView">
@@ -848,6 +848,9 @@
                                     <constraint firstAttribute="height" constant="40" id="xcX-ch-PRn"/>
                                 </constraints>
                                 <state key="normal" backgroundImage="weixin"/>
+                                <connections>
+                                    <action selector="weixinLogin:" destination="YIl-HW-Zp0" eventType="touchUpInside" id="7EV-aQ-vgY"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="VtK-0E-0Er">
                                 <rect key="frame" x="313" y="278" width="40" height="40"/>
@@ -856,6 +859,9 @@
                                     <constraint firstAttribute="width" constant="40" id="VIc-9R-s6G"/>
                                 </constraints>
                                 <state key="normal" backgroundImage="qq"/>
+                                <connections>
+                                    <action selector="qqLogin:" destination="YIl-HW-Zp0" eventType="touchUpInside" id="eEk-kw-kNU"/>
+                                </connections>
                             </button>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="tcj-yk-xhq">
                                 <rect key="frame" x="378" y="278" width="40" height="40"/>
@@ -864,6 +870,9 @@
                                     <constraint firstAttribute="width" constant="40" id="yg4-OU-atX"/>
                                 </constraints>
                                 <state key="normal" backgroundImage="weibo"/>
+                                <connections>
+                                    <action selector="weiboLogin:" destination="YIl-HW-Zp0" eventType="touchUpInside" id="w9H-0c-dnh"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -1393,10 +1402,10 @@
                                                 <rect key="frame" x="0.0" y="28" width="408" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZsY-uw-fbA" id="Mtf-sv-wzc">
-                                                    <rect key="frame" x="0.0" y="0.0" width="408" height="44"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="408" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="57976D42-9CB6-4E93-8D1F-11568D3C9B1A" translatesAutoresizingMaskIntoConstraints="NO" id="Axa-d7-Z9S">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="361430E5-FAD6-441B-B09A-51DBE62A8EA0" translatesAutoresizingMaskIntoConstraints="NO" id="Axa-d7-Z9S">
                                                             <rect key="frame" x="15" y="12" width="21" height="21"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" secondItem="Axa-d7-Z9S" secondAttribute="height" multiplier="2:2" id="tJp-ce-Zz7"/>
@@ -1759,7 +1768,7 @@
                                         <rect key="frame" x="0.0" y="28" width="534" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="MXj-W9-cle" id="0do-PP-lZo">
-                                            <rect key="frame" x="0.0" y="0.0" width="534" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="534" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -1796,7 +1805,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="57976D42-9CB6-4E93-8D1F-11568D3C9B1A" width="36" height="36">
+        <image name="361430E5-FAD6-441B-B09A-51DBE62A8EA0" width="36" height="36">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGOjtYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK0HCBEW
 GxwgISgrLjQ3VSRudWxs1AkKCwwNDg8QViRjbGFzc1xOU0ltYWdlRmxhZ3NWTlNSZXBzV05TQ29sb3KA

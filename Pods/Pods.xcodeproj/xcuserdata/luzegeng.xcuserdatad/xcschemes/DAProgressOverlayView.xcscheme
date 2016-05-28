@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '2E6FDA091601051E5B45D9B7'
+               BlueprintIdentifier = '6599A99079F712700FEE7DAD'
                BlueprintName = 'DAProgressOverlayView'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'libDAProgressOverlayView.a'>

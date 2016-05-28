@@ -9,4 +9,5 @@ pod 'SCLAlertView-Objective-C'
 pod 'FXKeychain'
 pod 'DAProgressOverlayView'
 pod 'MuPDF'
+pod 'SVProgressHUD'
 

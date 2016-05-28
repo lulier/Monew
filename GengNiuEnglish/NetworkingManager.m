@@ -32,6 +32,7 @@ static const NSString *URLForResetPassword=@"/student/change_passwd/";
 static const NSString *URLForUpdateState=@"/studystatus/text_state_update/";
 static const NSString *URLForWeixinBind=@"/weixin/check_avail/";
 static const NSString *URLForUploadVoice=@"/studystatus/upload_repeat/";
+static const NSString *URLForThirdPartyLogin=@"/student/third_party_login/";
 
 
 @implementation NetworkingManager
@@ -95,6 +96,8 @@ static const NSString *URLForUploadVoice=@"/studystatus/upload_repeat/";
             return [NSString stringWithFormat:@"%@%@",MONEWDOMAIN,URLForWeixinBind];
         case RUUploadVoice:
             return [NSString stringWithFormat:@"%@%@",MONEWDOMAIN,URLForUploadVoice];
+        case RUThirdPartyLogin:
+            return [NSString stringWithFormat:@"%@%@",MONEWDOMAIN,URLForThirdPartyLogin];
         case RUCustom:
             return nil;
         default:

@@ -66,6 +66,7 @@
     {
         AccountManager *accountManager=[AccountManager singleInstance];
         self.accountInput.text=accountManager.account;
+        LoginType type=accountManager.type;
         if (!isIn)
         {
             self.accountInput.text=@"";
@@ -73,10 +74,22 @@
             [accountManager deleteAccount];
             return;
         }
-        else
+        else if(type==LTEmail||type==LTPhone)
         {
             [self login];
         }
+        else if(type==LTWeiXin||type==LTWeiBo||type==LTQQ)
+        {
+            [self thirdPartyLoginOnBackground:type openID:accountManager.openID];
+        }
+        else
+        {
+            self.accountInput.text=@"";
+            self.passwordInput.text=@"";
+            [accountManager deleteAccount];
+            return;
+        }
+        
     }
     else
     {
@@ -234,9 +247,11 @@
             accountManager.completeInfo=[responseObject objectForKey:@"info_complete"];
             accountManager.loginTime=[responseObject objectForKey:@"logintime"];
             [accountManager saveAccount];
-            UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
-            MaterialViewController *materialViewController=[storyboard instantiateViewControllerWithIdentifier:@"MaterialViewController"];
-            [self.navigationController pushViewController:materialViewController animated:NO];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                MaterialViewController *materialViewController=[storyboard instantiateViewControllerWithIdentifier:@"MaterialViewController"];
+                [self.navigationController pushViewController:materialViewController animated:NO];
+            });
         }
         if (status==USER_NOT_EXISTS||status==PASSWD_INCORRECT)
         {
@@ -260,5 +275,111 @@
     MobileRegistViewController *mobileRegistViewController=[storyboard instantiateViewControllerWithIdentifier:@"MobileRegistViewController"];
     [self.navigationController pushViewController:mobileRegistViewController animated:YES];
 }
-
+- (IBAction)weixinLogin:(id)sender {
+    
+    [ShareSDK getUserInfo:SSDKPlatformTypeWechat
+           onStateChanged:^(SSDKResponseState state, SSDKUser *user, NSError *error)
+     {
+         NSLog(@"log for state:%ld",(unsigned long)state);
+         if (state == SSDKResponseStateSuccess) {
+             [self thirdPartyLogin:LTWeiXin openID:user.uid];
+         } else {
+             NSLog(@"%@",error);
+             SCLAlertView *alert = [[SCLAlertView alloc] init];
+             [alert showError:self title:@"错误" subTitle:@"第三方登录失败" closeButtonTitle:nil duration:1.0f];
+         }
+     }];
+}
+- (IBAction)qqLogin:(id)sender {
+    [ShareSDK getUserInfo:SSDKPlatformTypeQQ
+           onStateChanged:^(SSDKResponseState state, SSDKUser *user, NSError *error)
+     {
+         NSLog(@"log for state:%ld",(unsigned long)state);
+         if (state == SSDKResponseStateSuccess) {
+             user.icon = user.rawData[@"figureurl_qq_2"];
+             [self thirdPartyLogin:LTQQ openID:user.uid];
+         } else {
+             NSLog(@"%@",error);
+             SCLAlertView *alert = [[SCLAlertView alloc] init];
+             [alert showError:self title:@"错误" subTitle:@"第三方登录失败" closeButtonTitle:nil duration:1.0f];
+         }
+     }];
+}
+- (IBAction)weiboLogin:(id)sender {
+    [ShareSDK getUserInfo:SSDKPlatformTypeSinaWeibo
+           onStateChanged:^(SSDKResponseState state, SSDKUser *user, NSError *error)
+     {
+         NSLog(@"log for state:%ld",(unsigned long)state);
+         if (state == SSDKResponseStateSuccess) {
+             [self thirdPartyLogin:LTWeiBo openID:user.uid];
+         } else {
+             NSLog(@"%@",error);
+             SCLAlertView *alert = [[SCLAlertView alloc] init];
+             [alert showError:self title:@"错误" subTitle:@"第三方登录失败" closeButtonTitle:nil duration:1.0f];
+         }
+     }];
+}
+-(void)thirdPartyLogin:(LoginType)type openID:(NSString*)openID
+{
+    MRProgressOverlayView *progressView=[MRProgressOverlayView showOverlayAddedTo:self.view title:@"登录中" mode:MRProgressOverlayViewModeIndeterminate animated:YES];
+    NSDictionary *parameters=[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",(long)type],@"thirdPartyType",openID,@"openID", nil];
+    [AccountManager thirdPartyLogin:parameters success:^(NSURLSessionTask * _Nullable task, id  _Nullable responseObject) {
+        [progressView dismiss:YES];
+        long int status=[[responseObject objectForKey:@"status"] integerValue];
+        if (status==0)
+        {
+            AccountManager *accountManager=[AccountManager singleInstance];
+            accountManager.userID=[responseObject objectForKey:@"userid"];
+            accountManager.completeInfo=[responseObject objectForKey:@"info_complete"];
+            accountManager.loginTime=[responseObject objectForKey:@"logintime"];
+            accountManager.type=type;
+            accountManager.openID=openID;
+            [accountManager saveAccount];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                MaterialViewController *materialViewController=[storyboard instantiateViewControllerWithIdentifier:@"MaterialViewController"];
+                [self.navigationController pushViewController:materialViewController animated:NO];
+            });
+        }
+    } failure:^(NSURLSessionTask * _Nullable task, NSError * _Nullable error) {
+        [progressView dismiss:YES];
+        SCLAlertView *alert = [[SCLAlertView alloc] init];
+        [alert showError:self title:@"错误" subTitle:@"网络错误，请重新尝试" closeButtonTitle:nil duration:1.0f];
+    }];
+}
+- (void)thirdPartyLoginOnBackground:(LoginType)type openID:(NSString*)openID{
+    NSDictionary *parameters=[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",(long)type],@"thirdPartyType",openID,@"openID", nil];
+    [AccountManager thirdPartyLogin:parameters success:^(NSURLSessionTask * _Nullable task, id  _Nullable responseObject) {
+        long int status=[[responseObject objectForKey:@"status"] integerValue];
+        if (status==0)
+        {
+            AccountManager *accountManager=[AccountManager singleInstance];
+            accountManager.userID=[responseObject objectForKey:@"userid"];
+            accountManager.completeInfo=[responseObject objectForKey:@"info_complete"];
+            accountManager.loginTime=[responseObject objectForKey:@"logintime"];
+            accountManager.type=type;
+            accountManager.openID=openID;
+            [accountManager saveAccount];
+            dispatch_async(dispatch_get_main_queue(), ^{
+                UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+                MaterialViewController *materialViewController=[storyboard instantiateViewControllerWithIdentifier:@"MaterialViewController"];
+                [self.navigationController pushViewController:materialViewController animated:NO];
+            });
+        }
+        if (status==USER_NOT_EXISTS||status==PASSWD_INCORRECT)
+        {
+            //deleteaccount
+            [[NSUserDefaults standardUserDefaults] setValue:@"out" forKey:@"AccountStatus"];
+            [[NSUserDefaults standardUserDefaults] synchronize];
+            dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.5 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                //force to login
+                [self.navigationController popToRootViewControllerAnimated:YES];
+            });
+        }
+    } failure:^(NSURLSessionTask * _Nullable task, NSError * _Nullable error) {
+        UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+        MaterialViewController *materialViewController=[storyboard instantiateViewControllerWithIdentifier:@"MaterialViewController"];
+        [self.navigationController pushViewController:materialViewController animated:NO];
+    }];
+}
 @end

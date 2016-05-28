@@ -157,6 +157,44 @@ static NSString * const ACCOUNT_KEYCHAIN = @"GNAccount20160311";
     NSDictionary *dict=[NSDictionary dictionaryWithObjectsAndKeys:reType,@"type",accountNum,@"account",md5_str,@"passwd",salt,@"salt",@"0",@"channel",sign,@"sign",nil];
     [NetworkingManager httpRequest:RTPost url:RURegist parameters:dict progress:nil success:success failure:failure completionHandler:nil];
 }
++ (void)thirdPartyLogin:(nonnull NSDictionary *)parameters success:(nullable void (^)( NSURLSessionTask * _Nullable task, id _Nullable responseObject))success failure:(nullable void (^)(NSURLSessionTask * _Nullable task, NSError * _Nullable error))failure
+{
+    
+    NSString *openID=[parameters objectForKey:@"openID"];
+    LoginType tmp=[[parameters objectForKey:@"thirdPartyType"] integerValue];
+    NSInteger thirdPartyType=0;
+    switch (tmp)
+    {
+        case LTWeiBo:
+            thirdPartyType=0;
+            break;
+        case LTQQ:
+            thirdPartyType=1;
+            break;
+        case LTWeiXin:
+            thirdPartyType=2;
+            break;
+        default:
+            break;
+    }
+    NSMutableString* sign=[CommonMethod MD5EncryptionWithString:[NSString stringWithFormat:@"0%@%ld",openID,(long)thirdPartyType]];
+    NSDictionary *dict=[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",(long)thirdPartyType],@"third_type",openID,@"openid",@"0",@"channel",sign,@"sign",nil];
+    
+    
+    [NetworkingManager httpRequest:RTPost url:RUThirdPartyLogin parameters:dict progress:nil
+      success:^(NSURLSessionTask * _Nullable task, id  _Nullable responseObject)
+     {
+         long int status=[[responseObject objectForKey:@"status"]integerValue];
+         if (status==0)
+         {
+             success(task,responseObject);
+         }
+     }
+      failure:^(NSURLSessionTask * _Nullable task, NSError * _Nullable error) {
+          failure(task,error);
+    } completionHandler:nil];
+}
+
 
 -(void)bindPhone:(NSString*)phone bind:(BOOL)bind password:(NSString*)password success:(void (^)(BOOL bindSuccess))success failure:(void (^)(NSString * message))failure;
 {

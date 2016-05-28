@@ -1,23 +1,23 @@
 PODS:
-  - AFNetworking (3.0.4):
-    - AFNetworking/NSURLSession (= 3.0.4)
-    - AFNetworking/Reachability (= 3.0.4)
-    - AFNetworking/Security (= 3.0.4)
-    - AFNetworking/Serialization (= 3.0.4)
-    - AFNetworking/UIKit (= 3.0.4)
-  - AFNetworking/NSURLSession (3.0.4):
+  - AFNetworking (3.1.0):
+    - AFNetworking/NSURLSession (= 3.1.0)
+    - AFNetworking/Reachability (= 3.1.0)
+    - AFNetworking/Security (= 3.1.0)
+    - AFNetworking/Serialization (= 3.1.0)
+    - AFNetworking/UIKit (= 3.1.0)
+  - AFNetworking/NSURLSession (3.1.0):
     - AFNetworking/Reachability
     - AFNetworking/Security
     - AFNetworking/Serialization
-  - AFNetworking/Reachability (3.0.4)
-  - AFNetworking/Security (3.0.4)
-  - AFNetworking/Serialization (3.0.4)
-  - AFNetworking/UIKit (3.0.4):
+  - AFNetworking/Reachability (3.1.0)
+  - AFNetworking/Security (3.1.0)
+  - AFNetworking/Serialization (3.1.0)
+  - AFNetworking/UIKit (3.1.0):
     - AFNetworking/NSURLSession
   - DAProgressOverlayView (1.0.2)
-  - FMDB (2.6):
-    - FMDB/standard (= 2.6)
-  - FMDB/standard (2.6)
+  - FMDB (2.6.2):
+    - FMDB/standard (= 2.6.2)
+  - FMDB/standard (2.6.2)
   - FXKeychain (1.5.3)
   - MRProgress (0.8.3):
     - MRProgress/ActivityIndicator (= 0.8.3)
@@ -48,11 +48,12 @@ PODS:
   - MRProgress/Stopable (0.8.3):
     - MRProgress/Helper
   - MuPDF (1.8.2)
-  - SCLAlertView-Objective-C (1.0.2)
-  - SDWebImage (3.7.5):
-    - SDWebImage/Core (= 3.7.5)
-  - SDWebImage/Core (3.7.5)
+  - SCLAlertView-Objective-C (1.0.3)
+  - SDWebImage (3.7.6):
+    - SDWebImage/Core (= 3.7.6)
+  - SDWebImage/Core (3.7.6)
   - StreamingKit (0.1.29)
+  - SVProgressHUD (2.0.3)
   - vfrReader (2.8.6)
   - ZipUtilities (1.7.2)
 
@@ -66,19 +67,21 @@ DEPENDENCIES:
   - SCLAlertView-Objective-C
   - SDWebImage (~> 3.7)
   - StreamingKit
+  - SVProgressHUD
   - vfrReader (~> 2.8.6)
   - ZipUtilities
 
 SPEC CHECKSUMS:
-  AFNetworking: a0075feb321559dc78d9d85b55d11caa19eabb93
+  AFNetworking: 5e0e199f73d8626b11e79750991f5d173d1f8b67
   DAProgressOverlayView: 08bbeaab98a0604fddb77672f100e8389472cec2
-  FMDB: c1968bab3ab0aed38f66cb778ae1e7fa9a652b6e
+  FMDB: 854a0341b4726e53276f2a8996f06f1b80f9259a
   FXKeychain: 2fe54573946ffef634f4e2a2851e6c8f4ea15e76
   MRProgress: 16de7cc9f347e8846797a770db102a323fe7ef09
   MuPDF: 9b2f34a25d0e1b0ef42cbb2b377dcfc06b5d4fa0
-  SCLAlertView-Objective-C: 25f7ea3a3526dde177d8b8056a0b88fe4187651e
-  SDWebImage: 69c6303e3348fba97e03f65d65d4fbc26740f461
+  SCLAlertView-Objective-C: e83376218b431109dc5403adc63f8e9787db7b74
+  SDWebImage: c325cf02c30337336b95beff20a13df489ec0ec9
   StreamingKit: c329785aaef3ac142d4ae388345bfe1ed23cfd45
+  SVProgressHUD: b0830714205bea1317ea1a2ebc71e5633af334d4
   vfrReader: 94ea739a545e39093c93802ca1c5b203a5df46b1
   ZipUtilities: e266a234f60bc53d47e1a030a353275e7213b17b
 

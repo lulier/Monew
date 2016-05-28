@@ -18,7 +18,10 @@ typedef NS_ENUM(NSInteger,RegistType)
 typedef NS_ENUM(NSInteger,LoginType)
 {
     LTPhone,
-    LTEmail
+    LTEmail,
+    LTWeiBo,
+    LTWeiXin,
+    LTQQ
 };
 typedef NS_ENUM(NSInteger,UserGender)
 {
@@ -31,7 +34,7 @@ typedef NS_ENUM(NSInteger,UserGender)
 @property(nonatomic,strong)NSString *account;
 @property(nonatomic,strong)NSString *password;
 @property(nonatomic,strong)NSString *openID;
-@property(nonatomic,)LoginType type;
+@property(nonatomic)LoginType type;
 @property(nonatomic)BOOL isActive;
 @property(nonatomic,strong)NSString *loginTime;
 @property(nonatomic)NSInteger channel;
@@ -49,6 +52,7 @@ typedef NS_ENUM(NSInteger,UserGender)
 + (void)login:(LoginType)type parameters:(NSDictionary *)parameters success:(void (^)( NSURLSessionTask * task, id responseObject))success failure:( void (^)(NSURLSessionTask *  task, NSError *  error))failure;
 + (void)registAccount:(RegistType)type parameters:( NSDictionary *)parameters success:( void (^)( NSURLSessionTask *  task, id  responseObject))success failure:( void (^)(NSURLSessionTask *  task, NSError *  error))failure;
 + (void)checkPhoneInUse:(NSString *)phoneNumber success:(void (^)(BOOL isInused))success failure:(void (^)(NSString * message))failure;
++ (void)thirdPartyLogin:(nonnull NSDictionary *)parameters success:(nullable void (^)( NSURLSessionTask * _Nullable task, id _Nullable responseObject))success failure:(nullable void (^)(NSURLSessionTask * _Nullable task, NSError * _Nullable error))failure;
 - (void)bindPhone:(NSString*)phone bind:(BOOL)bind password:(NSString*)password success:(void (^)(BOOL bindSuccess))success failure:(void (^)(NSString * message))failure;
 - (void)getUserInfo;
 - (void)uploadUserInfo;
