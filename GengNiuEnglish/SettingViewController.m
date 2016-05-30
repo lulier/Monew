@@ -70,23 +70,34 @@
         self.userName.text=@"dd";
     
     // 设置头像
-    
-    if (account.portraitKey!=nil&&![account.portraitKey isEqualToString:@""])
+    if (account.type==LTWeiBo||account.type==LTWeiXin||account.type==LTQQ)
     {
-        NSMutableString *sign=[CommonMethod MD5EncryptionWithString:[NSString stringWithFormat:@"GET%@",account.portraitKey]];
-        NSDictionary *dict=[NSDictionary dictionaryWithObjectsAndKeys:@"GET",@"method",account.portraitKey,@"object",sign,@"sign",nil];
-        [NetworkingManager httpRequest:RTPost url:RUGetCloudURL parameters:dict progress:nil success:^(NSURLSessionTask * _Nullable task, id  _Nullable responseObject) {
-            long int status=[[responseObject objectForKey:@"status"]integerValue];
-            if (status==0)
-            {
-                NSURL *url=[NSURL URLWithString:[responseObject objectForKey:@"url"]];
-                [self.portraitImage sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"Icon"]];
-            }
-            
-        } failure:^(NSURLSessionTask * _Nullable task, NSError * _Nullable error) {
-            
-        } completionHandler:nil];
+        if (account.thirdPartyImage!=nil)
+        {
+            NSURL *url=[NSURL URLWithString:account.thirdPartyImage];
+            [self.portraitImage sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"Icon"]];
+        }
     }
+    else
+    {
+        if (account.portraitKey!=nil&&![account.portraitKey isEqualToString:@""])
+        {
+            NSMutableString *sign=[CommonMethod MD5EncryptionWithString:[NSString stringWithFormat:@"GET%@",account.portraitKey]];
+            NSDictionary *dict=[NSDictionary dictionaryWithObjectsAndKeys:@"GET",@"method",account.portraitKey,@"object",sign,@"sign",nil];
+            [NetworkingManager httpRequest:RTPost url:RUGetCloudURL parameters:dict progress:nil success:^(NSURLSessionTask * _Nullable task, id  _Nullable responseObject) {
+                long int status=[[responseObject objectForKey:@"status"]integerValue];
+                if (status==0)
+                {
+                    NSURL *url=[NSURL URLWithString:[responseObject objectForKey:@"url"]];
+                    [self.portraitImage sd_setImageWithURL:url placeholderImage:[UIImage imageNamed:@"Icon"]];
+                }
+                
+            } failure:^(NSURLSessionTask * _Nullable task, NSError * _Nullable error) {
+                
+            } completionHandler:nil];
+        }
+    }
+    
 }
 -(void)viewWillAppear:(BOOL)animated
 {
@@ -368,9 +379,25 @@
     }
     else
     {
-        UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
-        BindPhoneViewController *bindViewController=[storyboard instantiateViewControllerWithIdentifier:@"BindPhoneViewController"];
-        [self.navigationController pushViewController:bindViewController animated:YES];
+        //check whether bind phone
+        AccountManager *account=[AccountManager singleInstance];
+        [account checkPhoneBind:^(BOOL bind) {
+            UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
+            BindPhoneViewController *bindViewController=[storyboard instantiateViewControllerWithIdentifier:@"BindPhoneViewController"];
+            if (!bind)
+            {
+                bindViewController.bind=YES;
+                
+            }
+            else
+            {
+                bindViewController.bind=NO;
+            }
+            [self.navigationController pushViewController:bindViewController animated:YES];
+        } failure:^(NSString *message) {
+            
+        }];
+        
     }
 }
 -(void)goToUnknow

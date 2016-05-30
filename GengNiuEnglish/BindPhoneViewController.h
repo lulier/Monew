@@ -19,5 +19,8 @@
 @property (weak, nonatomic) IBOutlet UIButton *veriButton;
 @property (weak, nonatomic) IBOutlet NSLayoutConstraint *titleTopConstraint;
 @property (weak, nonatomic) IBOutlet UIButton *sendVeriCode;
+@property (weak, nonatomic) IBOutlet UITextField *passwordInput;
+@property (weak, nonatomic) IBOutlet UIButton *registButton;
+@property(nonatomic)BOOL bind;
 @property(nonatomic)BOOL codeVerified;
 @end

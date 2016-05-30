@@ -22,6 +22,7 @@ static NSString * const ACCOUNT_KEYCHAIN = @"GNAccount20160311";
 @synthesize gender;
 @synthesize nickName;
 @synthesize portraitKey;
+@synthesize thirdPartyImage;
 + (AccountManager *)singleInstance {
     static dispatch_once_t once;
     static id instance;
@@ -50,6 +51,7 @@ static NSString * const ACCOUNT_KEYCHAIN = @"GNAccount20160311";
         gender=[[aDecoder decodeObjectForKey:@"gender"] integerValue];
         nickName=[aDecoder decodeObjectForKey:@"nickName"];
         portraitKey=[aDecoder decodeObjectForKey:@"portraitKey"];
+        thirdPartyImage=[aDecoder decodeObjectForKey:@"thirdPartyImage"];
     }
     
     return self;
@@ -68,6 +70,7 @@ static NSString * const ACCOUNT_KEYCHAIN = @"GNAccount20160311";
     [aCoder encodeObject:@(self.type) forKey:@"gender"];
     [aCoder encodeObject:self.nickName forKey:@"nickName"];
     [aCoder encodeObject:self.portraitKey forKey:@"portraitKey"];
+    [aCoder encodeObject:self.thirdPartyImage forKey:@"thirdPartyImage"];
 }
 
 
@@ -91,6 +94,7 @@ static NSString * const ACCOUNT_KEYCHAIN = @"GNAccount20160311";
     self.gender=accountManager.gender;
     self.nickName=accountManager.nickName;
     self.portraitKey=accountManager.portraitKey;
+    self.thirdPartyImage=accountManager.thirdPartyImage;
 }
 +(void)login:(LoginType)type parameters:(nonnull NSDictionary *)parameters success:(nullable void (^)( NSURLSessionTask * _Nullable task, id _Nullable responseObject))success failure:(nullable void (^)(NSURLSessionTask * _Nullable task, NSError * _Nullable error))failure
 {
@@ -196,16 +200,18 @@ static NSString * const ACCOUNT_KEYCHAIN = @"GNAccount20160311";
 }
 
 
--(void)bindPhone:(NSString*)phone bind:(BOOL)bind password:(NSString*)password success:(void (^)(BOOL bindSuccess))success failure:(void (^)(NSString * message))failure;
+-(void)bindPhone:(NSString*)phone bind:(BOOL)bind password:(NSString*)passWord success:(void (^)(BOOL bindSuccess))success failure:(void (^)(NSString * message))failure;
 {
     NSInteger bindSign=0;
     if (bind)
     {
         bindSign=1;
     }
-    NSMutableString* sign=[CommonMethod MD5EncryptionWithString:[NSString stringWithFormat:@"%@%@%ld",self.userID,phone,(long)bindSign]];
-    NSDictionary *dict=[NSDictionary dictionaryWithObjectsAndKeys:self.userID,@"user_id",phone,@"phone",[NSString stringWithFormat:@"%ld",(long)bindSign],@"bind",sign,@"sign",nil];
-    [NetworkingManager httpRequest:RTPost url:RUCheckAvail parameters:dict progress:nil success:^(NSURLSessionTask * _Nullable task, id  _Nullable responseObject) {
+    NSString* salt = [CommonMethod randomStringWithLength:6];
+    NSMutableString* md5_str = [CommonMethod MD5EncryptionWithString:[NSString stringWithFormat:@"%@%@",passWord,salt]];
+    NSMutableString* sign=[CommonMethod MD5EncryptionWithString:[NSString stringWithFormat:@"%ld%@%@%@%@",(long)bindSign,md5_str,phone,salt,self.userID]];
+    NSDictionary *dict=[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",(long)bindSign],@"bind",md5_str,@"passwd",phone,@"phone",salt,@"salt",sign,@"sign",self.userID,@"user_id",nil];
+    [NetworkingManager httpRequest:RTPost url:RUBindPhone parameters:dict progress:nil success:^(NSURLSessionTask * _Nullable task, id  _Nullable responseObject) {
         long int status=[[responseObject objectForKey:@"status"]integerValue];
         if (status==0)
         {
@@ -266,8 +272,8 @@ static NSString * const ACCOUNT_KEYCHAIN = @"GNAccount20160311";
                 weakself.gender=UGGirl;
             weakself.nickName=[responseObject objectForKey:@"nickname"];
             weakself.portraitKey=[responseObject objectForKey:@"avatar"];
-            NSArray *colums=[[NSArray alloc]initWithObjects:@"user_id",@"gender",@"nickname",@"portrait_key", nil];
-            NSArray *values=[[NSArray alloc]initWithObjects:[NSString stringWithFormat:@"'%@'",weakself.userID],[NSString stringWithFormat:@"%ld",weakself.gender],[NSString stringWithFormat:@"'%@'",weakself.nickName],[NSString stringWithFormat:@"'%@'",weakself.portraitKey], nil];
+            NSArray *colums=[[NSArray alloc]initWithObjects:@"user_id",@"gender",@"nickname",@"portrait_key",@"extra", nil];
+            NSArray *values=[[NSArray alloc]initWithObjects:[NSString stringWithFormat:@"'%@'",weakself.userID],[NSString stringWithFormat:@"%ld",weakself.gender],[NSString stringWithFormat:@"'%@'",weakself.nickName],[NSString stringWithFormat:@"'%@'",weakself.portraitKey], [NSString stringWithFormat:@"'%@'",weakself.thirdPartyImage],nil];
             [[MTDatabaseHelper sharedInstance] insertToTable:@"UserInfo" withColumns:colums andValues:values];
             [FXKeychain defaultKeychain][ACCOUNT_KEYCHAIN] = self;
         }
@@ -287,6 +293,7 @@ static NSString * const ACCOUNT_KEYCHAIN = @"GNAccount20160311";
     gender=0;
     nickName=nil;
     portraitKey=nil;
+    thirdPartyImage=nil;
     
     [[FXKeychain defaultKeychain] removeObjectForKey:ACCOUNT_KEYCHAIN];
     
@@ -417,6 +424,32 @@ static NSString * const ACCOUNT_KEYCHAIN = @"GNAccount20160311";
             success(NO);
     } failure:^(NSURLSessionTask * _Nullable task, NSError * _Nullable error) {
         success(NO);
+    } completionHandler:nil];
+}
+- (void)checkPhoneBind:(void (^)(BOOL bind))success failure:(void (^)(NSString * message))failure
+{
+    NSMutableString *sign=[CommonMethod MD5EncryptionWithString:[NSString stringWithFormat:@"%@",self.userID]];
+    NSDictionary *dic=[NSDictionary dictionaryWithObjectsAndKeys:self.userID,@"user_id",sign,@"sign",nil];
+    [NetworkingManager httpRequest:RTPost url:RUCheckBindPhone parameters:dic progress:nil success:^(NSURLSessionTask * _Nullable task, id  _Nullable responseObject) {
+        long int status=[[responseObject objectForKey:@"status"]integerValue];
+        if (status==0)
+        {
+            long int registType=[[responseObject objectForKey:@"regist_type"] integerValue];
+            if (registType!=1)
+            {
+                NSString *phone=[responseObject objectForKey:@"phone"];
+                if ([phone isEqualToString:@""])
+                {
+                    success(NO);
+                }
+                else
+                    success(YES);
+            }
+        }
+        else
+            success(NO);
+    } failure:^(NSURLSessionTask * _Nullable task, NSError * _Nullable error) {
+        failure([NSString stringWithFormat:@"%@",error]);
     } completionHandler:nil];
 }
 @end

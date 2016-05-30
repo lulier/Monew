@@ -281,8 +281,9 @@
            onStateChanged:^(SSDKResponseState state, SSDKUser *user, NSError *error)
      {
          NSLog(@"log for state:%ld",(unsigned long)state);
+         NSLog(@"log for user:%@",user);
          if (state == SSDKResponseStateSuccess) {
-             [self thirdPartyLogin:LTWeiXin openID:user.uid];
+             [self thirdPartyLogin:LTWeiXin user:user];
          } else {
              NSLog(@"%@",error);
              SCLAlertView *alert = [[SCLAlertView alloc] init];
@@ -297,7 +298,7 @@
          NSLog(@"log for state:%ld",(unsigned long)state);
          if (state == SSDKResponseStateSuccess) {
              user.icon = user.rawData[@"figureurl_qq_2"];
-             [self thirdPartyLogin:LTQQ openID:user.uid];
+             [self thirdPartyLogin:LTQQ user:user];
          } else {
              NSLog(@"%@",error);
              SCLAlertView *alert = [[SCLAlertView alloc] init];
@@ -311,7 +312,7 @@
      {
          NSLog(@"log for state:%ld",(unsigned long)state);
          if (state == SSDKResponseStateSuccess) {
-             [self thirdPartyLogin:LTWeiBo openID:user.uid];
+             [self thirdPartyLogin:LTWeiBo user:user];
          } else {
              NSLog(@"%@",error);
              SCLAlertView *alert = [[SCLAlertView alloc] init];
@@ -319,8 +320,9 @@
          }
      }];
 }
--(void)thirdPartyLogin:(LoginType)type openID:(NSString*)openID
+-(void)thirdPartyLogin:(LoginType)type user:(SSDKUser*)user
 {
+    NSString *openID=user.uid;
     MRProgressOverlayView *progressView=[MRProgressOverlayView showOverlayAddedTo:self.view title:@"登录中" mode:MRProgressOverlayViewModeIndeterminate animated:YES];
     NSDictionary *parameters=[NSDictionary dictionaryWithObjectsAndKeys:[NSString stringWithFormat:@"%ld",(long)type],@"thirdPartyType",openID,@"openID", nil];
     [AccountManager thirdPartyLogin:parameters success:^(NSURLSessionTask * _Nullable task, id  _Nullable responseObject) {
@@ -334,7 +336,15 @@
             accountManager.loginTime=[responseObject objectForKey:@"logintime"];
             accountManager.type=type;
             accountManager.openID=openID;
+            accountManager.nickName=user.nickname;
+            accountManager.thirdPartyImage=user.icon;
+            accountManager.gender=user.gender;
+            accountManager.portraitKey=@"";
+            
             [accountManager saveAccount];
+            //update user info
+            [accountManager uploadUserInfo];
+            
             dispatch_async(dispatch_get_main_queue(), ^{
                 UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
                 MaterialViewController *materialViewController=[storyboard instantiateViewControllerWithIdentifier:@"MaterialViewController"];

@@ -66,9 +66,10 @@
     [[UIApplication sharedApplication] setStatusBarHidden:YES];
     //check network
     
+    [SMSSDK registerApp:appKey withSecret:appSecret];
+    [self initShareSDK];
     [CommonMethod checkNetwork:^(NSURLSessionTask *task, id responseObject) {
-        [SMSSDK registerApp:appKey withSecret:appSecret];
-        [self initShareSDK];
+        
     }];
     
 

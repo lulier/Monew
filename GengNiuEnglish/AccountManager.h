@@ -44,6 +44,7 @@ typedef NS_ENUM(NSInteger,UserGender)
 @property(nonatomic)UserGender gender;
 @property(strong,nonatomic)NSString *nickName;
 @property(strong,nonatomic)NSString *portraitKey;
+@property(strong,nonatomic)NSString *thirdPartyImage;
 
 + (AccountManager *)singleInstance;
 - (void)saveAccount;
@@ -53,10 +54,11 @@ typedef NS_ENUM(NSInteger,UserGender)
 + (void)registAccount:(RegistType)type parameters:( NSDictionary *)parameters success:( void (^)( NSURLSessionTask *  task, id  responseObject))success failure:( void (^)(NSURLSessionTask *  task, NSError *  error))failure;
 + (void)checkPhoneInUse:(NSString *)phoneNumber success:(void (^)(BOOL isInused))success failure:(void (^)(NSString * message))failure;
 + (void)thirdPartyLogin:(nonnull NSDictionary *)parameters success:(nullable void (^)( NSURLSessionTask * _Nullable task, id _Nullable responseObject))success failure:(nullable void (^)(NSURLSessionTask * _Nullable task, NSError * _Nullable error))failure;
-- (void)bindPhone:(NSString*)phone bind:(BOOL)bind password:(NSString*)password success:(void (^)(BOOL bindSuccess))success failure:(void (^)(NSString * message))failure;
+- (void)bindPhone:(NSString*)phone bind:(BOOL)bind password:(NSString*)passWord success:(void (^)(BOOL bindSuccess))success failure:(void (^)(NSString * message))failure;
 - (void)getUserInfo;
 - (void)uploadUserInfo;
 - (void)resetPassword:(NSDictionary *)parameters success:(void (^)(BOOL resetSuccess))success failure:(void (^)(NSString * message))failure;
 - (void)checkWeixinBind:(void (^)(BOOL bind))success failure:(void (^)(NSString * message))failure;
+- (void)checkPhoneBind:(void (^)(BOOL bind))success failure:(void (^)(NSString * message))failure;
 -(void)uploadVoice:(NSString*)textID voiceKey:(NSString*)voiceKey score:(NSInteger)score sentence:(NSString*)sentence;
 @end

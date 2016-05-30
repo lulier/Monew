@@ -36,11 +36,35 @@
 {
     UIImage *background=[CommonMethod imageWithImage:[UIImage imageNamed:@"naked_background"] scaledToSize:CGSizeMake(self.view.frame.size.width, self.view.frame.size.height)];
     self.view.backgroundColor=[UIColor colorWithPatternImage:background];
-    self.phoneNumInput.delegate=self;
-    self.veriInput.delegate=self;
-    self.veriButton.enabled=YES;
-    self.phoneNumInput.enabled=YES;
-    self.codeVerified=NO;
+    
+    if (self.bind)
+    {
+        self.veriInput.hidden=NO;
+        self.veriButton.hidden=NO;
+        self.sendVeriCode.hidden=NO;
+        self.phoneNumInput.delegate=self;
+        self.veriInput.delegate=self;
+        self.passwordInput.delegate=self;
+        self.veriButton.enabled=YES;
+        self.phoneNumInput.enabled=YES;
+        self.codeVerified=NO;
+        self.passwordInput.hidden=YES;
+        self.registButton.hidden=YES;
+    }
+    else
+    {
+        self.veriInput.hidden=YES;
+        self.veriButton.hidden=YES;
+        self.sendVeriCode.hidden=YES;
+        self.phoneNumInput.delegate=self;
+        self.veriInput.delegate=self;
+        self.passwordInput.delegate=self;
+        self.veriButton.enabled=YES;
+        self.phoneNumInput.enabled=YES;
+        self.codeVerified=YES;
+        self.passwordInput.hidden=NO;
+        self.registButton.hidden=NO;
+    }
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(onKeyboardHide) name:UIKeyboardWillHideNotification object:nil];
 }
 -(void)onKeyboardHide
@@ -50,6 +74,7 @@
 -(void)touchesBegan:(NSSet *)touches withEvent:(UIEvent *)event{
     [self.phoneNumInput resignFirstResponder];
     [self.veriInput resignFirstResponder];
+    [self.passwordInput resignFirstResponder];
     self.view.frame =CGRectMake(0, 0, self.view.frame.size.width, self.view.frame.size.height);
 }
 
@@ -172,7 +197,21 @@
             self.veriInput.enabled=NO;
             [self updateViewConstraints];
             //验证成功之后需要绑定手机号
-            [self bindPhone];
+            //如果是邮箱的话不需要输入密码了，如果是第三方的话还需要再输入密码
+            AccountManager *account=[AccountManager singleInstance];
+            if (account.type==LTEmail)
+            {
+                [self bindPhone:@""];
+            }
+            else
+            {
+                //显示密码输入，输入密码之后再绑定手机
+                self.passwordInput.hidden=NO;
+                self.registButton.hidden=NO;
+                self.veriInput.hidden=YES;
+                self.veriButton.hidden=YES;
+                self.sendVeriCode.hidden=YES;
+            }
         } else {
             NSLog(@"验证失败");
             SCLAlertView *alert=[[SCLAlertView alloc]init];
@@ -180,13 +219,20 @@
         }
     }];
 }
--(void)bindPhone
+-(void)bindPhone:(NSString*)password
 {
     //绑定中
-    __block MRProgressOverlayView *progressView=[MRProgressOverlayView showOverlayAddedTo:self.view title:@"正在绑定手机" mode:MRProgressOverlayViewModeIndeterminate animated:YES];
+    NSString *bindTip;
+    if (self.bind)
+    {
+        bindTip=@"正在绑定手机";
+    }
+    else
+        bindTip=@"正在解绑手机";
+    __block MRProgressOverlayView *progressView=[MRProgressOverlayView showOverlayAddedTo:self.view title:bindTip mode:MRProgressOverlayViewModeIndeterminate animated:YES];
     NSString *phone=self.phoneNumInput.text;
     AccountManager *accountManager=[AccountManager singleInstance];
-    [accountManager bindPhone:phone bind:YES password:nil success:^(BOOL bindSuccess) {
+    [accountManager bindPhone:phone bind:self.bind password:password success:^(BOOL bindSuccess) {
         if (progressView!=nil)
         {
             [progressView dismiss:NO];
@@ -194,16 +240,30 @@
         }
         if (bindSuccess)
         {
+            NSString *successTitle;
+            if (self.bind)
+            {
+                successTitle=@"绑定成功";
+            }
+            else
+                successTitle=@"解绑成功";
             SCLAlertView *alert=[[SCLAlertView alloc]init];
-            [alert showWaiting:self title:nil subTitle:@"绑定成功" closeButtonTitle:nil duration:1.0f];
+            [alert showWaiting:self title:nil subTitle:successTitle closeButtonTitle:nil duration:1.0f];
             dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.0f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                 [self.navigationController popViewControllerAnimated:YES];
             });
         }
         else
         {
+            NSString *failTitle;
+            if (self.bind)
+            {
+                failTitle=@"绑定手机失败";
+            }
+            else
+                failTitle=@"解绑手机失败";
             SCLAlertView *alert=[[SCLAlertView alloc]init];
-            [alert showError:self title:nil subTitle:@"绑定手机失败" closeButtonTitle:@"确认" duration:0.0f];
+            [alert showError:self title:nil subTitle:failTitle closeButtonTitle:@"确认" duration:0.0f];
         }
         
     } failure:^(NSString *message) {
@@ -215,6 +275,16 @@
         SCLAlertView *alert = [[SCLAlertView alloc] init];
         [alert showError:self title:@"错误" subTitle:@"网络错误，请重新尝试" closeButtonTitle:@"确定" duration:0.0f];
     }];
+}
+- (IBAction)registButtonClick:(id)sender {
+    NSString* password=self.passwordInput.text;
+    if ([password length] < 5)
+    {
+        SCLAlertView *alert = [[SCLAlertView alloc] init];
+        [alert showError:self title:@"错误" subTitle:@"密码长度请不要少于5位" closeButtonTitle:@"确定" duration:0.0f];
+        return;
+    }
+    [self bindPhone:password];
 }
 - (IBAction)goBack:(id)sender {
     [self.navigationController popViewControllerAnimated:YES];
