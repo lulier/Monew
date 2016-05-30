@@ -50,6 +50,7 @@
         self.codeVerified=NO;
         self.passwordInput.hidden=YES;
         self.registButton.hidden=YES;
+        [self.registButton setTitle:@"绑定" forState:UIControlStateNormal];
     }
     else
     {
@@ -64,6 +65,7 @@
         self.codeVerified=YES;
         self.passwordInput.hidden=NO;
         self.registButton.hidden=NO;
+        [self.registButton setTitle:@"解除绑定" forState:UIControlStateNormal];
     }
     [[NSNotificationCenter defaultCenter]addObserver:self selector:@selector(onKeyboardHide) name:UIKeyboardWillHideNotification object:nil];
 }
