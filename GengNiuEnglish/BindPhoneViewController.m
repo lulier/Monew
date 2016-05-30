@@ -58,10 +58,11 @@
         self.veriButton.hidden=YES;
         self.sendVeriCode.hidden=YES;
         self.phoneNumInput.delegate=self;
+        self.phoneNumInput.enabled=NO;
+        self.phoneNumInput.text=self.currentPhone;
         self.veriInput.delegate=self;
         self.passwordInput.delegate=self;
         self.veriButton.enabled=YES;
-        self.phoneNumInput.enabled=YES;
         self.codeVerified=YES;
         self.passwordInput.hidden=NO;
         self.registButton.hidden=NO;

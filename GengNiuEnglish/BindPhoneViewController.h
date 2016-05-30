@@ -21,6 +21,7 @@
 @property (weak, nonatomic) IBOutlet UIButton *sendVeriCode;
 @property (weak, nonatomic) IBOutlet UITextField *passwordInput;
 @property (weak, nonatomic) IBOutlet UIButton *registButton;
+@property(nonatomic,strong) NSString *currentPhone;
 @property(nonatomic)BOOL bind;
 @property(nonatomic)BOOL codeVerified;
 @end

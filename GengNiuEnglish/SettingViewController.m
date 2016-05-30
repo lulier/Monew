@@ -381,7 +381,7 @@
     {
         //check whether bind phone
         AccountManager *account=[AccountManager singleInstance];
-        [account checkPhoneBind:^(BOOL bind) {
+        [account checkPhoneBind:^(BOOL bind,NSString* phone) {
             UIStoryboard *storyboard=[UIStoryboard storyboardWithName:@"Main" bundle:nil];
             BindPhoneViewController *bindViewController=[storyboard instantiateViewControllerWithIdentifier:@"BindPhoneViewController"];
             if (!bind)
@@ -392,6 +392,7 @@
             else
             {
                 bindViewController.bind=NO;
+                bindViewController.currentPhone=phone;
             }
             [self.navigationController pushViewController:bindViewController animated:YES];
         } failure:^(NSString *message) {

@@ -426,7 +426,7 @@ static NSString * const ACCOUNT_KEYCHAIN = @"GNAccount20160311";
         success(NO);
     } completionHandler:nil];
 }
-- (void)checkPhoneBind:(void (^)(BOOL bind))success failure:(void (^)(NSString * message))failure
+- (void)checkPhoneBind:(void (^)(BOOL bind,NSString*phone))success failure:(void (^)(NSString * message))failure
 {
     NSMutableString *sign=[CommonMethod MD5EncryptionWithString:[NSString stringWithFormat:@"%@",self.userID]];
     NSDictionary *dic=[NSDictionary dictionaryWithObjectsAndKeys:self.userID,@"user_id",sign,@"sign",nil];
@@ -440,14 +440,14 @@ static NSString * const ACCOUNT_KEYCHAIN = @"GNAccount20160311";
                 NSString *phone=[responseObject objectForKey:@"phone"];
                 if ([phone isEqualToString:@""])
                 {
-                    success(NO);
+                    success(NO,phone);
                 }
                 else
-                    success(YES);
+                    success(YES,phone);
             }
         }
         else
-            success(NO);
+            success(NO,@"");
     } failure:^(NSURLSessionTask * _Nullable task, NSError * _Nullable error) {
         failure([NSString stringWithFormat:@"%@",error]);
     } completionHandler:nil];

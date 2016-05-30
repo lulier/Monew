@@ -311,7 +311,7 @@ static void saveDoc(char *current_path, fz_document *doc)
     deleteButton = [self newResourceBasedButton:@"ic_trash" withAction:@selector(onDelete:)];
     searchBar = [[UISearchBar alloc] initWithFrame: CGRectMake(0,0,50,32)];
     backButton = [self newResourceBasedButton:@"mu_goBack" withAction:@selector(onBack:)];
-    playText=[self newResourceBasedButton:@"playText" withAction:@selector(onPlayText:)];
+    playText=[self newResourceBasedButton:@"broadcast" withAction:@selector(onPlayText:)];
     [searchBar setPlaceholder: @"Search"];
     [searchBar setDelegate: self];
     
@@ -340,6 +340,15 @@ static void saveDoc(char *current_path, fz_document *doc)
     }
     isPlaying=false;
     isDictionary=false;
+    [self onHighlight:nil];
+    self.autoPlay=false;
+    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(1.2f * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+        if (self.autoPlay)
+        {
+            [self onPlayText:nil];
+        }
+    });
+    
 }
 - (void) dealloc
 {
@@ -806,9 +815,24 @@ static void saveDoc(char *current_path, fz_document *doc)
 }
 -(void)onPlayText:(id)sender
 {
-    if (isPlaying) {
-        return;
+    UIButton *tmpButton=(UIButton*)playText.customView;
+    switch (audioPlayer.state)
+    {
+        case STKAudioPlayerStatePaused:
+            [audioPlayer resume];
+//            [playText setImage:[UIImage imageNamed:@"stop"]];
+            [tmpButton setImage:[UIImage imageNamed:@"stop"] forState:UIControlStateNormal];
+            return;
+        case STKAudioPlayerStatePlaying:
+            [audioPlayer pause];
+//            [playText setImage:[UIImage imageNamed:@"broadcast"]];
+            [tmpButton setImage:[UIImage imageNamed:@"broadcast"] forState:UIControlStateNormal];
+//            [self.playButton setImage:[UIImage imageNamed:@"broadcast"] forState:UIControlStateNormal];
+            return;
+        default:
+            break;
     }
+    [tmpButton setImage:[UIImage imageNamed:@"stop"] forState:UIControlStateNormal];
     if (audioPlayer==nil)
     {
         audioPlayer = [[STKAudioPlayer alloc] initWithOptions:(STKAudioPlayerOptions){ .flushQueueOnSeek = YES, .enableVolumeMixer = NO, .equalizerBandFrequencies = {50, 100, 200, 400, 800, 1600, 2600, 16000} }];
@@ -1177,15 +1201,20 @@ static void saveDoc(char *current_path, fz_document *doc)
 }
 -(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
-    [self onHighlight:nil];
+//    [self onHighlight:nil];
 }
 -(void)scrollViewDidEndDecelerating:(UIScrollView *)scrollView
 {
+    if (self.autoPlay)
+    {
+        [self onPlayText:nil];
+    }
     [self onHighlight:nil];
+    
 }
 -(void)finishLoading
 {
-    [self onHighlight:nil];
+    
 }
 - (void) createPageView: (int)number
 {
