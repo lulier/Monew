@@ -1200,7 +1200,7 @@ static void saveDoc(char *current_path, fz_document *doc)
 -(void)scrollViewDidEndScrollingAnimation:(UIScrollView *)scrollView
 {
     
-}
+} 
 -(void)scrollViewDidEndDragging:(UIScrollView *)scrollView willDecelerate:(BOOL)decelerate
 {
 //    [self onHighlight:nil];

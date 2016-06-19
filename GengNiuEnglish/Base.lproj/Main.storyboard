@@ -211,7 +211,7 @@
                                         <rect key="frame" x="0.0" y="28" width="627" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="nrk-Bx-EJL" id="4G9-2G-cvS">
-                                            <rect key="frame" x="0.0" y="0.0" width="627" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="627" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
                                                 <textView clipsSubviews="YES" userInteractionEnabled="NO" contentMode="scaleToFill" scrollEnabled="NO" showsHorizontalScrollIndicator="NO" showsVerticalScrollIndicator="NO" editable="NO" text="The monkeys can." textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="D4M-0M-d7T" customClass="GNTextView">
@@ -1438,10 +1438,10 @@
                                                 <rect key="frame" x="0.0" y="28" width="408" height="44"/>
                                                 <autoresizingMask key="autoresizingMask"/>
                                                 <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ZsY-uw-fbA" id="Mtf-sv-wzc">
-                                                    <rect key="frame" x="0.0" y="0.0" width="408" height="44"/>
+                                                    <rect key="frame" x="0.0" y="0.0" width="408" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="CFF9E44F-6D34-4865-9197-3428B52D62DE" translatesAutoresizingMaskIntoConstraints="NO" id="Axa-d7-Z9S">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="6B5AD3DD-3966-49CF-A251-3EA974AE73AF" translatesAutoresizingMaskIntoConstraints="NO" id="Axa-d7-Z9S">
                                                             <rect key="frame" x="15" y="12" width="21" height="21"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" secondItem="Axa-d7-Z9S" secondAttribute="height" multiplier="2:2" id="tJp-ce-Zz7"/>
@@ -1503,9 +1503,15 @@
                                             <constraint firstAttribute="width" secondItem="wZ7-hq-JmR" secondAttribute="height" multiplier="1:1" id="agu-gP-BcJ"/>
                                         </constraints>
                                     </imageView>
-                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" translatesAutoresizingMaskIntoConstraints="NO" id="BE8-hY-ztP">
+                                    <switch opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" contentHorizontalAlignment="center" contentVerticalAlignment="center" on="YES" translatesAutoresizingMaskIntoConstraints="NO" id="BE8-hY-ztP">
                                         <rect key="frame" x="370" y="13" width="51" height="31"/>
                                     </switch>
+                                    <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="困难" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="TNR-YO-FIX">
+                                        <rect key="frame" x="322" y="16.5" width="40" height="24"/>
+                                        <fontDescription key="fontDescription" type="system" pointSize="20"/>
+                                        <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                        <nil key="highlightedColor"/>
+                                    </label>
                                 </subviews>
                                 <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 <constraints>
@@ -1524,9 +1530,11 @@
                                     <constraint firstItem="qfj-Zj-ZJL" firstAttribute="height" secondItem="xmI-0r-q0F" secondAttribute="height" id="eFj-VV-T3I"/>
                                     <constraint firstItem="qfj-Zj-ZJL" firstAttribute="leading" secondItem="xmI-0r-q0F" secondAttribute="trailing" constant="10" id="jHQ-nV-6Vd"/>
                                     <constraint firstItem="wZ7-hq-JmR" firstAttribute="centerY" secondItem="qfj-Zj-ZJL" secondAttribute="centerY" id="k1n-AN-3Gn"/>
+                                    <constraint firstItem="BE8-hY-ztP" firstAttribute="leading" secondItem="TNR-YO-FIX" secondAttribute="trailing" constant="8" id="kuN-to-t4T"/>
                                     <constraint firstAttribute="bottom" secondItem="PFT-6x-eep" secondAttribute="bottom" constant="8" id="nMt-I4-9ic"/>
                                     <constraint firstItem="qfj-Zj-ZJL" firstAttribute="width" secondItem="xmI-0r-q0F" secondAttribute="width" id="vIv-qY-JbN"/>
                                     <constraint firstItem="PFT-6x-eep" firstAttribute="leading" secondItem="iXt-6g-Q9K" secondAttribute="leading" constant="12" id="xEQ-QI-WYU"/>
+                                    <constraint firstItem="TNR-YO-FIX" firstAttribute="centerY" secondItem="qfj-Zj-ZJL" secondAttribute="centerY" id="y9v-4b-ffw"/>
                                     <constraint firstItem="xmI-0r-q0F" firstAttribute="top" secondItem="iXt-6g-Q9K" secondAttribute="bottom" multiplier="2:100" id="yqc-3m-GLH"/>
                                     <constraint firstItem="PFT-6x-eep" firstAttribute="top" secondItem="iXt-6g-Q9K" secondAttribute="bottom" multiplier="20.7:100" id="zMe-oE-8dK"/>
                                 </constraints>
@@ -1563,7 +1571,6 @@
                     <simulatedOrientationMetrics key="simulatedOrientationMetrics" orientation="landscapeRight"/>
                     <simulatedScreenMetrics key="simulatedDestinationMetrics" type="retina47"/>
                     <connections>
-                        <outlet property="difficultSwitch" destination="BE8-hY-ztP" id="YBy-un-jio"/>
                         <outlet property="genderImage" destination="wZ7-hq-JmR" id="OIW-nD-CnE"/>
                         <outlet property="portraitImage" destination="xmI-0r-q0F" id="YZW-ko-H9j"/>
                         <outlet property="settingTableView" destination="PFT-6x-eep" id="XKm-fF-BIg"/>
@@ -1838,7 +1845,7 @@
                                         <rect key="frame" x="0.0" y="28" width="534" height="44"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="MXj-W9-cle" id="0do-PP-lZo">
-                                            <rect key="frame" x="0.0" y="0.0" width="534" height="44"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="534" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
                                     </tableViewCell>
@@ -1875,7 +1882,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="CFF9E44F-6D34-4865-9197-3428B52D62DE" width="36" height="36">
+        <image name="6B5AD3DD-3966-49CF-A251-3EA974AE73AF" width="36" height="36">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGOjtYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK0HCBEW
 GxwgISgrLjQ3VSRudWxs1AkKCwwNDg8QViRjbGFzc1xOU0ltYWdlRmxhZ3NWTlNSZXBzV05TQ29sb3KA
