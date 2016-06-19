@@ -721,7 +721,7 @@
 				TargetAttributes = {
 					F42799251C18514200240736 = {
 						CreatedOnToolsVersion = 7.1.1;
-						DevelopmentTeam = 5Y787D7K6C;
+						DevelopmentTeam = BQWKD37TRB;
 						SystemCapabilities = {
 							com.apple.BackgroundModes = {
 								enabled = 1;
@@ -1086,7 +1086,7 @@
 					"$(PROJECT_DIR)/ShareSDK-iOS-simple-3.1.4/extends/WeChatSDK",
 				);
 				MODULEMAP_FILE = "${PROJECT_DIR}/module.modulemap";
-				PRODUCT_BUNDLE_IDENTIFIER = com.monew.test.english;
+				PRODUCT_BUNDLE_IDENTIFIER = com.monew.enterprise.english;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;
@@ -1143,7 +1143,7 @@
 					"$(PROJECT_DIR)/ShareSDK-iOS-simple-3.1.4/extends/WeChatSDK",
 				);
 				MODULEMAP_FILE = "${PROJECT_DIR}/module.modulemap";
-				PRODUCT_BUNDLE_IDENTIFIER = com.monew.test.english;
+				PRODUCT_BUNDLE_IDENTIFIER = com.monew.enterprise.english;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				TARGETED_DEVICE_FAMILY = 1;

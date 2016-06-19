@@ -73,10 +73,10 @@
     
     if (account.difficult)
     {
-        [self.difficultSwitch setOn:YES];
+        [self.difficultSwitch setOn:YES animated:NO];
     }
     else
-        [self.difficultSwitch setOn:NO];
+        [self.difficultSwitch setOn:NO animated:NO];
     
     
     
