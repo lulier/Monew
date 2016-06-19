@@ -27,5 +27,7 @@
 @property (weak, nonatomic) IBOutlet UILabel *userName;
 @property (weak, nonatomic) IBOutlet UIImageView *portraitImage;
 @property (weak, nonatomic) IBOutlet UIImageView *genderImage;
+@property (weak, nonatomic) IBOutlet UISwitch *difficultSwitch;
+
 
 @end

@@ -311,7 +311,7 @@ static void saveDoc(char *current_path, fz_document *doc)
     deleteButton = [self newResourceBasedButton:@"ic_trash" withAction:@selector(onDelete:)];
     searchBar = [[UISearchBar alloc] initWithFrame: CGRectMake(0,0,50,32)];
     backButton = [self newResourceBasedButton:@"mu_goBack" withAction:@selector(onBack:)];
-    playText=[self newResourceBasedButton:@"broadcast" withAction:@selector(onPlayText:)];
+    playText=[self newResourceBasedButton:@"practice_playText" withAction:@selector(onPlayText:)];
     [searchBar setPlaceholder: @"Search"];
     [searchBar setDelegate: self];
     
@@ -821,18 +821,18 @@ static void saveDoc(char *current_path, fz_document *doc)
         case STKAudioPlayerStatePaused:
             [audioPlayer resume];
 //            [playText setImage:[UIImage imageNamed:@"stop"]];
-            [tmpButton setImage:[UIImage imageNamed:@"stop"] forState:UIControlStateNormal];
+            [tmpButton setImage:[UIImage imageNamed:@"practice_stop"] forState:UIControlStateNormal];
             return;
         case STKAudioPlayerStatePlaying:
             [audioPlayer pause];
 //            [playText setImage:[UIImage imageNamed:@"broadcast"]];
-            [tmpButton setImage:[UIImage imageNamed:@"broadcast"] forState:UIControlStateNormal];
+            [tmpButton setImage:[UIImage imageNamed:@"practice_playText"] forState:UIControlStateNormal];
 //            [self.playButton setImage:[UIImage imageNamed:@"broadcast"] forState:UIControlStateNormal];
             return;
         default:
             break;
     }
-    [tmpButton setImage:[UIImage imageNamed:@"stop"] forState:UIControlStateNormal];
+    [tmpButton setImage:[UIImage imageNamed:@"practice_stop"] forState:UIControlStateNormal];
     if (audioPlayer==nil)
     {
         audioPlayer = [[STKAudioPlayer alloc] initWithOptions:(STKAudioPlayerOptions){ .flushQueueOnSeek = YES, .enableVolumeMixer = NO, .equalizerBandFrequencies = {50, 100, 200, 400, 800, 1600, 2600, 16000} }];
@@ -1192,6 +1192,8 @@ static void saveDoc(char *current_path, fz_document *doc)
     if (audioPlayer!=nil)
     {
         [audioPlayer stop];
+        UIButton *tmpButton=(UIButton*)playText.customView;
+        [tmpButton setImage:[UIImage imageNamed:@"practice_playText"] forState:UIControlStateNormal];
         currentPlayFiles=nil;
     }
 }

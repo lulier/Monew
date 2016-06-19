@@ -35,6 +35,7 @@ typedef NS_ENUM(NSInteger,StarNum)
     NSString *currentCheckWord;
     NSString *currentRecordPath;
     BOOL bindWeiXin;
+    StarNum lastTimeStar;
 //    MRProgressOverlayView *progressView;
 //    NSTimer *timer;
 }
@@ -120,6 +121,7 @@ static NSString* cellIdentifierLyric=@"LyricViewCell";
     });
     [DictionaryDatabase sharedInstance];
     playTextID=-1;
+    lastTimeStar=oneStar;
     
     [self checkWeiXinBind];
     [[StudyDataManager sharedInstance] loadSentenceScores:self.book.text_id];
@@ -792,19 +794,45 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
         }
         [resultString appendAttributedString:word];
     }
+    
+    StarNum plus=1;
+    AccountManager *account=[AccountManager singleInstance];
+    if (account.difficult)
+    {
+        plus=0;
+    }
+    
     StarNum number;
-    if (wrong>=correct)
+    if (correct>=1)
     {
         number=oneStar;
+        if (correct>=wrong)
+        {
+            number=twoStar;
+            if (wrong<=3)
+            {
+                number=threeStar;
+            }
+        }
+    }
+    if (number!=3)
+    {
+        number+=plus;
+    }
+    
+    if (lastTimeStar!=twoStar)
+    {
+        lastTimeStar=number;
     }
     else
     {
-        number=twoStar;
-        if (wrong<=2)
+        if (number==twoStar)
         {
             number=threeStar;
         }
     }
+    
+    
     for (LyricViewCell *cell in [self.tableview visibleCells])
     {
         if (cell.index==self.selectedIndex.row)

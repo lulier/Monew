@@ -14,5 +14,6 @@
 @property(strong,nonatomic)NSArray *list;
 @property (weak, nonatomic) IBOutlet UIButton *settingButton;
 @property (weak, nonatomic) IBOutlet UICollectionView *collectionView;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *titleTopConstraint;
 -(void)reload:(__unused id)sender;
 @end

@@ -33,4 +33,5 @@
 @property(atomic)BOOL isLoading;
 @property(nonatomic)BOOL showCache;
 @property(strong,nonatomic)NSString *textCount;
+@property (weak, nonatomic) IBOutlet NSLayoutConstraint *titleTopConstraint;
 @end

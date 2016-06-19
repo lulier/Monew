@@ -252,7 +252,7 @@ static NSString * const ACCOUNT_KEYCHAIN = @"GNAccount20160311";
     [[NSUserDefaults standardUserDefaults] setObject:@"in" forKey:@"AccountStatus"];
     [[NSUserDefaults standardUserDefaults] synchronize];
     [FXKeychain defaultKeychain][ACCOUNT_KEYCHAIN] = self;
-    
+    self.difficult=false;
     [self getUserInfo];
 }
 -(void)getUserInfo

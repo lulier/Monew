@@ -138,6 +138,22 @@ static NSString * const reuseIdentifierMaterial = @"MaterialCell";
 -(void)updateViewConstraints
 {
     [super updateViewConstraints];
+    //    NSLog(@"%f",[UIScreen mainScreen].bounds.size.height);
+    IphoneType type=[CommonMethod checkIphoneType];
+    switch (type) {
+        case Iphone5s:
+            self.titleTopConstraint.constant=4;
+            break;
+        case Iphone6:
+            self.titleTopConstraint.constant=7;
+            break;
+        case Iphone6p:
+            self.titleTopConstraint.constant=10;
+            break;
+        default:
+            self.titleTopConstraint.constant=4;
+            break;
+    }
 }
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];

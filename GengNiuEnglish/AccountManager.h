@@ -46,6 +46,9 @@ typedef NS_ENUM(NSInteger,UserGender)
 @property(strong,nonatomic)NSString *portraitKey;
 @property(strong,nonatomic)NSString *thirdPartyImage;
 
+
+//difficultySetting
+@property(nonatomic)BOOL difficult;
 + (AccountManager *)singleInstance;
 - (void)saveAccount;
 - (void)deleteAccount;

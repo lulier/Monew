@@ -69,6 +69,18 @@
     else
         self.userName.text=@"dd";
     
+    [self.difficultSwitch addTarget:self action:@selector(switchValueChanged:) forControlEvents:UIControlEventValueChanged];
+    
+    if (account.difficult)
+    {
+        [self.difficultSwitch setOn:YES];
+    }
+    else
+        [self.difficultSwitch setOn:NO];
+    
+    
+    
+    
     // 设置头像
     if (account.type==LTWeiBo||account.type==LTWeiXin||account.type==LTQQ)
     {
@@ -103,6 +115,18 @@
 {
     AppDelegate *appDelegate=[[UIApplication sharedApplication] delegate];
     appDelegate.isPickerView=false;
+}
+-(void)switchValueChanged:(id)sender
+{
+    AccountManager *account=[AccountManager singleInstance];
+    BOOL value=[sender isOn];
+    if (value)
+    {
+        account.difficult=true;
+    }
+    else
+        account.difficult=false;
+        
 }
 -(void)touchesBegan:(NSSet<UITouch *> *)touches withEvent:(UIEvent *)event
 {
