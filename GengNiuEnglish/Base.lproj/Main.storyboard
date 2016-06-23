@@ -1441,7 +1441,7 @@
                                                     <rect key="frame" x="0.0" y="0.0" width="408" height="43.5"/>
                                                     <autoresizingMask key="autoresizingMask"/>
                                                     <subviews>
-                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="B49129FA-17CF-4933-B143-DDE7A4361CD0" translatesAutoresizingMaskIntoConstraints="NO" id="Axa-d7-Z9S">
+                                                        <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="59BECF2B-7FB8-4B9F-B221-537F7650FE34" translatesAutoresizingMaskIntoConstraints="NO" id="Axa-d7-Z9S">
                                                             <rect key="frame" x="15" y="12" width="21" height="21"/>
                                                             <constraints>
                                                                 <constraint firstAttribute="width" secondItem="Axa-d7-Z9S" secondAttribute="height" multiplier="2:2" id="tJp-ce-Zz7"/>
@@ -1672,11 +1672,11 @@
                                     <constraint firstAttribute="width" constant="247" id="dCU-Sg-GOT"/>
                                     <constraint firstAttribute="height" constant="30" id="pLZ-jX-1rS"/>
                                 </constraints>
-                                <state key="normal" title="注册" backgroundImage="loginButtonBG">
+                                <state key="normal" title="绑定" backgroundImage="loginButtonBG">
                                     <color key="titleColor" red="0.50196081400000003" green="0.25098040700000002" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 </state>
                                 <connections>
-                                    <action selector="registButtonClick:" destination="97l-wf-j9K" eventType="touchUpInside" id="oW0-gw-ufY"/>
+                                    <action selector="registButtonClick:" destination="OB9-0H-5cB" eventType="touchUpInside" id="pFR-mw-FYG"/>
                                 </connections>
                             </button>
                         </subviews>
@@ -1705,6 +1705,7 @@
                     <connections>
                         <outlet property="passwordInput" destination="ouW-9H-odc" id="kz4-RB-VwS"/>
                         <outlet property="phoneNumInput" destination="Hj1-JI-uVm" id="tbF-go-NA3"/>
+                        <outlet property="registButton" destination="jhl-Mq-y7U" id="QIP-km-HTi"/>
                         <outlet property="sendVeriCode" destination="XOv-Rg-Czu" id="f2V-Jy-SQD"/>
                         <outlet property="titleTopConstraint" destination="5Gl-gf-Atk" id="EFa-oe-R7f"/>
                         <outlet property="veriButton" destination="FfK-N4-9d2" id="2jj-D8-75h"/>
@@ -1882,7 +1883,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="B49129FA-17CF-4933-B143-DDE7A4361CD0" width="36" height="36">
+        <image name="59BECF2B-7FB8-4B9F-B221-537F7650FE34" width="36" height="36">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGOjtYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK0HCBEW
 GxwgISgrLjQ3VSRudWxs1AkKCwwNDg8QViRjbGFzc1xOU0ltYWdlRmxhZ3NWTlNSZXBzV05TQ29sb3KA
@@ -1978,7 +1979,7 @@ AAMAAAABACQAAAEBAAMAAAABACQAAAECAAMAAAAEAAAU9gEDAAMAAAABAAEAAAEGAAMAAAABAAIAAAER
 AAQAAAABAAAACAESAAMAAAABAAEAAAEVAAMAAAABAAQAAAEWAAMAAAABACQAAAEXAAQAAAABAAAUQAEc
 AAMAAAABAAEAAAFSAAMAAAABAAIAAAFTAAMAAAAEAAAU/odzAAcAAAxIAAAVBgAAAAAACAAIAAgACAAB
 AAEAAQABAAAMSExpbm8CEAAAbW50clJHQiBYWVogB84AAgAJAAYAMQAAYWNzcE1TRlQAAAAASUVDIHNS
-R0IAAAAAAAAAAAAAAAEAAPbWAAEAAAAA0y1IUCAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
+R0IAAAAAAAAAAAAAAAAAAPbWAAEAAAAA0y1IUCAgAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA
 AAAAAAAAAAAAAAAAAAAAAAARY3BydAAAAVAAAAAzZGVzYwAAAYQAAABsd3RwdAAAAfAAAAAUYmtwdAAA
 AgQAAAAUclhZWgAAAhgAAAAUZ1hZWgAAAiwAAAAUYlhZWgAAAkAAAAAUZG1uZAAAAlQAAABwZG1kZAAA
 AsQAAACIdnVlZAAAA0wAAACGdmlldwAAA9QAAAAkbHVtaQAAA/gAAAAUbWVhcwAABAwAAAAkdGVjaAAA

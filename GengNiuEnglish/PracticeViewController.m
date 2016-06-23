@@ -829,6 +829,7 @@ heightForRowAtIndexPath:(NSIndexPath *)indexPath
         if (number==twoStar)
         {
             number=threeStar;
+            lastTimeStar=oneStar;
         }
     }
     
